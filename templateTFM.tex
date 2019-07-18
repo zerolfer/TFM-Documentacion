@@ -1,0 +1,153 @@
+\documentclass[spanish,12pt, a4paper,twoside]{paper}
+
+\let\oldsection\section
+\def\section{\cleardoublepage\oldsection}
+
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+
+%\renewcommand{\listoftables}{Índice de tablas}
+
+
+\usepackage[textwidth=15cm, textheight=22.5cm, top=3.5cm, bottom=3.5cm,left= 4cm,right=2cm]{geometry}
+
+
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{graphics}
+\usepackage{amsmath,amssymb}
+\usepackage{float}
+\usepackage{changepage}
+\usepackage{subcaption}
+
+
+\usepackage{algorithm}
+\usepackage{multirow}
+
+\usepackage[]{hyperref}
+\hypersetup{
+	backref,
+	bookmarksnumbered=true,     
+	bookmarksopen=true,         
+	bookmarksopenlevel=1,
+	colorlinks=true,                       
+	%pdfpagemode=UseOutlines,    % this is the option you were lookin for
+	%pdfpagelayout=TwoPageRight
+}
+% !TeX spellcheck = es_ES
+
+\begin{document}
+	%\maketitle
+	%\thispagestyle{empty}
+	\begin{titlepage}
+		
+		\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+		
+		\center % Center everything on the page
+		
+		%	HEADING SECTIONS
+		\includegraphics[width=2.25cm]{recursos/logoFi.png}
+		\hspace{8cm}
+		\includegraphics[width=2cm]{recursos/logoupm.png}
+		\\[1cm]
+		
+		\textsc{\Large Escuela Técnica Superior de Ingenieros Informáticos}\\[0.5cm]
+		\textsc{\large Universidad Politécnica de Madrid}
+		\\[3cm]
+		
+		
+		%	TITLE SECTION
+		\HRule \\[0.4cm]
+		{ \huge \bfseries serdfgvesrdfserdzfesrdgf}\\[0.4cm] % Title of your document
+		\HRule \\[2.5cm]
+		
+		\textsc{\LARGE yudtryutyu6ydrujfghdtyju}\\[0.5cm] 
+		\textsc{\Large dtyjhgftyghujbft yrf ghjdry tjghf }\\[2.5cm]
+		
+		%	AUTHOR SECTION
+		\begin{flushright}
+			\large
+			AUTOR: Sergio Flórez Vallina\\
+			TUTORES: Alfonso Mateos Caballero y \linebreak
+			Antonio Jiménez Martín
+		\end{flushright}
+		
+		\vspace{1.3cm}
+		
+		%	DATE SECTION
+		{ {2018}}\\[3cm]
+		%	LOGO SECTION
+		
+		\vfill % Fill the rest of the page with whitespace
+		
+	\end{titlepage}
+	
+	\afterpage{\blankpage}
+	\pagenumbering{roman}
+	
+	
+	%	AGRADECIMIENTOS
+	\section*{AGRADECIMIENTOS}
+	Agradezco especialmente a Tino Tello Caballo por toda su paciencia y tiempo para ayudarme
+	a dar vida a éste proyecto.
+	
+	%	RESUMEN
+	\section*{RESUMEN}
+	Extensin mxima de una pgina
+	
+	
+	%	SUMMARY
+	\section*{SUMMARY}
+	Extensión máxima de una página
+	
+	
+	%	ÍNDICE
+	\tableofcontents % indice de contenidos
+	
+	
+	
+	%	INDICE DE FIGURAS Y TABLAS
+	\listoffigures
+	
+	\listoftables
+	
+	%	CAPTULOS DEL TRABAJO FIN DE MSTER
+	\newpage
+	\pagenumbering{arabic} 
+	
+	%
+	% EN ESTE DOCUMENTO ESTÁ EL RESTO DE LA PLANTILLA
+	% \include{capitulos/ejemplo_documentacion}
+	%
+	%
+	
+	\include{capitulos/Capitulo1-Introduccion}
+	
+	\section*{ANEXOS}
+	
+	
+	%	REFERENCIAS
+	\newpage
+	
+	\begin{thebibliography}{00}
+		%\bibitem{Ashtiani2014}  Ashtiani, M.H.Z., Ahmadabadi, M.N., Araabi, B.N. (2014). Bandit-based local feature subset selection. \emph{Neurocomputing} 138, 371--382.
+		%\bibitem{Berry1985} Berry, D., Fristedt, B. (1985). \emph{Bandit problems}. London: Chapman and Hall.
+		%\bibitem{Figueira2005} Figueira, J., Mousseau, V., Roy, B. (2005). Electre methods. En J. Figueira, S. Greco y M. Erghott (Eds.), \emph{Multiple criteria decision analysis. State of the art survey} (pp. 133--162). New York: Springer.
+		%\bibitem{Li2010} Li, L., Chu, W., Langford, J., Schapire, R.E. (2010). A contextual-bandit approach to personalized news article recommendation. En \emph{Proceedings of the 19th International Conference on World Wide Web} (pp. 661--670). New York: ACM.
+		%\bibitem{Mateos2009} Mateos, A., , A. (2009). A trapezoidal fuzzy numbers-based approach for aggregating group preferences and ranking decision alternatives in MCDM. En M. Erghott, C.M. Fonseca, X. Gandibleux, H. Jao y M. Servaux (Eds.). \emph{Evolutionary multi-criterion optimization} (pp. 365--379). Berlin: Springer.
+		%\bibitem{Sutton1998} Sutton, R. Barto, A. (1998). \emph{Reinforcement learning, an introduction}. Cambridge: MIT Press.
+		%\bibitem{Thompson1933} Thompson, W.R. (1933). On the likelihood that one unknown probability exceeds another in view of the evidence of two samples. \emph{Biometrika} 25(3-4), 285--294.
+		%\bibitem{Vicente2016} Vicente, E. (2016). \emph{ y  del riesgo en los sistemas de : Un enfoque borroso}. (Tesis doctoral). Universidad  de Madrid, Madrid.
+		%\bibliographystyle{splncs04}
+		\bibliography{referencias}
+		
+	\end{thebibliography}
+\end{document}
+
