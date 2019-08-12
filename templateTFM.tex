@@ -5,6 +5,8 @@
 
 \usepackage{afterpage}
 
+\usepackage[dvipsnames]{xcolor}
+
 \newcommand\blankpage{%
 	\null
 	\thispagestyle{empty}%
@@ -12,6 +14,17 @@
 	\newpage}
 
 %\renewcommand{\listoftables}{Índice de tablas}
+\newcommand{\refcruzada}[2]{\hyperref[#2]{#1~\ref{#2}}}
+
+\newcommand*{\NOTE}[1]{\textcolor{ForestGreen}{#1}}
+
+\makeatletter
+\def\namedlabel#1{\begingroup
+	\def\@currentlabel{#1}%
+	\@currentlabel
+	\phantomsection\label{item:\@currentlabel}\endgroup
+}
+\makeatother
 
 
 \usepackage[textwidth=15cm, textheight=22.5cm, top=3.5cm, bottom=3.5cm,left= 4cm,right=2cm]{geometry}
@@ -27,6 +40,7 @@
 \usepackage{changepage}
 \usepackage{subcaption}
 
+\usepackage{enumitem}
 
 \usepackage{algorithm}
 \usepackage{multirow}
@@ -37,7 +51,7 @@
 	bookmarksnumbered=true,     
 	bookmarksopen=true,         
 	bookmarksopenlevel=1,
-	colorlinks=true,                       
+	colorlinks=false,                       
 	%pdfpagemode=UseOutlines,    % this is the option you were lookin for
 	%pdfpagelayout=TwoPageRight
 }
@@ -82,7 +96,7 @@
 		\vspace{1.3cm}
 		
 		%	DATE SECTION
-		{ {2018}}\\[3cm]
+		{ {2019}}\\[3cm]
 		%	LOGO SECTION
 		
 		\vfill % Fill the rest of the page with whitespace
@@ -129,6 +143,13 @@
 	%
 	
 	\include{capitulos/Capitulo1-Introduccion/Capitulo1}
+	\newpage
+	
+	\include{capitulos/Capitulo2-Definicion-del-problema/Capitulo2}
+	\newpage
+	
+	%\include{capitulos/CapituloXXX-YYY/CapituloXXX}
+	%\newpage
 	
 	\section*{ANEXOS}
 	
