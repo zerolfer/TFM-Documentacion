@@ -241,3 +241,5 @@ TSWLatexianTemp*
 # generated if using elsarticle.cls
 *.spl
 ~$bla de contenidos TFM - V2.docx
+.idea/
+*.iml
