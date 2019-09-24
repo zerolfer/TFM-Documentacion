@@ -1,0 +1,34 @@
+
+\section{Implementación}
+
+\NOTE{CONTAR AQUI LAS ETAPAS DE SW. Y DESPUES DESCRIBIR UNA A UNA EL INPUT Y EL OUPUT. PARA LA FASE DE REQUISITOS AQUÍ HAY ALGUNO:}
+
+\subsection{Requisitos del sistema}
+Una vez definidos los conceptos básicos, procedemos a recopilar las características y restricciones del sistema.
+
+\subsubsection{Requisitos de entrada/salida}
+
+\begin{enumerate}[label={\textbf{RIO\arabic*}}]
+	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso,
+	de esta forma, la información común a varios casos será independiente de cada caso concreto.
+	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 ficheros:
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item  Lista de todos los sectores pertenecientes la unidad de control y los sectores elementales\footnote{
+			Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} se podía sustituir por otros más pequeños, por lo tanto no es elemental
+		} por los que están formados cada uno de los sectores.
+		
+		\item  Matriz de Afinidad de los sectores de la dependencia (definida en la \autoref{section:2:sectores-y-sectorizacion})
+		\item Lista de los sectores pertenecientes a la unidad de control, en la que nos indica el tipo de sector (ver~\ref{RD-tipos-sector}) y los núcleos a los que pertenece (ver~\ref{RD-sector-nucleo}).
+	\end{enumerate}
+	
+\end{enumerate}
+
+
+\subsubsection{Restricciones de dominio}
+Las restricciones de dominio son aquellos requisitos del sistema que son impuestos únicamente por el dominio del problema, no por la propia naturaleza del sistema ni de forma externa.
+
+\begin{enumerate}[label={\textbf{RD\arabic*}}]
+	\item \label{RD-tipos-sector}  Cada sector tendrá un tipo de sector, que podrá ser Aproximación o Ruta
+	\item  \label{RD-sector-nucleo} Cada sector tendrá uno o varios núcleos asociados, así como cada núcleo tendrá un conjunto de sectores (relación N a N)
+	
+\end{enumerate}

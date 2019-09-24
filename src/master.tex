@@ -1,3 +1,5 @@
+% !TeX spellcheck = es_ES
+
 \documentclass[spanish,12pt, a4paper,twoside]{paper}
 
 \let\oldsection\section
@@ -41,29 +43,38 @@
 
 \usepackage{graphicx}
 \usepackage{graphics}
-\usepackage{subfigure}
+\usepackage{subcaption}
 \usepackage{amsmath,amssymb}
 \usepackage{float}
 \usepackage{changepage}
-\usepackage{subcaption}
+%\usepackage{subcaption} This package can't be used in cooperation with the subfigure package
 
 \usepackage{enumitem}
 
 \usepackage{algorithm}
 \usepackage{multirow}
 
-\usepackage[]{hyperref}
+\usepackage[breaklinks=true]{hyperref}
 \usepackage[T1]{fontenc}
+
 \hypersetup{
-backref,
-bookmarksnumbered=true,
-bookmarksopen=true,
-bookmarksopenlevel=1,
-colorlinks=false,
-%pdfpagemode=UseOutlines,    % this is the option you were lookin for
-%pdfpagelayout=TwoPageRight
+	pdftitle={Metaheurística alternativa para el problema},
+	pdfauthor={Sergio Flórez Vallina}
+	backref,
+	unicode=true,
+	bookmarksnumbered=true,
+	bookmarksopen=true,
+	bookmarksopenlevel=2,
+%	pdfborder={1 1 1},
+	colorlinks=true,
+%	hidelinks=true,
+	%pdfpagemode=UseOutlines,    % this is the option you were lookin for
+	%pdfpagelayout=TwoPageRight
+%	colorlinks=false,% hyperlinks will be black
+%	linkbordercolor=black,% hyperlink borders will be red
+	linkcolor=MidnightBlue
+%	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
 }
-% !TeX spellcheck = es_ES
 
 \begin{document}
     %\maketitle
@@ -169,18 +180,10 @@ colorlinks=false,
     %	REFERENCIAS
     \newpage
 
-    \begin{thebibliography}{00}
-        %\bibitem{Ashtiani2014}  Ashtiani, M.H.Z., Ahmadabadi, M.N., Araabi, B.N. (2014). Bandit-based local feature subset selection. \emph{Neurocomputing} 138, 371--382.
-        %\bibitem{Berry1985} Berry, D., Fristedt, B. (1985). \emph{Bandit problems}. London: Chapman and Hall.
-        %\bibitem{Figueira2005} Figueira, J., Mousseau, V., Roy, B. (2005). Electre methods. En J. Figueira, S. Greco y M. Erghott (Eds.), \emph{Multiple criteria decision analysis. State of the art survey} (pp. 133--162). New York: Springer.
-        %\bibitem{Li2010} Li, L., Chu, W., Langford, J., Schapire, R.E. (2010). A contextual-bandit approach to personalized news article recommendation. En \emph{Proceedings of the 19th International Conference on World Wide Web} (pp. 661--670). New York: ACM.
-        %\bibitem{Mateos2009} Mateos, A., , A. (2009). A trapezoidal fuzzy numbers-based approach for aggregating group preferences and ranking decision alternatives in MCDM. En M. Erghott, C.M. Fonseca, X. Gandibleux, H. Jao y M. Servaux (Eds.). \emph{Evolutionary multi-criterion optimization} (pp. 365--379). Berlin: Springer.
-        %\bibitem{Sutton1998} Sutton, R. Barto, A. (1998). \emph{Reinforcement learning, an introduction}. Cambridge: MIT Press.
-        %\bibitem{Thompson1933} Thompson, W.R. (1933). On the likelihood that one unknown probability exceeds another in view of the evidence of two samples. \emph{Biometrika} 25(3-4), 285--294.
-        %\bibitem{Vicente2016} Vicente, E. (2016). \emph{ y  del riesgo en los sistemas de : Un enfoque borroso}. (Tesis doctoral). Universidad  de Madrid, Madrid.
+%    \begin{thebibliography}{00}
         \bibliographystyle{splncs04}
         \bibliography{master}
 
-    \end{thebibliography}
+%    \end{thebibliography}
 \end{document}
 
