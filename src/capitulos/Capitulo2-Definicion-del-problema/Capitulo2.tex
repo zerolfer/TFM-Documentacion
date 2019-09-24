@@ -13,7 +13,7 @@ de cara a garantizar la seguridad de sus rutas (lo que se denomina control de ru
 tierra-aire con los pilotos de las aeronaves (vía radio), como tierra-tierra con otros controladores u otro personal
 de gestión (vía telefónica)~\cite{ENAIRE-web}.
 La zona de trabajo de los controladores aéreos se denomina Centros de Control de Tráfico Aéreo, cuyos puestos de trabajo tienen
-un aspecto similar al de la \refcruzada{Figura}{fig:2:enaire-atc}.
+un aspecto similar al de la \autoref{fig:2:enaire-atc}.
 
 \begin{figure}[htbp]
     \centering
@@ -35,10 +35,10 @@ detalles técnicos de aviación que no son necesarios para la implementación de
 
 El espacio aéreo mundial se encuentra dividido en \textit{FIR}s (\textit{Flight Information Region}), áreas del
 territorio sobre las que se mueven los diferentes aviones de cada compañía aérea de cada país, en la
-\refcruzada{Figura}{fig:2:fireuropa} puede verse gráficamente los límites de cada región. En el caso de España,
+\autoref{fig:2:fireuropa} puede verse gráficamente los límites de cada región. En el caso de España,
 podemos ver que tiene control sobre 3 \textit{FIR}s: el de Barcelona, el de Madrid y el de Canarias, sin embargo,
 a nivel nacional, existen algunas subdivisiones denominadas \textit{Dependencias} (ya que dependen del \textit{FIR}
-en el que se encuentren), que permiten una mejor gestión del territorio. Algunos de ellos aparecerán en los casos reales de prueba del sistema del \refcruzada{Apartado}{apartado:5}, así que los enumeramos a continuación:
+en el que se encuentren), que permiten una mejor gestión del territorio. Las dependencias están constituidas por Centros de Control (\hyperref[ACC]{ACC}) (uno por cada Dependencia) y Torres de Control. Algunos de ellos aparecerán en los casos reales de prueba del sistema del \autoref{apartado:5}, así que los enumeramos a continuación:
 
 \begin{figure}[htbp]
     \centering
@@ -52,7 +52,7 @@ en el que se encuentren), que permiten una mejor gestión del territorio. Alguno
     \begin{itemize}
         \item Barcelona RutaE
         \item Barcelona RutaW
-        \item Barcelona TMA ESTE
+        \item Barcelona TMA\footnote{Ver definición en la \hyperref[TMA]{\autoref{sec:Definiciones}}} ESTE
         \item Barcelona TMA NORTE
         \item Barcelona TMA OESTE
     \end{itemize}
@@ -82,41 +82,68 @@ en el que se encuentren), que permiten una mejor gestión del territorio. Alguno
     \label{fig:2:fireuropa}
 \end{figure}
 
-Cada una de estas Dependencias, está constituida por un cierto número de sectores, que se agrupan de forma que se cubra todo el espacio de la zona, conformando lo que llamaremos una \textit{configuración o sectorización} concreta. Existen varias configuraciones estandarizadas, de manera que dado un número de sectores, el espacio aéreo sea cubierto en su totalidad. Por eso, las sectorizaciones se nombran utilizando dos caracteres: un número y una letra; el número indica precisamente la cantidad de sectores de la configuración, mientras que la letra permite diferenciar entre dos posibles configuraciones que emplean el mismo número de sectores.
+Cada una de estas Dependencias, está constituida por un cierto número de sectores, que se agrupan de forma que se cubra
+todo el espacio de la zona, conformando lo que llamaremos una \textit{configuración o sectorización} concreta.
+Existen varias configuraciones estandarizadas, de manera que dado un número de sectores, el espacio aéreo sea cubierto en su totalidad.
+Por eso, las sectorizaciones se nombran utilizando dos caracteres: un número y una letra; el número indica precisamente
+la cantidad de sectores de la configuración, mientras que la letra permite diferenciar entre dos posibles configuraciones
+que emplean el mismo número de sectores.
 \\
 
-Por ejemplo, la configuración 3B de la dependencia MADRID Ruta 1 consta de los sectores LECMSAI, LECMBLI y LECMDPI, mientras que una 3D consta de LECMSAN, LECMASI y LECMBDP. En ambos casos se utilizan tres sectores y el espacio cubierto total es equivalente, como puede apreciarse en la figura \refcruzada{Figura}{fig:2:comparativa3B-3D}.
-De la misma forma, si utilizamos una configuración 5A, se utilizarían 5 sectores diferentes, pero el espacio aéreo a controlar sería nuevamente equivalente, como se aprecia en la \refcruzada{Figura}{fig:2:sectorizacion-5a}. Nótese además, que los sectores LECMSAN (amarillo) y LECMASI (verde) son los mismo que los de la sectorización 3D (\refcruzada{Figura}{fig:2:sectorizacion-3d}) pero el sector LECMBDP (azul) se ha dividido o \textit{abierto} en los sectores LECMBLI, LECMDGI y LECMPAI.
+Por ejemplo, la configuración 3B de la dependencia MADRID Ruta 1 consta de los sectores LECMSAI, LECMBLI y LECMDPI,
+mientras que una 3D consta de LECMSAN, LECMASI y LECMBDP. En ambos casos se utilizan tres sectores y el espacio cubierto
+total es equivalente, como puede apreciarse en la \autoref{fig:2:comparativa3B-3D}.
+De la misma forma, si utilizamos una configuración 5A, se utilizarían 5 sectores diferentes, pero el espacio aéreo a
+controlar sería nuevamente equivalente, como se aprecia en la \autoref{fig:2:sectorizacion-5a}.
+Nótese además, que los sectores LECMSAN (amarillo) y LECMASI (verde) son los mismo que los de la sectorización 3D (\autoref{fig:2:sectorizacion-3d})
+pero el sector LECMBDP (azul) se ha dividido o \textit{abierto} en los sectores LECMBLI, LECMDGI y LECMPAI.
 \\
 
 \begin{figure}[htbp]
     \centering
-    \subfigure[sectorizacion 3B]{
-    \includegraphics[width=0.6\linewidth]{sectorizacion-3B}
-    %	\label{fig:sectorizacion-3b}
-    }
+    \begin{subfigure}{\linewidth}
+        \centering
+        \includegraphics[width=0.6\linewidth]{sectorizacion-3B}
+        \caption{sectorizacion 3B\linebreak}
+        %	\label{fig:sectorizacion-3b}
+    \end{subfigure}
 
-    \subfigure[sectorizacion 3D]{
-    \includegraphics[width=0.6\linewidth]{sectorizacion-3D}
-    \label{fig:2:sectorizacion-3d}
-    }
-    \subfigure[sectorizacion 5A]{
-    \includegraphics[width=0.6\linewidth]{sectorizacion-5A}
-    \label{fig:2:sectorizacion-5a}
-    }
+    \begin{subfigure}{\linewidth}
+        \centering
+        \includegraphics[width=0.6\linewidth]{sectorizacion-3D}
+        \caption{sectorizacion 3D\linebreak}
+        \label{fig:2:sectorizacion-3d}
+    \end{subfigure}
+
+    \begin{subfigure}{\linewidth}
+        \centering
+        \includegraphics[width=0.6\linewidth]{sectorizacion-5A}
+        \caption{sectorizacion 5A}
+        \label{fig:2:sectorizacion-5a}
+    \end{subfigure}
 
     \caption{Ejemplo de comparativa de una sectorización 3B y 3D de la dependencia MADRID Ruta 1}
     \label{fig:2:comparativa3B-3D}
 \end{figure}
 
 
-Cuando cambiamos de una configuración de partida a otra, nos encontramos 2 posibles situaciones: que pasemos de una sectorización con un menor número de sectores a otra con mayor (como en el ejemplo anterior) donde se \textit{abrirán} sectores; o por el contrario que pasemos de una sectorización con un mayor número de sectores a otra menor (por ejemplo, el caso contrario: de una 5A a una 3D) donde se \textit{cerrarán} sectores, pero como hemos visto, algunos serán comunes y no sufrirán cambio.
+Cuando cambiamos de una configuración de partida a otra, nos encontramos 2 posibles situaciones: que pasemos de una sectorización
+con un menor número de sectores a otra con mayor (como en el ejemplo anterior) donde se \textit{abrirán} sectores; o por el
+contrario que pasemos de una sectorización con un mayor número de sectores a otra menor (por ejemplo, el caso contrario: de una 5A a una 3D)
+donde se \textit{cerrarán} sectores, pero como hemos visto, algunos serán comunes y no sufrirán cambio.
 \\
 
-El siguiente concepto importante es el de afinidad entre sectores. Sin entrar en demasiado detalle, la unidad mínima de división del espacio aéreo son los volúmenes, de esta forma los sectores subirán un determinado número de volúmenes. Pues diremos que dos sectores \textit{son afines entre sí} si comparten al menos un volumen entre sí. Para saber si dos sectores son afines, utilizaremos la llamada \textit{matriz de afinidad} que, si bien puede ser construida manualmente, en nuestro caso será tratada como un input del sistema para ahorrar tiempo innecesario de cómputo, pues es constante para cada dependencia (en el Apartado XXX se muestra un ejemplo). %TODO referencia!!
+El siguiente concepto importante es el de afinidad entre sectores. Sin entrar en demasiado detalle, la unidad mínima de
+división del espacio aéreo son los volúmenes, de esta forma los sectores subirán un determinado número de volúmenes.
+Pues diremos que dos sectores \textit{son afines entre sí} si comparten al menos un volumen entre sí. Para saber si dos
+sectores son afines, utilizaremos la llamada \textit{matriz de afinidad} que, si bien puede ser construida manualmente,
+en nuestro caso será tratada como un input del sistema para ahorrar tiempo innecesario de cómputo, pues es constante para
+cada dependencia (en el Apartado XXX se muestra un ejemplo). %TODO referencia!!
 \\
 
-Por último, resta introducir el concepto de \textit{núcleo}. Un núcleo no es más que una agrupación de alto nivel de varios sectores, pudiendo un sector pertenecer a varios núcleos (relación N a N). El uso de los núcleos facilita la gestión de la acreditación los controladores aéreos, pudiendo estos controlar únicamente un determinado núcleo (ver Requisito XXX.) %TODO referencia
+Por último, resta introducir el concepto de \textit{núcleo}. Un núcleo no es más que una agrupación de alto nivel de
+varios sectores, pudiendo un sector pertenecer a varios núcleos (relación N a N). El uso de los núcleos facilita la
+gestión de la acreditación los controladores aéreos, pudiendo estos controlar únicamente un determinado núcleo (ver Requisito XXX.) %TODO referencia
 
 
 \NOTE{Hasta aquí gramática revisada} %TODO eliminar nota
@@ -128,15 +155,14 @@ Una vez definidos los conceptos básicos, procedemos a recopilar las caracterís
 
 \begin{enumerate}[label={\textbf{RIO\arabic*}}]
     \item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso,
-    de esta forma, la información común a varios casos será independiente de cada caso concreto
-    \item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 fichero:
-
+    de esta forma, la información común a varios casos será independiente de cada caso concreto.
+    \item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 ficheros:
     \begin{enumerate}[label*={\textbf{.\arabic*}}]
         \item  Lista de todos los sectores pertenecientes la unidad de control y los sectores elementales\footnote{
-        Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \refcruzada{Figura}{fig:2:sectorizacion-3d} se podía sustituir por otros más pequeños, por lo tanto no es elemental
+        Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} se podía sustituir por otros más pequeños, por lo tanto no es elemental
         } por los que están formados cada uno de los sectores.
 
-        \item  Matriz de Afinidad de los sectores de la dependencia (definida en el \refcruzada{Apartado}{section:2:sectores-y-sectorizacion})
+        \item  Matriz de Afinidad de los sectores de la dependencia (definida en la \autoref{section:2:sectores-y-sectorizacion})
         \item Lista de los sectores pertenecientes a la unidad de control, en la que nos indica el tipo de sector (ver~\ref{RD-tipos-sector}) y los núcleos a los que pertenece (ver~\ref{RD-sector-nucleo}).
     \end{enumerate}
 
