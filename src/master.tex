@@ -6,14 +6,17 @@
 \def\section{\cleardoublepage\oldsection}
 
 \usepackage{afterpage}
-
+\usepackage{ulem}
 \usepackage[dvipsnames]{xcolor}
 
-\newcommand\blankpage{%
-\null
-\thispagestyle{empty}%
-\addtocounter{page}{-1}%
-\newpage}
+\newcommand\blankpage{
+    \null
+    \thispagestyle{empty}
+    \addtocounter{page}{-1}
+    \newpage
+}
+
+%\setcounter{tocdepth}{3}
 
 %\renewcommand{\listoftables}{Índice de tablas}
 \newcommand{\refcruzada}[2]{\hyperref[#2]{#1~\ref{#2}}}
@@ -24,6 +27,9 @@
 \renewcommand{\labelitemii}{$-$}
 \renewcommand{\labelitemiii}{$\bullet$}
 \renewcommand{\labelitemiv}{$\ast$}
+
+
+
 
 
 \makeatletter
@@ -44,10 +50,9 @@
 \usepackage{graphicx}
 \usepackage{graphics}
 \usepackage{subcaption}
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath}
 \usepackage{float}
 \usepackage{changepage}
-%\usepackage{subcaption} This package can't be used in cooperation with the subfigure package
 
 \usepackage{enumitem}
 
@@ -56,32 +61,57 @@
 
 \usepackage[breaklinks=true]{hyperref}
 \usepackage[T1]{fontenc}
+\usepackage{ amssymb }
+
+
+
+%\let \oldautoref \autoref
+%\renewcommand\autoref{1}{\uline{\oldautoref{#1}}}
+%\renewcommand{\autoref}[1]{\ul{\oldautoref{#1}}}
+
 
 \hypersetup{
-	pdftitle={Metaheurística alternativa para el problema},
-	pdfauthor={Sergio Flórez Vallina}
-	backref,
-	unicode=true,
-	bookmarksnumbered=true,
-	bookmarksopen=true,
-	bookmarksopenlevel=2,
-%	pdfborder={1 1 1},
-	colorlinks=true,
-%	hidelinks=true,
-	%pdfpagemode=UseOutlines,    % this is the option you were lookin for
-	%pdfpagelayout=TwoPageRight
-%	colorlinks=false,% hyperlinks will be black
-%	linkbordercolor=black,% hyperlink borders will be red
-	linkcolor=MidnightBlue
-%	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
+    pdftitle={Metaheurística alternativa para el problema},
+    pdfauthor={Sergio Flórez Vallina}
+    backref,
+    unicode=true,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    bookmarksopenlevel=2,
+    %	pdfborder={1 1 1},
+%    colorlinks=true,
+%    	hidelinks=true,
+    %pdfpagemode=UseOutlines,    % this is the option you were lookin for
+    %pdfpagelayout=TwoPageRight
+    %	colorlinks=false,% hyperlinks will be black
+   	linkbordercolor=MidnightBlue,
+%    linkcolor=MidnightBlue
+    pdfborderstyle={/S/U/W 1}
+    bordercolor
+%    	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
 }
 
+\addto\extrasspanish{\def\sectionautorefname{Apartado}}
+\addto\extrasspanish{\def\subsectionautorefname{Apartado}}
+\addto\extrasspanish{\def\subsubsectionname{Apartado}}
+
+\captionsetup{labelfont=bf}
+\captionsetup[subfigure]{labelfont=bf}
+
 \begin{document}
+    % renombrar strings de babel:
+    \renewcommand{\listtablename}{Índice de tablas}
+    %	\renewcommand{\tablename}{Tabla}
+    \renewcommand{\figureshortname}{Figura}
+    \renewcommand{\tableshortname}{Tabla}
+
     %\maketitle
     %\thispagestyle{empty}
     \begin{titlepage}
-
-        \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+    
+        % Defines a new command for the horizontal lines, change thickness here
+        \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
+        
 
         \center % Center everything on the page
 
@@ -98,11 +128,12 @@
 
         %	TITLE SECTION
         \HRule \\[0.4cm]
-        { \huge \bfseries serdfgvesrdfserdzfesrdgf}\\[0.4cm] % Title of your document
-        \HRule \\[2.5cm]
+        { \huge \bfseries Resolución Táctica del Problema de Asignación de Controladores Aéreos a Puestos
+        de Control}\\%[0.4cm] % Title of your document
+        \HRule \\[1.5cm]
 
-        \textsc{\LARGE yudtryutyu6ydrujfghdtyju}\\[0.5cm]
-        \textsc{\Large dtyjhgftyghujbft yrf ghjdry tjghf }\\[2.5cm]
+        \textsc{\LARGE Trabajo de Fin de Máster}\\[0.5cm]
+        \textsc{\large Máster Universitario en Inteligencia Artificial (MUIA) }\\[2.5cm]
 
         %	AUTHOR SECTION
         \begin{flushright}
@@ -115,7 +146,7 @@
         \vspace{1.3cm}
 
         %	DATE SECTION
-        { {2019}}\\[3cm]
+        { {Curso 2018/19}}\\[3cm]
         %	LOGO SECTION
 
         \vfill
@@ -126,15 +157,19 @@
     \afterpage{\blankpage}
     \pagenumbering{roman}
 
-
+    %
+    %
+    %	AGRADECIMIENTOS?
+    %
+    %
     %	AGRADECIMIENTOS
-    \section*{AGRADECIMIENTOS}
-    Agradezco especialmente a Tino Tello Caballo por toda su paciencia y tiempo para ayudarme
-    a dar vida a éste proyecto.
+    %    \section*{AGRADECIMIENTOS}
+    %    Agradezco especialmente a Tino Tello Caballo por toda su paciencia y tiempo para ayudarme
+    %    a dar vida a éste proyecto.
 
     %	RESUMEN
     \section*{RESUMEN}
-    Extensin mxima de una pgina
+    Extensión máxima de una página
 
 
     %	SUMMARY
@@ -165,13 +200,13 @@
     \include{capitulos/Capitulo1-Introduccion/Capitulo1}
     \newpage
 
-	\include{capitulos/Capitulo2-Definicion-del-problema/Capitulo2}
-	\newpage
+    \include{capitulos/Capitulo2-Definicion-del-problema/Capitulo2}
+    \newpage
 
-%	\include{capitulos/Capitulo3-Metodologia-propuesta/Capitulo3}
-%	\newpage
+    %	\include{capitulos/Capitulo3-Metodologia-propuesta/Capitulo3}
+    %	\newpage
 
-	%\include{capitulos/CapituloXXX-YYY/CapituloXXX}
+    %\include{capitulos/CapituloXXX-YYY/CapituloXXX}
     %\newpage
 
     \section*{ANEXOS}
@@ -180,10 +215,10 @@
     %	REFERENCIAS
     \newpage
 
-%    \begin{thebibliography}{00}
-        \bibliographystyle{splncs04}
-        \bibliography{master}
+    %    \begin{thebibliography}{00}
+    \bibliographystyle{splncs04}
+    \bibliography{master}
 
-%    \end{thebibliography}
+    %    \end{thebibliography}
 \end{document}
 

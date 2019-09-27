@@ -12,8 +12,8 @@ de cara a garantizar la seguridad de sus rutas (lo que se denomina control de ru
 (que se llama control de aproximación o de área terminal), encargándose también de las comunicaciones de voz tanto
 tierra-aire con los pilotos de las aeronaves (vía radio), como tierra-tierra con otros controladores u otro personal
 de gestión (vía telefónica)~\cite{ENAIRE-web}.
-La zona de trabajo de los controladores aéreos se denomina Centros de Control de Tráfico Aéreo, cuyos puestos de trabajo tienen
-un aspecto similar al de la \autoref{fig:2:enaire-atc}.
+La zona de trabajo de los controladores aéreos se denomina Centros de Control de Tráfico Aéreo, cuyos puestos de 
+trabajo tienen un aspecto similar al de la \autoref{fig:2:enaire-atc}.
 
 \begin{figure}[htbp]
     \centering
@@ -141,8 +141,8 @@ El siguiente concepto importante es el de afinidad entre sectores. Sin entrar en
 división del espacio aéreo son los volúmenes, de esta forma los sectores subirán un determinado número de volúmenes.
 Pues diremos que dos sectores \textit{son afines entre sí} si comparten al menos un volumen entre sí. Para saber si dos
 sectores son afines, utilizaremos la llamada \textit{matriz de afinidad} que, si bien puede ser construida manualmente,
-en nuestro caso será tratada como un input del sistema para ahorrar tiempo innecesario de cómputo, pues es constante para
-cada dependencia (en el Apartado XXX se muestra un ejemplo). %TODO referencia!!
+en nuestro caso será tratada como un input del sistema para ahorrar tiempo innecesario de cómputo, pues es constante 
+para cada dependencia (en el Apartado XXX se muestra un ejemplo). %TODO referencia!!
 \\
 
 Por último, resta introducir el concepto de \textit{núcleo}. Un núcleo no es más que una agrupación de alto nivel de
@@ -150,10 +150,18 @@ varios sectores, pudiendo un sector pertenecer a varios núcleos (relación N a 
 gestión de la acreditación los controladores aéreos, pudiendo estos controlar únicamente un determinado núcleo (ver Requisito XXX.) %TODO referencia
 
 
-\NOTE{Hasta aquí gramática revisada} %TODO eliminar nota  _                                                                                                                                                                            
+\NOTE{Hasta aquí gramática revisada} %TODO eliminar nota  
+%_                                                                                                                      
+% 
 
 \subsection{Gestión de tráfico aéreo}
-La gestión del tráfico aéreo (\hyperref[ATC]{ATC}) se desempeña en las salas de control por un conjunto de trabajadores llamados controladores aéreos. Los controladores trabajan a lo largo de un turno de una duración determinada, que puede ser de Mañana, Tarde o Noche, con la peculiaridad de que los de Mañana y Tarde pueden ser de tipo Largo o Corto. Cuando el turno es Largo quiere decir que se toma parte del turno de noche, extendiendo así el periodo laboral (se ilustra un ejemplo en la \autoref{fig:2:tipos-turnos}). Cada \hyperref[ACC]{Centro de Control} tiene sus propios horarios predefinidos para cada uno de los turnos.
+La gestión del tráfico aéreo (\hyperref[ATC]{ATC}) se desempeña en las salas de control por un conjunto de trabajadores 
+llamados controladores aéreos. Los controladores trabajan a lo largo de un turno de una duración determinada, que puede 
+ser de Mañana, Tarde o Noche, con la peculiaridad de que los de Mañana y Tarde pueden ser de tipo Largo o Corto. Cuando 
+el turno es Largo quiere decir que se toma parte del turno de noche, extendiendo así el periodo laboral (se ilustra un 
+ejemplo en la \autoref{fig:2:tipos-turnos}). Cada \hyperref[ACC]{Centro de Control} tiene sus propios horarios 
+predefinidos para cada uno de los turnos.
+\\
 
 \begin{figure}
     \centering
@@ -162,25 +170,67 @@ La gestión del tráfico aéreo (\hyperref[ATC]{ATC}) se desempeña en las salas
     \label{fig:2:tipos-turnos}
 \end{figure}
 
-Por otro lado, en cada puesto de control debe haber dos controladores, cada uno en una posición diferente: \textit{ejecutivo} y \textit{planificador}. El controlador en posición planificador es responsable de anticiparse a posibles problemas y avisar al otro controlador (en posición ejecutivo) antes de que éstos lleguen a producirse. Por su parte, el ejecutivo es quien debe llevar a cabo la tarea principal asi como solucionar los conflictos que el planificador le comunique. La fotografía de la \autoref{fig:2:enaire-atc} muestra cómo es uno de estos puestos de trabajo, con un controlador de cada tipo.
+Por otro lado, en cada puesto de control debe haber dos controladores, cada uno en una posición diferente: 
+\textit{ejecutivo} y \textit{planificador}. El controlador en posición planificador es responsable de anticiparse a 
+posibles problemas y avisar al otro controlador (en posición ejecutivo) antes de que éstos lleguen a producirse. Por su 
+parte, el ejecutivo es quien debe llevar a cabo la tarea principal así como solucionar los conflictos que el 
+planificador le comunique. La fotografía de la \autoref{fig:2:enaire-atc} muestra cómo es uno de estos puestos de 
+trabajo, con un controlador de cada tipo.
 \\
 
-Como ya se comentó en el apartado anterior, cada controlador tiene una acreditación que le permite controlar un \hyperref[Nucleo]{núcleo} específico, y por ende, únicamente podrá trabajar en puesto que impliquen el control del tráfico aéreo de un determinado conjunto de sectores, lo que equivaldría a una sección específica del espacio aéreo total.
+Como ya se comentó en el apartado anterior, cada controlador tiene una acreditación que le permite controlar un 
+\hyperref[Nucleo]{núcleo} específico, y por ende, únicamente podrá trabajar en puesto que impliquen el control del 
+tráfico aéreo de un determinado conjunto de sectores, lo que equivaldría a una sección específica del espacio aéreo 
+total.
 \\
 
-Adicionalmente, en vista de las diferentes tareas a realizar por los controladores en función del tipo de sectores acreditados, parece lógico pensar que exista acreditación adicional, que aumenta el nivel de restricción de los sectores que puede controlar en función del tipo que estos sean. Por ello, hay dos tipos de acreditaciones, que tienen el nombre de PTD y CON. Los controladores con acreditación CON, únicamente podrán controlar los sectores de tipo Ruta, mientras que los de tipo PTD pueden controlar tanto Ruta como Aproximación (ver \autoref{table:2:acreditaciones}).
+Adicionalmente, en vista de las diferentes tareas a realizar por los controladores en función del tipo de sectores 
+acreditados, parece lógico pensar que exista acreditación adicional, que aumenta el nivel de restricción de los 
+sectores que puede controlar en función del tipo que estos sean. Por ello, hay dos tipos de acreditaciones, que tienen 
+el nombre de PTD y CON. Los controladores con acreditación CON, únicamente podrán controlar los sectores de tipo Ruta, 
+mientras que los de tipo PTD pueden controlar tanto Ruta como Aproximación (ver 
+\autoref{table:2:acreditaciones}).
 
 \begin{table}[h]
     \centering
     \caption{Tipos de sectores que se pueden controlar según el tipo de acreditación de un controlador}
     \begin{tabular}{lcc}
-        \hline
-        \textbf{Tipo acreditación} & \textbf{Sectores tipo Ruta} & \textbf{Sectores tipo CON} \\ \hline
-        PTD & $\checkmark$                & $\checkmark$               \\
-        CON & $\checkmark$                &                            \\ \hline
+    	\hline
+    	\textbf{Tipo acreditación} & \textbf{Sectores tipo Ruta} & \textbf{Sectores tipo CON} \\ \hline
+    	PTD                        &        $\checkmark$         &        $\checkmark$        \\
+    	CON                        &        $\checkmark$         &                            \\ \hline
     \end{tabular}
     \label{table:2:acreditaciones}
 \end{table}
+
+La configuración de sectores en cada instante de tiempo puede variar en función del flujo del tráfico aéreo zonal, por 
+lo que no puede conocerse con exactitud previamente. No obstante, puede ser predicho con antelación, de manera que 
+se pueda realizar la asignación de controladores a puestos previamente.
+Es en este punto donde diverge el sistema existente con el propuesto en la presente tesis. Más detalladamente en la 
+\autoref{apartado:2:detalles-sistema}.
+\\
+
+Supongamos el ejemplo de la \autoref{fig:2:ejemplo-apertura-sectorizaciones}, en la que se muestra una posible 
+sectorización predicha 
+con antelación por el personal del aeropuerto. Podemos apreciar los conceptos definidos anteriormente: el turno
+
+\subsection{Apreciación de la diferencia del sistema frente al inicial}
+\label{apartado:2:detalles-sistema}
+Más detalladamente: el sistema previo (en adelante \textit{legacy}) resolvía el problema de asignación de controladores 
+con antelación previa, por lo que los requerimientos de software no eran estrictos, esto es, el tiempo no era un factor 
+crítico (si bien importante en todo sistema de optimización inteligente). El sistema podía permanecer en segundo plano 
+durante horas para lograr alcanzar una solución válida (ya sea una óptima o simplemente factible) 
+
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{ejemplo-apertura-sectorizaciones}
+    \caption{}
+    \label{fig:2:ejemplo-apertura-sectorizaciones}
+\end{figure}
+
+
+
 
 
 

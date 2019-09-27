@@ -245,6 +245,7 @@ TSWLatexianTemp*
 *.iml
 
 
-.lnk
-.bat
-.pdf
+*.lnk
+*.pdf
+~$**.pptx
+*.pptx
