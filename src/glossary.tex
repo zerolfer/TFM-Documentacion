@@ -1,0 +1,126 @@
+\makeglossaries
+
+%
+%   TEMPLATE:
+%
+%\newglossaryentry{ }
+%{
+%    name={ },
+%    description=
+%    {   
+%        
+%    }
+%}
+%
+%
+
+\newacronym{acr:ATC}{ATC}{Air Traffic Control}
+
+%\newacronym{ATC}{ATC}{Air Traffic Control (Control de Tránsito Aéreo)}
+
+\newglossaryentry{ABACO}
+{
+    name={ABACO},
+    description=
+    {
+        Nombre del proyecto
+    }
+}
+
+\newglossaryentry{ACC (Centro de Control)}
+{
+    name={ACC (Centro de Control)},
+    description=
+    {
+        <<Centro de control de tránsito aéreo responsable de la circulación aérea segura a lo largo de las rutas ATS 
+        (servicio de tránsito aéreo). Un ACC se divide en varios sectores, cada uno de los cuales tiene claramente 
+        definidas sus responsabilidades. Los procedimientos para transferir una aeronave de un sector a otro entre 
+        estados limítrofes están perfectamente definidos por acuerdos internacionales, así como 
+        bilaterales>>.~\cite{ENAIRE-web}
+    }
+}
+
+\newglossaryentry{__ATC}
+{
+    name={ATC (Control de Tránsito Aéreo)},
+    description=
+    {   
+        <<Término común que designa todos los servicios proporcionados para asegurar y acelerar el flujo de tráfico 
+        aéreo a través del espacio aéreo controlado>>.~\cite{ENAIRE-web}
+    }
+}
+
+\newglossaryentry{CRIDA}
+{
+    name={CRIDA},
+    description=
+    {   
+        \textit{acrón.} Centro de Referencia de Investigación, Desarrollo e Innovación 
+        en \hyperref[ATC]{Gestión del Tráfico Aéreo}. Agrupación de interés económico (A.I.E.) sin ánimo de lucro 
+        establecida por ENAIRE, la Universidad Politécnica de Madrid (UPM) e Ingeniería y Economía del Transporte, S.A. 
+        (INECO).~\cite{CRIDA-web}
+    }
+}
+
+\newglossaryentry{Nucleo}
+{
+    name={Núcleo},
+    description=
+    {   
+        Conjunto de Sectores. Un sector puede pertenecer a más de un núcleo (relación N a N). Esta 
+        agrupación se lleva a cabo para poder gestionar los posibles sectores que cada controlador puede controlar, de 
+        esta 
+        forma, un controlador tiene acreditación para un único núcleo.
+    }
+}
+
+\newglossaryentry{Matriz-afinidad}
+{
+    name={Matriz de Afinidad},
+    description=
+    {   
+        Tabla o matriz booleana cuyas filas y columnas son los diferentes sectores de 
+        una Unidad de Control dada, de forma que la intersección de dos sectores tendrá el valor de Cierto si y solo si 
+        los sectores son afines entre sí (relación bidireccional)
+    }
+}
+
+\newglossaryentry{Proyecto-Airport}
+{
+    name={Proyecto Airport 2050+},
+    description=
+    {   
+        Proyecto europeo con colaboración española por parte de UPM, CRIDA e INECO
+    }
+}
+
+\newglossaryentry{TMA}
+{
+    name={TMA},
+    description=
+    {   
+        Área de control terminal. <<Espacio aéreo controlado en torno a uno o varios aeropuertos 
+        donde se realizan las maniobras de aproximación (aterrizajes y despegues)>>~\cite{ENAIRE-web}.
+    }
+}
+
+
+
+\newglossaryentry{ATC}
+{
+    type=\acronymtype,
+    name={ATC}, 
+    description=
+    {
+        Centro de Referencia de Investigación, Desarrollo e Innovación 
+        en \hyperref[ATC]{Gestión del Tráfico Aéreo}. Agrupación de interés económico (A.I.E.) sin ánimo de lucro 
+        establecida por ENAIRE, la Universidad Politécnica de Madrid (UPM) e Ingeniería y Economía del Transporte, S.A. 
+        (INECO).~\cite{CRIDA-web}
+     }, 
+%    first=
+%    {
+%        Control del espacio aéreo (también conocido como \glsadd{ATC}, \acrlong{acr:ATC})
+%    }
+%    see=[Glossary:]{apig}
+    long={Air Traffic Management}
+}

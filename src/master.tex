@@ -28,10 +28,6 @@
 \renewcommand{\labelitemiii}{$\bullet$}
 \renewcommand{\labelitemiv}{$\ast$}
 
-
-
-
-
 \makeatletter
 \def\namedlabel#1{\begingroup
 \def\@currentlabel{#1}%
@@ -62,13 +58,12 @@
 \usepackage[breaklinks=true]{hyperref}
 \usepackage[T1]{fontenc}
 \usepackage{ amssymb }
+\usepackage{glossaries} % must be under hyperref
 
-
+\loadglsentries{glossary}
 
 %\let \oldautoref \autoref
 %\renewcommand\autoref{1}{\uline{\oldautoref{#1}}}
-%\renewcommand{\autoref}[1]{\ul{\oldautoref{#1}}}
-
 
 \hypersetup{
     pdftitle={Metaheurística alternativa para el problema},
@@ -215,10 +210,8 @@
     %	REFERENCIAS
     \newpage
 
-    %    \begin{thebibliography}{00}
     \bibliographystyle{splncs04}
     \bibliography{master}
 
-    %    \end{thebibliography}
 \end{document}
 
