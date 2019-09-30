@@ -14,20 +14,35 @@
 %
 %
 
-\newacronym{acr:ATC}{ATC}{Air Traffic Control}
+%\newacronym{acr:ATC}{ATC}{Air Traffic Control}
 
-%\newacronym{ATC}{ATC}{Air Traffic Control (Control de Tránsito Aéreo)}
+\newglossaryentry{ATC}
+{
+    type=\acronymtype, % indicar que es acronimo
+    long={Air Traffic Management}, % y su forma larga. Usar mediante \acrlong{label}
+    name={ATC}, 
+    description=
+    {
+       <<Término común que designa todos los servicios proporcionados para asegurar y acelerar el flujo de tráfico 
+       aéreo a través del espacio aéreo controlado>>~\cite{ENAIRE-web}
+    }
+%    first=
+%    {
+%        Control del espacio aéreo (también conocido como \glsadd{ATC}, \acrlong{acr:ATC})
+%    }
+%    see=[Glossary:]{apig}
+}
 
 \newglossaryentry{ABACO}
 {
     name={ABACO},
     description=
-    {
-        Nombre del proyecto
+    {   
+        Nombre del proyecto.
     }
 }
 
-\newglossaryentry{ACC (Centro de Control)}
+\newglossaryentry{ACC}
 {
     name={ACC (Centro de Control)},
     description=
@@ -36,17 +51,7 @@
         (servicio de tránsito aéreo). Un ACC se divide en varios sectores, cada uno de los cuales tiene claramente 
         definidas sus responsabilidades. Los procedimientos para transferir una aeronave de un sector a otro entre 
         estados limítrofes están perfectamente definidos por acuerdos internacionales, así como 
-        bilaterales>>.~\cite{ENAIRE-web}
-    }
-}
-
-\newglossaryentry{__ATC}
-{
-    name={ATC (Control de Tránsito Aéreo)},
-    description=
-    {   
-        <<Término común que designa todos los servicios proporcionados para asegurar y acelerar el flujo de tráfico 
-        aéreo a través del espacio aéreo controlado>>.~\cite{ENAIRE-web}
+        bilaterales>>. \cite{ENAIRE-web}
     }
 }
 
@@ -97,6 +102,7 @@
 \newglossaryentry{TMA}
 {
     name={TMA},
+    long={Área de control terminal},
     description=
     {   
         Área de control terminal. <<Espacio aéreo controlado en torno a uno o varios aeropuertos 
@@ -104,23 +110,3 @@
     }
 }
 
-
-
-\newglossaryentry{ATC}
-{
-    type=\acronymtype,
-    name={ATC}, 
-    description=
-    {
-        Centro de Referencia de Investigación, Desarrollo e Innovación 
-        en \hyperref[ATC]{Gestión del Tráfico Aéreo}. Agrupación de interés económico (A.I.E.) sin ánimo de lucro 
-        establecida por ENAIRE, la Universidad Politécnica de Madrid (UPM) e Ingeniería y Economía del Transporte, S.A. 
-        (INECO).~\cite{CRIDA-web}
-     }, 
-%    first=
-%    {
-%        Control del espacio aéreo (también conocido como \glsadd{ATC}, \acrlong{acr:ATC})
-%    }
-%    see=[Glossary:]{apig}
-    long={Air Traffic Management}
-}

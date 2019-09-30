@@ -58,10 +58,24 @@
 \usepackage[breaklinks=true]{hyperref}
 \usepackage[T1]{fontenc}
 \usepackage{ amssymb }
-\usepackage{glossaries} % must be under hyperref
+\usepackage[numberedsection, nopostdot, nogroupskip]{glossaries} % must be under hyperref
+%\usepackage{glossary-long}
 
+\setglossarysection{subsection} % En caso de incluirlo, el glosario es subsección en vez de sección
 \loadglsentries{glossary}
 
+\setglossarystyle{longborder} % TODO: remove "border", olny "long"
+%\setlength{\glsdescwidth}{5.05in}
+\setlength{\glsdescwidth}{0.8\textwidth} % NOTE: ver https://bit.ly/2n9cLOn y/o https://bit.ly/2n0kRJh
+
+
+\renewenvironment{theglossary}
+{
+    \begin{longtable}[l]{lp{\glsdescwidth}}}
+    {\end{longtable}
+}
+\renewcommand{\glsnamefont}[1]{\textbf{#1}}
+\renewcommand{\glsgroupskip}{}
 %\let \oldautoref \autoref
 %\renewcommand\autoref{1}{\uline{\oldautoref{#1}}}
 
