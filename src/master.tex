@@ -64,16 +64,25 @@
 \setglossarysection{subsection} % En caso de incluirlo, el glosario es subsección en vez de sección
 \loadglsentries{glossary}
 
-\setglossarystyle{longborder} % TODO: remove "border", olny "long"
-%\setlength{\glsdescwidth}{5.05in}
-\setlength{\glsdescwidth}{0.8\textwidth} % NOTE: ver https://bit.ly/2n9cLOn y/o https://bit.ly/2n0kRJh
 
+%
+%   DESCOMENTAR LO SIGUIENTE PARA CAMBIAR EL ESTILO DEL GLOSARIO DE "list" (default) A "long":
+%
 
-\renewenvironment{theglossary}
-{
-    \begin{longtable}[l]{lp{\glsdescwidth}}}
-    {\end{longtable}
-}
+% _________________________________________________________________________________________________
+%\setglossarystyle{longborder} % TODO: remove "border", just "long"
+% %\setlength{\glsdescwidth}{5.05in}
+%\setlength{\glsdescwidth}{0.8\textwidth} % NOTE: ver https://bit.ly/2n9cLOn y/o https://bit.ly/2n0kRJh
+%
+%
+%\renewenvironment{theglossary}
+%{
+%    \begin{longtable}[l]{lp{\glsdescwidth}}}
+%    {\end{longtable}
+%}
+% _________________________________________________________________________________________________
+	
+	
 \renewcommand{\glsnamefont}[1]{\textbf{#1}}
 \renewcommand{\glsgroupskip}{}
 %\let \oldautoref \autoref
