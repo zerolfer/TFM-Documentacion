@@ -1,24 +1,44 @@
 \makeglossaries
 
 %
-%   TEMPLATE:
+%   TEMPLATE (versión larga):
 %
-%\newglossaryentry{ }
+%\newglossaryentry{ } % etiqueta de referencia
 %{
-%    name={ },
-%    description=
+%    type=\acronymtype, % indicar que es acronimo en caso de serlo. combinar con "long"
+%    name={ }, % forma de aparición en el glosario
+%    text={ }, % forma de aparición en el texto
+%	 long={ }, % forma larga (muéstrese mediante \acrlong{label}) 
+%    first={ }, % cado especial para la primera aparición en el texto
+%    plural={ }, % forma en plural (muéstrese mediante \glspl{label})
+%    firstplural={ },
+%    symbol={ }, % símbolo del término (úsese mediante ¿?)
+%    description= 
 %    {   
 %        
 %    }
 %}
 %
+
 %
+%   TEMPLATE (versión mínima):
+%
+%\newglossaryentry{ } % etiqueta de referencia
+%{
+%    name={ }, % forma de aparición en el glosario
+%    description= 
+%    {   
+%        
+%    }
+%}
+%
+
 
 %\newacronym{acr:ATC}{ATC}{Air Traffic Control}
 
 \newglossaryentry{ATC}
 {
-    type=\acronymtype, % indicar que es acronimo
+%    type=\acronymtype, % indicar que es acronimo
     long={Air Traffic Management}, % y su forma larga. Usar mediante \acrlong{label}
     name={ATC}, 
     description=
@@ -38,13 +58,18 @@
     name={ABACO},
     description=
     {   
-        Nombre del proyecto.
+        Nombre del proyecto. % TODO
     }
 }
 
-\newglossaryentry{ACC}
+\newglossaryentry{Centro de Control}
 {
-    name={ACC (Centro de Control)},
+    name={Centro de Control (ACC)},
+    text={ACC},
+%	type=\acronymtype, % indicar que es acronimo
+	long={Centro de Control}, % y su forma larga. Usar mediante \acrlong{label}
+	firstplural= {Centros de Control (ACC)},
+%	first={ACC (Centro de Control)},
     description=
     {
         <<Centro de control de tránsito aéreo responsable de la circulación aérea segura a lo largo de las rutas ATS 
@@ -96,6 +121,7 @@
     description=
     {   
         Proyecto europeo con colaboración española por parte de UPM, CRIDA e INECO
+        %TODO: "http://www.upm.es/Estudiantes?fmt=detail&prefmt=articulo&id=c89071caf5738310VgnVCM10000009c7648a____"
     }
 }
 
@@ -110,3 +136,44 @@
     }
 }
 
+\newglossaryentry{FIR}
+{
+    name={FIR},
+    long={Flight Information Region},
+    firstplural={FIRs (Flight Information Region)},
+    description=
+    {   
+        Unidad de subdivisión del espácio aéreo a nivel mundial empleado por todos los países europeos (entre otros) 
+        con el objetivo de tener un marco común de gestión aérea sobre el que organizarse. El territorio español abarca 
+        dos sectores, conocidos como MADRID y BARCELONA pese a que comprenden regiones nacionales mucho mayores 
+        (ver~\autoref{fig:2:fireuropa})
+    }
+}
+
+
+
+\newglossaryentry{SA} % etiqueta de referencia
+{
+    type=\acronymtype, % indicar que es acronimo en caso de serlo. combinar con "long"
+    name={Simulated Annealing (Recocido Simulado)}, % forma de aparición en el glosario
+    text={SA}, % forma de aparición en el texto
+	 long={Simulated Annealing}, % forma larga (muéstrese mediante \acrlong{label}) 
+    first={\textit{Simulated Annealing} (SA)}, % cado especial para la primera aparición en el texto
+    description= 
+    {   
+        Metaheurística trayectorial de búsqueda local basada en la aceptación de soluciones peores según el valor de su parámetro que varía con el tiempo una cantidad constante de forma de al final de la ejecución ya no se aceptan soluciones peores en ningún caso. %TODO: mejorar definición
+    }
+}
+
+\newglossaryentry{VNS} % etiqueta de referencia
+{
+	type=\acronymtype, % indicar que es acronimo en caso de serlo. combinar con "long"
+	name={Variable Neighborhood Search (Búsqueda de Entorno Variable)}, % forma de aparición en el glosario
+	text={VNS}, % forma de aparición en el texto
+	long={Variable Neighborhood Search}, % forma larga (muéstrese mediante \acrlong{label}) 
+	first={\textit{Variable Neighborhood Search} (VNS)}, % cado especial para la primera aparición en el texto
+	description= 
+	{   
+		Metaheurística trayectorial basada en una búsqueda local continuada a lo largo de un conjunto dado de entornos o vecindades. Cuando la búsqueda local llega a un óptimo local, se da paso a otro de los entornos y se repite nuevamente la búsqueda local.
+	}
+}
