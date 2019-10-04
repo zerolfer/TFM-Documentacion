@@ -102,8 +102,7 @@ total es equivalente, como puede apreciarse en la \autoref{fig:2:comparativa3B-3
 De la misma forma, si utilizamos una configuración 5A, se utilizarían 5 sectores diferentes, pero el espacio aéreo a
 controlar sería nuevamente equivalente, como se aprecia en la \autoref{fig:2:sectorizacion-5a}.
 Nótese además, que los sectores LECMSAN (amarillo) y LECMASI (verde) son los mismo que los de la sectorización 3D 
-(\autoref{fig:2:sectorizacion-3d})
-pero el sector LECMBDP (azul) se ha dividido o \textit{abierto} en los sectores LECMBLI, LECMDGI y LECMPAI.
+(\autoref{fig:2:sectorizacion-3d}) pero el sector LECMBDP (azul) se ha dividido o \textit{abierto} en los sectores LECMBLI, LECMDGI y LECMPAI.
 \\
 
 \begin{figure}[htbp]
@@ -162,40 +161,34 @@ para cada dependencia (en el Apartado XXX se muestra un ejemplo). %TODO referenc
 Por último, resta introducir el concepto de \textit{núcleo}. Un núcleo no es más que una agrupación de alto nivel de
 varios sectores, pudiendo un sector pertenecer a varios núcleos (relación N a N). El uso de los núcleos facilita la
 gestión de la acreditación los controladores aéreos, pudiendo estos controlar únicamente un determinado núcleo (ver 
-Requisito XXX.) %TODO referencia
+Requisito XXX). %TODO referencia
 
-
-\NOTE{Hasta aquí gramática revisada} %TODO eliminar nota  
-%_                                                                                                                      
-% 
 
 \subsection{Gestión de tráfico aéreo}
 La gestión del tráfico aéreo (\gls{ATC}) se desempeña en las salas de control por un conjunto de trabajadores 
 llamados controladores aéreos. Los controladores trabajan a lo largo de un turno de una duración determinada, que puede 
 ser de Mañana, Tarde o Noche, con la peculiaridad de que los de Mañana y Tarde pueden ser de tipo Largo o Corto. Cuando 
 el turno es Largo quiere decir que se toma parte del turno de noche, extendiendo así el periodo laboral (se ilustra un 
-ejemplo en la \autoref{fig:2:tipos-turnos}). Cada \acrlong{Centro de Control} tiene sus propios 
-horarios 
-predefinidos para cada uno de los turnos.
+ejemplo en la \autoref{fig:2:tipos-turnos}). Cada \acrlong{Centro de Control} tiene sus propios horarios predefinidos para cada uno de los turnos.
 \\
 
 \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{tipos-turnos}
-    \caption{Esquema que representa los tipos de turnos. Fuente:~\cite{articulo1}}
-    \label{fig:2:tipos-turnos}
+	\centering
+	\includegraphics[width=\linewidth]{tipos-turnos}
+	\caption{Esquema que representa los tipos de turnos. Fuente:~\cite{articulo1}}
+	\label{fig:2:tipos-turnos}
 \end{figure}
 
 Por otro lado, en cada puesto de control debe haber dos controladores, cada uno en una posición diferente: 
 \textit{ejecutivo} y \textit{planificador}. El controlador en posición planificador es responsable de anticiparse a 
 posibles problemas y avisar al otro controlador (en posición ejecutivo) antes de que éstos lleguen a producirse. Por su 
-parte, el ejecutivo es quien debe llevar a cabo la tarea principal así como solucionar los conflictos que el 
+parte, el ejecutivo es quien debe llevar a cabo la tarea principal, así como solucionar los conflictos que el 
 planificador le comunique. La fotografía de la \autoref{fig:2:enaire-atc} muestra cómo es uno de estos puestos de 
 trabajo, con un controlador de cada tipo.
 \\
 
 Como ya se comentó en el apartado anterior, cada controlador tiene una acreditación que le permite controlar un 
-\gls{Nucleo} específico, y por ende, únicamente podrá trabajar en puesto que impliquen el control del 
+\gls{Nucleo} específico y, por ende, únicamente podrá trabajar en puestos que impliquen el control del 
 tráfico aéreo de un determinado conjunto de sectores, lo que equivaldría a una sección específica del espacio aéreo 
 total.
 \\
@@ -208,17 +201,17 @@ mientras que los de tipo PTD pueden controlar tanto Ruta como Aproximación (ver
 \autoref{table:2:acreditaciones}).
 
 \begin{table}[h]
-    \centering
-    \caption{Tipos de sectores que se pueden controlar según el tipo de acreditación de un controlador}
-    \begin{tabular}{lcc}
-    	\hline
-    	\textbf{Tipo acreditación} & \textbf{Sectores tipo Ruta} & \textbf{Sectores tipo CON} \\ \hline
-    	PTD                        &        $\checkmark$         &        $\checkmark$        \\
-    	CON                        &        $\checkmark$         &                            \\ \hline
-    \end{tabular}
-    \label{table:2:acreditaciones}
+	\centering
+	\caption{Tipos de sectores que se pueden controlar según el tipo de acreditación de un controlador}
+	\begin{tabular}{lcc}
+		\hline
+		\textbf{Tipo acreditación} & \textbf{Sectores tipo Ruta} & \textbf{Sectores tipo CON} \\ \hline
+		PTD                        &        $\checkmark$         &        $\checkmark$        \\
+		CON                        &        $\checkmark$         &                            \\ \hline
+	\end{tabular}
+	\label{table:2:acreditaciones}
 \end{table}
-				% TODO: elegir uno de los formatos
+% TODO: elegir uno de los formatos
 \begin{table}[h]
 	\centering
 	\caption{Tipos de sectores que se pueden controlar según el tipo de acreditación de un controlador}
@@ -226,7 +219,7 @@ mientras que los de tipo PTD pueden controlar tanto Ruta como Aproximación (ver
 		\hline
 		\textbf{Tipo acreditación} & \textbf{PTD} & \textbf{CON} \\ \hline
 		Sectores tipo Ruta         & $\checkmark$ & $\checkmark$ \\
-		Sectores tipo CON          & $\checkmark$ &              \\ \hline		
+		Sectores tipo CON          & $\checkmark$ &              \\ \hline
 	\end{tabular}
 	\label{table:2:acreditaciones2}
 \end{table}
@@ -245,9 +238,9 @@ sectorización predicha
 con antelación por el personal del aeropuerto. Podemos apreciar los conceptos definidos anteriormente: el turno de 
 trabajo de mañana, que para éste \gls{Centro de Control} comienza y finaliza a las 7:30 y 15:00 horas respectivamente; 
 también las sectorizaciones de cada uno de los núcleos afectados (en este caso son dos), en el casco del núcleo 
-\textit{Barcelona Ruta Oeste} tenemos una configuración 3D para todo el turno, mientras que el el caso del otro, 
+\textit{Barcelona Ruta Oeste} tenemos una configuración 3D para todo el turno, mientras que en el caso del otro, 
 \textit{Barcelona Ruta Este}, ocurre un desdoblamiento de un 5A a una 6C (uno de los núcleos de la 5A se subdivide en 
-dos, y otros se cierran y son sustituidos por otros de forma que no haya superposición entre ellos)
+dos, y otros se cierran y son sustituidos por otros de forma que no haya superposición entre ellos).
 
 \begin{figure}[htbp]
 	\centering
@@ -266,13 +259,13 @@ naturaleza.
 El sistema planteado y resuelto anteriormente por el grupo de investigación de análisis de decisiones y 
 estadística\footnote{\url{http://dia.fi.upm.es/dasg/}} y 
 del que reutilizamos partes de la 
-funcionalidad (en adelante \texttt{legacy}) resolvía el problema de asignación de controladores 
+funcionalidad (en adelante \texttt{Legacy}) resolvía el problema de asignación de controladores 
 con antelación previa, por lo que los requerimientos de software relativos a la eficiencia no eran estrictos, esto es, 
 el tiempo no era un factor crítico (si bien importante en todo sistema de optimización inteligente). El sistema podía 
 permanecer en segundo plano durante horas para lograr alcanzar una solución válida (ya sea una óptima o simplemente 
 factible), no obstante, para el nuevo sistema sucede lo contrario: el tiempo es un factor vital, el problema no se está 
 resolviendo con antelación sino al momento de surgir una contingencia imprevista en la planificación, por lo tanto, es 
-necesario reorganizar todo el plan para adecuarlo a dicha contingencia, que puede ser de varios tipos aunque para el 
+necesario reorganizar todo el plan para adecuarlo a dicha contingencia, que puede ser de varios tipos, aunque para el 
 presente trabajo hemos considerado los dos más urgentes e importantes: baja inesperada de uno de los controladores (con 
 posible reincorporación) y cambio imprevisto de la sectorización en un instante dado. El personal del centro 
 normalmente tendría conocimiento de las contingencias unos 10 minutos antes de producirse, por lo que el problema 
@@ -286,26 +279,14 @@ anteriores, una metaheurística como aplicación directa de la Inteligencia Arti
 multiobjetivo.
 Los antecedentes del proyecto resuelven el problema de planificación mediante dos metaheurísticas diferentes: 
 \gls{SA} y \gls{VNS}, ambas de naturaleza muy diferente. 
-Esta serie de proyectos anteriores a éste, llegó a su culminación mediante una publicación en la revista \textit{Mathematical Problems in Engineering}~\cite{articulo1} y posteriormente otra en \textit{Mathematics -- Open Access Journal}~\cite{articulo2}. 
-En este ultimo se comparan resultados de sendas metaheurísticas, donde puede apreciarse que el VNS es superior en los casos más sencillos 
-mientras que el SA supera el resultados en los más difíciles %TODO hec this with the paper
+Esta serie de proyectos anteriores a éste llegó a su culminación mediante una publicación en la revista \textit{Mathematical Problems in Engineering}~\cite{articulo1} y posteriormente otra en \textit{Mathematics -- Open Access Journal}~\cite{articulo2}. 
+En este último se comparan resultados de sendas metaheurísticas, donde puede apreciarse que el VNS es superior en los casos más sencillos 
+mientras que el SA supera el resultado en los más difíciles. %TODO check this with the paper
 \\
 
-La metodología propuesta (ver apartado) para este nuevo sistema es completamente diferente a la propuesta por Tello et al. en \cite{articulo1}, no obstante, existen conceptos y subprocesos equivalentes en ambos. A lo largo de los próximos apartados subrayaremos otras diferencias entre ambos sistemas más concretas en cuanto a implementación y a la metodología
-
-
-
-
-
-
-
+La metodología propuesta (ver apartado) para este nuevo sistema es completamente diferente a la propuesta por Tello et al. en \cite{articulo1}, no obstante, existen conceptos y subprocesos equivalentes en ambos. A lo largo de los próximos apartados subrayaremos otras diferencias entre ambos sistemas más concretas en cuanto a implementación y a la metodología.
 
 
 
 % TODO: reeler y adecuar, llamar regiones en lugar de dependencias y comentar los tipos de estaciones (ACC o torre) y 
 %despues listar las diferentes que hay (la lista de arriba)
-
-
-
-
-
