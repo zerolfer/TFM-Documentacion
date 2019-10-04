@@ -21,7 +21,9 @@
 %\renewcommand{\listoftables}{Índice de tablas}
 \newcommand{\refcruzada}[2]{\hyperref[#2]{#1~\ref{#2}}}
 
-\newcommand*{\NOTE}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\NOTE}[1]{\textcolor{ForestGreen}{#1}}
+
+\newcommand*{\legacy}{\texttt{Legacy}}
 
 \renewcommand{\labelitemi}{$\square$}
 \renewcommand{\labelitemii}{$-$}
@@ -65,6 +67,7 @@
 \setglossarysection{subsection} % En caso de incluirlo, el glosario es subsección en vez de sección
 \loadglsentries{glossary}
 \setglossarystyle{altlist}
+
 
 \pdfminorversion=6
 %
@@ -118,6 +121,7 @@
 \captionsetup{labelfont=bf}
 \captionsetup[subfigure]{labelfont=bf}
 
+
 \begin{document}
     % renombrar strings de babel:
     \renewcommand{\listtablename}{Índice de tablas}
@@ -131,7 +135,6 @@
     
         % Defines a new command for the horizontal lines, change thickness here
         \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} 
-        
 
         \center % Center everything on the page
 
@@ -223,9 +226,12 @@
     \include{capitulos/Capitulo2-Definicion-del-problema/Capitulo2}
     \newpage
 
-    %	\include{capitulos/Capitulo3-Metodologia-propuesta/Capitulo3}
-    %	\newpage
+   	\include{capitulos/Capitulo3-Metodologia-propuesta/Capitulo3}
+   	\newpage
 
+    \include{capitulos/Capitulo4-Implementacion/Capitulo4}
+    \newpage
+    
     %\include{capitulos/CapituloXXX-YYY/CapituloXXX}
     %\newpage
 

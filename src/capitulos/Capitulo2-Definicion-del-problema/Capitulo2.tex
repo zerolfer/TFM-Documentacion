@@ -102,7 +102,8 @@ total es equivalente, como puede apreciarse en la \autoref{fig:2:comparativa3B-3
 De la misma forma, si utilizamos una configuración 5A, se utilizarían 5 sectores diferentes, pero el espacio aéreo a
 controlar sería nuevamente equivalente, como se aprecia en la \autoref{fig:2:sectorizacion-5a}.
 Nótese además, que los sectores LECMSAN (amarillo) y LECMASI (verde) son los mismo que los de la sectorización 3D 
-(\autoref{fig:2:sectorizacion-3d}) pero el sector LECMBDP (azul) se ha dividido o \textit{abierto} en los sectores LECMBLI, LECMDGI y LECMPAI.
+(\autoref{fig:2:sectorizacion-3d}) pero el sector LECMBDP (azul) se ha dividido o \textit{abierto} en los sectores 
+LECMBLI, LECMDGI y LECMPAI.
 \\
 
 \begin{figure}[htbp]
@@ -169,7 +170,8 @@ La gestión del tráfico aéreo (\gls{ATC}) se desempeña en las salas de contro
 llamados controladores aéreos. Los controladores trabajan a lo largo de un turno de una duración determinada, que puede 
 ser de Mañana, Tarde o Noche, con la peculiaridad de que los de Mañana y Tarde pueden ser de tipo Largo o Corto. Cuando 
 el turno es Largo quiere decir que se toma parte del turno de noche, extendiendo así el periodo laboral (se ilustra un 
-ejemplo en la \autoref{fig:2:tipos-turnos}). Cada \acrlong{Centro de Control} tiene sus propios horarios predefinidos para cada uno de los turnos.
+ejemplo en la \autoref{fig:2:tipos-turnos}). Cada \acrlong{Centro de Control} tiene sus propios horarios predefinidos 
+para cada uno de los turnos.
 \\
 
 \begin{figure}
@@ -256,21 +258,20 @@ bien tienen en común el dominio del problema presentado en apartados previos, s
 naturaleza.
 \\
 
-El sistema planteado y resuelto anteriormente por el grupo de investigación de análisis de decisiones y 
-estadística\footnote{\url{http://dia.fi.upm.es/dasg/}} y 
-del que reutilizamos partes de la 
-funcionalidad (en adelante \texttt{Legacy}) resolvía el problema de asignación de controladores 
-con antelación previa, por lo que los requerimientos de software relativos a la eficiencia no eran estrictos, esto es, 
-el tiempo no era un factor crítico (si bien importante en todo sistema de optimización inteligente). El sistema podía 
-permanecer en segundo plano durante horas para lograr alcanzar una solución válida (ya sea una óptima o simplemente 
-factible), no obstante, para el nuevo sistema sucede lo contrario: el tiempo es un factor vital, el problema no se está 
-resolviendo con antelación sino al momento de surgir una contingencia imprevista en la planificación, por lo tanto, es 
-necesario reorganizar todo el plan para adecuarlo a dicha contingencia, que puede ser de varios tipos, aunque para el 
-presente trabajo hemos considerado los dos más urgentes e importantes: baja inesperada de uno de los controladores (con 
-posible reincorporación) y cambio imprevisto de la sectorización en un instante dado. El personal del centro 
-normalmente tendría conocimiento de las contingencias unos 10 minutos antes de producirse, por lo que el problema 
-táctico debe resolverse en tiempo real, idealmente antes de que la incidencia se produzca y poder reorganizar a los 
-controladores de la forma más amena posible. 
+El sistema planteado y resuelto anteriormente por el grupo de investigación de análisis de decisiones y
+estadística\footnote{\url{http://dia.fi.upm.es/dasg/}} y del que reutilizamos partes de la funcionalidad (en adelante
+\texttt{Legacy}) resolvía el problema de asignación de controladores con antelación previa, por lo que los
+requerimientos de software relativos a la eficiencia no eran estrictos, esto es, el tiempo no era un factor crítico (si
+bien importante en todo sistema de optimización inteligente). El sistema podía permanecer en segundo plano durante
+horas para lograr alcanzar una solución válida (ya sea una óptima o simplemente factible), no obstante, para el nuevo
+sistema sucede lo contrario: el tiempo es un factor vital, el problema no se está resolviendo con antelación sino al
+momento de surgir una contingencia imprevista en la planificación, por lo tanto, es necesario reorganizar todo el plan
+para adecuarlo a dicha contingencia, que puede ser de varios tipos, aunque para el presente trabajo hemos considerado
+los dos más urgentes e importantes: baja inesperada de uno de los controladores (con posible reincorporación) y cambio
+imprevisto de la sectorización en un instante dado. El personal del centro normalmente tendría conocimiento de las
+contingencias unos 10 minutos antes de producirse, por lo que el problema táctico debe resolverse en tiempo real,
+idealmente antes de que la incidencia se produzca y poder reorganizar a los controladores de la forma más amena
+posible.
 Por todo ello, no solamente cambia la naturaleza del sistema, sino también los objetivos del mismo.
 \\
 
@@ -279,13 +280,23 @@ anteriores, una metaheurística como aplicación directa de la Inteligencia Arti
 multiobjetivo.
 Los antecedentes del proyecto resuelven el problema de planificación mediante dos metaheurísticas diferentes: 
 \gls{SA} y \gls{VNS}, ambas de naturaleza muy diferente. 
-Esta serie de proyectos anteriores a éste llegó a su culminación mediante una publicación en la revista \textit{Mathematical Problems in Engineering}~\cite{articulo1} y posteriormente otra en \textit{Mathematics -- Open Access Journal}~\cite{articulo2}. 
-En este último se comparan resultados de sendas metaheurísticas, donde puede apreciarse que el VNS es superior en los casos más sencillos 
-mientras que el SA supera el resultado en los más difíciles. %TODO check this with the paper
+Esta serie de proyectos anteriores a éste llegó a su culminación mediante una publicación en la revista 
+\textit{Mathematical Problems in Engineering}~\cite{articulo1} y posteriormente otra en \textit{Mathematics -- Open 
+Access Journal}~\cite{articulo2}. 
+En este último se comparan resultados de sendas metaheurísticas, donde puede apreciarse que el SA es superior en casi 
+todos los casos, aunque en tiempo de ejecución el VNS le supero salvo en dos instancias. Por ello, en este caso en el 
+que el tiempo es crucial, parece prometedora la idea del VNS para este nuevo sistema. 
 \\
 
-La metodología propuesta (ver apartado) para este nuevo sistema es completamente diferente a la propuesta por Tello et al. en \cite{articulo1}, no obstante, existen conceptos y subprocesos equivalentes en ambos. A lo largo de los próximos apartados subrayaremos otras diferencias entre ambos sistemas más concretas en cuanto a implementación y a la metodología.
+La metodología propuesta (ver apartado) para este nuevo sistema es completamente diferente a la propuesta por Tello et 
+al. en \cite{articulo1}, no obstante, existen conceptos y subprocesos equivalentes en ambos. A lo largo de los próximos 
+apartados subrayaremos otras diferencias entre ambos sistemas más concretas en cuanto a implementación y a la 
+metodología.
 
+Finalmente, es importante destacar que el origen de ambos proyectos pretenden automatizar el proceso de planificación 
+que actualmente llevan a cabo manualmente, por lo que el sistema \legacy{} será utilizado como herramienta para generar 
+planificaciones diarias, por lo que el sistema aquí presentado podrá utilizar el formato de salida del anterior como 
+una entrada (más detalles en el \autoref{apartado:3}) 
 
 
 % TODO: reeler y adecuar, llamar regiones en lugar de dependencias y comentar los tipos de estaciones (ACC o torre) y 

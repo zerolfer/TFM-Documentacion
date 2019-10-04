@@ -1,10 +1,34 @@
-\section{Introducción y objetivos}
+\graphicspath{{capitulos/Capitulo3-Metodologia-propuesta/recursos/}}
 
-En éste capítulo describiremos el contexto principal y las hipótesis iniciales de las que parte el proyecto, así como una ligera introducción al problema bajo estudio en el presente proyecto de fin de máster.
+\section{Metodología propuesta} \label{apartado:3}
+En este capítulo se describe en detalle la metodología propuesta para resolver el problema planteado en la \hyperref[apartado:2]{sección anterior}, entendiendo por metodología el conjunto de decisiones previas a la implementación tomadas con el fin de plantear una forma de resolver dicho problema.
+\\
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{capitulos/Capitulo1/Figure1a}
-	\caption{ figura de test}
-	\label{fig:figure1a}
-\end{figure}
+La hipótesis de partida (\hyperref[H2]{H2}) plantea como punto de partida del proyecto el uso de una metaheurística con el fin de optimizar todos los parámetros del sistema, pero hemos de definir dichos parámetros antes de poder definir la metaheurística.
+\\
+
+Para comenzar con el planteamiento de la metodología, podemos comenzar desde el punto de vista de la ingeniería: verlo como un sistema de caja negra que recibe una entrada y una salida.
+El sistema debe poder corregir la planificación de controladores de ese día, por lo tanto es claro que la entrada será esa planificación. Recordemos que el sistema \legacy{} será empleado por el personal del aeropuerto para realizar la planificación de forma automatizada, por lo que \textbf{la entrada del sistema deberá tener un formato común con la salida del sistema \legacy{}}.
+Respecto a la salida, deberá ser de un formato comprensible por el personal gerente de los puestos de control.
+\\
+
+Por último resta detallar la parte más importante, la \textit{caja negra}. Pues bien, como hemos dicho antes, en primer lugar el sistema recibirá una \textbf{solución inicial}, que deberá ser tratada de acuerdo a las contingencias habidas. Por ejemplo ocurre un cambio de sectorización en mitad del turno y no estaba planificado, a partir del momento en el que se cierra debemos eliminar todas las apariciones de los sectores que se cierran y añadir los que se abren, pero no antes de dicho momento (mas detalles en el \autoref{sec:3:inicializacion-soluciones}. Llamaremos al momento de la incidencia como \textbf{momento actual} para simplificar, aunque lo habitual es que el sistema sea ejecutado varios minutos antes de que suceda la incidencia.
+Una vez tratada la solución inicial, la metaheurística ya podrá dar comienzo sobre la misma, buscando diferentes planificaciones alternativas y dando como resultado la mejor. 
+\\
+
+%Con todo, el sistema tiene cuatro módulos:
+%\begin{itemize}
+%	\item Módulo de lectura de datos: lleva a cabo las tareas de lectura e inicialización de estructuras de datos.
+%	\item Módulo de inicialización: inicializa la solución inicial de acuerdo a la(s) contingencias recibidas del módulo anterior
+%	\item Módulo de búsqueda: lleva a cabo la búsqueda de una solución factible al problema.
+%	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
+%\end{itemize}
+
+Sin entrar en detalles de implementación (para ello ver el \autoref{apartado:4} sistema tiene, claramente, dos \textit{Fases}:
+\begin{itemize}
+	\item Fase 1: tratamiento de la solución
+	\item Fase 2: resolución del problema
+\end{itemize}
+
+
+\subsection{Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
