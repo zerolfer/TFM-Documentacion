@@ -4,7 +4,9 @@
 En este capítulo se describe en detalle la metodología propuesta para resolver el problema planteado en la \hyperref[apartado:2]{sección anterior}, entendiendo por metodología el conjunto de decisiones previas a la implementación tomadas con el fin de plantear una forma de resolver dicho problema.
 \\
 
-La hipótesis de partida (\hyperref[H2]{H2}) plantea como punto de partida del proyecto el uso de una metaheurística con el fin de optimizar todos los parámetros del sistema, pero hemos de definir dichos parámetros antes de poder definir la metaheurística.
+La hipótesis de partida (\hyperref[H2]{H2}) plantea como punto de comienzo del proyecto el uso de una metaheurística 
+con el fin de optimizar todos los parámetros del sistema, pero hemos de definir dichos parámetros antes de poder 
+definir la metaheurística.
 \\
 
 Para comenzar con el planteamiento de la metodología, podemos comenzar desde el punto de vista de la ingeniería: verlo como un sistema de caja negra que recibe una entrada y una salida.
@@ -12,8 +14,16 @@ El sistema debe poder corregir la planificación de controladores de ese día, p
 Respecto a la salida, deberá ser de un formato comprensible por el personal gerente de los puestos de control.
 \\
 
-Por último resta detallar la parte más importante, la \textit{caja negra}. Pues bien, como hemos dicho antes, en primer lugar el sistema recibirá una \textbf{solución inicial}, que deberá ser tratada de acuerdo a las contingencias habidas. Por ejemplo ocurre un cambio de sectorización en mitad del turno y no estaba planificado, a partir del momento en el que se cierra debemos eliminar todas las apariciones de los sectores que se cierran y añadir los que se abren, pero no antes de dicho momento (mas detalles en el \autoref{sec:3:inicializacion-soluciones}. Llamaremos al momento de la incidencia como \textbf{momento actual} para simplificar, aunque lo habitual es que el sistema sea ejecutado varios minutos antes de que suceda la incidencia.
-Una vez tratada la solución inicial, la metaheurística ya podrá dar comienzo sobre la misma, buscando diferentes planificaciones alternativas y dando como resultado la mejor. 
+Por último resta detallar la parte más importante: la \textit{caja negra} propiamente dicha. Pues bien, como hemos 
+dicho antes, en primer lugar el sistema recibirá una \textbf{solución inicial}, que deberá ser tratada de acuerdo a las 
+contingencias habidas. Por ejemplo ocurre un cambio de sectorización en mitad del turno que no estaba planificado. A 
+partir del momento en el que se cierra debemos eliminar todas las apariciones de los sectores que se cierran y añadir 
+los que se abren, pero no antes de dicho momento (mas detalles en el \autoref{sec:3:inicializacion-soluciones}). 
+Llamaremos al momento en el que sucede la incidencia como \textbf{momento actual} para simplificar, aunque lo habitual 
+es que el sistema sea ejecutado varios minutos antes de que suceda la incidencia.
+
+Una vez tratada la solución inicial, la metaheurística ya podrá dar comienzo sobre ella, buscando diferentes 
+planificaciones alternativas (soluciones) y dando como resultado la mejor. 
 \\
 
 %Con todo, el sistema tiene cuatro módulos:
@@ -24,11 +34,35 @@ Una vez tratada la solución inicial, la metaheurística ya podrá dar comienzo 
 %	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
 %\end{itemize}
 
-Sin entrar en detalles de implementación (para ello ver el \autoref{apartado:4} sistema tiene, claramente, dos \textit{Fases}:
+Sin entrar en detalles de implementación (para ello ver el \autoref{apartado:4}), el sistema tiene, claramente, dos 
+\textit{Fases}:
 \begin{itemize}
-	\item Fase 1: tratamiento de la solución
-	\item Fase 2: resolución del problema
+	\item \label{Fase 1} Fase 1: tratamiento de la solución
+	\item \label{Fase 2} Fase 2: resolución del problema
 \end{itemize}
 
+En adelante aludiremos a la fase del sistema que comprende la inicialización de la solución de entrada según las 
+necesidades del caso concreto de incidencia que se produzca como \faseuno{} o \textit{Fase de Inicialización}. 
+Mientras que la \fasedos{} o simplemente \textit{Metaheurística}, será la fase del sistema en la que se resolverá el 
+problema propiamente dicho de acuerdo a las pautas establecidas en forma de restricciones y puntuaciones sobre la 
+metaheurística.
+En los próximos apartados definiremos cada una de estas Fases en detalle.
 
-\subsection{Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
+\subsection{Fase 1: Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

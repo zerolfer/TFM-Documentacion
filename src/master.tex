@@ -24,6 +24,8 @@
 \newcommand{\NOTE}[1]{\textcolor{ForestGreen}{#1}}
 
 \newcommand*{\legacy}{\texttt{Legacy}}
+\newcommand*{\faseuno}{\hyperref[Fase 1]{Fase 1}}
+\newcommand*{\fasedos}{\hyperref[Fase 2]{Fase 2}}
 
 \renewcommand{\labelitemi}{$\square$}
 \renewcommand{\labelitemii}{$-$}
@@ -121,6 +123,10 @@
 \captionsetup{labelfont=bf}
 \captionsetup[subfigure]{labelfont=bf}
 
+% las dos líneas siguientes hacen que las figuras estén subnumeradas según el numero de la sección "num-section.num-fig"
+\usepackage{chngcntr}
+\counterwithin{figure}{section}
+
 
 \begin{document}
     % renombrar strings de babel:
@@ -128,7 +134,7 @@
     %	\renewcommand{\tablename}{Tabla}
     \renewcommand{\figureshortname}{Figura}
     \renewcommand{\tableshortname}{Tabla}
-
+    
     %\maketitle
     %\thispagestyle{empty}
     \begin{titlepage}
