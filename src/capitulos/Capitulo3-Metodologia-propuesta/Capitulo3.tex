@@ -50,9 +50,26 @@ En los próximos apartados definiremos cada una de estas Fases en detalle.
 
 \subsection{Fase 1: Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
 
+La fase de inicialización toma como entrada la planificación inicial, la planificada para el día y que ya no tiene 
+validez debido a la incidencia; junto a los datos relativos a la incidencia que son:
 
+\begin{itemize}
+	\item Hora a la que se produce la incidencia.
+	\item Tipo de incidencia
+	\item Si la incidencia es por un cambio imprevisto de sectorización, la nueva sectorización
+	\item Si la incidencia es por una baja de un trabajador, hora de la baja y los datos del tranajador y, 
+	opcionalmente, hora del alta y datos del trabajador (puede ser el mismo u otro que no forme parte del turno inicial)
+\end{itemize}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{Esquema-Fase-1-extendido}
+	\caption{Diagrama de flujo del funcionamiento de la Fase 1}
+	\label{fig:3:esquema-fase-1}
+\end{figure}
 
+Con esos datos, la \faseuno deberá convertir la planificación inválida en una \textit{solución incial}, que emplearemos 
+como punto de partida para el sistema de búsqueda inteligente que es la \fasedos{}.
 
 
 

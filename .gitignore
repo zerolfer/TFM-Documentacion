@@ -249,3 +249,7 @@ TSWLatexianTemp*
 *.pdf
 ~$**.pptx
 *.pptx
+*.ini
+auxil/
+out/
+src/534F525513AF14876830FCE480551AB68D70F644554D.ico
