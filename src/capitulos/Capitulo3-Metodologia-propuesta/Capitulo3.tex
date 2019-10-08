@@ -48,6 +48,61 @@ problema propiamente dicho de acuerdo a las pautas establecidas en forma de rest
 metaheurística.
 En los próximos apartados definiremos cada una de estas Fases en detalle.
 
+\subsection{Representación de las soluciones}
+Antes de entrar en detalle, es importante explicar cómo se han representado las soluciones. Recordemos que estamos 
+representado planificaciones, es decir una relación matricial de sectores con trabajadores a lo largo del tiempo que 
+dura un turno. De forma que dada una lista de controladores, en cada instante de tiempo tendremos un sector asignado 
+así como el tipo de puesto (planificador o ejecutivo).
+\\
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{Ejemplo-distribucion-inicial}
+	\caption[Ejemplo de una solución inicial]{Ejemplo de una posible solución inicial. Constituida mediante el uso 
+		de plantillas. 
+		Nótese que se emplean identificadores en vez del nombre completo de cada sector para abreviar}
+	\label{fig:3:ejemplo-distribucion-inicial}
+\end{figure}
+
+Las filas de la matriz serán por tanto los controladores que tengamos a nuestra disposición así como los que añadamos 
+dinámicamente para facilitarla inicialización y que serán eliminados en la \fasedos{}, mientras que las columnas de la 
+matriz representará el tiempo (véase \autoref{fig:3:ejemplo-distribucion-inicial}).
+
+El tiempo es una variable continua, que nos permitiría conocer el sector que controla un trabajador para un momento 
+exacto del tiempo como por ejemplo las 8:29:17 (horas, minutos, segundos), una precisión del todo innecesaria en éste 
+problema, pero también difícil de representarlo en éste tipo de problemas de \textit{timetabling}. Para poder 
+representar el tiempo, debemos convertir la variable continua en discreta mediante el proceso denominado 
+discretización: renunciamos a la precisión del tiempo fragmentándolo en intervalos de tiempo uniformes que llamaremos 
+\textit{slots}, por ejemplo de 5 minutos cada uno.
+\\
+
+Esta discretización nos hace perder precisión, por lo que el tamaño del slot deberá ser el adecuado para no perder 
+capacidad de representación en nuestras soluciones y por ende limitar espacio de búsqueda en exceso, lo cual podría 
+desembocar en que una buena solución no pueda ser representada y por lo tanto no será contemplada por el sistema de 
+búsqueda así que nunca se dará como solución.
+En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas 
+las restricciones numéricas del dominio del problema (ver %TODO REFERENCIAS!!!)
+
+\begin{figure}[htbp]
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{timepo-continuo}
+		\caption{Tiempo continuo}
+		\label{fig:timepo-continuo}
+	\end{subfigure}
+
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{timepo-disccreto}
+		\caption{Tiempo discreto con \textit{slots} de 5 minutos}
+		\label{fig:timepo-disccreto}
+	\end{subfigure}
+
+	\caption{Ilustración de la discretización del tiempo}
+\end{figure}
+
+Con todo, la representación de una solución es de la forma de la \autoref{fig:3:ejemplo-distribucion-inicial}
+
 \subsection{Fase 1: Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
 
 La fase de inicialización toma como entrada la planificación inicial, la planificada para el día y que ya no tiene 
@@ -55,10 +110,11 @@ validez debido a la incidencia; junto a los datos relativos a la incidencia que 
 
 \begin{itemize}
 	\item Hora a la que se produce la incidencia.
-	\item Tipo de incidencia
-	\item Si la incidencia es por un cambio imprevisto de sectorización, la nueva sectorización
-	\item Si la incidencia es por una baja de un trabajador, hora de la baja y los datos del tranajador y, 
-	opcionalmente, hora del alta y datos del trabajador (puede ser el mismo u otro que no forme parte del turno inicial)
+	\item Tipo de incidencia.
+	\item Si la incidencia es por un cambio imprevisto de sectorización, la nueva sectorización.
+	\item Si la incidencia es por una baja de un trabajador, hora de la baja y los datos del trabajador y, 
+	opcionalmente, hora del alta y datos del trabajador (puede ser el mismo u otro que no forme parte del turno 
+	inicial).
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -68,8 +124,48 @@ validez debido a la incidencia; junto a los datos relativos a la incidencia que 
 	\label{fig:3:esquema-fase-1}
 \end{figure}
 
-Con esos datos, la \faseuno deberá convertir la planificación inválida en una \textit{solución incial}, que emplearemos 
-como punto de partida para el sistema de búsqueda inteligente que es la \fasedos{}.
+Con esos datos, la \faseuno{} deberá convertir la planificación inválida en una \textit{solución incial}, que 
+emplearemos 
+como punto de partida para el sistema de búsqueda inteligente que es la \fasedos{}. Para ello distinguimos dos tipos de 
+tareas, las relativas a la incidencia por cambio de sector (pasos 1 y 2) y las relativas a las bajas y altas de los 
+trabajadores (pasos 3 y 4). Los pasos pueden verse esquemáticamente en la \autoref{fig:3:esquema-fase-1}.
+Adicionalmente, un quinto paso fue planteado para poder facilitar la tarea de la \fasedos{}, que consistía en reducir 
+el numero de controladores añadidos artificialmente en los pasos anteriores moviendo carga de trabajo a otros que la 
+soporten heurísticamente. Finalmente no fue implementada y fue añadida como trabajo futuro.
+\\
+
+En la figura \autoref{fig:3:ejemplo-distribucion-inicial} se muestra cómo sería una posible planificación inicial. En 
+éste caso ha sido creada en base a \textit{plantillas} o \textit{estadillos}, que es el método empleado habitualmente 
+por el personal para conformar la planificación. Consiste en la repetición de un patrón conformado por tres 
+controladores para un sector en el que se suceden trabajo en puesto planificador, en puesto ejecutivo y descanso con un 
+desfase en incremento 
+para cada controlador, forma que en cada instante de tiempo (imagínese una línea transversal) habrá un controlador en 
+puesto ejecutivo, otro en planificador y otro descansado. \gls{CRIDA} sabe que el uso de estas plantillas si bien no es 
+lo mas óptimo es lo más cómodo tanto para la creación manual de la planificación como de cara a no incumplir las 
+restricciones de cada trabajador (ver %TODO: referencias!!).
+\\
+
+El tipo de plantilla descrito se le denomina $3\times1$ (3 controladores para 1 sector) pero existen otros tipos como 
+$8\times3$ o $4\times1$, no obstante, la más importante para el sistema es la $3\times1$, que será empleada durante 
+esta Fase.
+
+\subsubsection{Paso 1: Eliminar sectores que se cierran}
+El primer paso es el encargado de eliminar los sectores que se cierran. Pongamos por ejemplo que tenemos una 
+sectorización 5A que pasa a ser una 6C en un momento dado, tal y como se ilustra en la 
+\autoref{fig:3:ejemplo-cambio-sectorizacion}. Como ya hemos dicho previamente, nosotros partimos de una planificación 
+inicial como la representada en la \autoref{fig:3:ejemplo-distribucion-inicial}, que con la nueva sectorización queda 
+totalmente inútil, pues podemos ver sectores que ya no se encuentran abiertos a partir del punto de cambio.
+\\
+
+Identificamos pues, el \textit{momento actual} como las 10:30. Antes de dicha hora, el tiempo no debe ser
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{Ejemplo-cambio-sectorizacion}
+	\caption[Ejemplo de cambio de sectorización]{Ejemplo de posible cambio de sectorización en la Unidad de Control de 
+	Barcelona.}
+	\label{fig:3:ejemplo-cambio-sectorizacion}
+\end{figure}
 
 
 
