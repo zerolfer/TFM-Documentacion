@@ -1,6 +1,6 @@
 % !TeX spellcheck = es_ES
 
-\documentclass[spanish,12pt, a4paper,twoside]{paper}
+\documentclass[spanish,12pt, a4paper,twoside]{article}
 
 \let\oldsection\section
 \def\section{\cleardoublepage\oldsection}
@@ -16,7 +16,18 @@
     \newpage
 }
 
-%\setcounter{tocdepth}{3}
+
+% Para que \paragraph tenga la misma forma que un hipotético \subsubsubsection
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+	{-2.5ex\@plus -1ex \@minus -.25ex}%
+	{1.25ex \@plus .25ex}%
+	{\normalfont\normalsize\bfseries}}
+\makeatother
+
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
 
 %\renewcommand{\listoftables}{Índice de tablas}
 \newcommand{\refcruzada}[2]{\hyperref[#2]{#1~\ref{#2}}}
@@ -69,12 +80,16 @@
 \usepackage[numberedsection, nopostdot, nogroupskip]{glossaries} % must be under hyperref
 %\usepackage{glossary-long}
 
+%
+%   GLOSSARY
+%
 \setglossarysection{subsection} % En caso de incluirlo, el glosario es subsección en vez de sección
 \loadglsentries{glossary}
 \setglossarystyle{altlist}
 
+%\renewcommand{\cftsectnumwidth}{6em}
 
-\pdfminorversion=6
+\pdfminorversion=7
 %
 %   DESCOMENTAR LO SIGUIENTE PARA CAMBIAR EL ESTILO DEL GLOSARIO DE "list" (default) A "super":
 %
@@ -135,8 +150,8 @@
     % renombrar strings de babel:
     \renewcommand{\listtablename}{Índice de tablas}
     %	\renewcommand{\tablename}{Tabla}
-    \renewcommand{\figureshortname}{Figura}
-    \renewcommand{\tableshortname}{Tabla}
+%    \renewcommand{\figureshortname}{Figura}
+%    \renewcommand{\tableshortname}{Tabla}
     
     %\maketitle
     %\thispagestyle{empty}
@@ -241,6 +256,12 @@
     \include{capitulos/Capitulo4-Implementacion/Capitulo4}
     \newpage
     
+    \include{capitulos/Capitulo5-Resultados-experimentales/Capitulo5}
+    \newpage
+    
+    \include{capitulos/Capitulo6-Conclusiones/Capitulo6}
+    \newpage
+    
     %\include{capitulos/CapituloXXX-YYY/CapituloXXX}
     %\newpage
 
@@ -250,6 +271,9 @@
     %	REFERENCIAS
     \newpage
 
+	%
+	%  BIBLIOGRAPHY
+	%
     \bibliographystyle{splncs04}
     \bibliography{master}
 
