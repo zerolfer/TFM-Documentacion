@@ -8,12 +8,12 @@ La hipótesis de partida (\hyperref[H2]{H2}) plantea como punto de comienzo del 
 \\
 
 Para comenzar con el planteamiento de la metodología, podemos comenzar desde el punto de vista de la ingeniería: verlo como un sistema de caja negra que recibe una entrada y una salida.
-El sistema debe poder corregir la planificación de controladores de ese día, por lo tanto es claro que la entrada será esa planificación. Recordemos que el sistema \legacy{} será empleado por el personal del aeropuerto para realizar la planificación de forma automatizada, por lo que \textbf{la entrada del sistema deberá tener un formato común con la salida del sistema \legacy{}}.
+El sistema debe poder corregir la planificación de controladores de ese día, por lo tanto, es claro que la entrada será esa planificación. Recordemos que el sistema \legacy{} será empleado por el personal del aeropuerto para realizar la planificación de forma automatizada, por lo que \textbf{la entrada del sistema deberá tener un formato común con la salida del sistema \legacy{}}.
 Respecto a la salida, deberá ser de un formato comprensible por el personal gerente de los puestos de control.
 \\
 
-Por último resta detallar la parte más importante: la \textit{caja negra} propiamente dicha. Pues bien, como hemos dicho antes, en primer lugar el sistema recibirá una \textbf{solución inicial}, que deberá ser tratada de acuerdo a las contingencias habidas. Por ejemplo ocurre un cambio de sectorización en mitad del turno que no estaba planificado. 
-A partir del momento en el que se cierra debemos eliminar todas las apariciones de los sectores que se cierran y añadir los que se abren, pero no antes de dicho momento (mas detalles en el \autoref{sec:3:inicializacion-soluciones}). 
+Por último resta detallar la parte más importante: la \textit{caja negra} propiamente dicha. Pues bien, como hemos dicho antes, en primer lugar el sistema recibirá una \textbf{solución inicial}, que deberá ser tratada de acuerdo con las contingencias habidas. Por ejemplo, ocurre un cambio de sectorización en mitad del turno que no estaba planificado. 
+A partir del momento en el que se cierra debemos eliminar todas las apariciones de los sectores que se cierran y añadir los que se abren, pero no antes de dicho momento (más detalles en el \autoref{sec:3:inicializacion-soluciones}). 
 Llamaremos al momento en el que sucede la incidencia como \textbf{momento actual} para simplificar, aunque lo habitual es que el sistema sea ejecutado varios minutos antes de que suceda la incidencia.
 
 Una vez tratada la solución inicial, la metaheurística ya podrá dar comienzo sobre ella, buscando diferentes 
@@ -23,7 +23,7 @@ planificaciones alternativas (soluciones) y dando como resultado la mejor.
 %Con todo, el sistema tiene cuatro módulos:
 %\begin{itemize}
 %	\item Módulo de lectura de datos: lleva a cabo las tareas de lectura e inicialización de estructuras de datos.
-%	\item Módulo de inicialización: inicializa la solución inicial de acuerdo a la(s) contingencias recibidas del módulo anterior
+%	\item Módulo de inicialización: inicializa la solución inicial de acuerdo con la(s) contingencias recibidas del módulo anterior
 %	\item Módulo de búsqueda: lleva a cabo la búsqueda de una solución factible al problema.
 %	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
 %\end{itemize}
@@ -36,7 +36,7 @@ Sin entrar en detalles de implementación (para ello ver el \autoref{apartado:4}
 \end{enumerate}
 
 En adelante aludiremos a la fase del sistema que comprende la inicialización de la solución de entrada según las necesidades del caso concreto de incidencia que se produzca como \faseuno{} o \textit{Fase de Inicialización}. 
-Mientras que la \fasedos{} o simplemente \textit{Metaheurística}, será la fase del sistema en la que se resolverá el problema propiamente dicho de acuerdo a las pautas establecidas en forma de restricciones y puntuaciones sobre la metaheurística.
+Mientras que la \fasedos{} o simplemente \textit{Metaheurística}, será la fase del sistema en la que se resolverá el problema propiamente dicho de acuerdo con las pautas establecidas en forma de restricciones y puntuaciones sobre la metaheurística.
 En los próximos apartados definiremos cada una de estas Fases en detalle.
 
 \subsection{Representación de las soluciones}
@@ -52,11 +52,11 @@ Antes de entrar en detalle, es importante explicar cómo se han representado las
 	\label{fig:3:ejemplo-distribucion-inicial}
 \end{figure}
 
-Las filas de la matriz serán por tanto los controladores que tengamos a nuestra disposición así como los que añadamos dinámicamente para facilitarla inicialización y que serán eliminados en la \fasedos{}, mientras que las columnas de la matriz representará el tiempo (véase \autoref{fig:3:ejemplo-distribucion-inicial}) desde el inicio del turno hasta el final del turno. Por lo que el tamaño de cada una dependerá de la instancia concreta del problema que estemos 
+Las filas de la matriz serán por tanto los controladores que tengamos a nuestra disposición así como los que añadamos dinámicamente para facilitarla inicialización y que serán eliminados en la \fasedos{}, mientras que las columnas de la matriz representarán el tiempo (véase \autoref{fig:3:ejemplo-distribucion-inicial}) desde el inicio del turno hasta el final del turno. Por lo que el tamaño de cada una dependerá de la instancia concreta del problema que estemos 
 resolviendo.
 \\
 
-El tiempo es una variable continua, que nos permitiría conocer el sector que controla un trabajador para un momento exacto del tiempo como por ejemplo las 8:29:17 (horas, minutos, segundos), una precisión del todo innecesaria en éste problema, pero también difícil de representarlo en éste tipo de problemas de \textit{timetabling}. Para poder 
+El tiempo es una variable continua, que nos permitiría conocer el sector que controla un trabajador para un momento exacto del tiempo como por ejemplo las 8:29:17 (horas, minutos, segundos), una precisión del todo innecesaria en este problema, pero también difícil de representarlo en este tipo de problemas de \textit{timetabling}. Para poder 
 representar el tiempo, debemos convertir la variable continua en discreta mediante el proceso denominado 
 discretización: renunciamos a la precisión del tiempo fragmentándolo en intervalos de tiempo uniformes que llamaremos \textit{slots}, por ejemplo de 5 minutos cada uno.
 \\
@@ -88,7 +88,3 @@ Con todo, la representación de una solución es de la forma de la \autoref{fig:
 
 
 \input{capitulos/Capitulo3-Metodologia-propuesta/Capitulo3-Fase2}
-
-
-
-

@@ -252,3 +252,5 @@ TSWLatexianTemp*
 auxil/
 out/
 src/534F525513AF14876830FCE480551AB68D70F644554D.ico
+*.jar
+report.html
