@@ -1,19 +1,15 @@
 \subsection{Fase 2: Metaheurística de optimización multiobjetivo} \label{sec:3:metaheurística}
 Se trata del núcleo principal del presente proyecto, pues trata de dar solución al problema en sí mediante un enfoque de metaheurísticas.
-\\
 
 Como ya se ha introducido previamente, estamos ante un problema de \textit{timetabling/scheduling} que son generalmente problemas complejos debido a su naturaleza combinatoria. 
 Matemáticamente se dice que pertenecen al conjunto de los problemas llamados \textit{NP-Duros}, pues los algoritmos clásicos empleados para resolverlos tienen una complejidad al menos de tipo exponencial.
 Clásicamente se han empleado algoritmos para problemas concretos de este tipo que van desde el \textit{General Scheduling Problem} (GSP) que es el caso más general hasta los casos más concretos mediante variaciones respecto al anterior, haciéndolo más o menos restrictivo. 
 Algunos son: el \textit{Open Shop Scheduling} (OSS), \textit{Job Shop Scheduling} (JSS), \textit{Flow Shop Scheduling} (FSS) o \textit{Permutational Flow Shop Scheduling} (PFSS). Una clasificación más detallada de este tipo de problemas clásicos se encuentra en \cite{sota:tesis-doctoral}. 
-\\
 
 Lejos del entorno académico, los problemas reales de scheduling (como el que tenemos entre manos en esta tesis) pueden ser muy diferentes entre sí, habiendo pues mucha variedad en función del ámbito de aplicación. 
 Por ejemplo se han estudiado casos para transporte público \cite{sota:transporte-publico} o universidades \cite{sota:universidad} y podemos ver cómo son completamente diferentes en cuanto a restricciones y necesidades de cada una de las soluciones, por lo que las metodologías empleadas para su resolución son bien diferentes.
-\\
 
 Existen gran cantidad de técnicas que se han empleado previamente para resolver este tipo de problemas, comenzando por sencillos heurísticos aplicados a los problemas clásicos bien estudiados y formalizados, pero como hemos puntualizado antes, este tipo de algoritmos solamente son aplicable a instancias pequeñas debido a la mencionada naturaleza no polinómica, por lo que no son útiles en problemas reales. Por otro lado, se ha analizado cómo transformar un problema de scheduling en un problema de coloreado de grafos \cite{sota:estudio-coloreado-grafos, sota:algotimo-coloreado-grafos} lo que nos permite emplear los algoritmos existentes para este tipo de problemas, entre los que podemos encontrar exactos y aproximados. También existen enfoques más modernos que emplean técnicas de \textit{Aprendizaje Automático} habitualmente combinados con metaheurísticas \cite{sota:machine-learning-geneticos}) y recientemente \textit{Hiperheurísticas} (como por ejemplo en \cite{sota:hiperheuristicas}). En el libro \cite{sota:libro-sota-scheduling} se encuentran explicadas de forma detallada todas estas técnicas aquí nombradas.
-\\
 
 Por último, la técnica más empleada actualmente para resolver este tipo de problemas son las metaheurísticas: una familia de algoritmos genéricos empleados como framework para resolver un problema dado. Tienen dos características principales: \cite{bibid}
 

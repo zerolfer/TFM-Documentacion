@@ -76,6 +76,7 @@
 \usepackage[breaklinks=true]{hyperref}
 \usepackage[T1]{fontenc}
 \usepackage{ amssymb }
+\usepackage{parskip}
 %\usepackage{natbib} 
 \usepackage[numberedsection, nopostdot, nogroupskip]{glossaries} % must be under hyperref
 %\usepackage{glossary-long}
@@ -238,7 +239,9 @@
     %	CAPTULOS DEL TRABAJO FIN DE MÁSTER
     \newpage
     \pagenumbering{arabic}
-
+%	\setlength{\parindent}{0em}
+%	\setlength{\parskip}{\baselineskip}%
+	
     %
     % EN ESTE DOCUMENTO ESTÁ EL RESTO DE LA PLANTILLA
     % \include{capitulos/ejemplo_documentacion}

@@ -2,15 +2,12 @@
 
 \section{Metodología propuesta} \label{apartado:3}
 En este capítulo se describe en detalle la metodología propuesta para resolver el problema planteado en la \hyperref[apartado:2]{sección anterior}, entendiendo por metodología el conjunto de decisiones previas a la implementación tomadas con el fin de plantear una forma de resolver dicho problema.
-\\
 
 La hipótesis de partida (\hyperref[H2]{H2}) plantea como punto de comienzo del proyecto el uso de una metaheurística con el fin de optimizar todos los parámetros del sistema, pero hemos de definir dichos parámetros antes de poder definir la metaheurística.
-\\
 
 Para comenzar con el planteamiento de la metodología, podemos comenzar desde el punto de vista de la ingeniería: verlo como un sistema de caja negra que recibe una entrada y una salida.
 El sistema debe poder corregir la planificación de controladores de ese día, por lo tanto, es claro que la entrada será esa planificación. Recordemos que el sistema \legacy{} será empleado por el personal del aeropuerto para realizar la planificación de forma automatizada, por lo que \textbf{la entrada del sistema deberá tener un formato común con la salida del sistema \legacy{}}.
 Respecto a la salida, deberá ser de un formato comprensible por el personal gerente de los puestos de control.
-\\
 
 Por último resta detallar la parte más importante: la \textit{caja negra} propiamente dicha. Pues bien, como hemos dicho antes, en primer lugar el sistema recibirá una \textbf{solución inicial}, que deberá ser tratada de acuerdo con las contingencias habidas. Por ejemplo, ocurre un cambio de sectorización en mitad del turno que no estaba planificado. 
 A partir del momento en el que se cierra debemos eliminar todas las apariciones de los sectores que se cierran y añadir los que se abren, pero no antes de dicho momento (más detalles en el \autoref{sec:3:inicializacion-soluciones}). 
@@ -18,7 +15,6 @@ Llamaremos al momento en el que sucede la incidencia como \textbf{momento actual
 
 Una vez tratada la solución inicial, la metaheurística ya podrá dar comienzo sobre ella, buscando diferentes 
 planificaciones alternativas (soluciones) y dando como resultado la mejor. 
-\\
 
 %Con todo, el sistema tiene cuatro módulos:
 %\begin{itemize}
@@ -40,8 +36,7 @@ Mientras que la \fasedos{} o simplemente \textit{Metaheurística}, será la fase
 En los próximos apartados definiremos cada una de estas Fases en detalle.
 
 \subsection{Representación de las soluciones}
-Antes de entrar en detalle, es importante explicar cómo se han representado las soluciones. Recordemos que estamos representado planificaciones, es decir una relación matricial de sectores con trabajadores a lo largo del tiempo que dura un turno. De forma que dada una lista de controladores, en cada instante de tiempo tendremos un sector asignado así como el tipo de puesto (planificador o ejecutivo).
-\\
+Antes de entrar en detalle, es importante explicar cómo se han representado las soluciones. Recordemos que estamos representado planificaciones, es decir una relación matricial de sectores con trabajadores a lo largo del tiempo que dura un turno. De forma que, dada una lista de controladores, en cada instante de tiempo tendremos un sector asignado, así como el tipo de puesto (planificador o ejecutivo).
 
 \begin{figure}
 	\centering
@@ -54,12 +49,10 @@ Antes de entrar en detalle, es importante explicar cómo se han representado las
 
 Las filas de la matriz serán por tanto los controladores que tengamos a nuestra disposición así como los que añadamos dinámicamente para facilitarla inicialización y que serán eliminados en la \fasedos{}, mientras que las columnas de la matriz representarán el tiempo (véase \autoref{fig:3:ejemplo-distribucion-inicial}) desde el inicio del turno hasta el final del turno. Por lo que el tamaño de cada una dependerá de la instancia concreta del problema que estemos 
 resolviendo.
-\\
 
 El tiempo es una variable continua, que nos permitiría conocer el sector que controla un trabajador para un momento exacto del tiempo como por ejemplo las 8:29:17 (horas, minutos, segundos), una precisión del todo innecesaria en este problema, pero también difícil de representarlo en este tipo de problemas de \textit{timetabling}. Para poder 
 representar el tiempo, debemos convertir la variable continua en discreta mediante el proceso denominado 
 discretización: renunciamos a la precisión del tiempo fragmentándolo en intervalos de tiempo uniformes que llamaremos \textit{slots}, por ejemplo de 5 minutos cada uno.
-\\
 
 Esta discretización nos hace perder precisión, por lo que el tamaño del slot deberá ser el adecuado para no perder capacidad de representación en nuestras soluciones y por ende limitar espacio de búsqueda en exceso, lo cual podría desembocar en que una buena solución no pueda ser representada y por lo tanto no será contemplada por el sistema de búsqueda así que nunca se dará como solución.
 En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas las restricciones numéricas del dominio del problema (ver %TODO REFERENCIAS!!!)
