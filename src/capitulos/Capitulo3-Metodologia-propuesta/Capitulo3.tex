@@ -31,7 +31,7 @@ Sin entrar en detalles de implementación (para ello ver el \autoref{apartado:4}
 	\item \label{Fase 2} Fase 2: resolución del problema
 \end{enumerate}
 
-En adelante aludiremos a la fase del sistema que comprende la inicialización de la solución de entrada según las necesidades del caso concreto de incidencia que se produzca como \faseuno{} o \textit{Fase de Inicialización}. 
+En adelante, aludiremos a la fase del sistema que comprende la inicialización de la solución de entrada en función de las necesidades del caso concreto de incidencia que se produzca como \faseuno{} o \textit{Fase de Inicialización}. 
 Mientras que la \fasedos{} o simplemente \textit{Metaheurística}, será la fase del sistema en la que se resolverá el problema propiamente dicho de acuerdo con las pautas establecidas en forma de restricciones y puntuaciones sobre la metaheurística.
 En los próximos apartados definiremos cada una de estas Fases en detalle.
 
@@ -47,7 +47,7 @@ Antes de entrar en detalle, es importante explicar cómo se han representado las
 	\label{fig:3:ejemplo-distribucion-inicial}
 \end{figure}
 
-Las filas de la matriz serán por tanto los controladores que tengamos a nuestra disposición así como los que añadamos dinámicamente para facilitarla inicialización y que serán eliminados en la \fasedos{}, mientras que las columnas de la matriz representarán el tiempo (véase \autoref{fig:3:ejemplo-distribucion-inicial}) desde el inicio del turno hasta el final del turno. Por lo que el tamaño de cada una dependerá de la instancia concreta del problema que estemos 
+Las filas de la matriz serán por tanto los controladores que tengamos a nuestra disposición así como los que añadamos dinámicamente para facilitar la inicialización y que serán eliminados en la \fasedos{}, mientras que las columnas de la matriz representarán el tiempo (véase \autoref{fig:3:ejemplo-distribucion-inicial}) desde el inicio del turno hasta el final del turno. Por lo que el tamaño de cada una dependerá de la instancia concreta del problema que estemos 
 resolviendo.
 
 El tiempo es una variable continua, que nos permitiría conocer el sector que controla un trabajador para un momento exacto del tiempo como por ejemplo las 8:29:17 (horas, minutos, segundos), una precisión del todo innecesaria en este problema, pero también difícil de representarlo en este tipo de problemas de \textit{timetabling}. Para poder 
@@ -55,9 +55,9 @@ representar el tiempo, debemos convertir la variable continua en discreta median
 discretización: renunciamos a la precisión del tiempo fragmentándolo en intervalos de tiempo uniformes que llamaremos \textit{slots}, por ejemplo de 5 minutos cada uno.
 
 Esta discretización nos hace perder precisión, por lo que el tamaño del slot deberá ser el adecuado para no perder capacidad de representación en nuestras soluciones y por ende limitar espacio de búsqueda en exceso, lo cual podría desembocar en que una buena solución no pueda ser representada y por lo tanto no será contemplada por el sistema de búsqueda así que nunca se dará como solución.
-En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas las restricciones numéricas del dominio del problema (ver %TODO REFERENCIAS!!!)
+En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas las restricciones numéricas del dominio del problema (ver requisito) %TODO REFERENCIAS!!!)
 
-\begin{figure}[htbp]
+\begin{figure}
 	\begin{subfigure}{\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{tiempo-continuo}
