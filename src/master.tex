@@ -135,10 +135,12 @@
 %    	pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
 }
 
-\addto\extrasspanish{\def\sectionautorefname{Apartado}}
-\addto\extrasspanish{\def\subsectionautorefname{Apartado}}
-\addto\extrasspanish{\def\subsubsectionautorefname{Apartado}}
-\addto\extrasspanish{\def\paragraphautorefname{Apartado}}
+\addto\extrasspanish{\def\sectionautorefname{Capítulo}}
+%\addto\extrasspanish{\def\subsectionautorefname{Sección}}
+%\addto\extrasspanish{\def\subsubsectionautorefname{Sección}}
+%\addto\extrasspanish{\def\paragraphautorefname{Sección}}
+
+\addto\extrasspanish{\def\algorithmautorefname{Algoritmo}}
 
 \captionsetup{labelfont=bf}
 \captionsetup[subfigure]{labelfont=bf}
@@ -197,7 +199,7 @@
         %	DATE SECTION
         { 
         	{Curso 2019/20}\\[0.3cm]
-        	{v0.1}
+        	{v0.2}
     	}\\[3cm]
         
         %	LOGO SECTION
@@ -218,7 +220,7 @@
     %	AGRADECIMIENTOS
     %    \section*{AGRADECIMIENTOS}
     %    Agradezco especialmente a Tino Tello Caballo por toda su paciencia y tiempo para ayudarme
-    %    a dar vida a éste proyecto.
+    %    a dar vida a este proyecto.
 
     %	RESUMEN
     \section*{RESUMEN}

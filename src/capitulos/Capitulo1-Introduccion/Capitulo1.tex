@@ -8,30 +8,29 @@ colaboración con la empresa de innovación en el tráfico aéreo CRIDA (\url{ht
 automatización del proceso de creación de la planificación de los turnos de los trabajadores que controlan el espacio 
 aéreo en sus puestos de control de los aeropuertos españoles.
 
-En esta sección se describe el contexto principal y los objetivos e hipótesis iniciales de las que parte el presente Proyecto de Fin de Máster, así como una ligera introducción al problema bajo estudio. Por su parte, en el 
-\autoref{apartado:2}, se describirá el problema en profundidad; en el \autoref{apartado:3}
-la metodología propuesta para su resolución; en el \autoref{apartado:4} los detalles de implementación;
-en el \autoref{apartado:5} los resultados experimentales obtenidos; y, finalmente, en el \autoref{apartado:6} las 
-conclusiones y trabajo a futuro. También \NOTE{completar con los anexos} % TODO: Completar con los anexos
+En este capítulo se describe el contexto principal y los objetivos e hipótesis iniciales de las que parte el presente Proyecto de Fin de Máster, así como una ligera introducción al problema bajo estudio. En el 
+\autoref{capitulo:2}, se describirá el problema en profundidad. En el \autoref{capitulo:3} se expondrá 
+la metodología propuesta para su resolución. En el \autoref{capitulo:4} se tratará la implementación del sistema.
+El \autoref{capitulo:5} se centrará en los resultados experimentales obtenidos; y, finalmente, el \autoref{capitulo:6} mostrará las conclusiones y líneas futuras de trabajo. También \NOTE{completar con los anexos} % TODO: Completar con los anexos
 
 \subsection{Objetivos del proyecto}
 \label{sec:Objectivos}
 El proyecto \gls{ABACO} es realmente grande, y continua en constante evolución, pasando por las manos de 
-diferentes alumnos tanto del máster como del doctorado en Inteligencia Artificial impartidos por la Universidad, algunos de esos trabajos se encuentran citados a lo largo de este documento. 
+diferentes alumnos tanto del máster como del doctorado en Inteligencia Artificial impartidos por la Universidad Politécnica de Madrid, algunos de esos trabajos se encuentran citados a lo largo de esta memoria. 
 
-Por ello, este trabajo pretende continuar el proyecto llevándolo un nivel más allá: hasta ahora el sistema resolvía únicamente el problema de conformar por completo la distribución del personal. 
-Sin embargo, la empresa necesita en algunas ocasiones reescribir parte de la planificación debido a una incidencia, por ejemplo la baja repentina de uno de los trabajadores, por lo tanto éste nuevo problema consiste en resolver parte de la solución anterior, reescribiendo únicamente aquella parte de la planificación que pertenezca al futuro, manteniendo lo anterior como constante. 
-Por supuesto, para conformar la nueva solución, se ha de considerar en todo momento la parte fija. El problema se describe en detalle en la \autoref{apartado:2}.
+Este trabajo pretende continuar el proyecto llevándolo un nivel superior: hasta ahora el sistema resolvía únicamente el problema de conformar por completo la distribución del personal. 
+Sin embargo, la empresa necesita en algunas ocasiones reescribir parte de la planificación debido a una incidencia, por ejemplo la baja repentina de uno de los trabajadores, por lo tanto este nuevo problema consiste en resolver parte de la solución anterior, reescribiendo únicamente aquella parte de la planificación que pertenezca al futuro, manteniendo lo anterior como constante. 
+Por supuesto, para conformar la nueva solución, se ha de considerar en todo momento la parte fija. El problema se describe en detalle en el \autoref{capitulo:2}.
 
 Además, debido a los requisitos del nuevo sistema, trataremos también de mejorar el rendimiento general del sistema, modificando ciertas partes del software anterior para lograr mejor rendimiento.
 
 \subsection{Hipótesis iniciales del proyecto}
 \label{sec:Hipotesis}
 \begin{enumerate}[label={H\arabic*}]
-	\item \label{H1} Es posible implementar las alteraciones, modificaciones y extensiones al sistema en un tiempo máximo de 7 meses, de forma que cumpla todos los requisitos del mismo y resuelva el problema dado (ver Apartado Requisitos). %TODO referenciar el apartado de requisitos
-	\item \label{H2} El empleo de la metaheurística VNS mejora el rendimiento%
+	\item \label{H1} Es posible implementar las alteraciones, modificaciones y extensiones al sistema en un tiempo máximo de 7 meses, de forma que cumpla todos los requisitos del mismo y resuelva el problema dado (véase Capítulo XXX Requisitos). %TODO referenciar el apartado de requisitos
+	\item \label{H2} El empleo de la metaheurística \textit{Variable Neighborhood Search} (VNS) mejora el rendimiento%
 	\footnote{Entiéndase como el coste computacional en unidades de tiempo  de la metaheurística de forma aislada, no del sistema en su totalidad}
-	del sistema en comparación con el SA.
+	del sistema en comparación con \textit{Simulated Annealing} (SA).
 %	\item Es más eficiente el cuanto a tiempos de ejecución
 \end{enumerate}
 
@@ -39,7 +38,7 @@ Además, debido a los requisitos del nuevo sistema, trataremos también de mejor
 %   GLOSSARY
 %
 \glsaddall
-\printglossary[title={Definiciones, acrónimos y abreviaturas}]
+\printglossary[title={Definiciones, acrónimos y abreviaturas}, nonumberlist]
 %
 %
 %
