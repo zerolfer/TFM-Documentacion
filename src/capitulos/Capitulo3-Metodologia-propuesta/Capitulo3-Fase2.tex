@@ -19,25 +19,99 @@ Por último, la técnica más empleada actualmente para resolver este tipo de pr
 	\item Por definición son métodos de búsqueda aproximados, que tratan de combinar técnicas de exploración y explotación (véase \autoref{capitulo:3:busqueda-divers-intens}) para obtener la mejor solución posible dentro del espacio de búsqueda definido.
 \end{enumerate}
 
+Tienen dos conceptos básicos que conforman la clave para su implementación para un problema concreto: la función objetivo y la codificación. 
+
+La codificación permite representar una solución de la forma más compacta posible sin perder información del dominio. Una buena codificación tendrá las siguientes características~\cite{sota:metaheuristicas-design-impl}:
+
+\begin{itemize}
+	\item Completitud: Todas las soluciones asociadas con el problema deben poder ser representadas. Se debe garantizar una representatividad total dentro del espacio de soluciones: si no es definida correctamente podría haber soluciones incapaces de ser representadas y lógicamente afectará a la eficiencia de la metaheurística.
+	\item Conectividad: Debe existir un camino que permita moverse entre dos soluciones del espacio de búsqueda, de forma que cualquier solución del espacio pueda ser alcanzada (en especial el optimo global).
+	\item Eficiencia: Fácil de manipular por los operadores de la búsqueda (definidos por cada metaheurística).
+\end{itemize}
+
+Por su parte, la función objetivo o de evaluación (en inglés denominada \textit{fitness}) permite la comparación de soluciones entre sí y representará el objetivo de la búsqueda, de forma que si nos enfrentamos a un problema con varios parámetros objetivo, podamos ponderarlos u ordenarlos según los criterios que se adecuen al problema. Existen varios enfoques para definir una función de evaluación de un problema multiobjetivo: enfoques escalares, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más sencillos son los primeros, pues permiten trasformar el problema multiobjetivo en uniobjetivo y al ser el empleado en esta tesis será descrito con mayor detenimiento en el \autoref{apartado:adaptacion-VNS}
+
+Por otro lado, las metaheurísticas emplean una o varias soluciones que son comparadas entre sí empleando una función de comparación o evaluación  que suele ser de un coste computacional importante. Ésta función será dependiente del problema a resolver.
+
 Estas técnicas fueron muy innovadoras, pues permitieron la resolución de muchos problemas clásicos que hasta entonces no podían resolverse con técnicas clásicas. Además, soportan perfectamente instancias grandes, por lo que hasta la fecha es la técnica más prometedora para el problema a resolver en esta tesis.
 
-Por otro lado, la mayor desventaja de las metaheurísticas es que, al tratarse de métodos aproximados, no garantizan que se encuentre una solución óptima global ni que se encuentre acotada a algún rango de valores~\cite{sota:metaheuristicas-design-impl}, una pequeña desventaja frente a todas las posibilidades que las metaheurísticas nos ofrecen.
+No obstante, la mayor desventaja de las metaheurísticas es que, al tratarse de métodos aproximados, no garantizan que se encuentre una solución óptima global ni que se encuentre acotada en algún rango de valores~\cite{sota:metaheuristicas-design-impl} como sí permiten otras técnicas. Una pequeña desventaja frente a todas las posibilidades que las metaheurísticas nos ofrecen.
  
 Una vez decidida la técnica a emplear para resolver el problema definido, el siguiente paso es elegir de entre el catálogo de metaheurísticas existentes hasta la fecha, una de ellas. A lo largo del tiempo se han ido proponiendo diferentes taxonomías para ordenar toda esta gran cantidad de metaheurísticas. 
 Así, una de las clasificaciones más conocidas es la propuesta por Osman en~\cite{metaheuristicas:taxonomia1} que distingue entre aquellas basadas en búsquedas locales (pequeños cambios a una misma solución), las constructivas (en cada iteración se van añadiendo partes que al final conforman una solución al completo) y las poblacionales (se combinan varias soluciones entre sí). 
 
 Gendreau y Potvin~\cite{metaheuristicas:taxonomia2} propusieron en 2005 una clasificación dicotómica: aquellas de tipo trayectorial y de tipo poblacional, combinando así las de búsqueda local y las constructivas en un mismo grupo que emplea unicamente una sola solución por iteración mientras que las segundas emplean un conjunto dinámico de soluciones que en cada iteración irá cambiando. 
 
-Existen otras clasificaciones menos relevantes que dividen las metaheurísticas en aquellas inspiradas en la naturaleza y aquellas que no, si emplean capacidad de memoria o no, o si son de naturaleza determinista o estocástica. Una de las últimas clasificaciones~\cite{sota:metaheuristicas} propone la clasificación en metafóricas (metáforas de la biología, química, música, matemáticas, física o social-deportiva) o no metafóricas
+Existen otras clasificaciones menos relevantes que dividen las metaheurísticas en aquellas inspiradas en la naturaleza y aquellas que no, en si emplean capacidad de memoria o no, o si son de naturaleza determinista o estocástica. Una de las últimas clasificaciones~\cite{sota:metaheuristicas} propone la división en metafóricas (metáforas de la biología, química, música, matemáticas, física o social-deportiva) o no metafóricas.
 
-En el caso de este proyecto, la elección fue de carácter histórica: los proyectos previos habían empleado dos metaheurísticas y una de ellas parecía dar resultados más prometedores que la otra. Estamos hablando de la metaheurística \textit{Variable Neighborhood Search} (\textit{Búsqueda de Entornos Variable}) que describiremos en las próximas secciones y veremos cómo ha sido adaptado a nuestro problema.
+En el caso de este proyecto, la elección fue de carácter histórica: los proyectos previos habían empleado dos metaheurísticas y una de ellas parecía dar resultados más prometedores que la otra. Estamos hablando de la metaheurística \textit{Variable Neighborhood Search} (\textit{Búsqueda de Entornos Variable}) que describiremos en las próximas secciones y veremos cómo ha sido adaptada a nuestro problema.
 
 \subsubsection{Búsqueda en Entornos Variables (VNS)}
-Se trata de una metaheurística trayectorial, pues maneja una única solución en cada iteración, además de tipo búsqueda local pues trata de modificarla iterativamente para mejorarla empleando un catálogo de \textit{entornos} (\textit{neighborhoods}). A su vez es de tipo no metafórica, no se inspira en ningún proceso de la naturaleza. Es además de tipo estocástico y no emplea memoria para su funcionamiento.
+Se trata de una metaheurística trayectorial, pues maneja una única solución en cada iteración, además de tipo búsqueda local pues trata de modificarla iterativamente para mejorarla empleando un catálogo de \textit{entornos} o vecindades (\textit{neighborhoods}). A su vez es de tipo no metafórica: no se inspira en ningún proceso de la naturaleza. Es además de tipo estocástico y no emplea memoria para su funcionamiento.
 
-Su nombre radica precisamente en dos conceptos: búsqueda local y entornos variables. 
+Su nombre radica precisamente en sus dos conceptos fundamentales: búsqueda local y entornos variables. Se fundamenta en dos etapas~\cite{vns}: descenso y perturbación, la primera consiste en el intercambio sistemático del entorno empleado durante una búsqueda local simple que nos permite alcanzar un óptimo local; mientras que la segunda radica en la alteración aleatoria de la solución para evitar atascarse en óptimos locales evitando así una convergencia prematura.
+
+Así pues, el VNS parte de una lista predefinida de entornos, que definen el criterio a emplear para moverse entre soluciones a partir de una inicial. Al entorno $k$ del conjunto de vecindades se les suele denotar como $N_k, k=1,...,k_{max}$ y al conjunto de soluciones alcanzables mediante la vecindad $k$ como $N_k(x)$.
+Un ejemplo sencillo de entorno podría ser en el caso de una optimización de una variable en el dominio $\mathbb{R}$: un posible entorno sería $N_1=[x-2, x+2]$ o $N_2=[x-7, x+7]$, ilustrados en la \autoref{fig:ejemplos-entorno}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{ejemplos-entorno}
+	\caption{Ejemplo de dos entornos definidos en $\mathbb{R}$}
+	\label{fig:ejemplos-entorno}
+\end{figure}
+
+Como podemos observar, los entornos se definen con respecto a una solución, denotada por $x$. En el ejemplo los entornos se han definido de forma que el conjunto de soluciones alcanzables mediante el segundo sea un superconjunto del aquel empleando el primero, ampliando de esta forma las fronteras de la búsqueda (no es necesario definirlos así pero suele ser una práctica habitual). Si lanzamos una búsqueda local sobre la función del ejemplo empleando el entorno $k_1$, el punto más optimo que podemos alcanzar en caso de maximización es el punto $A$, mientras que si empleamos el $k_2$ será el $B$. El punto $C$ es el óptimo global de la función, que no es alcanzado por ninguno de los entornos definidos, aunque $k_2$ se aproxima bastante. 
+
+No necesariamente un entorno amplio, i.e. con mayor conjunto de soluciones factibles, es mejor que uno más reducido, pues el espacio de búsqueda es mayor y esto repercutirá decisivamente en el rendimiento del algoritmo de búsqueda. Además, en problemas más complejos con un mayor número de variables, el espacio de búsqueda es mucho más complejo y difícil de explorar.
+
+Con todo, el VNS se basa en tres caraterísticas:
+
+\begin{enumerate}
+	\item Un óptimo local respecto a una estructura de vecindad no necesariamente lo es respecto a otra.
+	\item Un óptimo global es a su vez óptimo local respecto a todas las posibles estructuras de entornos.
+	\item Empíricamente se ha determinado que para la mayoría de problemas, los óptimos locales con la misma o distinta estructura de entornos están relativamente cerca.
+\end{enumerate}
+
+En la \autoref{fig:VNS-facts} se ilustran estas tres características visualmente.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{VNS-facts}
+	\caption[Ilustración que representa las características sobre las que se fundamenta el VNS]{Ilustración que representa las características sobre las que se fundamenta el VNS. Imagen proporcionada por Adolfo Urrutia Zambrana}
+	\label{fig:VNS-facts}
+\end{figure}
+
+El cambio entre entornos se lleva a cabo siguiendo el \autoref{algoritmo:VNS-cambio-entornos}. Como se puede observar, se llevan a cabo acciones diferentes en función de si la nueva solución obtenida por el algoritmo de búsqueda local es mejor que la de partida. La función fitness se ha denotado como $f(x) \in [0,1]$
+
+
+\begin{algorithm}[htbp]
+	%	\SetAlgoLined
+	\DontPrintSemicolon
+	\KwData{
+		
+		$x$, solución actual. En la primera iteración es la inicial.
+				
+		$x'$, solución obtenida del algoritmo de búsqueda local con el entorno $k$
+	}
+	\medskip
+
+	\If{$f(x')>f(x)$}{
+		$x \leftarrow x'$  [Moverse a la mejor solucion] \;
+		$k \leftarrow 1$  [Reinicio de vecindades] \;
+	}
+	\Else{
+		$k \leftarrow k+1$  [Siguiente vecino] \;
+	}
+	
+	\caption{Algoritmo del VNS empleado para el cambio de vecindades}
+	\label{algoritmo:VNS-cambio-entornos}
+\end{algorithm}
+
+ Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
 
 \subsubsection{Adaptación del VNS al problema}
+\label{apartado:adaptacion-VNS}
 Lorem ipsum
 \paragraph{Función Fitness} 
 Lorem ipsum
