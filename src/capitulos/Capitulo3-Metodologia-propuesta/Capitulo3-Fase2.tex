@@ -82,7 +82,8 @@ En la \autoref{fig:VNS-facts} se ilustran estas tres características visualment
 	\label{fig:VNS-facts}
 \end{figure}
 
-El cambio entre entornos se lleva a cabo siguiendo el \autoref{algoritmo:VNS-cambio-entornos}. Como se puede observar, se llevan a cabo acciones diferentes en función de si la nueva solución obtenida por el algoritmo de búsqueda local es mejor que la de partida. La función fitness se ha denotado como $f(x) \in [0,1]$
+Comenzaremos analizando el cambio entre entornos, que se lleva a cabo de la misma forma en todo VNS siguiendo el \autoref{algoritmo:VNS-cambio-entornos}. 
+Como se puede observar, se llevan a cabo acciones diferentes en función de si la nueva solución obtenida por el algoritmo de búsqueda local es mejor que la de partida. La función fitness se ha denotado como $f(x) \in [0,1]$
 
 
 \begin{algorithm}[htbp]
@@ -104,9 +105,63 @@ El cambio entre entornos se lleva a cabo siguiendo el \autoref{algoritmo:VNS-cam
 		$k \leftarrow k+1$  [Siguiente vecino] \;
 	}
 	
-	\caption{Algoritmo del VNS empleado para el cambio de vecindades}
+	\caption{Algoritmo del VNS empleado para el cambio de vecindades en caso de un problema de maximización}
 	\label{algoritmo:VNS-cambio-entornos}
 \end{algorithm}
+
+\NOTE{Contar las variaciones del VNS y completar de explicar el algoritmo de cambio de entornos (seguir libro)}
+
+En cuanto al comportamiento de la búsqueda, el VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación" (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
+
+La componente de búsqueda local se puede realizar en dos enfoques diferentes: buscando la primera solución que mejore la actual (\textit{First Improvement}) o empleando la mejor de todas las posibles soluciones del entorno (\textit{Best Improvement}) sin embargo no siempre es posible obtener todas las soluciones posibles de un entorno, especialmente en problemas complejos como el que tenemos entre manos. En éste problema se ha empleado una técnica mixta que si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda hasta que la solución no se mejore en un porcentaje de tolerancia (véase \NOTE{REFERENCIA} para una descripción detallada). %TODO REFERENCIA!!
+
+Los algoritmos \ref{algoritmo:BestImprovement} y \ref{algoritmo:FirstImprovement} se han obtenido directamente de Hansel et al. \cite{vns}
+
+\begin{algorithm}[htbp]
+%	\SetAlgoLined
+\DontPrintSemicolon
+\KwData{
+$x$, solución actual.
+}
+\medskip
+
+\Repeat{
+	$f(x) \le f(x')$
+}{
+	$x' \leftarrow x$ \;
+	$x \leftarrow \arg \max_{y \in N(x')} f(y)$ \;
+}
+\Return x \;
+
+\caption{Best Improvement}
+\label{algoritmo:BestImprovement}
+\end{algorithm}
+
+\begin{algorithm}[htbp]
+	%	\SetAlgoLined
+	\DontPrintSemicolon
+	\KwData{
+		$x$, solución actual. 
+	}
+	\medskip
+	
+	\Repeat{
+		$f(x) \le f(x')$
+	}{
+		$x' \leftarrow x$ \; 
+		$i \leftarrow 0$ \;
+		\Repeat{$f(x) > f(x')$ ó $i = |N(x)|$}{
+			$i \leftarrow i + 1$ \;
+			$x \leftarrow \arg \max \left\lbrace f(x), f(x^i)\right\rbrace $, $x^i \in N(x)$ \;
+		}
+	}
+	\Return x \;
+	
+	\caption{First Improvement}
+	\label{algoritmo:FirstImprovement}
+\end{algorithm}
+
+Existen algunas variaciones de VNS que reciben nombres diferentes. Comenzaremos describiendo el \textit{Variable Neighborhood Descendent} (VND)
 
  Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
 
