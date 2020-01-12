@@ -94,6 +94,8 @@ Como se puede observar, se llevan a cabo acciones diferentes en función de si l
 		$x$, solución actual. En la primera iteración es la inicial.
 				
 		$x'$, solución obtenida del algoritmo de búsqueda local con el entorno $k$
+		
+		$k$, indice de la vecindad actual
 	}
 	\medskip
 
@@ -109,13 +111,11 @@ Como se puede observar, se llevan a cabo acciones diferentes en función de si l
 	\label{algoritmo:VNS-cambio-entornos}
 \end{algorithm}
 
-\NOTE{Contar las variaciones del VNS y completar de explicar el algoritmo de cambio de entornos (seguir libro)}
-
-En cuanto al comportamiento de la búsqueda, el VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación" (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
+En cuanto al comportamiento de la búsqueda, el VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación`` (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
 
 La componente de búsqueda local se puede realizar en dos enfoques diferentes: buscando la primera solución que mejore la actual (\textit{First Improvement}) o empleando la mejor de todas las posibles soluciones del entorno (\textit{Best Improvement}) sin embargo no siempre es posible obtener todas las soluciones posibles de un entorno, especialmente en problemas complejos como el que tenemos entre manos. En éste problema se ha empleado una técnica mixta que si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda hasta que la solución no se mejore en un porcentaje de tolerancia (véase \NOTE{REFERENCIA} para una descripción detallada). %TODO REFERENCIA!!
 
-Los algoritmos \ref{algoritmo:BestImprovement} y \ref{algoritmo:FirstImprovement} se han obtenido directamente de Hansel et al. \cite{vns}
+Los algoritmos \ref{algoritmo:BestImprovement} y \ref{algoritmo:FirstImprovement} se han obtenido directamente de Hansel et al. \cite{vns} y describen el proceso asociado al \textit{Best Improvement} y al \textit{First Improvement}. respectivamente
 
 \begin{algorithm}[htbp]
 %	\SetAlgoLined
@@ -161,15 +161,107 @@ $x$, solución actual.
 	\label{algoritmo:FirstImprovement}
 \end{algorithm}
 
-Existen algunas variaciones de VNS que reciben nombres diferentes. Comenzaremos describiendo el \textit{Variable Neighborhood Descendent} (VND)
+Por el otro lado, la componente estocástica introduce en la búsqueda una solución generada de forma aleatoria, de manera que nueva información se introduce en el proceso de búsqueda que puede mejorar el valor de fitness empleando, por ejemplo fragmentos de aleatoria que de forma determinista nunca podrían haberse logrado o como mínimo habría sido necesario un mayor tiempo de cómputo. En el \autoref{algoritmo:Basic-VNS} se muestra el proceso esquemáticamente para el VNS Básico. Nótese que la condición de parada es únicamente el tiempo de cómputo, no obstante, se suele combinar con un porcentaje mínimo de mejoría de forma que si la búsqueda se estanca, no se pierda tiempo de cómputo innecesariamente. Las condiciones de parada del algoritmo se encuentran descritas en profundidad en la \autoref{apartado:condiciones-parada}.
 
- Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum
+\begin{algorithm}[htbp]
+	%	\SetAlgoLined
+	\DontPrintSemicolon
+	\KwData{
+		
+		$x$, solución actual. 
+		
+		$k_{max}$, número de entornos definidos para la metaheurística.
+		
+		$t_{max}$, tiempo máximo de ejecución del algoritmo.
+	}
+
+%	\medskip
+	\bigskip
+	
+	$t \leftarrow 0$ \;
+	
+	\While{$t<t_{max}$}{
+		
+		\Repeat{
+			$k = k_{max}$
+		}{
+			$x' \leftarrow \texttt{Shake}(x,k)$ [Componente estocástica]
+			$x'' \leftarrow \texttt{FirstImprovement}(x')$ [Búsqueda local]
+			$x,k \leftarrow \texttt{NeighbourhoodChange}(x,x'',k)$ [Cambio de vecindad]
+		}
+		$t \leftarrow \texttt{CpuTime}()$ [Medición del tiempo de ejecución]
+	}
+
+	\Return x \;
+	
+	\caption{Basic VNS \cite{vns}}
+	\label{algoritmo:Basic-VNS}
+	
+
+\end{algorithm}
+
+Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descendent (VND)}; mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search (RVNS)}. Éste último es el menos costoso computacionalmente, sin embargo es el que menos información del problema emplea y su rendimiento suele ser peor que los demás. 
+
+Otra posible variación se basa en  emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descendent) en lugar de una búsqueda local simple, estaremos empleando un \textit{General VNS}.
+
+Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas,  mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en \cite{svsn-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución, sin embargo, la exploración de debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y ésto se sabe que es ineficiente para este tipo de problemas \cite{vns}). Para evitar ésto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
+
+Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y es el que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} se redefine de la siguiente manera:
+
+\begin{algorithm}[h]
+	%	\SetAlgoLined
+	\DontPrintSemicolon
+	\KwData{
+		
+		$x$, solución actual. En la primera iteración es la inicial.
+		
+		$x'$, solución obtenida del algoritmo de búsqueda local con el entorno $k$
+		
+		$k$, indice de la vecindad actual
+		
+		$\alpha$, parámetro de la metaheurística
+	}
+	\bigskip
+	
+	\If{$f(x')+\alpha \cdot \rho(x,x') > f(x)$}{
+		$x \leftarrow x'$  [Moverse a la mejor solucion] \;
+		$k \leftarrow 1$  [Reinicio de vecindades] \;
+	}
+	\Else{
+		$k \leftarrow k+1$  [Siguiente vecindad] \;
+	}
+	
+	\caption{Redefinición del algoritmo de cambio de vecindades para un \textit{Skewed} VNS en un problema de maximización}
+	\label{algoritmo:SVNS-cambio-entornos}
+\end{algorithm}
+
+Donde $\rho(x,x')$ es la función de distancia definida para el problema concreto.
+
+El algoritmo central del SVNS es homólogo al \autoref{algoritmo:Basic-VNS} con la diferencia de que debido a que el nuevo algoritmo de cambio de entorno no retorna la mejor solución, sino la próxima a explorar (de peor \textit{fitness} pero alejada de ella), debemos almacenar la mejor para no perderla, y actualizarla en cada iteración. Además, será la que devolvamos al final del algoritmo.
+
+Existen más variaciones del algoritmo básico del VNS que no se han contemplado en éste proyecto, por lo que no se encuentran definidas aquí. Más información al respecto puede hallarse en \cite{vns} y \cite{info-adicional-vns}
 
 \subsubsection{Adaptación del VNS al problema}
 \label{apartado:adaptacion-VNS}
-Lorem ipsum
+
+Una vez definida la técnica a utilizar y las posibles variaciones planteadas, debemos instanciar los parámetros del algoritmo y definir las heurísticas ---dependientes del problema concreto--- necesarias de la metaheurística.
+
+En las próximas secciones se describe cómo se ha optado por adaptar la metaheurística descrita en la sección anterior al problema descrito en el \autoref{capitulo:2}: cómo se ha implementado la función de evaluación, qué entornos se han definido y bajo qué criterios son ordenados, las técnicas de exploración y explotación utilizadas y, finalmente, las condiciones de parada
+
+La primera característica necesaria para las metaheurísticas ---y cualquier técnica, en palabras generales--- es la codificación (definida en la sección anterior). En el caso de nuestro problema, tal y como se describió detalladamente en la \autoref{apartado:representacion-soluciones}, las soluciones se representan de forma matricial con una discretización del tiempo a intervalos de 5 minutos. La representación desde el punto de vista de la programación se encuentra descrita en la \autoref{sec:detalles-impl-sistema}. % TODO ajustar referencia cruzada
+
 \paragraph{Función Fitness} 
-Lorem ipsum
+La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor.  Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de encontrar un único objetivo estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de seleccionar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. Otra opción para resolver ésto consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus criterios. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción. 
+
+Nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, % TODO: Poner nombres???
+ deberá ponderar los objetivos según sus criterios. En éste caso, \gls{CRIDA} aún no ha ponderado los objetivos, por lo que se utilizó una técnica
+
+
+
+
+Como se ha descrito previamente en la \autoref{sec:3:metaheurística}, en caso de una optimización multio
+
+
 
 \paragraph{Definiciones de entornos}
 Lorem ipsum
@@ -178,6 +270,7 @@ Lorem ipsum
 Lorem ipsum
 
 \paragraph{Condiciones de Parada}
+\label{apartado:condiciones-parada}
 Lorem ipsum
 
 

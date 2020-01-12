@@ -36,6 +36,8 @@ Mientras que la \fasedos{} o simplemente \textit{Metaheurística}, será la fase
 En las próximas secciones definiremos cada una de estas Fases en detalle.
 
 \subsection{Representación de las soluciones}
+\label{apartado:representacion-soluciones}
+
 Antes de entrar en detalle, es importante explicar cómo se han representado las soluciones. Recordemos que estamos representado planificaciones, es decir una relación matricial de sectores con trabajadores a lo largo del tiempo que dura un turno. De forma que, dada una lista de controladores, en cada instante de tiempo tendremos un sector asignado, así como el tipo de puesto (planificador o ejecutivo).
 
 Las filas de la matriz serán por tanto los controladores que tengamos a nuestra disposición así como los que añadamos dinámicamente para facilitar la inicialización y que serán eliminados en la \fasedos{}, mientras que las columnas de la matriz representarán el tiempo (véase \autoref{fig:3:ejemplo-distribucion-inicial}) desde el inicio del turno hasta el final del turno. Por lo que el tamaño de cada una dependerá de la instancia concreta del problema que estemos 
