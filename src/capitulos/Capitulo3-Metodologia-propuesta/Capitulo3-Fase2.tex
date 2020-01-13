@@ -1,4 +1,4 @@
-\NOTE{REVISAR GRAMÁTICA Y ORTOGRAFÍA A PARTIR DE AQUÍ!!}
+\NOTE{REVISAR GRAMÁTICA Y ORTOGRAFÍA A PARTIR DE AQUÍ!!} %TODO NOTE
 \subsection{Fase 2: Metaheurística de optimización multiobjetivo} \label{sec:3:metaheurística}
 Se trata del núcleo principal del presente proyecto, pues trata de dar solución al problema en sí mediante un enfoque de metaheurísticas.
 
@@ -29,7 +29,16 @@ La codificación permite representar una solución de la forma más compacta pos
 	\item Eficiencia: Fácil de manipular por los operadores de la búsqueda (definidos por cada metaheurística).
 \end{itemize}
 
-Por su parte, la función objetivo o de evaluación (en inglés denominada \textit{fitness}) permite la comparación de soluciones entre sí y representará el objetivo de la búsqueda, de forma que si nos enfrentamos a un problema con varios parámetros objetivo, podamos ponderarlos u ordenarlos según los criterios que se adecuen al problema. Existen varios enfoques para definir una función de evaluación de un problema multiobjetivo: enfoques escalares, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más sencillos son los primeros, pues permiten trasformar el problema multiobjetivo en uniobjetivo y al ser el empleado en esta tesis será descrito con mayor detenimiento en el \autoref{apartado:adaptacion-VNS}
+Por su parte, la función objetivo o de evaluación (en inglés denominada \textit{fitness}) permite la comparación de soluciones entre sí y representará el objetivo de la búsqueda, de forma que si nos enfrentamos a un problema con varios parámetros objetivo, podamos ponderarlos u ordenarlos según los criterios que se adecuen al problema. Existen varios enfoques para definir una función de evaluación de un problema multiobjetivo: enfoques escalares, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más sencillos son los primeros, pues permiten trasformar el problema multiobjetivo en uniobjetivo y al ser el empleado en esta tesis será descrito con mayor detenimiento en el \autoref{apartado:adaptacion-fitness}
+
+Un problema de optimización multiobjetivo es de la siguiente forma:
+%\[
+\begin{flalign*}
+	& \max_x \quad \textbf{f(x)} = \left( \, f_1(\textbf{x}), f_2(\textbf{x}), f_3(\textbf{x}), ..., f_n(\textbf{x}) \, \right) \\
+	& \; \text{s.a.} \quad \textbf{x} \in X
+\end{flalign*}
+%\]
+Siendo $X$ en conjunto de soluciones factibles, definido mediante una serie de restricciones dadas por el dominio del problema.
 
 Por otro lado, las metaheurísticas emplean una o varias soluciones que son comparadas entre sí empleando una función de comparación o evaluación  que suele ser de un coste computacional importante. Ésta función será dependiente del problema a resolver.
 
@@ -204,7 +213,7 @@ Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y
 
 Otra posible variación se basa en  emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descendent) en lugar de una búsqueda local simple, estaremos empleando un \textit{General VNS}.
 
-Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas,  mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en \cite{svsn-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución, sin embargo, la exploración de debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y ésto se sabe que es ineficiente para este tipo de problemas \cite{vns}). Para evitar ésto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
+Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas,  mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en \cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución, sin embargo, la exploración de debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y ésto se sabe que es ineficiente para este tipo de problemas \cite{vns}). Para evitar ésto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
 
 Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y es el que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} se redefine de la siguiente manera:
 
@@ -250,11 +259,46 @@ En las próximas secciones se describe cómo se ha optado por adaptar la metaheu
 
 La primera característica necesaria para las metaheurísticas ---y cualquier técnica, en palabras generales--- es la codificación (definida en la sección anterior). En el caso de nuestro problema, tal y como se describió detalladamente en la \autoref{apartado:representacion-soluciones}, las soluciones se representan de forma matricial con una discretización del tiempo a intervalos de 5 minutos. La representación desde el punto de vista de la programación se encuentra descrita en la \autoref{sec:detalles-impl-sistema}. % TODO ajustar referencia cruzada
 
-\paragraph{Función Fitness} 
+\paragraph{Función Fitness} \label{apartado:adaptacion-fitness}
+
 La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor.  Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de encontrar un único objetivo estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de seleccionar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. Otra opción para resolver ésto consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus criterios. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción. 
 
-Nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, % TODO: Poner nombres???
- deberá ponderar los objetivos según sus criterios. En éste caso, \gls{CRIDA} aún no ha ponderado los objetivos, por lo que se utilizó una técnica
+Dentro de la primera opción, tenemos diferentes alternativas introducidas \hyperref[sec:3:metaheurística]{al principio de ésta sección}, que son: enfoques de escalarización, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más empleados son los primeros, pues aportan una mayor sencillez a la resolución del problema ya que permiten trasformar el problema multiobjetivo en uniobjetivo. Dicha transformación se puede realizar a su vez de diferentes maneras, como se puede apreciar en la \autoref{fig:enfoques-fitness-multiobj}, definidas en detalle en \cite{sota:metaheuristicas-design-impl} entre otros. Nosotros hemos optado con el primero de todos, pues es el más sencillo y nos permite una mayor flexibilidad en caso de tener que modificar las prioridades de los objetivos en un futuro, sin necesidad de recalcular nada. El enfoque de escalarización mediante agregación construye la función fitness de la forma:
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{enfoques-resolucion-fitness-optimizacion-multiobj}
+	\caption[Esquema de los posibles enfoques para la resolución del problema del fitness en optimización multiobjetivo]{Esquema de los posibles enfoques para la resolución del problema del fitness en optimización multiobjetivo. Obtenido de \cite{sota:metaheuristicas-design-impl}}
+	\label{fig:enfoques-fitness-multiobj}
+\end{figure}
+
+\[
+	f(x) = \sum_{i=1}^{n} \lambda_i \cdot f_i(x) = \lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) + ...
+\]
+
+Donde $f_i(x)$ es la función objetivo $i$-ésima y $\lambda$ un escalar entre 0 y 1 de manera que $\sum_{i=1}^n \lambda_i = 1$
+
+Cada función objetivo tiene asociado un escalar que ponderiza la relevancia de la función, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En éste caso, \gls{CRIDA} aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
+
+\begin{enumerate}
+	\item Reducir el número de controladores: Si añadimos nuevos controladores imaginarios, debemos eliminarlos de forma que conservemos el número inicial y, si es posible, reducir el numero inicial de los mismos.
+	
+	\item Factivilidad de las soluciones: es importante que se cumplan los criterios del dominio del problema, pero debido a que se trata de una planificación de urgencia, el decisor lo considera menos importante que el objetivo anterior.
+	
+	\item Tras el momento en el que se sucede la incidencia, los cambios propuestos por nuestro sistema deberían ser \textit{suaves}, es decir, que el numero de cambios de sala de los controladores sea el menor posible.
+	
+	\item Cuanto más se parezca una solución del sistema a una plantilla mejor, pues los empleados están acostrumbrados a manejar este tipo de planificaciones ya que resultan más intuitivas.
+\end{enumerate}
+
+Cuatro objetivos que podemos ponderar de diferentes formas, entre los que encontramos: 
+
+\begin{enumerate}[label=\alph*]
+	\item mismos pesos para todos los objetivos
+	\item pesos del método Rank-Sum (RS)
+	\item pesos del método \textit{Rank Order-Centroid} (ROC)
+\end{enumerate}
+
+La técnica que mejores resultados ofrece es el método ROC, un estudio exhaustivo de éstas técnicas de ponderación de objetivos en problemas de decisión multi-criterio entre otras no nombradas, puede encontrarse en \cite{ROC-comparativas-tecnicas}. \NOTE{ XQ ROC y no RS si en el paper es mejor RS?? }
 
 
 
