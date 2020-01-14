@@ -259,6 +259,8 @@ En las próximas secciones se describe cómo se ha optado por adaptar la metaheu
 
 La primera característica necesaria para las metaheurísticas ---y cualquier técnica, en palabras generales--- es la codificación (definida en la sección anterior). En el caso de nuestro problema, tal y como se describió detalladamente en la \autoref{apartado:representacion-soluciones}, las soluciones se representan de forma matricial con una discretización del tiempo a intervalos de 5 minutos. La representación desde el punto de vista de la programación se encuentra descrita en la \autoref{sec:detalles-impl-sistema}. % TODO ajustar referencia cruzada
 
+\NOTE{poner los vns adaptados al problema (funciondistancia del skewed y demas cosas que no tienen apartado propio)}% TODO: 
+
 \paragraph{Función Fitness} \label{apartado:adaptacion-fitness}
 
 La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor.  Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de encontrar un único objetivo estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de seleccionar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. Otra opción para resolver ésto consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus criterios. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción. 
@@ -318,9 +320,42 @@ Tres de las definiciones de las funciones objetivo han sido reutilizadas de dife
 
 Adicionalmente se ha creado un nuevo objetivo, \ref{O4}, nacido de las nuevas características del presente sistema: el momento del cambio.
 
-A continuación describiremos brevemente cada uno de ellos.
 
-El primer objetivo, \ref{O1} se obtiene tras la normalización de 
+La función objetivo final, empleando el método de escalarización ponderada tiene esta forma:
+\[
+	f(x)= \left\{ \begin{array}{lcc}
+		\lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) & si &  nATC > nATCdisp  \\
+		                                                                          &    &                   \\
+		\lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x)                    & si & nATC \le nATCdisp
+	\end{array}
+   \right.	
+\]
+
+Donde $nATC$ es el número de controladores aéreos (\gls{ATC}) empleados en la solución actual ($x$) y $nATCdisp$ es el numero de controladores disponible para esa instancia del problema. La idea es que el primer número sea igual o menor al primero, de esta forma la solución podrá llevarse a cabo sin necesidad de buscar controladores extra. Como ya se ha dicho previamente, el problema de optimización se expresará en forma de maximización de la expresión.
+
+Se ha definido así debido a que cuando el valor de la primera función objetivo alcanza su máximo valor (uno), ya no aporta nada al sistema, y podemos ahorrarnos un tiempo significativo de cómputo, pues el cálculo de cada una de ellas es costoso (véase \NOTE{Gráfica tiempo ejecución de cada parte del sistema. Comparación usando todos los fitness vs el primero no???}).%TODO hacer grafica y ponerla en implementacion
+
+Para poder emplear este modelo de escalarización aditivo, todas las funciones objetivo se han normalizado, de esta forma las escalas manejadas por cada uno de ellos son las mismas y puedan ser añadidos al sumatorio ponderado.
+
+A continuación describiremos brevemente cada una de estas funciones.
+
+La primera función objetivo \ref{O1} tiene la siguiente fórmula:
+\[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^c i\cdot h_i \]
+Donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios---ccccccccccccc se queden sin carga y puedan ser eliminados (véase \autoref{apartado:representacion-soluciones}).
+
+La segunda función objetivo \ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en el Apartado Implementación requisitos de dominio (entorno)--- %TODO referencia!!
+, favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado). En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase ...) % TODO referencia!
+
+La tercera función objetivo \ref{O3} trata de minimizar el 
+
+
+
+
+
+
+
+
+
 
 
 
