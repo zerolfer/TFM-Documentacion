@@ -278,32 +278,49 @@ Dentro de la primera opción, tenemos diferentes alternativas introducidas \hype
 
 Donde $f_i(x)$ es la función objetivo $i$-ésima y $\lambda$ un escalar entre 0 y 1 de manera que $\sum_{i=1}^n \lambda_i = 1$
 
-Cada función objetivo tiene asociado un escalar que ponderiza la relevancia de la función, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En éste caso, \gls{CRIDA} aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
+Cada función objetivo tiene asociado un escalar que pondera la relevancia de la función, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En éste caso, \gls{CRIDA} aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
 
-\begin{enumerate}
-	\item Reducir el número de controladores: Si añadimos nuevos controladores imaginarios, debemos eliminarlos de forma que conservemos el número inicial y, si es posible, reducir el numero inicial de los mismos.
+\begin{enumerate}[label={O\arabic*}]
+	\item \label{O1} Reducir el número de controladores: Si añadimos nuevos controladores imaginarios, debemos eliminarlos de forma que conservemos el número inicial y, si es posible, reducir el numero inicial de los mismos.
 	
-	\item Factivilidad de las soluciones: es importante que se cumplan los criterios del dominio del problema, pero debido a que se trata de una planificación de urgencia, el decisor lo considera menos importante que el objetivo anterior.
+	\item \label{O2} Factivilidad de las soluciones: es importante que se cumplan los criterios del dominio del problema, pero debido a que se trata de una planificación de urgencia, el decisor lo considera menos importante que el objetivo anterior.
 	
-	\item Tras el momento en el que se sucede la incidencia, los cambios propuestos por nuestro sistema deberían ser \textit{suaves}, es decir, que el numero de cambios de sala de los controladores sea el menor posible.
+	\item \label{O3} Tras el momento en el que se sucede la incidencia, los cambios propuestos por nuestro sistema deberían ser \textit{suaves}, es decir, que el numero de cambios de sala de los controladores sea el menor posible.
 	
-	\item Cuanto más se parezca una solución del sistema a una plantilla mejor, pues los empleados están acostrumbrados a manejar este tipo de planificaciones ya que resultan más intuitivas.
+	\item \label{O4} Cuanto más se parezca una solución del sistema a una plantilla mejor, pues los empleados están acostrumbrados a manejar este tipo de planificaciones ya que resultan más intuitivas.
 \end{enumerate}
 
 Cuatro objetivos que podemos ponderar de diferentes formas, entre los que encontramos: 
 
-\begin{enumerate}[label=\alph*]
+\begin{enumerate}[label=\alph*)]
 	\item mismos pesos para todos los objetivos
 	\item pesos del método Rank-Sum (RS)
 	\item pesos del método \textit{Rank Order-Centroid} (ROC)
 \end{enumerate}
 
-La técnica que mejores resultados ofrece es el método ROC, un estudio exhaustivo de éstas técnicas de ponderación de objetivos en problemas de decisión multi-criterio entre otras no nombradas, puede encontrarse en \cite{ROC-comparativas-tecnicas}. \NOTE{ XQ ROC y no RS si en el paper es mejor RS?? }
+La técnica que mejores resultados ofrece es el método ROC, una definición precisa y un estudio comparativo de éstas técnicas de ponderación de objetivos en problemas de decisión multi-criterio entre otras no nombradas, puede encontrarse en \cite{ROC-comparativas-tecnicas}. \NOTE{ XQ ROC y no RS si en el paper es mejor RS?? } % TODO NOTE;
 
+El método ROC utiliza la siguiente fórmula para la ponderación de cada objetivo $\lambda_i$ ordenados del más importante al menos importante:
+\[
+	\lambda_i = \sfrac{1}{N} \sum_{j=i}^N \frac{1}{j}
+\]
 
+De forma que calculamos todos los pesos $\lambda_i$ con $N=4$. Como podemos ver, suman $1$:
 
+\begin{flalign*}
+	& \lambda_1 =  \sfrac{1}{4} \sum_{j=1}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{1}+\frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.52 \\	
+	&\lambda_2 =  \sfrac{1}{4} \sum_{j=2}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.27 \\
+	&\lambda_3 =  \sfrac{1}{4} \sum_{j=3}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{3}+\frac{1}{4} \right) = 0.15 \\
+	&\lambda_4 =  \sfrac{1}{4} \sum_{j=4}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{4} \right) = 0.06 
+\end{flalign*}
 
-Como se ha descrito previamente en la \autoref{sec:3:metaheurística}, en caso de una optimización multio
+Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del del sistema \legacy{} (objetivos \ref{O1}, \ref{O2} y \ref{O3}). Esto es así debido a que, tal y como se detalló en el \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multi-criterio que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. En nuestro caso se han tomado aquellos objetivos decisivos para el sistema, aunando objetivos de diferentes fases de la metodología propuesta en el sistema \legacy{}. Véase~\cite{articulo1} para una mayor descripción tanto de la metodología \legacy{} como todas las funciones objetivo planteadas entonces.
+
+Adicionalmente se ha creado un nuevo objetivo, \ref{O4}, nacido de las nuevas características del presente sistema: el momento del cambio.
+
+A continuación describiremos brevemente cada uno de ellos.
+
+El primer objetivo, \ref{O1} se obtiene tras la normalización de 
 
 
 
