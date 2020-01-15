@@ -123,6 +123,8 @@ De esta forma, obtendremos una planificación en la que se han tenido en cuenta 
 \end{figure}
 
 \subsubsection{Paso 3 y 4: Dar de baja/alta a los controladores}
+\label{sec:baja-alta-controladores}
+
 Estos pasos son ejecutados únicamente en caso de que haya una incidencia relacionada con el personal. Podría suceder que tras ponerse de baja repentinamente, otro controlador cubra ese puesto a lo largo de la jornada, por lo que tendremos que hacer dos modificaciones a la planificación:
 
 El controlador que se da de baja dejará de trabajar ese día, sin embargo no podemos eliminarlo de la planificación puesto que en momentos previos al \textit{momento actual} si ha trabajado, y hemos de contabilizarlo como carga de trabajo. Emplearemos el carácter especial ``000'' para indicar que se trata de un slot en el que el controlador no está trabajando pero tampoco descansado, al que se deberá tratar de forma especial durante la ejecución de la \fasedos{}, pues no se podrá mover a otro controlador ni se le podrá asignar nuevo trabajo. 
@@ -130,7 +132,10 @@ El controlador que se da de baja dejará de trabajar ese día, sin embargo no po
 Si ningún trabajador se reincorpora a su puesto de trabajo, emplearemos un controlador imaginario al que se le asignará toda la carga de trabajo que tenía el controlador de baja a partir del momento de la incidencia.
 
 La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el controlador 23 se ha puesto de baja a las 9:30 (slot 30) y no hay reincorporación (en caso de haberla el controlador $C_0$ tendría su identificador correspondiente). Nótese que se emplean los caracteres de fuera de turno (``000'') en todos los slots a partir de la incidencia en el caso del controlador de baja mientras que para el controlador imaginario (o el reincorporado según se aplique) sucede lo contrario: todos los slots previos a la incidencia tienen el mencionado carácter. 
-%TODO Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo (véase Fitness) %TODO referencia no se han de computar como tiempo de descanso
+
+\NEW{Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase \autoref{apartado:adaptacion-fitness})---concretamente la función objetivo \ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas la del descanso mínimo (recopiladas en Implementacion requisitos % TODO referencia!
+)--- no se han de computar como tiempo de descanso para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito XXX) % TODO referencia!!
+tenga un valor coherente con la realidad.}
 
 \begin{figure}[htbp]
 	\centering

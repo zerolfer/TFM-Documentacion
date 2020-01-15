@@ -1,4 +1,5 @@
-\NOTE{REVISAR GRAMÁTICA Y ORTOGRAFÍA A PARTIR DE AQUÍ!!} %TODO NOTE
+\NOTE{REVISAR GRAMÁTICA Y ORTOGRAFÍA A PARTIR DE AQUÍ!! \\
+\NEW{A PARTIR DE ÉSTE PUNTO, TODO ES NUEVO}} %TODO NOTE
 \subsection{Fase 2: Metaheurística de optimización multiobjetivo} \label{sec:3:metaheurística}
 Se trata del núcleo principal del presente proyecto, pues trata de dar solución al problema en sí mediante un enfoque de metaheurísticas.
 
@@ -285,7 +286,7 @@ Cada función objetivo tiene asociado un escalar que pondera la relevancia de la
 \begin{enumerate}[label={O\arabic*}]
 	\item \label{O1} Reducir el número de controladores: Si añadimos nuevos controladores imaginarios, debemos eliminarlos de forma que conservemos el número inicial y, si es posible, reducir el numero inicial de los mismos.
 	
-	\item \label{O2} Factivilidad de las soluciones: es importante que se cumplan los criterios del dominio del problema, pero debido a que se trata de una planificación de urgencia, el decisor lo considera menos importante que el objetivo anterior.
+	\item \label{O2} Factibilidad de las soluciones: es importante que se cumplan los criterios del dominio del problema, pero debido a que se trata de una planificación de urgencia, el decisor lo considera menos importante que el objetivo anterior.
 	
 	\item \label{O3} Tras el momento en el que se sucede la incidencia, los cambios propuestos por nuestro sistema deberían ser \textit{suaves}, es decir, que el numero de cambios de sala de los controladores sea el menor posible.
 	
@@ -323,12 +324,15 @@ Adicionalmente se ha creado un nuevo objetivo, \ref{O4}, nacido de las nuevas ca
 
 La función objetivo final, empleando el método de escalarización ponderada tiene esta forma:
 \[
-	f(x)= \left\{ \begin{array}{lcc}
-		\lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) & si &  nATC > nATCdisp  \\
-		                                                                          &    &                   \\
-		\lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x)                    & si & nATC \le nATCdisp
-	\end{array}
-   \right.	
+	f(x)= 
+%	\left\{ 
+	\begin{cases}
+		\lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) & \quad \textrm{si } \, nATC > nATCdisp  \\
+		\\
+%		                                                                          &    &                   \\
+		\lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x)                    & \quad \textrm{si } \,  nATC \le nATCdisp
+	\end{cases}
+%   \right.	
 \]
 
 Donde $nATC$ es el número de controladores aéreos (\gls{ATC}) empleados en la solución actual ($x$) y $nATCdisp$ es el numero de controladores disponible para esa instancia del problema. La idea es que el primer número sea igual o menor al primero, de esta forma la solución podrá llevarse a cabo sin necesidad de buscar controladores extra. Como ya se ha dicho previamente, el problema de optimización se expresará en forma de maximización de la expresión.
@@ -341,25 +345,57 @@ A continuación describiremos brevemente cada una de estas funciones.
 
 La primera función objetivo \ref{O1} tiene la siguiente fórmula:
 \[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^c i\cdot h_i \]
-Donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios---ccccccccccccc se queden sin carga y puedan ser eliminados (véase \autoref{apartado:representacion-soluciones}).
+Donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{apartado:representacion-soluciones}).
 
-La segunda función objetivo \ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en el Apartado Implementación requisitos de dominio (entorno)--- %TODO referencia!!
-, favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado). En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase ...) % TODO referencia!
+La segunda función objetivo \ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en el Apartado Implementación requisitos de dominio (entorno)---, %TODO referencia!!
+favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado). 
 
-La tercera función objetivo \ref{O3} trata de minimizar el 
+En caso de que el trabajador tenga slots fuera de turno (véase \autoref{sec:baja-alta-controladores}) éstos serán contabilizados como descansos para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito XXX) % TODO referencia!!
+tenga un valor coherente con la realidad.
+
+En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase ...) % TODO referencia!
+
+La tercera función objetivo \ref{O3}, implementada por vez primera para éste sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, mejor eficiente y rápido prodrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
+
+Para contar el número de cambios simplemente tendremos que recorrer la matriz por la columna del momento del cambio, el índice $slot_{actual}$ y compararla con la columna anterior $slot_{actual}-1$, matemáticamente lo podríamos expresar como:
+
+\[
+	f_3(x) = \frac{1}{nATC} \sum_{i=1}^{nATC} 
+	\begin{cases}
+		1 & \quad \textrm{si } x_i^{slot_{cambio}} = x_i^{slot_{cambio}-1} \\
+		0 & \quad \textrm{en otro caso }
+	\end{cases}
+\]
 
 
+%\[
+%	f_3(x) = \frac{1}{nATC} \sum_{i=1}^{nATC} t_i
+%	\; , \quad \textrm{con } t_i = \begin{cases}
+%		1 & \quad \textrm{si } x_i^{slot_{actual}} = x_i^{slot_{actual}-1} \\
+%		0 & \quad \textrm{en otro caso }
+%	\end{cases}
+%\]
 
+Con $x_i^j$ el sector y la posición asignados por la solución $x$ al controlador $i$ (fila) en el slot $j$ (columna). Consideramos un cambio tanto cuando el sector es diferente como cuando lo es la posición, aunque sea el mismo sector.
+El quebrado $\sfrac{1}{nATC}$ sirve para normalizar la función, y poder usarla junto con todas las demás. 
 
+La cuarta y última función objetivo \ref{O4}, trata de lograr que las planificaciones resultantes sean parecidas a los estadillos (definidos en el \autoref{sec:3:inicializacion-soluciones}). Lo lograremos comparando para slot de la solución el sector asignado con aquél del slot inmediatamente a la derecha y aquel inmediatamente inferior. Matemáticamente de la siguiente forma:
 
+\[
+	f_4(x) = \sum_{i=1}^{nATC} \sum_{i=1}^{nSlots}
+	\begin{cases}
+		1 & \; \textrm{si } \; x_i^j = x_{i+1}^{j} \\
+													\\
+		1 & \; \textrm{si } \; x_i^j = x_{i}^{j+1}   \\
+													  \\
+		0 & \; \textrm{en otro caso } 
+	\end{cases}
+\]
 
+Con $nSlots$ en número de slots de la instancia concreta del problema. Cabe destacar que, en caso de alcanzar slots
+donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces dicho caso será ignorado.
 
-
-
-
-
-
-\paragraph{Definiciones de entornos}
+\paragraph{Definicion de entornos}
 Lorem ipsum
 
 \paragraph{Búsqueda diversificada/intensificada} \label{capitulo:3:busqueda-divers-intens}
