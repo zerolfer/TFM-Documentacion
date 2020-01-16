@@ -195,11 +195,11 @@ Por el otro lado, la componente estocástica introduce en la búsqueda una soluc
 		\Repeat{
 			$k = k_{max}$
 		}{
-			$x' \leftarrow \texttt{Shake}(x,k)$ [Componente estocástica]
-			$x'' \leftarrow \texttt{FirstImprovement}(x')$ [Búsqueda local]
-			$x,k \leftarrow \texttt{NeighbourhoodChange}(x,x'',k)$ [Cambio de vecindad]
+			$x' \leftarrow \texttt{Shake}(x,k)$ \Comment{Componente estocástica}
+			$x'' \leftarrow \texttt{FirstImprovement}(x')$ \Comment{Búsqueda local}
+			$x,k \leftarrow \texttt{NeighbourhoodChange}(x,x'',k)$ \Comment{Cambio de vecindad}
 		}
-		$t \leftarrow \texttt{CpuTime}()$ [Medición del tiempo de ejecución]
+		$t \leftarrow \texttt{CpuTime}()$ \Comment{Medición del tiempo de ejecución}
 	}
 
 	\Return x \;
@@ -234,11 +234,11 @@ Para ello, el SVNS define un parámetro adicional denotado normalmente como $\al
 	\bigskip
 	
 	\If{$f(x')+\alpha \cdot \rho(x,x') > f(x)$}{
-		$x \leftarrow x'$  [Moverse a la mejor solucion] \;
-		$k \leftarrow 1$  [Reinicio de vecindades] \;
+		$x \leftarrow x'$ \Comment{Moverse a la mejor solucion} \;
+		$k \leftarrow 1$  \Comment{Reinicio de vecindades} \;
 	}
 	\Else{
-		$k \leftarrow k+1$  [Siguiente vecindad] \;
+		$k \leftarrow k+1$ \Comment{Siguiente vecindad} \;
 	}
 	
 	\caption{Redefinición del algoritmo de cambio de vecindades para un \textit{Skewed} VNS en un problema de maximización}
@@ -317,7 +317,7 @@ De forma que calculamos todos los pesos $\lambda_i$ con $N=4$. Como podemos ver,
 	&\lambda_4 =  \sfrac{1}{4} \sum_{j=4}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{4} \right) = 0.06 
 \end{flalign*}
 
-Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del del sistema \legacy{} (objetivos \ref{O1}, \ref{O2} y \ref{O3}). Esto es así debido a que, tal y como se detalló en el \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multi-criterio que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. En nuestro caso se han tomado aquellos objetivos decisivos para el sistema, aunando objetivos de diferentes fases de la metodología propuesta en el sistema \legacy{}. Véase~\cite{articulo1} para una mayor descripción tanto de la metodología \legacy{} como todas las funciones objetivo planteadas entonces.
+Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del del sistema \legacy{} (objetivos \ref{O1}, \ref{O2} y \ref{O3}). Esto es así debido a que, tal y como se detalló en el \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multi-criterio que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. En nuestro caso se han tomado aquellos objetivos decisivos para el sistema, aunando objetivos de diferentes fases de la metodología propuesta en el sistema \legacy{}. Véase~\cite{articulo1} para una mayor descripción tanto de la metodología \legacy{} como todas las funciones objetivo planteadas entonces, especialmente la normalización de las mismas, que se ha optado por no incluir aquí.
 
 Adicionalmente se ha creado un nuevo objetivo, \ref{O4}, nacido de las nuevas características del presente sistema: el momento del cambio.
 
@@ -388,7 +388,7 @@ La cuarta y última función objetivo \ref{O4}, trata de lograr que las planific
 													\\
 		1 & \; \textrm{si } \; x_i^j = x_{i}^{j+1}   \\
 													  \\
-		0 & \; \textrm{en otro caso } 
+		0 & \; \textrm{en otro caso }  \NOTE{HACE FALTA ESTE? LO QUITO??}
 	\end{cases}
 \]
 
@@ -396,7 +396,106 @@ Con $nSlots$ en número de slots de la instancia concreta del problema. Cabe des
 donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces dicho caso será ignorado.
 
 \paragraph{Definicion de entornos}
-Lorem ipsum
+En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
+
+Para definir un entorno, necesitamos concocer la reprentación de las soluciones (recuérdese la \autoref{apartado:representacion-soluciones}), pues en función de la misma definiremos los entornos. En nuestro caso, se trata de una representación discreta en forma matricial. Para este tipo de representaciones lo mas habitual es la permutación de elementos de la solución para tranformarlas en otras.
+
+Los antecedentes respecto a las definiciones de entorno no son demasiadas, Jonatan Lara Valero realizó un estudio exhaustivo desde el punto de vista matemático de los entornos del sistema \legacy{} y propuso uno nuevo con una técnica innovadora de rejilla. En su tesis, Lara describe y analiza el comportamiento de los entornos definidos por Tello et al. en~\cite{articulo1} denominados como \textit{mov3} y \textit{mov6} que han sido utilizados en el SA por lo que los explicaremos brevemente. 
+
+El primer movimiento, \textit{mov3}, se define algorítmicamente de la siguiente manera:
+
+\begin{algorithm}[h]
+	%	\SetAlgoLined
+	\DontPrintSemicolon
+	\LinesNumbered
+	\KwData{
+		
+		$s$, una solución
+		
+		$d$, índice de la solución inicial
+	}
+	\bigskip
+	
+	\Repeat{No queden controladores por probar}{
+		Seleccionar un controlador $c_1$ aleatoriamente
+		Elegir un periodo de trabajo de $c_1$ aleatoriamente \label{testtt}
+	}
+	
+	\caption{Movimiento \textit{mov3}}
+%	\algorithmicgoto~\ref{testtt}
+	\label{algoritmo:entorno-mov3}
+\end{algorithm}
+
+\begin{algorithm}[h]
+	%	\SetAlgoLined
+	\DontPrintSemicolon
+	\LinesNumbered
+	\KwData{
+		
+		$s$, una solución
+		
+		$d$, índice de la solución inicial
+	}
+	\bigskip
+	
+	\Repeat{No queden controladores por probar}{
+		Seleccionar un controlador $c_1$ aleatoriamente
+		Elegir un periodo de trabajo de $c_1$ aleatoriamente 
+	}
+	
+	\caption{Movimiento \textit{mov3}}
+	\label{algoritmo:entorno-mov3}
+\end{algorithm}
+
+El movimiento \textit{mov6} consiste simplemente en la repetición del anterior dos veces para potenciar la capacidad exploratoria del sistema.
+
+\begin{quotation}
+	El movimiento \textit{mov3} [...] selecciona un controlador al azar, que llamaremos $c_1$ y seleccionamos un
+	intervalo con carga	de trabajo para este controlador, también al azar. Se forma una lista de amplitudes [...]. Fijamos una de estas amplitudes al azar. Probamos a intercambiar los intervalos que estén dentro del intervalo
+	seleccionado, con la amplitud seleccionada, del controlador $c_1$ a otro controlador $c_2$ seleccionado al azar. Si este intercambio no resulta en una solución $s_0$ válida, se selecciona
+	otro controlador $c_2$, hasta que se hayan probado todos. Si al analizar no se ha
+	encontrado una solución $s_0$ válida, se selecciona otra amplitud y se vuelven a probar
+	todos los controladores. Si se agotan todas las amplitudes posibles, el movimiento
+	no se realiza. [...] En esta situación, se comenzará una nueva iteración con la misma solución inicial.
+	
+	\rightline{---Jónatan Lara Valero~\cite{tesis-jonatan}}
+\end{quotation}
+
+Lara en su tesis propone además los movimientos en una o varias rejillas, que tratan de mantener la estructura vertical que tienen las soluciones debido a los patrones regulares que presentan los estadillos empleados para definir la solución inicial. 
+
+\begin{quotation}
+%	Los movimientos en rejilla parten de un idea básica: mantener la estructura
+%	vertical de las soluciones iniciales. [...] La construcción de las soluciones iniciales a partir de plantillas hace que tengan ciertas regularidades La estructura vertical es esta regularidad. +
+%	Los cambios en las asignaciones se hacen con regularidad y solo la sectorización puede romper esta regularidad.
+	
+	Los movimientos \textit{mov3} y \textit{mov6} rompen la estructura vertical de las soluciones
+	iniciales salvo que las amplitudes, la longitud de los descansos y la sectorización sean
+	compatibles entre sí, caso que no se dá en muchas situaciones.
+	
+	Para solventar este problema definimos el movimiento \textit{mov12}. En este movimiento,
+	se crea una rejilla a partir de la solución inicial que limita los intercambios
+	que pueden hacerse entre controladores. Una rejilla no será más que una serie de
+	puntos que dividirán el turno en intervalos, no necesariamente iguales en tamaño. El
+	movimiento \textit{mov12} consistirá siempre en intercambiar uno de estos intervalos entre
+	dos controladores.
+	\rightline{---Jónatan Lara Valero~\cite{tesis-jonatan}}
+\end{quotation}
+
+A su vez propone otros movimientos como variaciones de éste, pero para ésta tesis únicamente hemos considerado su propuesta del uso de rejillas simple como un tipo de entornos que hemos definido. Véase la \autoref{fig:representacion-rejilla} para comprender visualmente cómo se constituye una rejilla a partir de una solución.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{representacion-rejilla}
+	\caption[Representación gráfica de una rejilla]{Representación gráfica de una rejilla. Fuente:~\cite{tesis-jonatan}}
+	\label{fig:representacion-rejilla}
+\end{figure}
+
+
+
+
+
+
+Para este proyecto se han definido tres tipos de entornos: basados en 
 
 \paragraph{Búsqueda diversificada/intensificada} \label{capitulo:3:busqueda-divers-intens}
 Lorem ipsum
