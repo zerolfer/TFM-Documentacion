@@ -71,8 +71,12 @@
 
 \usepackage{enumitem}
 
+
+\usepackage[nottoc, notlot, notlof, numbib]{tocbibind}
 \usepackage[spanish, onelanguage, ruled, vlined]{algorithm2e}
 \newcommand{\Comment}[1]{ \tcp*[r]{#1} }
+%\newcommand{\listofalgorithmes}{\tocfile{\listalgorithmcfname}{loa}}
+
 
 \usepackage{multirow}
 \usepackage{cancel}
@@ -247,7 +251,10 @@
     \listoffigures
 
     \listoftables
-
+    
+    \listofalgorithms
+	\afterpage{\blankpage}
+	
     %	CAPTULOS DEL TRABAJO FIN DE MÁSTER
     \newpage
     \pagenumbering{arabic}

@@ -110,11 +110,11 @@ Como se puede observar, se llevan a cabo acciones diferentes en función de si l
 	\medskip
 
 	\If{$f(x')>f(x)$}{
-		$x \leftarrow x'$  [Moverse a la mejor solucion] \;
-		$k \leftarrow 1$  [Reinicio de vecindades] \;
+		$x \leftarrow x'$  \Comment{Moverse a la mejor solucion}
+		$k \leftarrow 1$  \Comment{Reinicio de vecindades}
 	}
 	\Else{
-		$k \leftarrow k+1$  [Siguiente vecino] \;
+		$k \leftarrow k+1$  \Comment{Siguiente vecino}
 	}
 	
 	\caption{Algoritmo del VNS empleado para el cambio de vecindades en caso de un problema de maximización}
@@ -216,10 +216,9 @@ Otra posible variación se basa en  emplear una técnica distinta para la búsqu
 
 Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas,  mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en \cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución, sin embargo, la exploración de debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y ésto se sabe que es ineficiente para este tipo de problemas \cite{vns}). Para evitar ésto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
 
-Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y es el que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} se redefine de la siguiente manera:
+Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y es el que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} explicado previamente se redefine de la siguiente manera:
 
 \begin{algorithm}[h]
-	%	\SetAlgoLined
 	\DontPrintSemicolon
 	\KwData{
 		
@@ -234,11 +233,11 @@ Para ello, el SVNS define un parámetro adicional denotado normalmente como $\al
 	\bigskip
 	
 	\If{$f(x')+\alpha \cdot \rho(x,x') > f(x)$}{
-		$x \leftarrow x'$ \Comment{Moverse a la mejor solucion} \;
-		$k \leftarrow 1$  \Comment{Reinicio de vecindades} \;
+		$x \leftarrow x'$ \Comment{Moverse a la mejor solucion}
+		$k \leftarrow 1$  \Comment{Reinicio de vecindades}
 	}
 	\Else{
-		$k \leftarrow k+1$ \Comment{Siguiente vecindad} \;
+		$k \leftarrow k+1$ \Comment{Siguiente vecindad}
 	}
 	
 	\caption{Redefinición del algoritmo de cambio de vecindades para un \textit{Skewed} VNS en un problema de maximización}
@@ -388,7 +387,7 @@ La cuarta y última función objetivo \ref{O4}, trata de lograr que las planific
 													\\
 		1 & \; \textrm{si } \; x_i^j = x_{i}^{j+1}   \\
 													  \\
-		0 & \; \textrm{en otro caso }  \NOTE{HACE FALTA ESTE? LO QUITO??}
+		0 & \; \textrm{en otro caso }  \NOTE{\textrm{HACE FALTA ESTE? LO QUITO??}}
 	\end{cases}
 \]
 
