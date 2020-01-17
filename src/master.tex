@@ -75,9 +75,12 @@
 \usepackage[nottoc, notlot, notlof, numbib]{tocbibind}
 \usepackage[spanish, onelanguage, ruled, vlined, algosection]{algorithm2e}
 \newcommand{\Comment}[1]{ \tcp*[r]{#1} }
+\newcommand{\algovspace}{ \medskip }
+\newcommand{\algorefpaso}[1]{\texttt{\autoref{#1}}}
 %\newcommand{\listofalgorithmes}{\tocfile{\listalgorithmcfname}{loa}}
 
 
+\usepackage{setspace}
 \usepackage{multirow}
 \usepackage{cancel}
 \renewcommand\CancelColor{\color{red}}
@@ -151,6 +154,9 @@
 \addto\extrasspanish{\def\paragraphautorefname{Sección}}
 
 \addto\extrasspanish{\def\algorithmautorefname{Algoritmo}}
+\renewcommand{\algorithmcflinename}{Paso}
+
+
 
 \captionsetup{labelfont=bf}
 \captionsetup[subfigure]{labelfont=bf}
