@@ -72,7 +72,9 @@ Para hacer más eficiente el recorrido del algoritmo, en lugar de ir slot a slot
 La búsqueda del sector afín es un algoritmo voraz que obtiene el primer sector de entre los que se abren que sea afín al que se cierra, evitando repeticiones.
 
 \begin{algorithm}[H]
-%	\SetAlgoLined
+	\caption{Heurística de inicialización: AFINIDADES}
+	\label{algoritmo:inicializacion-afinidades}
+	
 	\DontPrintSemicolon
 	\KwData{
 		
@@ -98,8 +100,7 @@ La búsqueda del sector afín es un algoritmo voraz que obtiene el primer sector
 			
 	}
 	
-	\caption{Heurística de inicialización: AFINIDADES}
-	\label{algoritmo:inicializacion-afinidades}
+
 \end{algorithm}
 
 

@@ -95,9 +95,10 @@ En la \autoref{fig:VNS-facts} se ilustran estas tres características visualment
 Comenzaremos analizando el cambio entre entornos, que se lleva a cabo de la misma forma en todo VNS siguiendo el \autoref{algoritmo:VNS-cambio-entornos}. 
 Como se puede observar, se llevan a cabo acciones diferentes en función de si la nueva solución obtenida por el algoritmo de búsqueda local es mejor que la de partida. La función fitness se ha denotado como $f(x) \in [0,1]$
 
-
 \begin{algorithm}[htbp]
-	%	\SetAlgoLined
+	\caption{Algoritmo del VNS empleado para el cambio de vecindades en caso de un problema de maximización}
+	\label{algoritmo:VNS-cambio-entornos}
+
 	\DontPrintSemicolon
 	\KwData{
 		
@@ -117,8 +118,7 @@ Como se puede observar, se llevan a cabo acciones diferentes en función de si l
 		$k \leftarrow k+1$  \Comment{Siguiente vecino}
 	}
 	
-	\caption{Algoritmo del VNS empleado para el cambio de vecindades en caso de un problema de maximización}
-	\label{algoritmo:VNS-cambio-entornos}
+
 \end{algorithm}
 
 En cuanto al comportamiento de la búsqueda, el VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación`` (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
@@ -128,7 +128,9 @@ La componente de búsqueda local se puede realizar en dos enfoques diferentes: b
 Los algoritmos \ref{algoritmo:BestImprovement} y \ref{algoritmo:FirstImprovement} se han obtenido directamente de Hansel et al. \cite{vns} y describen el proceso asociado al \textit{Best Improvement} y al \textit{First Improvement}. respectivamente
 
 \begin{algorithm}[htbp]
-%	\SetAlgoLined
+\caption{Best Improvement}
+\label{algoritmo:BestImprovement}
+
 \DontPrintSemicolon
 \KwData{
 $x$, solución actual.
@@ -143,12 +145,12 @@ $x$, solución actual.
 }
 \Return x \;
 
-\caption{Best Improvement}
-\label{algoritmo:BestImprovement}
 \end{algorithm}
 
 \begin{algorithm}[htbp]
-	%	\SetAlgoLined
+	\caption{First Improvement}
+	\label{algoritmo:FirstImprovement}
+	
 	\DontPrintSemicolon
 	\KwData{
 		$x$, solución actual. 
@@ -167,14 +169,14 @@ $x$, solución actual.
 	}
 	\Return x \;
 	
-	\caption{First Improvement}
-	\label{algoritmo:FirstImprovement}
 \end{algorithm}
 
 Por el otro lado, la componente estocástica introduce en la búsqueda una solución generada de forma aleatoria, de manera que nueva información se introduce en el proceso de búsqueda que puede mejorar el valor de fitness empleando, por ejemplo fragmentos de aleatoria que de forma determinista nunca podrían haberse logrado o como mínimo habría sido necesario un mayor tiempo de cómputo. En el \autoref{algoritmo:Basic-VNS} se muestra el proceso esquemáticamente para el VNS Básico. Nótese que la condición de parada es únicamente el tiempo de cómputo, no obstante, se suele combinar con un porcentaje mínimo de mejoría de forma que si la búsqueda se estanca, no se pierda tiempo de cómputo innecesariamente. Las condiciones de parada del algoritmo se encuentran descritas en profundidad en la \autoref{apartado:condiciones-parada}.
 
 \begin{algorithm}[htbp]
-	%	\SetAlgoLined
+	\caption{Basic VNS \cite{vns}}
+	\label{algoritmo:Basic-VNS}
+	
 	\DontPrintSemicolon
 	\KwData{
 		
@@ -204,13 +206,9 @@ Por el otro lado, la componente estocástica introduce en la búsqueda una soluc
 
 	\Return x \;
 	
-	\caption{Basic VNS \cite{vns}}
-	\label{algoritmo:Basic-VNS}
-	
-
 \end{algorithm}
 
-Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descendent (VND)}; mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search (RVNS)}. Éste último es el menos costoso computacionalmente, sin embargo es el que menos información del problema emplea y su rendimiento suele ser peor que los demás. 
+Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descendent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Éste último es el menos costoso computacionalmente, sin embargo es el que menos información del problema emplea y su rendimiento suele ser peor que los demás. 
 
 Otra posible variación se basa en  emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descendent) en lugar de una búsqueda local simple, estaremos empleando un \textit{General VNS}.
 
@@ -219,6 +217,9 @@ Por último, existen otras variaciones que rompen con la estructura básica del 
 Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y es el que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} explicado previamente se redefine de la siguiente manera:
 
 \begin{algorithm}[h]
+	\caption{Redefinición del algoritmo de cambio de vecindades para un \textit{Skewed} VNS en un problema de maximización}
+	\label{algoritmo:SVNS-cambio-entornos}
+	
 	\DontPrintSemicolon
 	\KwData{
 		
@@ -240,8 +241,6 @@ Para ello, el SVNS define un parámetro adicional denotado normalmente como $\al
 		$k \leftarrow k+1$ \Comment{Siguiente vecindad}
 	}
 	
-	\caption{Redefinición del algoritmo de cambio de vecindades para un \textit{Skewed} VNS en un problema de maximización}
-	\label{algoritmo:SVNS-cambio-entornos}
 \end{algorithm}
 
 Donde $\rho(x,x')$ es la función de distancia definida para el problema concreto.
@@ -399,12 +398,15 @@ En secciones previas se ha introducido el concepto de entorno: estructuras algor
 
 Para definir un entorno, necesitamos concocer la reprentación de las soluciones (recuérdese la \autoref{apartado:representacion-soluciones}), pues en función de la misma definiremos los entornos. En nuestro caso, se trata de una representación discreta en forma matricial. Para este tipo de representaciones lo mas habitual es la permutación de elementos de la solución para tranformarlas en otras.
 
-Los antecedentes respecto a las definiciones de entorno no son demasiadas, Jonatan Lara Valero realizó un estudio exhaustivo desde el punto de vista matemático de los entornos del sistema \legacy{} y propuso uno nuevo con una técnica innovadora de rejilla. En su tesis, Lara describe y analiza el comportamiento de los entornos definidos por Tello et al. en~\cite{articulo1} denominados como \textit{mov3} y \textit{mov6} que han sido utilizados en el SA por lo que los explicaremos brevemente. 
+Los antecedentes respecto a las definiciones de entorno no son demasiados, Jonatan Lara Valero realizó un estudio exhaustivo desde el punto de vista matemático de los entornos del sistema \legacy{} y propuso uno nuevo con una técnica innovadora de rejilla. En su tesis, Lara describe y analiza el comportamiento de los entornos definidos por Tello et al. en~\cite{articulo1} denominados como \textit{mov3} y \textit{mov6}. 
 
 El primer movimiento, \textit{mov3}, se define algorítmicamente de la siguiente manera:
 
 \begin{algorithm}[h]
-	%	\SetAlgoLined
+	\caption{Movimiento \textit{mov3}}
+%	\algorithmicgoto~\ref{testtt}
+	\label{algoritmo:entorno-mov3}
+	
 	\DontPrintSemicolon
 	\LinesNumbered
 	\KwData{
@@ -415,18 +417,17 @@ El primer movimiento, \textit{mov3}, se define algorítmicamente de la siguiente
 	}
 	\bigskip
 	
-	\Repeat{No queden controladores por probar}{
-		Seleccionar un controlador $c_1$ aleatoriamente
-		Elegir un periodo de trabajo de $c_1$ aleatoriamente \label{testtt}
+	\Repeat{no queden controladores por probar}{
+		Seleccionar un controlador $c_1$ aleatoriamente \;
+		Elegir un periodo de trabajo de $c_1$ aleatoriamente \label{testtt} \;
 	}
 	
-	\caption{Movimiento \textit{mov3}}
-%	\algorithmicgoto~\ref{testtt}
-	\label{algoritmo:entorno-mov3}
 \end{algorithm}
 
 \begin{algorithm}[h]
-	%	\SetAlgoLined
+	\caption{Movimiento \textit{mov3}}
+	\label{algoritmo:entorno-mov3}
+	
 	\DontPrintSemicolon
 	\LinesNumbered
 	\KwData{
@@ -442,8 +443,6 @@ El primer movimiento, \textit{mov3}, se define algorítmicamente de la siguiente
 		Elegir un periodo de trabajo de $c_1$ aleatoriamente 
 	}
 	
-	\caption{Movimiento \textit{mov3}}
-	\label{algoritmo:entorno-mov3}
 \end{algorithm}
 
 El movimiento \textit{mov6} consiste simplemente en la repetición del anterior dos veces para potenciar la capacidad exploratoria del sistema.
