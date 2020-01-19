@@ -214,7 +214,7 @@ Por el otro lado, la componente estocástica introduce en la búsqueda una soluc
 
 Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descendent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Éste último es el menos costoso computacionalmente, sin embargo es el que menos información del problema emplea y su rendimiento suele ser peor que los demás. 
 
-Otra posible variación se basa en  emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descendent) en lugar de una búsqueda local simple, estaremos empleando un \textit{General VNS}.
+Otra posible variación respecto a la versión básica se basa en  emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descendent) en lugar de una búsqueda local simple para, estaremos empleando un \textit{General VNS}.
 
 Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas,  mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en~\cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución, sin embargo, la exploración de debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y ésto se sabe que es ineficiente para este tipo de problemas~\cite{vns}). Para evitar ésto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
 
@@ -519,6 +519,8 @@ Como podemos ver, los dos primeros no tienen libertades de movimiento, sino que 
 La idea inicial consiste en emplearlos en el orden descrito, de forma que primero se quite la máxima carga del controlador superior y si no es posible, se utilicen rejillas, y finalmente sin restricciones de entorno. No obstante, empíricamente descubrimos que ésto no era lo óptimo, tal y como se ha indicado en el \autoref{capitulo:5}.
 
 \subparagraph{Movimientos de máxima carga}
+\label{entorno:movMaxCarga}
+
 \textbf{Objetivo:} Intentar pasar toda la carga de trabajo continuado.
 
 \textbf{Comportamiento:} Se intenta pasar toda la máxima carga posible de trabajo de $c_1$ a $c_2$
@@ -584,6 +586,8 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 \end{enumerate}
 
 \subparagraph{Movimientos en rejilla}
+\label{entorno:movRejilla}
+
 \textbf{Objetivo:} Intentar pasar la carga de trabajo de forma controlada para no romper la estructura de la solución.
 
 \textbf{Comportamiento:} El cambio de carga de trabajo se realiza unicamente entre intervalos limitados por las rejillas
@@ -649,6 +653,8 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 \end{enumerate}
 
 \subparagraph{Movimiento libre (\textit{movLibre})}
+\label{entorno:movLibre}
+
 \textbf{Objetivo:} Intentar pasar la carga de trabajo en tamaños menores, permitiendo en caso necesario romper la estructura.
 
 \textbf{Comportamiento:} Prueba tamaños de mayor a menor hasta que se pueda hacer el cambio
@@ -696,7 +702,6 @@ Para el caso de \textit{movLibre} no se han definido restricciones de dominio.
 	\algovspace
 \end{algorithm}
 
-	
 
 \paragraph{Búsqueda diversificada/intensificada} \label{capitulo:3:busqueda-divers-intens}
 Ya hemos visto que la búsqueda va orientada hacia unos objetivos, y es el valor del fitness quien permite evaluar y cuantificar cuanto se acercan a ellos. Por otro lado, para poder moverse entre soluciones, de forma que podamos aumentar
@@ -709,14 +714,27 @@ hace uso de ambas de forma equilibrada, si bien las basadas en una solución sue
 
 La metaheurística \gls{VNS} es considerablemente explotativa, pero permite dar juego a estas componentes de tres posibles maneras:
 \begin{enumerate}[label=\alph*.]
-\item El tipo de VNS: VND, BVNS, RVNS...
-\item El orden de los entornos:hacia adelante, hacia atrás, etc.
-\item La forma de elegir los entornos: determinista, probabilista
+\item Tipo de VNS: VND, BVNS, RVNS...
+\item Orden de los entornos:hacia adelante, hacia atrás, etc.
+\item Naturaleza de selección de los entornos: determinista, probabilista
 \end{enumerate}
 
 Vamos a analizarlos por separado en los siguientes párrafos.
 
-El tipo de VNS es la forma más clara y sencilla de ajustar la capacidad explotatoria/explotatoria de la búsqueda. Si partimos de la definición básica del VNS, el \textit{Basic VNS} (recuérdese mediante el \autoref{algoritmo:Basic-VNS} a principio del capítulo)
+El tipo de VNS es la forma más clara y sencilla de ajustar la capacidad exploratoria/explotatoria de la búsqueda. Si partimos de la definición básica del VNS, el \textit{Basic VNS} (recuérdese mediante el \autoref{algoritmo:Basic-VNS} a principio del capítulo) podemos ver claramente que la componente de búsqueda local es puramente intensificación, mientras que la componente de shaking es únicamente exploración mediante una perturbación aleatoria. 
+Ésta es precisamente la técnica más usual para introducir exploración en una metaheurística. 
+Si eliminamos la componente de búsqueda local, el \textit{Reduced VNS}, potencia la exploración, mientras que si eliminamos la componente de búsqueda local, el \textit{VND}, se potencia la capacidad de explotación. 
+En el caso del \textit{General VNS}, potenciamos la capacidad de exploración, pues si bien un VND es meramente determinista, a diferencia de una búsqueda local simple, emplea más de un entorno y cada uno de ellos llega a diferentes puntos del espacio de búsqueda. 
+Por último, el SVNS tiene por fundamento elegir soluciones peores para mejorar su eficiencia explorando por otros lugares menos prometedores, por lo que claramente potencia una capacidad exploratoria extra en la búsqueda.
+
+En segundo lugar, el orden de los entornos puede ser muy relevante a la hora de explorar y explotar el espacio de búsqueda, puesto que si en primer lugar la búsqueda opta por entornos más intentificadores, entonces esta dará preferencia a explotar la solución hasta que no sea posible mejorarla aún más, en cuyo caso, empleará el resto de entornos menos intentificadores y más exploratorios. Por ello tendremos que clasificar los entornos definidos anteriormente (véase la \autoref{paragraph:entornos}) en función de la característica que potencian más. 
+%La lista de entornos se puede recorrer de varias formas, hacia adelante ($1,\dots,k_{max}$), hacia adelante ($k_{max},\dots,1$) o con un salto, pero sin más
+
+Se ha considerado los entornos \hyperref[entorno:movMaxCarga]{\textit{movMaxCarga}} y \hyperref[entorno:movLibre]{\textit{movLibre}} como más exploratorios, pues permiten moverse hacia soluciones más lejanas en el primero, y más difíciles de alcanzar por los demás en el caso del segundo. Por el otro lado, el entorno \hyperref[entorno:movRejilla]{\textit{movRejilla}} se considera más intensificador, pues está limitado y cambios muy concretos y limitados de la solución.
+
+Esta clasificación es importante para la tercera y última técnica para ajustar la diversificación/intensificación del sistema: la naturaleza de la selección de los entornos. En esta tesis se han probado dos enfoques, el clásico determinista, y uno probabilista. 
+
+El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilista permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. 
 
 \paragraph{Condiciones de Parada}
 \label{apartado:condiciones-parada}
