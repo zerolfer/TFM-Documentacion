@@ -397,7 +397,7 @@ La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planific
 Con $nSlots$ en número de slots de la instancia concreta del problema. Cabe destacar que, en caso de alcanzar slots
 donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces dicho caso será ignorado.
 
-\paragraph{Definicion de entornos}
+\paragraph{Definicion de entornos} \label{paragraph:entornos}
 En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
 
 Para definir un entorno, necesitamos conocer la representación de las soluciones (recuérdese la \autoref{apartado:representacion-soluciones}), pues en función de la misma definiremos los entornos. En nuestro caso, se trata de una representación discreta en forma matricial. Para este tipo de representaciones lo mas habitual es la permutación de elementos de la solución para transformarlas en otras.
@@ -516,7 +516,7 @@ Para este proyecto se han empleado ideas de todos ellos y se han definido tres t
 
 Como podemos ver, los dos primeros no tienen libertades de movimiento, sino que deberán mover un numero de slots concreto, nunca menor que la carga continuada o la sección limitada por la rejilla. Para no limitar el espacio de soluciones, añadimos el último, que permite esa libertad en cuanto al tamaño. A continuación describiremos cada uno de ellos.
 
-La idea inicial consiste en emplearlos en el orden descrito, de forma que primero se quite la máxima carga del controlador superior y si no es posible, se utilicen rejillas, y finalmente sin restricciones de entorno. No obstante, empirícamente descubrimos que ésto no era lo óptimo, tal y como se ha indicado en el \autoref{capitulo:5}.
+La idea inicial consiste en emplearlos en el orden descrito, de forma que primero se quite la máxima carga del controlador superior y si no es posible, se utilicen rejillas, y finalmente sin restricciones de entorno. No obstante, empíricamente descubrimos que ésto no era lo óptimo, tal y como se ha indicado en el \autoref{capitulo:5}.
 
 \subparagraph{Movimientos de máxima carga}
 \textbf{Objetivo:} Intentar pasar toda la carga de trabajo continuado.
@@ -546,10 +546,10 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 	
 	\If{se cumplen las restricciones del dominio (en especial que la acreditación sea válida %TODO referencia al requisito concreto
 		)o y del entorno \label{line:maxcarga:restricciones}}{traspasar carga y \textbf{fin}}
-%	\footnote{Es decir, que ambos trabajadores estén acreditados para llevar a cabo el trabajo del otro controlador}
+	%	\footnote{Es decir, que ambos trabajadores estén acreditados para llevar a cabo el trabajo del otro controlador}
 	\algovspace
 	
-	\textbf{en caso de\,} \underline{no se cumplirse alguna restricción}, probar con otro $c_2$ volviendo al \autoref{line:maxcarga:c2}\;
+	\textbf{en caso de\,} \underline{no cumplirse alguna restricción}, probar con otro $c_2$ volviendo al \autoref{line:maxcarga:c2}\;
 	\algovspace
 	
 	\textbf{en caso de\,} \underline{haber probado todos los $c_2$}, tomar otro intervalo de trabajo y volver al \autoref{line:maxcarga:trabajo}\;
@@ -564,27 +564,159 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 	\item[MovMaxCarga]\mbox{}\\No hay restricciones
 	
 	\item[MovMaxCarga\_1]\mbox{}\\
-		$c_1$ debe tener trabajo en el intervalo elegido \\ 
-		$c_2$ debe estar descansando en el intervalo elegido
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar descansando en el intervalo elegido
 	
 	\item[MovMaxCarga\_2]\mbox{}\\
-		$c_1$ debe tener trabajo en el intervalo elegido \\ 
-		$c_2$ debe estar trabajando en el intervalo elegido \\
-		El sector y la posición de trabajo de $c_1$ deberán ser la misma que la de $c_2$
-
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar trabajando en el intervalo elegido \\
+	El sector y la posición de trabajo de $c_1$ deberán ser la misma que la de $c_2$
+	
 	\item[MovMaxCarga\_3]\mbox{}\\
-		$c_1$ debe tener trabajo en el intervalo elegido \\ 
-		$c_2$ debe estar descansando en el intervalo elegido \\
-		El sector de $c_1$ deberá ser el mismo que el de $c_2$, pero la posición del trabajo no tiene por qué
-
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar descansando en el intervalo elegido \\
+	El sector de $c_1$ deberá ser el mismo que el de $c_2$, pero la posición del trabajo no tiene por qué
+	
 	\item[MovMaxCarga\_4]\mbox{}\\
-		$c_1$ debe tener trabajo en el intervalo elegido \\ 
-		$c_2$ debe estar descansando en el intervalo elegido \\
-		El sector y la posición de trabajo podrán ser diferentes 
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar descansando en el intervalo elegido \\
+	El sector y la posición de trabajo podrán ser diferentes 
 \end{enumerate}
 
+\subparagraph{Movimientos en rejilla}
+\textbf{Objetivo:} Intentar pasar la carga de trabajo de forma controlada para no romper la estructura de la solución.
+
+\textbf{Comportamiento:} El cambio de carga de trabajo se realiza unicamente entre intervalos limitados por las rejillas
+
+\textbf{Algoritmo:}
+\RestyleAlgo{plain}
+\SetAlgoNoLine
+\LinesNumbered
+\SetAlgoNoEnd
+\DontPrintSemicolon
+\begin{algorithm}[h]
+	\label{algoritmo:movRejilla}
+	\SetAlgoNoEnd
+	Se elige arbitrariamente un controlador $c_1$ (en caso de existir algún imaginario, en lugar de arbitrariamente, se toma en orden partiendo del primer imaginario) \label{line:rejilla:paso1}\;
+	\algovspace
+	
+	Obtener rejilla\;
+	\algovspace
+	
+	Elegir un intervalo de la rejilla aleatoriamente \label{line:rejilla:trabajo}\;
+	\algovspace
+	
+	Elegir arbitrariamente un controlador $c_2$ \label{line:rejilla:c2}\;
+	\algovspace
+	
+	\If{se cumplen las restricciones del dominio y del entorno \label{line:rejilla:restricciones}}{traspasar carga y \textbf{fin}}
+	%	\footnote{Es decir, que ambos trabajadores estén acreditados para llevar a cabo el trabajo del otro controlador}
+	\algovspace
+	
+	\textbf{en caso de\,} \underline{no cumplirse alguna restricción}, probar con otro $c_2$ volviendo al \autoref{line:rejilla:c2}\;
+	\algovspace
+	
+	\textbf{en caso de\,} \underline{haber probado todos los $c_2$}, tomar otro intervalo de trabajo de la rejilla arbitrariamente, volviendo al \autoref{line:rejilla:trabajo}\;
+	\algovspace
+	
+	\textbf{en caso de\,} \underline{haber probado todos los intervalos de trabajo}, volver al \autoref{line:rejilla:paso1} hasta probar todos los $c_1$\;
+	\algovspace
+\end{algorithm}
+
+\textbf{Restricciones de entorno (y nombre):}
+\begin{enumerate}[align=parleft, labelsep=2cm, itemindent=5em, font=\itshape]
+	\item[MovRejilla]\mbox{}\\No hay restricciones
+	
+	\item[MovRejilla\_1]\mbox{}\\
+	Seleccionamos aleatoriamente uno de los intervalos de las rejillas que cumplan:
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar descansando en el intervalo elegido
+	
+	\item[MovRejilla\_2]\mbox{}\\
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar trabajando en el intervalo elegido \\
+	El sector y la posición de trabajo de $c_1$ deberán ser la misma que la de $c_2$
+	
+	\item[MovRejilla\_3]\mbox{}\\
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar descansando en el intervalo elegido \\
+	El sector de $c_1$ deberá ser el mismo que el de $c_2$, pero la posición del trabajo no tiene por qué
+	
+	\item[MovRejilla\_4]\mbox{}\\
+	$c_1$ debe tener trabajo en el intervalo elegido \\ 
+	$c_2$ debe estar descansando en el intervalo elegido \\
+	El sector y la posición de trabajo podrán ser diferentes 
+\end{enumerate}
+
+\subparagraph{Movimiento libre (\textit{movLibre})}
+\textbf{Objetivo:} Intentar pasar la carga de trabajo en tamaños menores, permitiendo en caso necesario romper la estructura.
+
+\textbf{Comportamiento:} Prueba tamaños de mayor a menor hasta que se pueda hacer el cambio
+
+Para el caso de \textit{movLibre} no se han definido restricciones de dominio.
+\newpage
+\textbf{Algoritmo:}
+\RestyleAlgo{plain}
+\SetAlgoNoLine
+\LinesNumbered
+\SetAlgoNoEnd
+\DontPrintSemicolon
+\begin{algorithm}[h]
+	\label{algoritmo:movLibre}
+	\SetAlgoNoEnd
+	Elegir aleatoriamente un controlador $c_1$  \label{line:libre:paso1}\;
+	\algovspace
+	
+	Obtener intervalos de trabajo continuados de $c_1$\;
+	\algovspace
+	
+	Elegir un intervalo de trabajo aleatoriamente \label{line:libre:trabajo}\;
+	\algovspace
+	
+	Seleccionar un subintervalo desde el inicio del intervalo hasta un cierto tamaño que será inicialmente el máximo y se irá reduciendo en 1 slot cada vez que no encuentre opción de hacer el traspaso de carga \label{line:libre:subintervalo}\;
+	\algovspace
+	
+	Elegir arbitrariamente un controlador $c_2$ \label{line:libre:c2}\;
+	\algovspace
+	
+	\If{se cumplen las restricciones del dominio}{traspasar carga y \textbf{fin}}
+	%	\footnote{Es decir, que ambos trabajadores estén acreditados para llevar a cabo el trabajo del otro controlador}
+	\algovspace
+	
+	\textbf{en caso de\,} \underline{no cumplirse alguna restricción}, probar con otro $c_2$ volviendo al \autoref{line:libre:c2}\;
+	\algovspace
+	
+	\textbf{en caso de\,} \underline{haber probado todos los $c_2$}, reducir el tamaño del subintervalo y volver al \autoref{line:libre:subintervalo}\;
+	\algovspace
+	
+	\textbf{en caso de\,} \underline{haber reducido al mínimo (1 slot) el tamaño del subintervalo}, se elige arbitrariamente otro periodo de trabajo continuado, volviendo así al \autoref{line:libre:trabajo}\;
+	\algovspace
+	
+	\textbf{en caso de\,} \underline{haber probado todos los intervalos de trabajo}, volver al \autoref{line:libre:paso1} hasta probar todos los $c_1$\;
+	\algovspace
+\end{algorithm}
+
+	
+
 \paragraph{Búsqueda diversificada/intensificada} \label{capitulo:3:busqueda-divers-intens}
-Lorem ipsum
+Ya hemos visto que la búsqueda va orientada hacia unos objetivos, y es el valor del fitness quien permite evaluar y cuantificar cuanto se acercan a ellos. Por otro lado, para poder moverse entre soluciones, de forma que podamos aumentar
+el valor del fitness, se emplean varios entornos, definidos \hyperref[paragraph:entornos]{en la sección anterior}.
+
+En la definición de una metaheurística dos características juegan un papel importante: la intensificación (o explotación) y la diversificación (o exploración). En la intensificación, trataremos de explorar regiones prometedoras del espacio de soluciones, dando uso a la información prometedora de la solución para obtener mejores soluciones, mientras que el la diversificación trataremos de explorar regiones del espacio más amplias, para asegurarse de que la búsqueda no quede atrapada en un óptimo local de una región concreta del espacio.
+
+Ambas técnicas enfocan el problema de la mejora de la solución actual de dos formas opuestas. Una buena metaheurística
+hace uso de ambas de forma equilibrada, si bien las basadas en una solución suelen ser mas explotativas y las poblacionales más exploratorias.
+
+La metaheurística \gls{VNS} es considerablemente explotativa, pero permite dar juego a estas componentes de tres posibles maneras:
+\begin{enumerate}[label=\alph*.]
+\item El tipo de VNS: VND, BVNS, RVNS...
+\item El orden de los entornos:hacia adelante, hacia atrás, etc.
+\item La forma de elegir los entornos: determinista, probabilista
+\end{enumerate}
+
+Vamos a analizarlos por separado en los siguientes párrafos.
+
+El tipo de VNS es la forma más clara y sencilla de ajustar la capacidad explotatoria/explotatoria de la búsqueda. Si partimos de la definición básica del VNS, el \textit{Basic VNS} (recuérdese mediante el \autoref{algoritmo:Basic-VNS} a principio del capítulo)
 
 \paragraph{Condiciones de Parada}
 \label{apartado:condiciones-parada}
