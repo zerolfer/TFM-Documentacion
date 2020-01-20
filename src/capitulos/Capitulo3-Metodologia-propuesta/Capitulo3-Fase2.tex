@@ -89,15 +89,22 @@ Con todo, el VNS se basa en tres caraterísticas:
 
 En la \autoref{fig:VNS-facts} se ilustran estas tres características visualmente.
 
-\begin{figure}[htbp]
+\begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{VNS-facts}
 	\caption[Ilustración que representa las características sobre las que se fundamenta el VNS]{Ilustración que representa las características sobre las que se fundamenta el VNS. Imagen proporcionada por Adolfo Urrutia Zambrana}
 	\label{fig:VNS-facts}
 \end{figure}
 
-Comenzaremos analizando el cambio entre entornos, que se lleva a cabo de la misma forma en todo VNS siguiendo el \autoref{algoritmo:VNS-cambio-entornos}. 
+Comenzaremos analizando el cambio entre entornos, que se lleva a cabo de la misma forma en todo VNS siguiendo el \autoref{algoritmo:VNS-cambio-entornos}. La \autoref{fig:esquema-idea-basica-VNS} muestra lo mismo de forma más gráfica.
 Como se puede observar, se llevan a cabo acciones diferentes en función de si la nueva solución obtenida por el algoritmo de búsqueda local es mejor que la de partida. La función fitness se ha denotado como $f(x) \in [0,1]$
+
+\begin{figure}
+	\centering
+	\includegraphics[width=.9\linewidth]{esquema-idea-basica-VNS}
+	\caption[Esquema que representa la idea básica del cambio de entornos en todo VNS]{Esquema que representa la idea básica del cambio de entornos en todo VNS. Fuente:~\cite{sota:metaheuristicas-design-impl}}
+	\label{fig:esquema-idea-basica-VNS}
+\end{figure}
 
 \begin{algorithm}[htbp]
 	\caption{Algoritmo del VNS empleado para el cambio de vecindades en caso de un problema de maximización}
@@ -281,9 +288,9 @@ Dentro de la primera opción, tenemos diferentes alternativas introducidas \hype
 	f(x) = \sum_{i=1}^{n} \lambda_i \cdot f_i(x) = \lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) + \dots
 \]
 
-Donde $f_i(x)$ es la función objetivo $i$-ésima y $\lambda$ un escalar entre 0 y 1 de manera que $\sum_{i=1}^n \lambda_i = 1$
+Donde $f_i(x)$ es la función objetivo $i$-ésima y $\lambda$ un escalar entre 0 y 1 de manera que~$\sum_{i=1}^n \lambda_i = 1$.
 
-Cada función objetivo tiene asociado un escalar que pondera la relevancia de la función, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En éste caso, \gls{CRIDA} aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
+Cada función objetivo tiene asociado un escalar que pondera la relevancia de la función, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En éste caso, CRIDA aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
 
 \begin{enumerate}[label={O\arabic*}]
 	\item \label{O1} Reducir el número de controladores: Si añadimos nuevos controladores imaginarios, debemos eliminarlos de forma que conservemos el número inicial y, si es posible, reducir el numero inicial de los mismos.
@@ -295,13 +302,14 @@ Cada función objetivo tiene asociado un escalar que pondera la relevancia de la
 	\item \label{O4} Cuanto más se parezca una solución del sistema a una plantilla mejor, pues los empleados están acostrumbrados a manejar este tipo de planificaciones ya que resultan más intuitivas.
 \end{enumerate}
 
+\begin{minipage}{\textwidth}
 Cuatro objetivos que podemos ponderar de diferentes formas, entre los que encontramos: 
-
 \begin{enumerate}[label=\alph*)]
 	\item mismos pesos para todos los objetivos
 	\item pesos del método Rank-Sum (RS)
 	\item pesos del método \textit{Rank Order-Centroid} (ROC)
 \end{enumerate}
+\end{minipage}
 
 La técnica que mejores resultados ofrece es el método ROC, una definición precisa y un estudio comparativo de éstas técnicas de ponderación de objetivos en problemas de decisión multi-criterio entre otras no nombradas, puede encontrarse en~\cite{ROC-comparativas-tecnicas}. \NOTE{ XQ ROC y no RS si en el paper es mejor RS?? } % TODO NOTE;
 
@@ -712,6 +720,12 @@ En la definición de una metaheurística dos características juegan un papel im
 Ambas técnicas enfocan el problema de la mejora de la solución actual de dos formas opuestas. Una buena metaheurística
 hace uso de ambas de forma equilibrada, si bien las basadas en una solución suelen ser mas explotativas y las poblacionales más exploratorias.
 
+\begin{figure}
+	\centering	\includegraphics[width=\linewidth]{intensifiaction-vs-diversification}
+	\caption[Intensificación vs diversificación]{Intensificación vs diversificación. Fuente:~\cite{sota:metaheuristicas-design-impl}}
+	\label{fig:intensifiaction-vs-diversification}
+\end{figure}
+
 La metaheurística \gls{VNS} es considerablemente explotativa, pero permite dar juego a estas componentes de tres posibles maneras:
 \begin{enumerate}[label=\alph*.]
 \item Tipo de VNS: VND, BVNS, RVNS...
@@ -722,10 +736,16 @@ La metaheurística \gls{VNS} es considerablemente explotativa, pero permite dar 
 Vamos a analizarlos por separado en los siguientes párrafos.
 
 El tipo de VNS es la forma más clara y sencilla de ajustar la capacidad exploratoria/explotatoria de la búsqueda. Si partimos de la definición básica del VNS, el \textit{Basic VNS} (recuérdese mediante el \autoref{algoritmo:Basic-VNS} a principio del capítulo) podemos ver claramente que la componente de búsqueda local es puramente intensificación, mientras que la componente de shaking es únicamente exploración mediante una perturbación aleatoria. 
-Ésta es precisamente la técnica más usual para introducir exploración en una metaheurística. 
+Ésta es precisamente la técnica más usual para introducir exploración en una metaheurística, la \autoref{fig:esquema-idea-basica-perturbacion} ilustra cómo permite salir de la zona ya explotada a otras potencialmente mejores. 
 Si eliminamos la componente de búsqueda local, el \textit{Reduced VNS}, potencia la exploración, mientras que si eliminamos la componente de búsqueda local, el \textit{VND}, se potencia la capacidad de explotación. 
 En el caso del \textit{General VNS}, potenciamos la capacidad de exploración, pues si bien un VND es meramente determinista, a diferencia de una búsqueda local simple, emplea más de un entorno y cada uno de ellos llega a diferentes puntos del espacio de búsqueda. 
 Por último, el SVNS tiene por fundamento elegir soluciones peores para mejorar su eficiencia explorando por otros lugares menos prometedores, por lo que claramente potencia una capacidad exploratoria extra en la búsqueda.
+
+\begin{figure}
+	\centering	\includegraphics[width=.8\linewidth]{esquema-idea-basica-perturbacion}
+	\caption[Representación gráfica de la idea de una perturbación aleatoria en un proceso de búsqueda genérico]{Representación gráfica de la idea de una perturbación aleatoria en un proceso de búsqueda genérico. Fuente:~\cite{sota:metaheuristicas-design-impl}}
+	\label{fig:esquema-idea-basica-perturbacion}
+\end{figure}
 
 En segundo lugar, el orden de los entornos puede ser muy relevante a la hora de explorar y explotar el espacio de búsqueda, puesto que si en primer lugar la búsqueda opta por entornos más intentificadores, entonces esta dará preferencia a explotar la solución hasta que no sea posible mejorarla aún más, en cuyo caso, empleará el resto de entornos menos intentificadores y más exploratorios. Por ello tendremos que clasificar los entornos definidos anteriormente (véase la \autoref{paragraph:entornos}) en función de la característica que potencian más. 
 %La lista de entornos se puede recorrer de varias formas, hacia adelante ($1,\dots,k_{max}$), hacia adelante ($k_{max},\dots,1$) o con un salto, pero sin más
@@ -734,7 +754,26 @@ Se ha considerado los entornos \hyperref[entorno:movMaxCarga]{\textit{movMaxCarg
 
 Esta clasificación es importante para la tercera y última técnica para ajustar la diversificación/intensificación del sistema: la naturaleza de la selección de los entornos. En esta tesis se han probado dos enfoques, el clásico determinista, y uno probabilista. 
 
-El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilista permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. 
+El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilista permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. La \autoref{fig:diagrama-flujo-naturaleza-entornos} representa en formato de diagrama de flujo estos procesos. Como se puede apreciar, en el caso de entornos deterministas únicamente se modifica el entorno en orden, mientras que el probabilista precisa de varios procesos. 
+
+\begin{figure}
+	\centering	\includegraphics[width=\linewidth]{diagrama-flujo-naturaleza-entornos-bold}
+	\caption{Diagrama de flujo del proceso de selección de la naturaleza de entornos}
+	\label{fig:diagrama-flujo-naturaleza-entornos}
+\end{figure}
+
+En primer lugar tenemos una probabilidad de diversificación (la probabilidad de intensificación es la complementaria, $1-p$) que irá variando cada cierto número de iteraciones que hemos denominado ciclos. 
+
+Con esa probabilidad elegimos uno de los tipos de entornos: diversificadores o intensificadores. Como es probabilístico se usará cualquiera de ambos, pero con mayor probabilidad uno que otro. Una vez escogido el movimiento (entorno) este no pordrá volver a ser elegido hasta que todos los entornos pertenecientes a su grupo hayan sido utilizados (de esta forma evitamos repeticiones y garantizamos que todos sean utilizados).
+
+La idea es tratar de que al principio las soluciones analizadas sean mas diversas entre sí y a medida que la ejecución avanza se vaya reduciendo la diversificación dando paso a la intensificación de la mejor solución alcanzada, siempre de forma estocástica. Una vez obtenido el tipo de entorno probabilísticamente, se elige el movimiento (entorno) concreto de ese tipo. En caso de utilizar entornos con restricciones, estos se ejecutan de forma determinista: en el orden en el que se han definido. La \autoref{fig:esquema-entornos-probabilisticos} resume esta información gráficamente. Más detalles desde el punto de vista de implementación en la \autoref{capitulo:4}. %TODO: referencia!!!!!!
+
+\begin{figure}
+	\centering	\includegraphics[width=\linewidth]{esquema-entornos-probabilisticos}
+	\caption{Representación grafica de los tipos de entornos}
+	\label{fig:esquema-entornos-probabilisticos}
+\end{figure}
+
 
 \paragraph{Condiciones de Parada}
 \label{apartado:condiciones-parada}
