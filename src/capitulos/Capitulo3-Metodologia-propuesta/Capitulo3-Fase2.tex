@@ -770,18 +770,30 @@ La idea es tratar de que al principio las soluciones analizadas sean mas diversa
 
 \begin{figure}
 	\centering	\includegraphics[width=\linewidth]{esquema-entornos-probabilisticos}
-	\caption{Representación grafica de los tipos de entornos}
+	\caption{Representación gráfica de los tipos de entornos}
 	\label{fig:esquema-entornos-probabilisticos}
 \end{figure}
 
 
 \paragraph{Condiciones de Parada}
 \label{apartado:condiciones-parada}
-Lorem ipsum
 
+Sin una condición de parada, el algoritmo se estaría ejecutando de forma indefinida, por lo que siempre precisamos de al menos una. 
 
+La más intuitiva consiste en finalizar la ejecución una vez transcurrido un cierto periodo de tiempo, de esta forma si el usuario/a necesita la planificación en un plazo máximo de 10 minutos, el sistema estará buscando constantemente mejorar la solución hasta que pasen 10 minutos. Entonces simplemente retornará al usuario/a la mejor solución alcanzada hasta el momento.
 
+Si el sistema no requisiera de un tiempo concreto, otra posible opción sería la de detener la ejecución cuando la búsqueda no logra encontrar soluciones mejores tras el transcurso de un determinado número de iteraciones. No obstante ésto tiene un problema, y es que cambios muy pequeños que manualmente no consideramos significativos el algoritmo sí los tomaría como mejoras, y un nuevo ciclo de iteraciones comenzaría, alargando tal vez innecesariamente el tiempo de ejecución. Por ello, la opción más común es utilizar un porcentaje mínimo de mejoría (véase \autoref{fig:porcentaje-mejora}) cuyo cálculo consiste en el incremento de la función fitness $\Delta f = |f_{inicio\, ciclo}-f_{fin\, ciclo}|$ multiplicado por 100. De esta forma utilizamos un porcentaje mínimo que se comprueba cada cierto número de iteraciones (ciclos) que permite indicar al sistema qué mejora es significativa y cual no, finalizando la ejecución en caso de no serlo.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{porcentaje-mejora}
+	\caption{El porcentaje de mejora actual se calcula mediante el incremento del fitness logrado en el ciclo}
+	\label{fig:porcentaje-mejora}
+\end{figure}
+
+En este sistema se han considerado ambas condiciones de parada, de forma que se detenga la ejecución tanto si no hay mejora suficiente antes de llegar al tiempo máximo y en el caso opuesto, que si bien esté mejorando ya se haya alcanzado el límite de tiempo. Ambas condiciones se evalúan tras cada cambio de vecindad como se ha representado en la % TODO: referencia al esquema del principio!!! \autoref{figura}
+
+\NEW{PREGUNTA: QUITO ALGUNAS IMÁGENES QUE QUIZÁS SEAN REDUNDANTES Y LAS GUARDO PARA LA PRESENTACIÓN?? CUÁLES}
 
 
 
