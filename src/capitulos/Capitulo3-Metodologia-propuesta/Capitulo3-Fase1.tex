@@ -1,3 +1,4 @@
+%! Suppress = LineBreak
 \subsection{Fase 1: Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
 
 La fase de inicialización toma como entrada la planificación inicial: aquella planificada para el día y que ya no tiene validez debido a la incidencia; junto a los datos relativos a la incidencia, que son:
@@ -17,11 +18,16 @@ La fase de inicialización toma como entrada la planificación inicial: aquella 
 \end{figure}
 
 Con esos datos, la \faseuno{} deberá convertir la planificación inválida en una \textit{solución inicial}, que 
-emplearemos como punto de partida para el sistema de búsqueda inteligente que es la \fasedos{}. Para ello distinguimos dos tipos de tareas, las relativas a la incidencia por cambio de sector (pasos 1 y 2) y las relativas a las bajas y altas de los trabajadores (pasos 3 y 4). Los pasos pueden verse esquemáticamente en la \autoref{fig:3:esquema-fase-1}.
-Adicionalmente, un quinto paso fue planteado para poder facilitar la tarea de la \fasedos{}, que consistía en reducir el número de controladores añadidos artificialmente en los pasos anteriores moviendo, heurísticamente, carga de trabajo a otros controladores que la soporten. Finalmente no fue implementada y fue añadida como trabajo futuro.
+emplearemos como punto de partida para el sistema de búsqueda inteligente que es la \fasedos{}.
+Para ello distinguimos dos tipos de tareas, las relativas a la incidencia por cambio de sector (pasos 1 y 2) y las relativas a las bajas y altas de los trabajadores (pasos 3 y 4).
+Los pasos pueden verse esquemáticamente en la \autoref{fig:3:esquema-fase-1}.
+Adicionalmente, un quinto paso fue planteado para poder facilitar la tarea de la \fasedos{}, que consistía en reducir el número de controladores añadidos artificialmente en los pasos anteriores moviendo, heurísticamente, carga de trabajo a otros controladores que la soporten.
+Finalmente no fue implementada y fue añadida como trabajo futuro.
 
-En la figura \autoref{fig:3:ejemplo-distribucion-inicial} se muestra cómo sería una posible planificación inicial. En este caso ha sido creada en base a \textit{plantillas} o \textit{estadillos}, que es el método empleado habitualmente por el personal para crear la planificación. Consiste en la repetición de un patrón conformado por tres 
-controladores para un sector, en el que se suceden trabajo en puesto planificador, trabajo en puesto ejecutivo y descanso con un desfase en incremento para cada controlador, de forma que en cada instante de tiempo (imagínese una línea transversal) habrá un controlador en puesto ejecutivo, otro en planificador y otro descansado (véase  la \autoref{fig:3:plantilla-3x1}). \gls{CRIDA} sabe que el uso de estas plantillas si bien no es lo más óptimo es lo más cómodo tanto para la creación manual de la planificación como de cara a no incumplir las restricciones de cada trabajador (véase requisito). %TODO: referencias!!).
+En la \autoref{fig:3:ejemplo-distribucion-inicial} se muestra cómo sería una posible planificación inicial.
+En este caso ha sido creada en base a \textit{plantillas} o \textit{estadillos}, que es el método empleado habitualmente por el personal para crear la planificación.
+Consiste en la repetición de un patrón conformado por tres controladores para un sector, en el que se suceden trabajo en puesto planificador, trabajo en puesto ejecutivo y descanso con un desfase en incremento para cada controlador, de forma que en cada instante de tiempo (imagínese una línea transversal) habrá un controlador en puesto ejecutivo, otro en planificador y otro descansado (véase  la \autoref{fig:3:plantilla-3x1}).
+\gls{CRIDA} sabe que el uso de estas plantillas si bien no es lo más óptimo es lo más cómodo tanto para la creación manual de la planificación como de cara a no incumplir las restricciones de cada trabajador (véase requisito). %TODO: referencias!!).
 
 \begin{figure}
 	\centering
@@ -31,7 +37,8 @@ controladores para un sector, en el que se suceden trabajo en puesto planificado
 	\label{fig:3:plantilla-3x1}
 \end{figure}
 
-En las representaciones realizadas, se utilizan identificadores de tres letras en lugar del nombre completo del sector para abreviar y mantener el número de caracteres constante. Se han añadido también colores para una mejor visualización.
+En las representaciones realizadas, se utilizan identificadores de tres letras en lugar del nombre completo del sector para abreviar y mantener el número de caracteres constante.
+Se han añadido también colores para una mejor visualización.
 Las letras en mayúscula (AAA-ZZZ) representan un trabajo en puesto de ejecutivo, mientras que las letras minúsculas (aaa-zzz) indican un trabajo en puesto planificador. Los descansos se representan mediante unos (111).
 Hemos agrupado slots contiguos tanto de trabajo como de descanso idénticos, de manera que visualmente sea más cómodo de entender. Para que las soluciones aquí presentadas tengan validez final, deberíamos añadir indicadores de las horas de los cambios de puesto, sin embargo, para este documento esto no es realmente importante por lo que podemos omitirlo.
 
@@ -52,15 +59,12 @@ sectorización 5A que pasa a ser una 6C en un momento dado, tal y como se ilustr
 
 
 Identificamos pues, el momento de la incidencia a las 10:30, sin embargo el \textit{momento actual} viene dado como parte de la entrada. En este caso, han decidido que sea media hora antes de la incidencia, a las 10:00 horas, que equivale al slot número 30:
-\[ 
-	10 \,h-7 \,h \,30 \,min = 2 \,h \,30 \,min = \left(2 \, \cancel{h} \times \frac{60 \,min}{1 \,\cancel{h}}\right) 
-	\,min + 30\,min = 150 
-	\,min 
-\]
-
-\[
-	150 \,\cancel{min} \times \frac{1\,slot}{5\,\cancel{min}} = 30\,slots
-\]
+\begin{gather*}
+    10 \,h-7 \,h \,30 \,\min = 2 \,h \,30 \,\min = \left(2 \, \cancel{h} \times \frac{60 \,\min}{1 \,\cancel{h}}\right)
+	\,\min + 30\,\min = 150
+	\,\min\\\\
+    150 \,\cancel{\min} \times \frac{1\,slot}{5\,\cancel{\min}} = 30\,slots\\
+\end{gather*}
 
 Antes de dicha hora, la planificación no debe ser alterada en ningún caso, pues representa el pasado. En la 
 \autoref{fig:3:ejemplo-distribucion-inicial} la hemos representado con una línea roja. 
@@ -134,7 +138,7 @@ Si ningún trabajador se reincorpora a su puesto de trabajo, emplearemos un cont
 
 La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el controlador 23 se ha puesto de baja a las 9:30 (slot 30) y no hay reincorporación (en caso de haberla el controlador $C_0$ tendría su identificador correspondiente). Nótese que se emplean los caracteres de fuera de turno (``000'') en todos los slots a partir de la incidencia en el caso del controlador de baja mientras que para el controlador imaginario (o el reincorporado según se aplique) sucede lo contrario: todos los slots previos a la incidencia tienen el mencionado carácter. 
 
-\NEW{Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase \autoref{apartado:adaptacion-fitness})---concretamente la función objetivo \ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas la del descanso mínimo (recopiladas en Implementacion requisitos % TODO referencia!
+\NEW{Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase \autoref{apartado:adaptacion-fitness})---concretamente la función objetivo~\ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas la del descanso mínimo (recopiladas en Implementación requisitos % TODO referencia!
 )--- no se han de computar como tiempo de descanso para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito XXX) % TODO referencia!!
 tenga un valor coherente con la realidad.}
 

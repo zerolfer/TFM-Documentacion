@@ -17,20 +17,20 @@ Por ejemplo se han estudiado casos para transporte público~\cite{sota:transport
 
 Existen gran cantidad de técnicas que se han empleado previamente para resolver este tipo de problemas, comenzando por sencillos heurísticos aplicados a los problemas clásicos bien estudiados y formalizados, pero como hemos puntualizado antes, este tipo de algoritmos solamente son aplicables a instancias pequeñas debido a la mencionada naturaleza no polinómica, por lo que no son útiles en problemas reales. Por otro lado, se ha analizado cómo transformar un problema de \textit{scheduling} en un problema de coloreado de grafos~\cite{sota:estudio-coloreado-grafos, sota:algotimo-coloreado-grafos} lo que nos permite emplear los algoritmos existentes para este tipo de problemas, entre los que podemos encontrar exactos y aproximados. También existen enfoques más modernos que emplean técnicas de \textit{Aprendizaje Automático} habitualmente combinados con metaheurísticas~\cite{sota:machine-learning-geneticos} y recientemente \textit{Hiperheurísticas} (como por ejemplo en~\cite{sota:hiperheuristicas}). En el libro~\cite{sota:libro-sota-scheduling} se encuentran explicadas de forma detallada todas estas técnicas aquí nombradas.
 
-Por último, la técnica más empleada actualmente para resolver este tipo de problemas son las metaheurísticas: una familia de algoritmos de carácter genérico empleados como \textit{framework} para resolver un problema dado. Tienen dos características principales~\cite{sota:metaheuristicas}:
+Por último, la técnica más empleada actualmente para resolver este tipo de problemas son las metaheurísticas: una familia de algoritmos de carácter genérico empleados como \textit{framework} para resolver un problema dado enfocandolo como un problema de optimización. Tienen dos características principales~\cite{sota:metaheuristicas}:
 
 \begin{enumerate}
 	\item En contraposición a los heurísticos, no dependen directamente del problema específico, únicamente han de ser adaptados parcialmente.
 	\item Por definición son métodos de búsqueda aproximados, que tratan de combinar técnicas de exploración y explotación (véase \autoref{capitulo:3:busqueda-divers-intens}) para obtener la mejor solución posible dentro del espacio de búsqueda definido.
 \end{enumerate}
 
-Tienen dos conceptos básicos que conforman la clave para su implementación para un problema concreto: la función objetivo y la codificación. 
+Tienen dos conceptos básicos que conforman la clave para su implementación para un problema concreto: la codificación y la función objetivo. 
 
 La codificación permite representar una solución de la forma más compacta posible sin perder información del dominio. Una buena codificación tendrá las siguientes características~\cite{sota:metaheuristicas-design-impl}:
 
 \begin{itemize}
 	\item Completitud: Todas las soluciones asociadas con el problema deben poder ser representadas. Se debe garantizar una representatividad total dentro del espacio de soluciones: si no es definida correctamente podría haber soluciones incapaces de ser representadas y lógicamente afectará a la eficiencia de la metaheurística.
-	\item Conectividad: Debe existir un camino que permita moverse entre dos soluciones del espacio de búsqueda, de forma que cualquier solución del espacio pueda ser alcanzada (en especial el optimo global).
+	\item Conectividad: Debe existir un camino que permita moverse entre dos soluciones del espacio de búsqueda, de forma que cualquier solución del espacio pueda ser alcanzada (en especial el óptimo global).
 	\item Eficiencia: Fácil de manipular por los operadores de la búsqueda (definidos por cada metaheurística).
 \end{itemize}
 
@@ -60,13 +60,17 @@ Existen otras clasificaciones menos relevantes que dividen las metaheurísticas 
 
 En el caso de este proyecto, la elección fue de carácter histórica: los proyectos previos habían empleado dos metaheurísticas y una de ellas parecía dar resultados más prometedores que la otra. Estamos hablando de la metaheurística \textit{Variable Neighborhood Search} (\textit{Búsqueda de Entornos Variable}) que describiremos en las próximas secciones y veremos cómo ha sido adaptada a nuestro problema.
 
+No obstante debemos destacar la metaheurística empleada previamente en el proyecto \legacy{} denominada \textit{Recocido Simulado (Simulated Annealing, SA)} debido a que si bien no ha sido implementada en este TFM se realizaron experimentos comparativos entre las dos metaheurísticas. 
+
+El SA  es una metaheurística trayectorial de búsqueda local basada en la aceptación de soluciones peores con una cierta probabilidad que depende del valor de un parámetro llamado \textit{temperatura} que varía con el tiempo (cada cierto numero de iteraciones) una cantidad constante (o variable en algunos casos) de forma que al final de la ejecución ya no se aceptan soluciones peores en ningún caso (probabilidad igual a cero), de esta forma en las primeras iteraciones la búsqueda será mas diversificada y cuanto más tiempo transcurra irá disminuyendo y aumentando de manera complementaria la intensificación. Al igual que el VNS, parte de una solución inicial dada, ya sea generada aleatoriamente o mediante una heurística más sofisticada; pero a diferencia de este, se mueve hacia otras empleando un único entorno. Esta es la mayor limitación de esta metaheurística y por ello hemos planteado la alternativa del uso de un VNS, partiendo así de la hipótesis~\ref{H2}, que sugiere que empleando más entornos se mejoran los resultados del SA.
+
 \subsubsection{Búsqueda en Entornos Variables (VNS)}
 Se trata de una metaheurística trayectorial, pues maneja una única solución en cada iteración, además de tipo búsqueda local pues trata de modificarla iterativamente para mejorarla empleando un catálogo de \textit{entornos} o vecindades (\textit{neighborhoods}). A su vez es de tipo no metafórica: no se inspira en ningún proceso de la naturaleza. Es además de tipo estocástico y no emplea memoria para su funcionamiento.
 
-Su nombre radica precisamente en sus dos conceptos fundamentales: búsqueda local y entornos variables. Se fundamenta en dos etapas~\cite{vns}: descenso y perturbación, la primera consiste en el intercambio sistemático del entorno empleado durante una búsqueda local simple que nos permite alcanzar un óptimo local; mientras que la segunda radica en la alteración aleatoria de la solución para evitar atascarse en óptimos locales evitando así una convergencia prematura.
+Su nombre radica precisamente en sus dos conceptos fundamentales: búsqueda local y entornos variables. En su versión original~\cite{vns} se fundamenta en dos etapas: descenso y perturbación, la primera consiste en el intercambio sistemático del entorno empleado durante una búsqueda local simple que nos permite alcanzar un óptimo local; mientras que la segunda radica en la alteración aleatoria de la solución para evitar atascarse en óptimos locales evitando así una convergencia prematura. Ambas serán descritas en detalle más adelante en esta sección.
 
-Así pues, el VNS parte de una lista predefinida de entornos, que definen el criterio a emplear para moverse entre soluciones a partir de una inicial. Al entorno $k$ del conjunto de vecindades se les suele denotar como $N_k, k=1,\dots,k_{max}$ y al conjunto de soluciones alcanzables mediante la vecindad $k$ como $N_k(x)$.
-Un ejemplo sencillo de entorno podría ser en el caso de una optimización de una variable en el dominio $\mathbb{R}$: un posible entorno sería $N_1=[x-2, x+2]$ o $N_2=[x-7, x+7]$, ilustrados en la \autoref{fig:ejemplos-entorno}.
+Así pues, el VNS parte de una lista predefinida de entornos, que definen el criterio a emplear para moverse entre soluciones a partir de una inicial. Al entorno $k$ del conjunto de vecindades se les suele denotar como $N_k, \; k=1,\dots,k_{max}$ y al conjunto de soluciones alcanzables mediante la vecindad $k$ como $N_k(x)$.
+Un ejemplo sencillo de entorno podría ser en el caso de una optimización de una variable en el dominio $\mathbb{R}$: dos posibles entornos serían $N_1=[x-2, x+2]$ y $N_2=[x-7, x+7]$, ilustrados en la \autoref{fig:ejemplos-entorno}.
 
 \begin{figure}[htbp]
 	\centering
@@ -75,11 +79,11 @@ Un ejemplo sencillo de entorno podría ser en el caso de una optimización de un
 	\label{fig:ejemplos-entorno}
 \end{figure}
 
-Como podemos observar, los entornos se definen con respecto a una solución, denotada por $x$. En el ejemplo los entornos se han definido de forma que el conjunto de soluciones alcanzables mediante el segundo sea un superconjunto del aquel empleando el primero, ampliando de esta forma las fronteras de la búsqueda (no es necesario definirlos así pero suele ser una práctica habitual). Si lanzamos una búsqueda local sobre la función del ejemplo empleando el entorno $k_1$, el punto más optimo que podemos alcanzar en caso de maximización es el punto $A$, mientras que si empleamos el $k_2$ será el $B$. El punto $C$ es el óptimo global de la función, que no es alcanzado por ninguno de los entornos definidos, aunque $k_2$ se aproxima bastante. 
+Como podemos observar, los entornos se definen con respecto a una solución, denotada por $x$. En el ejemplo, los entornos se han definido de forma que el conjunto de soluciones alcanzables mediante el segundo sea un superconjunto de aquel empleando el primero, ampliando de esta forma las fronteras de la búsqueda (no es necesario definirlos así pero suele ser una práctica habitual). Si lanzamos una búsqueda local sobre la función del ejemplo empleando el entorno $k_1$, el punto más optimo que podemos alcanzar en caso de maximización es el punto $A$, mientras que si empleamos el $k_2$ será el $B$. El punto $C$ es el óptimo global de la función, que no es alcanzado por ninguno de los entornos definidos, aunque $k_2$ se aproxima bastante. 
 
-No necesariamente un entorno amplio, i.e.\ con mayor conjunto de soluciones factibles, es mejor que uno más reducido, pues el espacio de búsqueda es mayor y esto repercutirá decisivamente en el rendimiento del algoritmo de búsqueda. Además, en problemas más complejos con un mayor número de variables, el espacio de búsqueda es mucho más complejo y difícil de explorar.
+%No necesariamente un entorno amplio, i.e.\ con mayor conjunto de soluciones factibles, es mejor que uno más reducido, pues el espacio de búsqueda es mayor y esto repercutirá decisivamente en el rendimiento del algoritmo de búsqueda. Además, en problemas más complejos con un mayor número de variables, el espacio de búsqueda es mucho más complejo y difícil de explorar. Es por ello que lo mas conveniente es emplear las vecindades más sencillas y pequeñas al principio de forma que solo se pasa a los más grandes y costosos en caso de que los anteriores no resultes fructíferos. % TRASLADADO UNOS PARRAFOS MAS ABAJO
 
-Con todo, el VNS se basa en tres caraterísticas:
+Con todo, el VNS se basa en tres características:
 
 \begin{enumerate}
 	\item Un óptimo local respecto a una estructura de vecindad no necesariamente lo es respecto a otra.
@@ -97,7 +101,7 @@ En la \autoref{fig:VNS-facts} se ilustran estas tres características visualment
 \end{figure}
 
 Comenzaremos analizando el cambio entre entornos, que se lleva a cabo de la misma forma en todo VNS siguiendo el \autoref{algoritmo:VNS-cambio-entornos}. La \autoref{fig:esquema-idea-basica-VNS} muestra lo mismo de forma más gráfica.
-Como se puede observar, se llevan a cabo acciones diferentes en función de si la nueva solución obtenida por el algoritmo de búsqueda local es mejor que la de partida. La función fitness se ha denotado como $f(x) \in [0,1]$
+Como se puede observar, se llevan a cabo acciones diferentes en función de si la nueva solución obtenida por el algoritmo de búsqueda local es mejor o peor que la de partida: si la nueva solución generada mediante la vecindad actual es mejor, se reinicia; mientras que si es peor no igual, se amplia la búsqueda al siguiente entorno. La función fitness se ha denotado como $f(x) \in [0,1]$.
 
 \begin{figure}
 	\centering
@@ -128,13 +132,15 @@ Como se puede observar, se llevan a cabo acciones diferentes en función de si l
 	\Else{
 		$k \leftarrow k+1$  \Comment{Siguiente vecino}
 	}
-	
-
 \end{algorithm}
 
-En cuanto al comportamiento de la búsqueda, el VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación`` (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
+No necesariamente un entorno amplio, i.e.\ con mayor conjunto de soluciones factibles, es mejor que uno más reducido, pues el espacio de búsqueda es mayor y esto repercutirá decisivamente en el rendimiento del algoritmo de búsqueda. Además, en problemas reales, con un mayor número de variables, el espacio de búsqueda es mucho más complejo y difícil de explorar. Es por ello que lo mas conveniente es emplear las vecindades más sencillas y pequeñas al principio de forma que solo se pasa a las más grandes y costosas en caso de que las anteriores no resultes fructíferas.
 
-La componente de búsqueda local se puede realizar en dos enfoques diferentes: buscando la primera solución que mejore la actual (\textit{First Improvement}) o empleando la mejor de todas las posibles soluciones del entorno (\textit{Best Improvement}) sin embargo no siempre es posible obtener todas las soluciones posibles de un entorno, especialmente en problemas complejos como el que tenemos entre manos. En éste problema se ha empleado una técnica mixta que si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda hasta que la solución no se mejore en un porcentaje de tolerancia (véase \NOTE{REFERENCIA} para una descripción detallada). %TODO REFERENCIA!!
+En función de los subprocesos que se utilicen durante la búsqueda estaremos hablando de un tipo de VNS u otro. A continuación describiremos las características de aquellos tipos de VNS que se han implementado en este TFM.
+
+El VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación`` (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
+
+La componente de búsqueda local se puede realizar en dos enfoques diferentes: buscando la primera solución que mejore la actual (\textit{First Improvement}) o empleando la mejor de todas las posibles soluciones del entorno (\textit{Best Improvement}) sin embargo no siempre es posible obtener todas las soluciones posibles de un entorno, especialmente en problemas complejos como el que tenemos entre manos. En éste problema se ha empleado una técnica mixta que si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda hasta que la solución no se mejore en un porcentaje de tolerancia (véase \autoref{apartado:condiciones-parada} para una descripción detallada).
 
 Los algoritmos~\ref{algoritmo:BestImprovement} y~\ref{algoritmo:FirstImprovement} se han obtenido directamente de Hansel et al.~\cite{vns} y describen el proceso asociado al \textit{Best Improvement} y al \textit{First Improvement} respectivamente.
 
@@ -311,22 +317,22 @@ Cuatro objetivos que podemos ponderar de diferentes formas, entre los que encont
 \end{enumerate}
 \end{minipage}
 
-La técnica que mejores resultados ofrece es el método ROC, una definición precisa y un estudio comparativo de éstas técnicas de ponderación de objetivos en problemas de decisión multi-criterio entre otras no nombradas, puede encontrarse en~\cite{ROC-comparativas-tecnicas}. \NOTE{ XQ ROC y no RS si en el paper es mejor RS?? } % TODO NOTE;
+La técnica que mejores resultados ofrece es el método ROC, una definición precisa y un estudio comparativo de éstas técnicas de ponderación de objetivos en problemas de decisión multi-criterio entre otras no nombradas, puede encontrarse en~\cite{ROC-comparativas-tecnicas}. \NOTE{ PENDIENTE DE RESPUESTA: ¿POR QUÉ ROC y no RS si RS es mas robusto? } % TODO NOTE;
 
 El método ROC utiliza la siguiente fórmula para la ponderación de cada objetivo $\lambda_i$ ordenados del más importante al menos importante:
 \[
 	\lambda_i = \sfrac{1}{N} \sum_{j=i}^N \frac{1}{j}
 \]
 
+\begin{minipage}{\textwidth}
 De forma que calculamos todos los pesos $\lambda_i$ con $N=4$. Como podemos ver, suman $1$:
-
 \begin{flalign*}
 	& \lambda_1 =  \sfrac{1}{4} \sum_{j=1}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{1}+\frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.52 \\	
 	&\lambda_2 =  \sfrac{1}{4} \sum_{j=2}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.27 \\
 	&\lambda_3 =  \sfrac{1}{4} \sum_{j=3}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{3}+\frac{1}{4} \right) = 0.15 \\
 	&\lambda_4 =  \sfrac{1}{4} \sum_{j=4}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{4} \right) = 0.06 
 \end{flalign*}
-
+\end{minipage}
 Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del del sistema \legacy{} (objetivos~\ref{O1},~\ref{O2} y~\ref{O3}). Esto es así debido a que, tal y como se detalló en el \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multi-criterio que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. En nuestro caso se han tomado aquellos objetivos decisivos para el sistema, aunando objetivos de diferentes fases de la metodología propuesta en el sistema \legacy{}. Véase~\cite{articulo1} para una mayor descripción tanto de la metodología \legacy{} como todas las funciones objetivo planteadas entonces, especialmente la normalización de las mismas, que se ha optado por no incluir aquí.
 
 Adicionalmente se ha creado un nuevo objetivo,~\ref{O4}, nacido de las nuevas características del presente sistema: el momento del cambio.
@@ -347,15 +353,17 @@ La función objetivo final, empleando el método de escalarización ponderada ti
 
 Donde $nATC$ es el número de controladores aéreos (\gls{ATC}) empleados en la solución actual ($x$) y $nATCdisp$ es el numero de controladores disponible para esa instancia del problema. La idea es que el primer número sea igual o menor al primero, de esta forma la solución podrá llevarse a cabo sin necesidad de buscar controladores extra. Como ya se ha dicho previamente, el problema de optimización se expresará en forma de maximización de la expresión.
 
-Se ha definido así debido a que cuando el valor de la primera función objetivo alcanza su máximo valor (uno), ya no aporta nada al sistema, y podemos ahorrarnos un tiempo significativo de cómputo, pues el cálculo de cada una de ellas es costoso (véase \NOTE{Gráfica tiempo ejecución de cada parte del sistema. Comparación usando todos los fitness vs el primero no???}).%TODO hacer grafica y ponerla en implementacion
+Se ha definido así debido a que cuando el valor de la primera función objetivo alcanza su máximo valor (uno), ya no aporta nada al sistema, y podemos ahorrarnos un tiempo significativo de cómputo, pues el cálculo de cada una de ellas es costoso (véase \NOTE{Gráfica tiempo ejecución de cada parte del sistema. Comparación usando todos los fitness vs el primero no}).%TODO hacer grafica y ponerla en implementacion
 
 Para poder emplear este modelo de escalarización aditivo, todas las funciones objetivo se han normalizado, de esta forma las escalas manejadas por cada uno de ellos son las mismas y puedan ser añadidos al sumatorio ponderado.
 
-A continuación describiremos brevemente cada una de estas funciones.
+A continuación describiremos brevemente cada una de estas funciones. Más detalles respecto tanto de la definición como de la normalización de cada una de las reutilizadas del sistema \legacy{} en~\cite{articulo2}.
 
 La primera función objetivo~\ref{O1} tiene la siguiente fórmula:
 \[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^c i\cdot h_i \]
 Donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{apartado:representacion-soluciones}).
+
+Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de mayor carga a menos carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma la carga de los controladores de la solución tendrá forma piramidal. Una vez alcanzado el valor 1 de este primer objetivo, la ordenación deja de ser necesaria y nos podemos ahorrar ese tiempo de computo bastante significativo, pues todo método de ordenación es bastante costoso, del orden de $O(n^2)$. \NOTE{PONER UN ESQUEMA DE LA ESTRUCTURA PIRAMIDAL??}
 
 La segunda función objetivo~\ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en el Apartado Implementación requisitos de dominio (entorno)---, %TODO referencia!!
 favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado). 
@@ -404,6 +412,8 @@ La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planific
 
 Con $nSlots$ en número de slots de la instancia concreta del problema. Cabe destacar que, en caso de alcanzar slots
 donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces dicho caso será ignorado.
+
+Por otra parte, para que el~\ref{O1} s
 
 \paragraph{Definicion de entornos} \label{paragraph:entornos}
 En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
@@ -598,7 +608,7 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 
 \textbf{Objetivo:} Intentar pasar la carga de trabajo de forma controlada para no romper la estructura de la solución.
 
-\textbf{Comportamiento:} El cambio de carga de trabajo se realiza unicamente entre intervalos limitados por las rejillas
+\textbf{Comportamiento:} El cambio de carga de trabajo se realiza unicamente entre intervalos limitados por las rejillas. La estructura de las rejillas puede cambiar en cada iteración debido a los demás movimientos, por lo que se debe de ejecutar la fragmentación del controlador en las rejillas en cada ejecución del movimiento.
 
 \textbf{Algoritmo:}
 \RestyleAlgo{plain}
@@ -792,6 +802,8 @@ Si el sistema no requisiera de un tiempo concreto, otra posible opción sería l
 \end{figure}
 
 En este sistema se han considerado ambas condiciones de parada, de forma que se detenga la ejecución tanto si no hay mejora suficiente antes de llegar al tiempo máximo y en el caso opuesto, que si bien esté mejorando ya se haya alcanzado el límite de tiempo. Ambas condiciones se evalúan tras cada cambio de vecindad como se ha representado en la % TODO: referencia al esquema del principio!!! \autoref{figura}
+
+Por otro lado, las iteraciones de la búsqueda local, tal y como se describió al comienzo de la sección, se utliza una mixtura entre el \textit{Best Improvement} y el \textit{First Improvement}: si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda con la condición de parada definida mediante un porcentaje de tolerancia equivalente al descrito previamente.
 
 \NEW{PREGUNTA: QUITO ALGUNAS IMÁGENES QUE QUIZÁS SEAN REDUNDANTES Y LAS GUARDO PARA LA PRESENTACIÓN?? CUÁLES}
 
