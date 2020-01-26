@@ -64,7 +64,7 @@ No obstante debemos destacar la metaheurística empleada previamente en el proye
 
 El SA  es una metaheurística trayectorial de búsqueda local basada en la aceptación de soluciones peores con una cierta probabilidad que depende del valor de un parámetro llamado \textit{temperatura} que varía con el tiempo (cada cierto numero de iteraciones) una cantidad constante (o variable en algunos casos) de forma que al final de la ejecución ya no se aceptan soluciones peores en ningún caso (probabilidad igual a cero), de esta forma en las primeras iteraciones la búsqueda será mas diversificada y cuanto más tiempo transcurra irá disminuyendo y aumentando de manera complementaria la intensificación. Al igual que el VNS, parte de una solución inicial dada, ya sea generada aleatoriamente o mediante una heurística más sofisticada; pero a diferencia de este, se mueve hacia otras empleando un único entorno. Esta es la mayor limitación de esta metaheurística y por ello hemos planteado la alternativa del uso de un VNS, partiendo así de la hipótesis~\ref{H2}, que sugiere que empleando más entornos se mejoran los resultados del SA.
 
-\subsubsection{Búsqueda en Entornos Variables (VNS)}
+\subsubsection{Búsqueda en Entornos Variables (VNS)} \label{sec:vns}
 Se trata de una metaheurística trayectorial, pues maneja una única solución en cada iteración, además de tipo búsqueda local pues trata de modificarla iterativamente para mejorarla empleando un catálogo de \textit{entornos} o vecindades (\textit{neighborhoods}). A su vez es de tipo no metafórica: no se inspira en ningún proceso de la naturaleza. Es además de tipo estocástico y no emplea memoria para su funcionamiento.
 
 Su nombre radica precisamente en sus dos conceptos fundamentales: búsqueda local y entornos variables. En su versión original~\cite{vns} se fundamenta en dos etapas: descenso y perturbación, la primera consiste en el intercambio sistemático del entorno empleado durante una búsqueda local simple que nos permite alcanzar un óptimo local; mientras que la segunda radica en la alteración aleatoria de la solución para evitar atascarse en óptimos locales evitando así una convergencia prematura. Ambas serán descritas en detalle más adelante en esta sección.
@@ -250,7 +250,7 @@ Para ello, el SVNS define un parámetro adicional denotado normalmente como $\al
 	}
 	\bigskip
 	
-	\If{$f(x')+\alpha \cdot \rho(x,x') > f(x)$}{
+	\If{$f(x')+\alpha \cdot d(x,x') > f(x)$}{
 		$x \leftarrow x'$ \Comment{Moverse a la mejor solucion}
 		$k \leftarrow 1$  \Comment{Reinicio de vecindades}
 	}
@@ -269,17 +269,30 @@ Existen más variaciones del algoritmo básico del VNS que no se han contemplado
 \subsubsection{Adaptación del VNS al problema}
 \label{apartado:adaptacion-VNS}
 
+Recordemos que en secciones anteriores hemos definido la \faseuno{} que nos permite crear una solución inicial sobre la que el el VNS pueda trabajar. El esquema planteado para la \fasedos{} es el de la \autoref{fig:esquema-fase2}, en el que podemos ver cómo se combinan los algoritmos definidos previamente del VNS y el cambio de vecindad, junto a la condición de parada, definida en \hyperref[apartado:condiciones-parada]{más adelante en la sección}. El proceso denominado ``VNS concreto" se trata del tipo de VNS elegido de entre todos los descritos previamente. Más adelante en el \autoref{capitulo:5} veremos cuál es el más eficiente de todos ellos.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{Esquema-Fase-2-centrico}
+	\caption{Diagrama de flujo del funcionamiento de la Fase 2}
+	\label{fig:esquema-fase2}
+\end{figure}
+
+\vspace*{\fill}
+
 Una vez definida la técnica a utilizar y las posibles variaciones planteadas, debemos instanciar los parámetros del algoritmo y definir las heurísticas ---dependientes del problema concreto--- necesarias de la metaheurística.
 
-En las próximas secciones se describe cómo se ha optado por adaptar la metaheurística descrita en la sección anterior al problema descrito en el \autoref{capitulo:2}: cómo se ha implementado la función de evaluación, qué entornos se han definido y bajo qué criterios son ordenados, las técnicas de exploración y explotación utilizadas y, finalmente, las condiciones de parada
+En las próximas secciones se describe cómo se ha optado por adaptar la metaheurística descrita en la sección anterior al problema descrito en el \autoref{capitulo:2}: cómo se ha implementado la función de evaluación, qué entornos se han definido y bajo qué criterios son ordenados, las técnicas de exploración y explotación utilizadas, las condiciones de parada y la función de distancia para el caso del skewed VNS.
 
 La primera característica necesaria para las metaheurísticas ---y cualquier técnica, en palabras generales--- es la codificación (definida en la sección anterior). En el caso de nuestro problema, tal y como se describió detalladamente en la \autoref{apartado:representacion-soluciones}, las soluciones se representan de forma matricial con una discretización del tiempo a intervalos de 5 minutos. La representación desde el punto de vista de la programación se encuentra descrita en la \autoref{sec:detalles-impl-sistema}. % TODO ajustar referencia cruzada
 
-\NOTE{poner los vns adaptados al problema (funciondistancia del skewed y demas cosas que no tienen apartado propio)}% TODO: 
+
+
+%Se han implementado todos los tipos de VNS descritos anteriormente, y empleando 3 tipos de entornos con subtipos variando ciertas restricciones. Los entornos se pueden seleccionar de dos formas diferentes, que más adelante compararemos su rendimiento: elección determinista (la clásica del VNS) y estocástica. Respecto a la búsqueda se impl
 
 \paragraph{Función Fitness} \label{apartado:adaptacion-fitness}
 
-La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor.  Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de encontrar un único objetivo estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de seleccionar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. Otra opción para resolver ésto consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus criterios. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción. 
+La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor. Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de encontrar un único objetivo estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de seleccionar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. Otra opción para resolver ésto consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus criterios. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción. 
 
 Dentro de la primera opción, tenemos diferentes alternativas introducidas \hyperref[sec:3:metaheurística]{al principio de ésta sección}, que son: enfoques de escalarización, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más empleados son los primeros, pues aportan una mayor sencillez a la resolución del problema ya que permiten trasformar el problema multiobjetivo en uniobjetivo. Dicha transformación se puede realizar a su vez de diferentes maneras, como se puede apreciar en la \autoref{fig:enfoques-fitness-multiobj}, definidas en detalle en~\cite{sota:metaheuristicas-design-impl} entre otros. Nosotros hemos optado con el primero de todos, pues es el más sencillo y nos permite una mayor flexibilidad en caso de tener que modificar las prioridades de los objetivos en un futuro, sin necesidad de recalcular nada. El enfoque de escalarización mediante agregación construye la función fitness de la forma:
 
@@ -305,7 +318,7 @@ Cada función objetivo tiene asociado un escalar que pondera la relevancia de la
 	
 	\item \label{O3} Tras el momento en el que se sucede la incidencia, los cambios propuestos por nuestro sistema deberían ser \textit{suaves}, es decir, que el numero de cambios de sala de los controladores sea el menor posible.
 	
-	\item \label{O4} Cuanto más se parezca una solución del sistema a una plantilla mejor, pues los empleados están acostrumbrados a manejar este tipo de planificaciones ya que resultan más intuitivas.
+	\item \label{O4} Cuanto más se parezca una solución del sistema a una plantilla mejor, pues los empleados están acostumbrados a manejar este tipo de planificaciones ya que resultan más intuitivas.
 \end{enumerate}
 
 \begin{minipage}{\textwidth}
@@ -373,7 +386,7 @@ tenga un valor coherente con la realidad.
 
 En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase ...) % TODO referencia!
 
-La tercera función objetivo~\ref{O3}, implementada por vez primera para éste sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, mejor eficiente y rápido prodrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
+La tercera función objetivo~\ref{O3}, implementada por vez primera para éste sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, mejor eficiente y rápido podrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
 
 Para contar el número de cambios simplemente tendremos que recorrer la matriz por la columna del momento del cambio, el índice $slot_{actual}$ y compararla con la columna anterior $slot_{actual}-1$, matemáticamente lo podríamos expresar como:
 
@@ -415,7 +428,7 @@ donde no sea posible comparar con posiciones inmediatamente inferior o derecha d
 
 Por otra parte, para que el~\ref{O1} s
 
-\paragraph{Definicion de entornos} \label{paragraph:entornos}
+\paragraph{Definición de entornos} \label{paragraph:entornos}
 En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
 
 Para definir un entorno, necesitamos conocer la representación de las soluciones (recuérdese la \autoref{apartado:representacion-soluciones}), pues en función de la misma definiremos los entornos. En nuestro caso, se trata de una representación discreta en forma matricial. Para este tipo de representaciones lo mas habitual es la permutación de elementos de la solución para transformarlas en otras.
@@ -529,7 +542,7 @@ Para este proyecto se han empleado ideas de todos ellos y se han definido tres t
 	
 	\item \textbf{Movimientos en rejilla} \textit{(movRejilla)}: permite el traspaso de carga sin romper la estructura de la solución
 			
-	\item \textbf{Movimiento libr}e \textit{(movLibre)}: si no es posible un intercambio mediante ninguno de los anteriores, trataremos de tomar intervalos más pequeños de carga
+	\item \textbf{Movimiento libre} \textit{(movLibre)}: si no es posible un intercambio mediante ninguno de los anteriores, trataremos de tomar intervalos más pequeños de carga
 \end{itemize}
 
 Como podemos ver, los dos primeros no tienen libertades de movimiento, sino que deberán mover un numero de slots concreto, nunca menor que la carga continuada o la sección limitada por la rejilla. Para no limitar el espacio de soluciones, añadimos el último, que permite esa libertad en cuanto al tamaño. A continuación describiremos cada uno de ellos.
@@ -776,7 +789,7 @@ En primer lugar tenemos una probabilidad de diversificación (la probabilidad de
 
 Con esa probabilidad elegimos uno de los tipos de entornos: diversificadores o intensificadores. Como es probabilístico se usará cualquiera de ambos, pero con mayor probabilidad uno que otro. Una vez escogido el movimiento (entorno) este no pordrá volver a ser elegido hasta que todos los entornos pertenecientes a su grupo hayan sido utilizados (de esta forma evitamos repeticiones y garantizamos que todos sean utilizados).
 
-La idea es tratar de que al principio las soluciones analizadas sean mas diversas entre sí y a medida que la ejecución avanza se vaya reduciendo la diversificación dando paso a la intensificación de la mejor solución alcanzada, siempre de forma estocástica. Una vez obtenido el tipo de entorno probabilísticamente, se elige el movimiento (entorno) concreto de ese tipo. En caso de utilizar entornos con restricciones, estos se ejecutan de forma determinista: en el orden en el que se han definido. La \autoref{fig:esquema-entornos-probabilisticos} resume esta información gráficamente. Más detalles desde el punto de vista de implementación en la \autoref{capitulo:4}. %TODO: referencia!!!!!!
+La idea es tratar de que al principio las soluciones analizadas sean mas diversas entre sí y a medida que la ejecución avanza se vaya reduciendo la diversificación dando paso a la intensificación de la mejor solución alcanzada, siempre de forma estocástica. Una vez obtenido el tipo de entorno probabilísticamente, se elige el movimiento (entorno) concreto de ese tipo. En caso de utilizar entornos con restricciones, estos se ejecutan de forma determinista: en el orden en el que se han definido. La \autoref{fig:esquema-entornos-probabilisticos} resume esta información gráficamente. Más detalles desde el punto de vista de implementación en la \autoref{capitulo:4}\NOTE{REFERENCIA!!}. %TODO: referencia!!!!!!
 
 \begin{figure}
 	\centering	\includegraphics[width=\linewidth]{esquema-entornos-probabilisticos}
@@ -803,12 +816,24 @@ Si el sistema no requisiera de un tiempo concreto, otra posible opción sería l
 
 En este sistema se han considerado ambas condiciones de parada, de forma que se detenga la ejecución tanto si no hay mejora suficiente antes de llegar al tiempo máximo y en el caso opuesto, que si bien esté mejorando ya se haya alcanzado el límite de tiempo. Ambas condiciones se evalúan tras cada cambio de vecindad como se ha representado en la % TODO: referencia al esquema del principio!!! \autoref{figura}
 
-Por otro lado, las iteraciones de la búsqueda local, tal y como se describió al comienzo de la sección, se utliza una mixtura entre el \textit{Best Improvement} y el \textit{First Improvement}: si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda con la condición de parada definida mediante un porcentaje de tolerancia equivalente al descrito previamente.
+Por otro lado, las iteraciones de la búsqueda local, tal y como se describió al comienzo de la sección, se utiliza una mixtura entre el \textit{Best Improvement} y el \textit{First Improvement}: si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda con la condición de parada definida mediante un porcentaje de tolerancia equivalente al descrito previamente.
 
-\NEW{PREGUNTA: QUITO ALGUNAS IMÁGENES QUE QUIZÁS SEAN REDUNDANTES Y LAS GUARDO PARA LA PRESENTACIÓN?? CUÁLES}
+\paragraph{Función de distancia en el Skewed-VNS}
+El Skewed VNS precisa de dos parámetros adicionales: la función de distancia $d(x,x')$ y el llamado $\alpha$, ambos explicados en la \autoref{sec:vns}. El parámetro $\alpha$ se ajusta experimentalmente, y la función de distancia se ha de definir previamente. 
 
+Hemos planteado dos opciones. La distancia basada en la diferencia de sus respectivos fitness: $d_1(x,x')=f(x)-f(x')$ y basada en el número de slots diferentes entre sí: 
+$
+d_2(x,x')=\sum_{i=1}^{nATC} \sum_{j=1}^{nSlots}
+\begin{cases}
+1 & \quad \textrm{si } x_i^j = {x'}_i^j \\
+0 & \quad \textrm{en otro caso }
+\end{cases}
+$ con la peculiaridad de que en caso de que la solución no esté ordenada, se deberán de tomar los mismos controladores en cada comparación, es decir que el lugar de comparar mediante índice, se compara mediante identificador.
 
+Para normalizar esta función (la primera ya está entre 0 y 1) medido empíricamente el valor máximo posible de la función
+y se ha utilizado la siguiente formula:
+\[
+	X' = \frac{X-X_{min}}{X_{max}-X_{min}}
+\]
 
-
-
-
+Sabemos que $X_{min}=0$ y tras ejecutar la función $5\,000$ veces en total entre todos los casos disponibles, se ha obtenido un valor máximo de 400, por lo que al resultado de $d_2(x,x')$ se ha de dividir por 400 para su normalización.
