@@ -1,3 +1,5 @@
+%! Suppress = LineBreak
+%! Suppress = LabelConvention
 \graphicspath{{capitulos/Capitulo3-Metodologia-propuesta/recursos/}}
 
 \section{Metodología propuesta} \label{capitulo:3}
@@ -9,7 +11,7 @@ Para comenzar con el planteamiento de la metodología, podemos comenzar desde el
 El sistema debe poder corregir la planificación de controladores de ese día, por lo tanto, es claro que la entrada será esa planificación. Recordemos que el sistema \legacy{} será empleado por el personal del aeropuerto para realizar la planificación de forma automatizada, por lo que la entrada del sistema deberá tener un formato común con la salida del sistema \legacy{}.
 Respecto a la salida, deberá ser de un formato comprensible por el personal gerente de los puestos de control.
 
-Por último resta detallar la parte más importante: la \textit{caja negra} propiamente dicha. Pues bien, como hemos dicho antes, en primer lugar el sistema recibirá una solución inicial, que deberá ser tratada de acuerdo con las contingencias habidas. Por ejemplo, ocurre un cambio de sectorización en mitad del turno que no estaba planificado. 
+Por último, resta detallar la parte más importante: la \textit{caja negra} propiamente dicha. Pues bien, como hemos dicho antes, en primer lugar el sistema recibirá una solución inicial, que deberá ser tratada de acuerdo con las contingencias habidas. Por ejemplo, ocurre un cambio de sectorización en mitad del turno que no estaba planificado. 
 A partir del momento en el que se cierra debemos eliminar todas las apariciones de los sectores que se cierran y añadir los que se abren, pero no antes de dicho momento (más detalles en la \autoref{sec:3:inicializacion-soluciones}). 
 Llamaremos al momento en el que sucede la incidencia como momento actual para simplificar, aunque lo habitual es que el sistema sea ejecutado varios minutos antes de que suceda la incidencia.
 
@@ -66,9 +68,13 @@ discretización: renunciamos a la precisión del tiempo fragmentándolo en inter
 \end{figure}
 
 Esta discretización nos hace perder precisión, por lo que el tamaño del slot deberá ser el adecuado para no perder capacidad de representación en nuestras soluciones y por ende limitar espacio de búsqueda en exceso, lo cual podría desembocar en que una buena solución no pueda ser representada y por lo tanto no será contemplada por el sistema de búsqueda así que nunca se dará como solución.
-En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas las restricciones numéricas del dominio del problema (véase requisito) %TODO REFERENCIAS!!!)
+En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas las restricciones numéricas del dominio del problema (véase requisito). Los expertos de \gls{CRIDA} están satisfechos con este nivel de detalle. % TODO REFERENCIAS!!!)
 
-Con todo, la representación de una solución es de la forma de la \autoref{fig:3:ejemplo-distribucion-inicial}
+En las representaciones realizadas (véase como ejemplo la \autoref{fig:3:ejemplo-distribucion-inicial}) se utilizan identificadores de tres letras en lugar del nombre completo del sector para abreviar y mantener el número de caracteres constante.
+Se han añadido también colores para una mejor visualización.
+Las letras en mayúscula (AAA-ZZZ) representan un trabajo en puesto de ejecutivo, mientras que las letras minúsculas (aaa-zzz) indican un trabajo en puesto planificador. Los descansos se representan mediante unos (111).
+Hemos agrupado slots contiguos tanto de trabajo como de descanso idénticos, de manera que visualmente sea más cómodo de entender. Para que las soluciones aquí presentadas tengan validez final, deberíamos añadir indicadores de las horas de los cambios de puesto, sin embargo, para este documento esto no es realmente importante por lo que podemos omitirlo.
+
 
 %\NOTE{ AÑADIR ESTRUCTURA PIRAMIDAL DE LAS SOLUCIONES (de cara a referenciarlo en el fitness \autoref{apartado:adaptacion-fitness})} % PUESTO EN EL APARTADO DE FITNESS
 
@@ -76,8 +82,7 @@ Con todo, la representación de una solución es de la forma de la \autoref{fig:
 	\centering
 	\includegraphics[width=\linewidth]{Ejemplo-distribucion-inicial}
 	\caption[Ejemplo de una solución inicial]{Ejemplo de una posible solución inicial. Constituida mediante el uso 
-		de plantillas. 
-		Nótese que se emplean identificadores en vez del nombre completo de cada sector para abreviar}
+		de plantillas.}
 	\label{fig:3:ejemplo-distribucion-inicial}
 \end{figure}
 
