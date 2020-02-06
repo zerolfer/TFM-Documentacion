@@ -38,7 +38,7 @@ Mientras que la \fasedos{} o simplemente \textit{Metaheurística}, será la fase
 En las próximas secciones definiremos cada una de estas Fases en detalle.
 
 \subsection{Representación de las soluciones}
-\label{apartado:representacion-soluciones}
+\label{sec:3:representacion-soluciones}
 
 Antes de entrar en detalle, es importante explicar cómo se han representado las soluciones. Recordemos que estamos representado planificaciones, es decir una relación matricial de sectores con trabajadores a lo largo del tiempo que dura un turno. De forma que, dada una lista de controladores, en cada instante de tiempo tendremos un sector asignado, así como el tipo de puesto (planificador o ejecutivo).
 
@@ -68,7 +68,7 @@ discretización: renunciamos a la precisión del tiempo fragmentándolo en inter
 \end{figure}
 
 Esta discretización nos hace perder precisión, por lo que el tamaño del slot deberá ser el adecuado para no perder capacidad de representación en nuestras soluciones y por ende limitar espacio de búsqueda en exceso, lo cual podría desembocar en que una buena solución no pueda ser representada y por lo tanto no será contemplada por el sistema de búsqueda así que nunca se dará como solución.
-En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas las restricciones numéricas del dominio del problema (véase requisito). Los expertos de \gls{CRIDA} están satisfechos con este nivel de detalle. % TODO REFERENCIAS!!!)
+En nuestro caso, hemos elegido un tamaño de slot de 5 minutos debido a que se trata del máximo común divisor de todas las restricciones numéricas del dominio del problema (véase la \autoref{sec:4:RD}). Los expertos de \gls{CRIDA} están satisfechos con este nivel de detalle.
 
 En las representaciones realizadas (véase como ejemplo la \autoref{fig:3:ejemplo-distribucion-inicial}) se utilizan identificadores de tres letras en lugar del nombre completo del sector para abreviar y mantener el número de caracteres constante.
 Se han añadido también colores para una mejor visualización.

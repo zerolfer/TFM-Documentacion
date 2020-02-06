@@ -29,7 +29,7 @@ En la \autoref{fig:3:ejemplo-distribucion-inicial} se muestra cómo sería una p
 En este caso ha sido creada en base a \textit{plantillas} o \textit{estadillos}, que es el método empleado habitualmente por el personal para crear la planificación.
 Consiste en la repetición de un patrón conformado por tres controladores para un sector, en el que se suceden trabajo en puesto planificador, trabajo en puesto ejecutivo y descanso con un desfase en incremento para cada controlador, de forma que en cada instante de tiempo (imagínese una línea transversal) habrá un controlador en puesto ejecutivo, otro en planificador y otro descansado (véase  la \autoref{fig:3:plantilla-3x1}).
 
-\gls{CRIDA} sabe que el uso de estas plantillas si bien no es lo más óptimo es lo más cómodo tanto para la creación manual de la planificación como de cara a no incumplir las restricciones de cada trabajador (véase requisito). %TODO: referencias!!).
+\gls{CRIDA} sabe que el uso de estas plantillas si bien no es lo más óptimo es lo más cómodo tanto para la creación manual de la planificación como de cara a no incumplir las restricciones de cada trabajador (véase la  \autoref{sec:4:RD}).
 
 \begin{figure}
 	\centering
@@ -115,7 +115,7 @@ Para este proyecto se ha utilizado un tamaño de 6 slots de descanso (12 de trab
 
 Para cada uno de los sectores mencionados añadiremos una de estas plantillas, con 3 controladores adicionales inexistentes que emplearemos auxiliarmente y que trataremos de eliminar en la \fasedos{}. En caso de no ser posible eliminar todos los auxiliares, diremos que para resolver el problema actual necesitamos obligatoriamente de un controlador extra.
 
-De esta forma, obtendremos una planificación en la que se han tenido en cuenta las contingencias relativas a los cambios de sectorización. Si la instancia concreta del problema incluye únicamente esta incidencia, la planificación de la \autoref{fig:3:ejemplo-distribucion-pasos-1-y-2} sería una \textit{solución inicial} preparada para emplear como entrada a la \fasedos{}, que deberá, entre otras cosas, eliminar los controladores imaginarios, es decir, que no existen pero son necesarios en la inicialización y que se representan mediante el identificador ``C0".
+De esta forma, obtendremos una planificación en la que se han tenido en cuenta las contingencias relativas a los cambios de sectorización. Si la instancia concreta del problema incluye únicamente esta incidencia, la planificación de la \autoref{fig:3:ejemplo-distribucion-pasos-1-y-2} sería una \textit{solución inicial} preparada para emplear como entrada a la \fasedos{}, que deberá, entre otras cosas, eliminar los controladores imaginarios, es decir, que no existen pero son necesarios en la inicialización y que se representan mediante el identificador ``C0''.
 
 \begin{figure}[htbp]
 	\centering
@@ -133,11 +133,9 @@ El controlador que se da de baja dejará de trabajar ese día. Sin embargo, no p
 <
 Si ningún trabajador se reincorpora a su puesto de trabajo, emplearemos un controlador imaginario al que se le asignará toda la carga de trabajo que tenía el controlador de baja a partir del momento de la incidencia.
 
-La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el controlador ``C23" se ha puesto de baja a las 9:30 (slot 30) y no hay reincorporación (en caso de haberla el controlador ``C0" tendría su identificador correspondiente). Nótese que se emplean los caracteres de fuera de turno (``000'') en todos los slots a partir de la incidencia en el caso del controlador de baja mientras que para el controlador imaginario (o el reincorporado según se aplique) sucede lo contrario, todos los slots previos a la incidencia tienen el mencionado carácter. 
+La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el controlador ``C23'' se ha puesto de baja a las 9:30 (slot 30) y no hay reincorporación (en caso de haberla el controlador ``C0'' tendría su identificador correspondiente). Nótese que se emplean los caracteres de fuera de turno (``000'') en todos los slots a partir de la incidencia en el caso del controlador de baja mientras que para el controlador imaginario (o el reincorporado según se aplique) sucede lo contrario, todos los slots previos a la incidencia tienen el mencionado carácter. 
 
-\NEW{Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase \autoref{apartado:adaptacion-fitness})---concretamente la función objetivo~\ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas la del descanso mínimo (recopiladas en Implementación requisitos % TODO referencia!
-)--- no se han de computar como tiempo de descanso para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito XXX) % TODO referencia!!
-tenga un valor coherente con la realidad.}
+\NEW{Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase \autoref{apartado:adaptacion-fitness})---concretamente la función objetivo~\ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas la del descanso mínimo (recopiladas en la \autoref{sec:4:RD})--- no se han de computar como tiempo de descanso para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito~\ref{RD:porcentaje-min-descanso}) tenga un valor coherente con la realidad.}
 
 \begin{figure}[htbp]
 	\centering

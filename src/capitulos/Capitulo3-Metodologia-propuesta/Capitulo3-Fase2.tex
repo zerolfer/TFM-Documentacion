@@ -135,7 +135,7 @@ No necesariamente un entorno amplio, i.e.\ con mayor conjunto de soluciones fact
 
 En función de los subprocesos que se utilicen durante la búsqueda estaremos hablando de un tipo de VNS u otro. A continuación describiremos las características de aquellos tipos de VNS que se han implementado en este TFM\@.
 
-El VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación`` (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
+El VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación'' (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
 
 La componente de búsqueda local se puede realizar en dos enfoques diferentes: buscando la primera solución que mejore la actual (\textit{First Improvement}) o empleando la mejor de todas las posibles soluciones del entorno (\textit{Best Improvement}) sin embargo no siempre es posible obtener todas las soluciones posibles de un entorno, especialmente en problemas complejos como el que tenemos entre manos. En este problema se ha empleado una técnica mixta que si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda hasta que la solución no se mejore en un porcentaje de tolerancia (véase \autoref{apartado:condiciones-parada} para una descripción detallada).
 
@@ -266,7 +266,7 @@ Existen más variaciones del algoritmo básico del VNS que no se han contemplado
 \subsubsection{Adaptación del VNS al problema}
 \label{apartado:adaptacion-VNS}
 
-Recordemos que en secciones anteriores hemos definido la \faseuno{} que nos permite crear una solución inicial sobre la que el VNS pueda trabajar. El esquema planteado para la \fasedos{} es el de la \autoref{fig:esquema-fase2}, en el que podemos ver cómo se combinan los algoritmos definidos previamente del VNS y el cambio de vecindad, junto a la condición de parada, definida en \hyperref[apartado:condiciones-parada]{más adelante en la sección}. El proceso denominado ``VNS concreto" se trata del tipo de VNS elegido de entre todos los descritos previamente. Más adelante en el \autoref{capitulo:5} veremos cuál es el más eficiente de todos ellos.
+Recordemos que en secciones anteriores hemos definido la \faseuno{} que nos permite crear una solución inicial sobre la que el VNS pueda trabajar. El esquema planteado para la \fasedos{} es el de la \autoref{fig:esquema-fase2}, en el que podemos ver cómo se combinan los algoritmos definidos previamente del VNS y el cambio de vecindad, junto a la condición de parada, definida en \hyperref[apartado:condiciones-parada]{más adelante en la sección}. El proceso denominado ``VNS concreto'' se trata del tipo de VNS elegido de entre todos los descritos previamente. Más adelante en el \autoref{capitulo:5} veremos cuál es el más eficiente de todos ellos.
 
 \begin{figure}[htbp]
     \centering
@@ -281,7 +281,7 @@ Una vez definida la técnica a utilizar y las posibles variaciones planteadas, d
 
 En las próximas secciones se describe cómo se ha optado por adaptar la metaheurística descrita en la sección anterior al problema descrito en el \autoref{capitulo:2}: cómo se ha implementado la función de evaluación, qué entornos se han definido y bajo qué criterios son ordenados, las técnicas de exploración y explotación utilizadas, las condiciones de parada y la función de distancia para el caso del skewed VNS.
 
-La primera característica necesaria para las metaheurísticas ---y cualquier técnica, en palabras generales--- es la codificación (definida en la sección anterior). En el caso de nuestro problema, tal y como se describió detalladamente en la \autoref{apartado:representacion-soluciones}, las soluciones se representan de forma matricial con una discretización del tiempo a intervalos de 5 minutos. La representación desde el punto de vista de la programación se encuentra descrita en la \autoref{sec:detalles-impl-sistema}. % TODO ajustar referencia cruzada
+La primera característica necesaria para las metaheurísticas ---y cualquier técnica, en palabras generales--- es la codificación (definida en la sección anterior). En el caso de nuestro problema, tal y como se describió detalladamente en la \autoref{sec:3:representacion-soluciones}, las soluciones se representan de forma matricial con una discretización del tiempo a intervalos de 5 minutos. La representación desde el punto de vista de la programación se encuentra descrita en la \autoref{sec:detalles-impl-sistema}. % TODO ajustar referencia cruzada
 
 
 
@@ -371,15 +371,13 @@ A continuación describiremos brevemente cada una de estas funciones. Más detal
 
 La primera función objetivo~\ref{O1} tiene la siguiente fórmula:
 \[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^c i\cdot h_i \]
-Donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{apartado:representacion-soluciones}).
+Donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{sec:3:representacion-soluciones}).
 
 Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de mayor carga a menos carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma la carga de los controladores de la solución tendrá forma piramidal. Una vez alcanzado el valor 1 de este primer objetivo, la ordenación deja de ser necesaria y nos podemos ahorrar ese tiempo de cómputo bastante significativo, pues todo método de ordenación es bastante costoso, del orden de $O(n^2)$. \NOTE{PONER UN ESQUEMA DE LA ESTRUCTURA PIRAMIDAL??}
 
-La segunda función objetivo~\ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en el Apartado Implementación requisitos de dominio (entorno)---, %TODO referencia!!
-favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado).
+La segunda función objetivo~\ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en la \autoref{sec:4:RD}---, favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado).
 
-En caso de que el trabajador tenga slots fuera de turno (véase \autoref{sec:baja-alta-controladores}) éstos serán contabilizados como descansos para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito XXX) % TODO referencia!!
-tenga un valor coherente con la realidad.
+En caso de que el trabajador tenga slots fuera de turno (véase \autoref{sec:baja-alta-controladores}) éstos serán contabilizados como descansos para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito~\ref{RD:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
 
 En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase \ldots) % TODO referencia!
 
@@ -428,7 +426,7 @@ Por otra parte, para que el~\ref{O1} s
 \paragraph{Definición de entornos} \label{paragraph:entornos}
 En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
 
-Para definir un entorno, necesitamos conocer la representación de las soluciones (recuérdese la \autoref{apartado:representacion-soluciones}), pues en función de la misma definiremos los entornos. En nuestro caso, se trata de una representación discreta en forma matricial. Para este tipo de representaciones lo más habitual es la permutación de elementos de la solución para transformarlas en otras.
+Para definir un entorno, necesitamos conocer la representación de las soluciones (recuérdese la \autoref{sec:3:representacion-soluciones}), pues en función de la misma definiremos los entornos. En nuestro caso, se trata de una representación discreta en forma matricial. Para este tipo de representaciones lo más habitual es la permutación de elementos de la solución para transformarlas en otras.
 
 Los antecedentes respecto a las definiciones de entorno no son demasiados, Jónatan Lara Valero realizó un estudio exhaustivo desde el punto de vista matemático de los entornos del sistema \legacy{} y propuso uno nuevo con una técnica innovadora de rejilla. En su tesis, Lara describe y analiza el comportamiento de los entornos definidos por Tello et al. en~\cite{articulo1} denominados como \textit{mov3} y \textit{mov6}.
 
@@ -526,7 +524,7 @@ A su vez propone otros movimientos como variaciones de este, pero para esta tesi
     \label{fig:representacion-rejilla}
 \end{figure}
 
-Si bien no forma parte de esta tesis, pues no se trata de trabajo propio, debido a que en el \autoref{capitulo:5} se hacen comparaciones entre las dos metaheurísticas definidas, consideramos importante en esta sección destacar que, los entornos definidos para el sistema \legacy{} ---los aquí definidos, entre otros--- fueron actualizados siguiendo las restricciones de codificación (véase XXX) % TODO: REFERENCIA Y TODO ESO!!!
+Si bien no forma parte de este TFM, pues no se trata de trabajo propio, debido a que en el \autoref{capitulo:5} se hacen comparaciones entre las dos metaheurísticas definidas, consideramos importante en esta sección destacar que, los entornos definidos para el sistema \legacy{} ---los aquí definidos, entre otros--- fueron actualizados siguiendo la codificación definida (véase la \autoref{sec:3:representacion-soluciones})
 y el SA fue ejecutado empleando todos ellos. El estudio concluyó con que el entorno que mejores resultados ofrecía para el SA es el \textit{mov15}, uno de los propuestos por Lara en~\cite{tesis-jonatan}, de tipo rejilla con la variación de que permite intercambiar más de un intervalo a la vez, entre 1 y 3 siempre y cuando estén consecutivos.
 % TODO: poner o referenciar en el capítulo 5!!!
 
@@ -574,8 +572,8 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
     Elegir arbitrariamente un controlador $c_2$ \label{line:maxcarga:c2}\;
     \algovspace
 
-    \If{se cumplen las restricciones del dominio (en especial que la acreditación sea válida %TODO referencia al requisito concreto
-    )o y del entorno \label{line:maxcarga:restricciones}}{traspasar carga y \textbf{fin}}
+    \If{se cumplen las restricciones del dominio (en especial que la acreditación sea válida, \ref{RD:acreditacion-valida}) y del entorno \label{line:maxcarga:restricciones}}
+    {traspasar carga y \textbf{fin}}
     %	\footnote{Es decir, que ambos trabajadores estén acreditados para llevar a cabo el trabajo del otro controlador}
     \algovspace
 
@@ -811,7 +809,7 @@ Si el sistema no requiriera de un tiempo concreto, otra posible opción sería l
     \label{fig:porcentaje-mejora}
 \end{figure}
 
-En este sistema se han considerado ambas condiciones de parada, de forma que se detenga la ejecución tanto si no hay mejora suficiente antes de llegar al tiempo máximo y en el caso opuesto, que si bien esté mejorando ya se haya alcanzado el límite de tiempo. Ambas condiciones se evalúan tras cada cambio de vecindad como se ha representado en la % TODO: referencia al esquema del principio!!! \autoref{figura}
+En este sistema se han considerado ambas condiciones de parada, de forma que se detenga la ejecución tanto si no hay mejora suficiente antes de llegar al tiempo máximo y en el caso opuesto, que si bien esté mejorando ya se haya alcanzado el límite de tiempo. Ambas condiciones se evalúan tras cada cambio de vecindad como se ha representado en la \autoref{fig:esquema-fase2}
 
 Por otro lado, las iteraciones de la búsqueda local, tal y como se describió al comienzo de la sección, se utiliza una mixtura entre el \textit{Best Improvement} y el \textit{First Improvement}: si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda con la condición de parada definida mediante un porcentaje de tolerancia equivalente al descrito previamente.
 

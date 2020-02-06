@@ -16,6 +16,7 @@ Adicionalmente existe la etapa de monitorización y seguimiento que se desarroll
 En las sucesivas secciones de este capítulo iremos describiendo los procesos llevados a cabo en cada una de estas etapas y las conclusiones alcanzadas en las mismas.
 
 \subsection{Planificación}
+\label{sec:4:planificacion}
 En esta primera etapa presente en todo proyecto tratamos de fijar principalmente el concepto de alcance, que podríamos definir como el trabajo realizado para entregar un producto, servicio o resultado con
 las funciones y características especificadas~\cite{PMBOK}.
 
@@ -46,10 +47,129 @@ En la \autoref{sec:4:implementacion} se describen las tecnologías software util
 % TODO: ¿cronograma?
 
 \subsection{Análisis}
-Lorem ipsum
+El objetivo de esta fase consiste en la educción de los requisitos que precisa el software a partir de los documentos e información facilitada por los tutores y demás stakeholders.
 
-\subsection{Planificación}
-Lorem ipsum
+Los \textit{stakeholders} del proyecto son: CRIDA, los tutores, y los estudiantes de doctorado o máster implicados actual o anteriormente (Tino Tello, Jónatan Lara y Pablo Lozano) y será a quienes se deberá recurrir para responder dudas. El \textit{stakeholder} principal por supuesto es CRIDA, que guiará los objetivos principales y responderá a las preguntas de mayor complejidad y que competan a dominio del problema. Los tutores tendrán las mismas competencias pero a nivel del TFM y no del proyecto en su totalidad, y serán quienes faciliten la documentación inicial relativa al dominio del problema. El resto de \textit{stakeholders} y especialmente Tino Tello, proporcionarán la información relativa al software y aclararán conceptos de esta índole.
+
+La documentación inicial facilitada por los tutores se basa en dos papers uno publicado y otro sin publicar a fecha de inicio del TFM~\cite{articulo1, articulo2}. Una vez leída la documentación inicial y comprendido el dominio del problema, se realizó una entrevista con Tino Tello para comprender la implementación del sistema \legacy{} para poder comenzar a trabajar. En dicha entrevista se obtuvo como conclusión la creación de un repositorio con control de versiones Git disponible para todos los \textit{stakeholders} y el inicio del primer ciclo de la planificación (definidos en \autoref{sec:4:planificacion}).
+
+En este punto se identifican los requisitos del sistema tanto del dominio (obtenidos del software \legacy{} y de la documentación inicial) como del sistema (entrada/salida, interfaces, etc.) que se encuentran recopilados en las próximas secciones.
+
+\subsubsection{Requisitos del dominio}
+\label{sec:4:RD}
+
+Los requisitos de dominio son aquellas restricciones del sistema que son impuestas únicamente por el dominio del problema, y no por la propia naturaleza del sistema ni de forma externa.
+
+Este tipo de requisitos son necesarios para la constitución de una solución factible y permite cuantificar lo mejor o peor que son una solución de otra mediante el conteo (ponderado) del numero de restricciones incumplidas (véase el objetivo \ref{O2}). 
+
+En el sistema \legacy{} existían dos tipos de restricciones: obligatorias y deseables, pues una vez alcanzada la factibilidad se intentaba mejorar. Sin embargo, en este sistema nos moveremos por soluciones infactibles buscando la que sea mejor, a ser posible factible pero no como condición necesaria. Estas restricciones son impuestas por la legislación española, recogidas en el BOE, fundamentalmente en:
+
+\begin{itemize}
+	\item Real Decreto 1001/2010, de 5 de agosto, por el que se establecen normas de seguridad aeronáutica en relación con los tiempos de actividad y los requisitos de descanso de los controladores civiles de tránsito aéreo. \\
+	(\url{https://www.boe.es/eli/es/rd/2010/08/05/1001/con})
+	
+	\item Ley 9/2010, de 14 de abril, por la que se regula la prestación de servicios de tránsito aéreo, se establecen las obligaciones de los proveedores civiles de dichos servicios y se fijan determinadas condiciones laborales para los controladores civiles de tránsito aéreo. \\
+	(\url{https://www.boe.es/eli/es/l/2010/04/14/9})
+\end{itemize} 
+
+
+
+En primer lugar tenemos las fundamentales:
+
+%\begin{enumerate}[label={\textbf{RDF\arabic*}}]
+\begin{enumerate}[label={\textbf{RD\arabic*}}, ref={RD\arabic*},  align=left]
+	
+	\item Todas las posiciones de control deben estar cubiertas por controladores de manera exclusiva, exhaustiva y bajo las restricciones definidas.
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item Cada sector y posición, deben ser cubiertos en los intervalos donde estén abiertos (exhaustividad).
+		\item Cada sector y posición, deben ser cubiertos por un único controlador (exclusividad).
+	\end{enumerate}
+	
+	\item Un controlador no puede tener dos asignaciones diferentes en el mismo instante.
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item Entendemos por asignación la combinación de sector y posición.
+		\item un controlador no puede estar cubriendo en el mismo
+		instante la posición de ejecutivo y planificador de un sector y tampoco puede estar
+		asignado a dos sectores diferentes en el mismo instante, sea cual sea la posición.
+	\end{enumerate}
+
+	\item \label{RD:tipos-sector}  Cada sector tendrá un tipo de sector, que podrá ser Aproximación o Ruta
+
+	\item  \label{RD:sector-nucleo} Cada sector tendrá uno o varios núcleos asociados, así como cada núcleo tendrá un conjunto de sectores (relación N a N)
+	
+	\item \label{RD:nucleo-controlador} Cada controlador estará acreditado para controlar un único núcleo.
+
+\end{enumerate}
+
+
+
+A continuación las relativas a la posición y asignación de los controladores:
+
+\begin{enumerate}[resume*]
+	\item \label{RD:acreditacion-valida} Una determinada posición podrá ser asignada a un controlador si el controlador está habilitado en el núcleo al que pertenece el sector que le corresponde, o bien en uno de los núcleos a los que pertenece el sector
+	(si este es un sector común) independientemente de la sectorización por la que el sector se encuentre abierto.
+	
+	\item A un controlador tipo CON solo podrá asignársele una posición cuyo sector sea Ruta (véase la \autoref{table:2:acreditaciones})
+	
+	\item Los sectores o agrupaciones de dos sectores que se indique en la entrada del problema, se deberán cubrir con 4 controladores en el turno	de noche.
+
+	\item Un controlador solo puede operar en su turno correspondiente: si pertenece al turno largo, en el turno largo y si pertenece al turno corto en el turno corto.
+
+	\item Un controlador no puede cambiar de posición de control de una posición ejecutiva de un determinado sector a una posición ejecutiva de otro sector diferente, sin que exista un descanso entre medias, a no ser que ambos sectores sean afines (cambio de configuración). Nota: si no hay cambio de configuración de sectores no es posible que dos sectores diferentes posean volúmenes comunes.
+	
+	\item El número máximo de sectores por los que rota un controlador es 3.
+	
+	
+	
+	
+\end{enumerate}
+
+
+
+Y por último las relativas a los tiempos de trabajo y descanso de los controladores:
+
+\begin{enumerate}[resume*]
+	
+	\item \label{RD:porcentaje-min-descanso} El porcentaje de tiempo de descanso mínimo en turno diurno (mañana o tarde), incluyendo turnos largos es del 25\% como mínimo.
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item En caso de los turnos de noche, el porcentaje de tiempo de descanso mínimo en el turno de noche será
+	como mínimo del 33 \%.
+	\end{enumerate}
+	
+	\item No es posible un periodo de trabajo continuo mayor de dos horas en los que el controlador no realice ningún periodo de descanso.
+	
+	\item No puede existir ningún periodo de dos horas y media en los que un controlador realice un periodo total de descanso menor de media hora. Es decir, dentro de una ventana de tiempo de dos horas y media un controlador debe tener mínimo 30 minutos de descanso, sin ser necesario que estos se realicen de forma continua.
+	
+	\item El tiempo mínimo de trabajo continuado es de 15 minutos.
+	
+	\item El tiempo mínimo de descanso continuado es de 15 minutos.
+	
+	\item El tiempo mínimo en posición de un controlador es de 15 minutos.
+	
+	\item Todos los controladores deben trabajar como mínimo 15 minutos.
+		
+\end{enumerate}
+
+
+\subsubsection{Requisitos de entrada/salida}
+Los requisitos de entrada y salida (I/O) son aquellos relativos a la los ficheros y formatos definidos tanto para la entrada al sistema como en la salida.
+
+\begin{enumerate}[label={\textbf{RIO\arabic*}}, ref={RC\arabic*},  align=left]
+	
+	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso, de esta forma, la información común a varios casos será independiente de cada caso concreto.
+	
+	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 ficheros:
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item  Lista de todos los sectores pertenecientes la unidad de control y los sectores elementales\footnote{
+			Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} se podía sustituir por otros más pequeños, por lo tanto no es elemental
+		} por los que están formados cada uno de los sectores.
+		
+		\item  Matriz de Afinidad de los sectores de la dependencia (definida en la \autoref{section:2:sectores-y-sectorizacion}).
+		
+		\item Lista de los sectores pertenecientes a la unidad de control, en la que nos indica el tipo de sector (véase~\ref{RD:tipos-sector}) y los núcleos a los que pertenece (ver~\ref{RD:sector-nucleo}).
+	\end{enumerate}
+	
+\end{enumerate}
 
 \subsection{Diseño}
 Lorem ipsum
@@ -107,35 +227,11 @@ Con todo, el sistema tiene cuatro módulos:
 
 
 
-\subsection{Requisitos del sistema}
-Una vez definidos los conceptos básicos, procedemos a recopilar las características y restricciones del sistema.
-
-\subsubsection{Requisitos de entrada/salida}
-
-\begin{enumerate}[label={\textbf{RIO\arabic*}}]
-	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso,
-	de esta forma, la información común a varios casos será independiente de cada caso concreto.
-	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 ficheros:
-	\begin{enumerate}[label*={\textbf{.\arabic*}}]
-		\item  Lista de todos los sectores pertenecientes la unidad de control y los sectores elementales\footnote{
-			Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} se podía sustituir por otros más pequeños, por lo tanto no es elemental
-		} por los que están formados cada uno de los sectores.
-		
-		\item  Matriz de Afinidad de los sectores de la dependencia (definida en la 	\autoref{section:2:sectores-y-sectorizacion})
-		\item Lista de los sectores pertenecientes a la unidad de control, en la que nos indica el tipo de sector (véase~\ref{RD-tipos-sector}) y los núcleos a los que pertenece (ver~\ref{RD-sector-nucleo}).
-	\end{enumerate}
-	
-\end{enumerate}
 
 
-\subsubsection{Restricciones de dominio}
-Las restricciones de dominio son aquellos requisitos del sistema que son impuestos únicamente por el dominio del problema, no por la propia naturaleza del sistema ni de forma externa.
 
-\begin{enumerate}[label={\textbf{RD\arabic*}}]
-	\item \label{RD:tipos-sector}  Cada sector tendrá un tipo de sector, que podrá ser Aproximación o Ruta
-	\item  \label{RD:sector-nucleo} Cada sector tendrá uno o varios núcleos asociados, así como cada núcleo tendrá un conjunto de sectores (relación N a N)
-	
-\end{enumerate}
+
+
 
 \subsubsection{Detalles de implementación del sistema}
 \label{sec:detalles-impl-sistema}
