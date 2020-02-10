@@ -48,6 +48,12 @@
 \newcommand*{\faseuno}{\hyperref[sec:3:inicializacion-soluciones]{Fase 1}}
 \newcommand*{\fasedos}{\hyperref[sec:3:metaheurística]{Fase 2}}
 
+%\newcommand{\sublist}[1]{
+%	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+%		#1
+%	\end{enumerate}
+%}
+
 \renewcommand{\labelitemi}{$\square$}
 \renewcommand{\labelitemii}{$-$}
 \renewcommand{\labelitemiii}{$\bullet$}
@@ -95,6 +101,7 @@
 
 \usepackage[breaklinks=true]{hyperref}
 \usepackage[T1]{fontenc}
+\usepackage{textcomp}
 \usepackage{ amssymb }
 \usepackage{parskip}
 %\usepackage{natbib} 
@@ -109,6 +116,11 @@
 \setglossarystyle{altlist}
 
 %\renewcommand{\cftsectnumwidth}{6em}
+
+\usepackage[page]{appendix}
+\usepackage{pdfpages}
+
+
 
 \pdfminorversion=7
 %
@@ -160,9 +172,10 @@
 \addto\extrasspanish{\def\subsubsectionautorefname{Sección}}
 \addto\extrasspanish{\def\paragraphautorefname{Sección}}
 
+\addto\extrasspanish{\def\appendixautorefname{Anexo}}
+
 \addto\extrasspanish{\def\algorithmautorefname{Algoritmo}}
 \renewcommand{\algorithmcflinename}{Paso}
-
 
 
 \captionsetup{labelfont=bf}
@@ -179,7 +192,11 @@
     \renewcommand{\tablename}{Tabla}
 %    \renewcommand{\figureshortname}{Figura}
 %    \renewcommand{\tableshortname}{Tabla}
-    
+
+	\renewcommand{\appendixname}{Anexo}
+	\renewcommand\appendixpagename{Anexos}
+   	\renewcommand\appendixtocname{Anexos}
+   	
     %\maketitle
     %\thispagestyle{empty}
     \begin{titlepage}
@@ -305,8 +322,14 @@
     %\include{capitulos/CapituloXXX-YYY/CapituloXXX}
     %\newpage
 
-    \section*{ANEXOS}
+	\begin{appendices}
+%    \section*{ANEXOS}
+%	\appendix
+	
+    \include{capitulos/Anexos/AnexoA-Formato-Planificacion-Inicial}
+	\newpage
 
+	\end{appendices}
 
     %	REFERENCIAS
     \newpage

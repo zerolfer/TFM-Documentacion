@@ -1,3 +1,4 @@
+\graphicspath{{capitulos/Capitulo4-Implementacion/recursos/}}
 
 \section{Implementación} \label{capitulo:4}
 
@@ -158,17 +159,110 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a la los fichero
 	
 	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso, de esta forma, la información común a varios casos será independiente de cada caso concreto.
 	
+	
 	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 ficheros:
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
-		\item  Lista de todos los sectores pertenecientes la unidad de control y los sectores elementales\footnote{
+		\item  Relación de todos los sectores pertenecientes la unidad de control con los sectores elementales\footnote{
 			Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} se podía sustituir por otros más pequeños, por lo tanto no es elemental
 		} por los que están formados cada uno de los sectores.
-		
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Tendrá las siguientes columnas: Nombre sector (p. ej. LECBBAS) y sector elemental
+			\item En caso de ser elemental, la segunda columna deberá ser vacía
+		\end{enumerate}
+
 		\item  Matriz de Afinidad de los sectores de la dependencia (definida en la \autoref{section:2:sectores-y-sectorizacion}).
-		
-		\item Lista de los sectores pertenecientes a la unidad de control, en la que nos indica el tipo de sector (véase~\ref{RD:tipos-sector}) y los núcleos a los que pertenece (ver~\ref{RD:sector-nucleo}).
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Será una matriz cuadrada cuyas filas y columnas son los sectores de la Unidad de Control concreta
+			\item Un elemento concreto de la matriz tendrá dos posibles valores:
+			\begin{enumerate}[label*={\textbf{.\arabic*}}]
+				\item 1 si son afines el sector de la fila con el de la columna.
+				\item 0 en caso contrario, es decir, si no son afines entre sí.
+			\end{enumerate}
+			\item Nótese que todo sector es afín consigo mismo.
+		\end{enumerate}
+	
+		\item Lista de los sectores pertenecientes a la Unidad de Control, en la que se indica el tipo de sector (véase~\ref{RD:tipos-sector}) y los núcleos a los que pertenece (ver~\ref{RD:sector-nucleo}).
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Tendrá las siguientes columnas: 
+			\begin{enumerate}[label*={\textbf{.\arabic*}}]
+				\item Nombre sector (p. ej. LECBBAS) 
+				\item Tipo Sector. Posibles valores APP o RUTA
+				\item Número variable de columnas que representen los núcleos que tiene la dependencia concreta (p. ej. Barcelona TMA, Barcelona Ruta Este y Barcelona Ruta Oeste)
+				\item Cada fila tendrá el caracter x en caso de que pertenezca al núcleo
+				\item Cada fila podrá tener varias columnas de núcleo marcadas (véase el requisito~\ref{RD:sector-nucleo}).
+			\end{enumerate}
+		\end{enumerate}
+		\item Lista de sectorizaciones de la Unidad de Control y sectores que conforman la sectorización y los volúmenes a los que pertenece cada sector.
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Tendrá como columnas: la sectorización (2B, 1A,...), el nombre del sector, el volumen al que pertenece y el núcleo al que pertenece.
+			\item Debido que cada volumen puede abarcar varios sectores, el nombre del sector y la sectorización se repetirán en varias filas pero cambiando el valor del volumen.
+		\end{enumerate}
 	\end{enumerate}
 	
+	\item La información del caso concreto está desglosada en 6 ficheros, dos de ellos opcionales.
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item Definición del turno. Contiene la hora de inicio y fin del turno completo asi como del tipo (mañana, tarde, noche y largo o corto).
+		\item \label{RIO:apertura-sectorizaciones} Apertura de sectorizaciones: contiene una lista de las franjas horarias en las que cada sectorización se abre, posiblemente más de una simultáneamente pero de diferente núcleo.
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item contiene los campos: nombre del núcleo, nombre de la sectorización, hora de inicio y hora de fin.
+		\end{enumerate}
+		\item \label{RIO:rrhh-disponibles}  Recursos humanos disponibles. Lista con los campos: identificador del controlador (unívoco), acreditación PTD o CON, núcleo al que pertenece y tipo de turno para el que trabaja.
+		\item Modificación de las sectorizaciones. Fichero opcional, únicamente se debe incluir si hay alguna incidencia que afecte a las sectorizaciones.
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Tiene el mismo formato que el fichero de apertura de sectorizaciones (\ref{RIO:apertura-sectorizaciones}) pero debe incluir las sectorizaciones nuevas a partir del momento de la incidencia.
+		\end{enumerate}
+		\item Modificación de los recursos. Fichero opcional, únicamente se debe incluir si hay alguna incidencia que afecte a los controladores.
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Cada campo (fila) indica si se trata de una baja o alta, el identificador del controlador pertinente y el momento (hh:mm:ss) del evento (que puede ser diferente al momento del cambio).
+		\end{enumerate}
+		\item La planificación inicial. Para esta versión se ha creado un formato ad-hoc para facilitar el trabajo a \gls{CRIDA} en la definición de casos para la experimentación:
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item La primera fila contendrá la hora del momento del cambio (hh:mm:ss).
+			\item el resto de filas tendrás las diferentes distribuciones del turno que maneja el personal para cada caso, que consta de una tabla definida de la forma:
+			\begin{enumerate}[label*={\textbf{.\arabic*}}]
+				\item la cabecera comienza con el carácter identificativo ``-''
+				\item el resto de columnas de la cabecera serán el rango de tiempo que representa en la tabla de la planificación. Deberá ser múltiplo de 5
+				\item el resto de columnas serán los nombres de los sectores (mayúscula si el puesto es ejecutivo, minúscula si es planificador) o ``111'' si es un descanso. 
+			\end{enumerate}		
+			\item Un mismo fichero podrá contener más de una distribución con diferentes intervalos de tiempo.
+			\item Más detalles sobre el formato y el proceso de creación en el \autoref{Anexo:A}
+		\end{enumerate}
+	\end{enumerate}
+
+	\item Todos los ficheros de entrada relativos a la parte de la información de la dependencia deberán estar en formato CSV separados por punto y coma (;) y en codificación UTF-8.
+	
+	\item Existen dos grupos de fichero de salida: los ficheros solución y las trazas.
+	\item Los ficheros solución, a su vez, tienen dos formatos: para máquina y para humanos.
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item El formato para máquina (txt) permite cargar en la memoria del sistema la planificación de salida rápidamente en caso de tener que hacer cálculos a posteriori.
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Consiste en la sucesión de todos los turnos creados sin espaicos, cada uno de ellos separados por comas.
+			\item Pierde la información de los controladores, pero para cálculos como el numero de restricciones incumplidas sí puede utilizarse.
+		\end{enumerate}
+		\item El formato para humanos será un fichero excel (xlsx) con tres partes:
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item Una tabla con la planificación resultante, empleando colores y el formato de salida (véase la \autoref{sec:3:representacion-soluciones} y especialmente la \autoref{fig:3:ejemplo-distribucion-inicial})
+			\item Resumen de la solución. Indica el identificador del controlador y el índice del turno asignado.
+			\item Información de las restricciones. Número de veces que cada restricción de incumple. Permite evaluar la calidad de la solución a posteriori.
+		\end{enumerate}
+	\end{enumerate}
+	\item Los ficheros de salida de tipo trazas son utilizados en la fase de experimentación (véase el \autopageref{capitulo:5}) para representar gráficas de la evolución del sistema.
+	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+		\item En cada iteración se registrará la información en un fichero CSV separado por comas
+		\item contendrá las siguiente columnas: i
+		\begin{itemize}
+		\item Número de la iteracion.
+		\item tiempo de ejecución (en milisegundos)
+		\item valor del fitness total (ponderado)
+		\item valor del objetivo \ref{O1}
+		\item valor del objetivo \ref{O2}
+		\item valor del objetivo \ref{O3}
+		\item valor del objetivo \ref{O4}
+		\item número de controladores (tamaño de la solución)
+		\item porcentaje mejora respecto al ciclo de ejecución actual (condición de parada)
+		\item vecindad en uso			
+		\end{itemize}
+	\end{enumerate}
 \end{enumerate}
 
 \subsection{Diseño}

@@ -299,7 +299,7 @@ Dentro de la primera opción, tenemos diferentes alternativas introducidas \hype
     \caption[Esquema de los posibles enfoques para la resolución del problema del fitness en optimización multiobjetivo]{Esquema de los posibles enfoques para la resolución del problema del fitness en optimización multiobjetivo. Obtenido de~\cite{sota:metaheuristicas-design-impl}}
     \label{fig:enfoques-fitness-multiobj}
 \end{figure}
-
+%
 \[
     f(x) = \sum_{i=1}^{n} \lambda_i \cdot f_i(x) = \lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) + \dots
 \]
@@ -384,7 +384,7 @@ En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las re
 La tercera función objetivo~\ref{O3}, implementada por vez primera para este sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, mejor eficiente y rápido podrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
 
 Para contar el número de cambios simplemente tendremos que recorrer la matriz por la columna del momento del cambio, el índice $slot_{actual}$ y compararla con la columna anterior $slot_{actual}-1$, matemáticamente lo podríamos expresar como:
-
+%
 \[
     f_3(x) = \frac{1}{nATC} \sum_{i=1}^{nATC}
     \begin{cases}
@@ -406,7 +406,7 @@ Con $x_i^j$ el sector y la posición asignados por la solución $x$ al controlad
 El quebrado $\sfrac{1}{nATC}$ sirve para normalizar la función, y poder usarla junto con todas las demás.
 
 La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planificaciones resultantes sean parecidas a los estadillos (definidos en el \autoref{sec:3:inicializacion-soluciones}). Lo lograremos comparando para slot de la solución el sector asignado con aquél del slot inmediatamente a la derecha y aquel inmediatamente inferior. Matemáticamente de la siguiente forma:
-
+%
 \[
     f_4(x) = \sum_{i=1}^{nATC} \sum_{i=1}^{nSlots}
     \begin{cases}
