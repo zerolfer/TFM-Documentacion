@@ -159,6 +159,8 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a la los fichero
 	
 	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso, de esta forma, la información común a varios casos será independiente de cada caso concreto.
 	
+	\item Adicionalmente se empleará un fichero de propiedades que permita modificar los parámetros del sistema (véase lista parámetros del sistema) %TODO: referencia!!!
+	sin necesidad de recompilar todo el código.	
 	
 	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 ficheros:
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
@@ -249,35 +251,83 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a la los fichero
 	\item Los ficheros de salida de tipo trazas son utilizados en la fase de experimentación (véase el \autopageref{capitulo:5}) para representar gráficas de la evolución del sistema.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
 		\item En cada iteración se registrará la información en un fichero CSV separado por comas
-		\item contendrá las siguiente columnas: i
+		\item contendrá las siguiente columnas:
 		\begin{itemize}
-		\item Número de la iteracion.
-		\item tiempo de ejecución (en milisegundos)
-		\item valor del fitness total (ponderado)
-		\item valor del objetivo \ref{O1}
-		\item valor del objetivo \ref{O2}
-		\item valor del objetivo \ref{O3}
-		\item valor del objetivo \ref{O4}
-		\item número de controladores (tamaño de la solución)
-		\item porcentaje mejora respecto al ciclo de ejecución actual (condición de parada)
-		\item vecindad en uso			
+			\item Número de la iteracion.
+			\item Tiempo de ejecución (en milisegundos)
+			\item Valor del fitness total (ponderado)
+			\item Valor del objetivo \ref{O1}
+			\item Valor del objetivo \ref{O2}
+			\item Valor del objetivo \ref{O3}
+			\item Valor del objetivo \ref{O4}
+			\item Número de controladores (tamaño de la solución)
+			\item Porcentaje mejora respecto al ciclo de ejecución actual (condición de parada)
+			\item Vecindad en uso			
 		\end{itemize}
 	\end{enumerate}
 \end{enumerate}
 
-\subsection{Diseño}
-Lorem ipsum
+%\subsubsection{Requisitos de interfaz}
+%En esta sección se recopilan los requisitos definidos para la adaptación del sistema diseñado con el sistema \legacy{}
+% TODO: OTROS REQUISITOS??
 
-\subsection{Implementación}
+\subsection{Diseño}
+En esta etapa diseñamos mediante la esquematización el sistema a implementar. El sistema se ha diseñado de tal manera que podamos reutilizar la mayor cantidad de código implementado y para ello se ha tomado como fundamente el paradigma Orientado a Objetos (POO) en contraposición con el paradigma procedimental. Además, las limitaciones de implementación de usar el lenguaje de programación Java (véase la \autoref{sec:4:implementacion}), favorecen el uso de éste paradigma. Además de la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante evolución y más de una persona empleará el código en un futuro. La selección del paradigma afectará a la forma de diseñar el sistema. El software se diseñó en el lenguaje universal de diseño UML, y debe notarse que los esquemas mostrados en los capítulos anteriores también forman parte del proceso de diseño, pero por claridad en la memoria se han incluido en sus correspondiente secciones.
+
+Se ha dividido el sistema en cuatro módulos:
+\begin{itemize}
+	\item Módulo de lectura de datos: lleva a cabo las tareas de lectura e inicialización de estructuras de datos.
+	\item Módulo de inicialización (\faseuno{}): inicializa la solución inicial de acuerdo a la(s) contingencias recibidas (input) del módulo anterior.
+	\item Módulo de búsqueda (\fasedos{}): lleva a cabo la búsqueda de una solución factible al problema.
+	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
+\end{itemize}
+
+Los módulos de entrada y salida se han resumido en dos clases que encapsulan toda la lógica de negocio, al igual que el módulo de conforma la \faseuno{}, sin embargo, para el módulo de búsqueda se ha diseñado un esquema de clases que se ha incluido completo en el Anexo B, y que explicaremos por partes. % TODO PONER ANEXO!!
+
+En primer lugar, tenemos la lógica relativa a los VNS propiamente dichos, que serán implementados siguiente el diseño de la \autoref{fig:4:diseño:vns}.
+
+En segundo lugar, la lógica de los entornos, en la \autoref{fig:4:diseño:entornos}. Que realizarán la búsqueda en sí, generando soluciones y modificando las existentes de diferentes formas según el tipo de vencidad.
+
+Por último, los VNS darán uso de las estructuras de vecindad mediante los sets, en la \autoref{fig:4:diseño:tipoEntorno}, que implementan el comportamiento de los entornos según su naturaleza probabilista o determinista
+
+El módulo de inicialización (\faseuno{}) empleará las clases Factoría para inicializar el VNS, las estructuras de vecindad y el tipo de Set de los entornos según la entrada del sistema y dar comienzo a la \faseuno{}.
+
+En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también las clases reutilizadas del sistema \legacy{} en rosa, y las modificadas, ampliadas o creadas en magenta. Nótese que la interfaz de la clase Fitness es utilizada únicamente por las estructuras de vecindad. La última decisión de diseño se trata de emplear un mapa de soluciones para guardar los fitness de las soluciones y recuperarlos rápidamente y con bajo coste computacional ($O(1)$) en el resto de ocasiones que sean requeridos en las clases del paquete vns, de esta forma su cálculo se realizará una única vez.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.9\linewidth]{diagrama-clases-VNS-alt}
+	\caption{Esquema del paquete vns (verde)}
+	\label{fig:4:diseño:vns}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{diagrama-clases-TipoEntornos}
+	\caption{Esquema del paquete naturaleza-entornos (amarillo+naranja)}
+	\label{fig:4:diseño:tipoEntorno}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\linewidth]{diagrama-clases-Vecindades}
+	\caption{Esquema del paquete estructuras-entorno (cian)}
+	\label{fig:4:diseño:entornos}
+\end{figure}
+
+
+%\subsection{Implementación}
+\subsubsection{Detalles de implementación del sistema}
 \label{sec:4:implementacion}
+
 
 Las herramientas software a utilizar serán:
 \begin{itemize}
 	\item Tello (planificación)
 	\item IntelliJ IDEA (implementación)
 	\item Jupyther Notebook (experimentación)
-	\item Microsoft Office (diagramas)
-	\item \TeX{} Studio (memoria)
+	\item Microsoft Office y Umlet (diagramas)
+	\item \TeX{} Studio (documentación)
 \end{itemize}
 
 
@@ -288,44 +338,3 @@ Lorem ipsum
 \label{sec:4:despliegue}
 
 Lorem ipsum
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\NOTE{CONTAR AQUI LAS ETAPAS DE SW. Y DESPUES DESCRIBIR UNA A UNA EL INPUT Y EL OUPUT. PARA LA FASE DE REQUISITOS AQUÍ HAY ALGUNO:}
-
-
-
-Con todo, el sistema tiene cuatro módulos:
-\begin{itemize}
-	\item Módulo de lectura de datos: lleva a cabo las tareas de lectura e inicialización de estructuras de datos.
-	\item Módulo de inicialización: inicializa la solución inicial de acuerdo a la(s) contingencias recibidas del módulo anterior
-	\item Módulo de búsqueda: lleva a cabo la búsqueda de una solución factible al problema.
-	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
-\end{itemize}
-
-
-
-
-
-
-
-
-
-\subsubsection{Detalles de implementación del sistema}
-\label{sec:detalles-impl-sistema}
