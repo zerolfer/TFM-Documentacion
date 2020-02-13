@@ -118,11 +118,7 @@ A continuación las relativas a la posición y asignación de los controladores:
 
 	\item Un controlador no puede cambiar de posición de control de una posición ejecutiva de un determinado sector a una posición ejecutiva de otro sector diferente, sin que exista un descanso entre medias, a no ser que ambos sectores sean afines (cambio de configuración). Nota: si no hay cambio de configuración de sectores no es posible que dos sectores diferentes posean volúmenes comunes.
 	
-	\item El número máximo de sectores por los que rota un controlador es 3.
-	
-	
-	
-	
+	\item El número máximo de sectores por los que rota un controlador es 3.	
 \end{enumerate}
 
 
@@ -203,7 +199,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a la los fichero
 	
 	\item La información del caso concreto está desglosada en 6 ficheros, dos de ellos opcionales.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
-		\item Definición del turno. Contiene la hora de inicio y fin del turno completo asi como del tipo (mañana, tarde, noche y largo o corto).
+		\item Definición del turno. Contiene la hora de inicio y fin del turno completo así como del tipo (mañana, tarde, noche y largo o corto).
 		\item \label{RIO:apertura-sectorizaciones} Apertura de sectorizaciones: contiene una lista de las franjas horarias en las que cada sectorización se abre, posiblemente más de una simultáneamente pero de diferente núcleo.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
 			\item contiene los campos: nombre del núcleo, nombre de la sectorización, hora de inicio y hora de fin.
@@ -241,7 +237,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a la los fichero
 			\item Consiste en la sucesión de todos los turnos creados sin espaicos, cada uno de ellos separados por comas.
 			\item Pierde la información de los controladores, pero para cálculos como el numero de restricciones incumplidas sí puede utilizarse.
 		\end{enumerate}
-		\item El formato para humanos será un fichero excel (xlsx) con tres partes:
+		\item \label{RIO:formato-excel} El formato para humanos será un fichero excel (xlsx) con tres partes:
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
 			\item Una tabla con la planificación resultante, empleando colores y el formato de salida (véase la \autoref{sec:3:representacion-soluciones} y especialmente la \autoref{fig:3:ejemplo-distribucion-inicial})
 			\item Resumen de la solución. Indica el identificador del controlador y el índice del turno asignado.
@@ -317,21 +313,47 @@ En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también la
 
 
 %\subsection{Implementación}
-\subsubsection{Detalles de implementación del sistema}
+\subsection{Detalles de implementación del sistema}
 \label{sec:4:implementacion}
 
+\subsubsection{Herramientas y tecnologías software utilizadas}
 
-Las herramientas software a utilizar serán:
+Debido a la condicionante del sistema \legacy{}, la mayoría de las decisiones de la tecnología son heredadas. 
+
+La más importante es el lenguaje de programación. Debido a la alta complejidad del sistema y a la eficiencia que éste requiere, el lenguaje de programación preferible hubiese sido C++, pues es orientado a objetos y altamente eficiente. Sin embargo, \legacy{} fue implementado en Java 8, y para poder realizar estudios comparativos de SA frente al VNS, se queriere que ambos estén implementados con la misma tecnología.
+
+El resto de tecnologías que se decidieon utilizar son:
+
 \begin{itemize}
-	\item Tello (planificación)
-	\item IntelliJ IDEA (implementación)
-	\item Jupyther Notebook (experimentación)
-	\item Microsoft Office y Umlet (diagramas)
-	\item \TeX{} Studio (documentación)
+	\item Tello (planificación). Empleado como tablero KANBAN con las tareas a realizar, en proceso y finalizadas.
+	\item IntelliJ IDEA (implementación). Entorno de Desarrollo Integrado (IDE) de Java.
+	\item Git (implementación). Control de versiones software y compartición de código.
+	\item Jupyther Notebook (experimentación). Entorno desarrollado sobre Python empleado para el tratamiento de datos y su representación en forma de gráficas.
+	\item Microsoft Office y Umlet (diagramas). Para el diseño previo del sistema así como los diagramas de la memoria.
+	\item \TeX{} Studio (documentación).
 \end{itemize}
 
+\subsubsection{Frameworks}
+Un \textit{framework} es un conjunto de herramientas software empaquetadas para su uso mediante una interfaz definida con un lenguaje de programación, que en este caso es Java 8, como ya se ha mencionado anteriormente.
+
+Los frameworks utilizados han sido:
+
+\begin{itemize}
+	\item Maven, para la gestión dinámica de librerias y frameworks. Nos evita tener que gestionar manualmente la inclusión de las librerias/frameworks.
+	\item Apache Poi 3.15, Para la escritura de ficheros en formato Microsoft Office Excel (véase el requisito \ref{RIO:formato-excel}).
+	\item Apache Commons Lang 3.0, Para el un tratamiento de cadenas de caracteres más eficiente.
+	\item The DSI Utilities, dsiutils 2.5.4 (Università degli Studi di Milano). Implementa entre otras cosas, algoritmos de generación de números aleatorios eficientes (véase la \autoref{sec:4:impl:random}).
+	\item JUnit 3.5.2, Para las pruebas unitarias (véase la \autoref{sec:4:tests}).
+\end{itemize}
+
+\subsubsection{Generador de números aleatorios}
+\label{sec:4:impl:random}
+
+Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se ve necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no
 
 \subsection{Pruebas}
+\label{sec:4:tests}
+
 Lorem ipsum
 
 \subsection{Despliegue y explotación} 
