@@ -151,7 +151,7 @@ Y por último las relativas a los tiempos de trabajo y descanso de los controlad
 \subsubsection{Requisitos de entrada/salida}
 Los requisitos de entrada y salida (I/O) son aquellos relativos a la los ficheros y formatos definidos tanto para la entrada al sistema como en la salida.
 
-\begin{enumerate}[label={\textbf{RIO\arabic*}}, ref={RC\arabic*},  align=left]
+\begin{enumerate}[label={\textbf{RIO\arabic*}}, ref={RIO\arabic*},  align=left]
 	
 	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso, de esta forma, la información común a varios casos será independiente de cada caso concreto.
 	
@@ -244,7 +244,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a la los fichero
 			\item Información de las restricciones. Número de veces que cada restricción de incumple. Permite evaluar la calidad de la solución a posteriori.
 		\end{enumerate}
 	\end{enumerate}
-	\item Los ficheros de salida de tipo trazas son utilizados en la fase de experimentación (véase el \autopageref{capitulo:5}) para representar gráficas de la evolución del sistema.
+	\item \label{RIO:salida-csv} Los ficheros de salida de tipo trazas son utilizados en la fase de experimentación (véase el \autopageref{capitulo:5}) para representar gráficas de la evolución del sistema.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
 		\item En cada iteración se registrará la información en un fichero CSV separado por comas
 		\item contendrá las siguiente columnas:
@@ -268,6 +268,8 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a la los fichero
 % TODO: OTROS REQUISITOS??
 
 \subsection{Diseño}
+\label{sec:4:diseño}
+
 En esta etapa diseñamos mediante la esquematización el sistema a implementar. El sistema se ha diseñado de tal manera que podamos reutilizar la mayor cantidad de código implementado y para ello se ha tomado como fundamente el paradigma Orientado a Objetos (POO) en contraposición con el paradigma procedimental. Además, las limitaciones de implementación de usar el lenguaje de programación Java (véase la \autoref{sec:4:implementacion}), favorecen el uso de éste paradigma. Además de la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante evolución y más de una persona empleará el código en un futuro. La selección del paradigma afectará a la forma de diseñar el sistema. El software se diseñó en el lenguaje universal de diseño UML, y debe notarse que los esquemas mostrados en los capítulos anteriores también forman parte del proceso de diseño, pero por claridad en la memoria se han incluido en sus correspondiente secciones.
 
 Se ha dividido el sistema en cuatro módulos:
@@ -349,12 +351,51 @@ Los frameworks utilizados han sido:
 \subsubsection{Generador de números aleatorios}
 \label{sec:4:impl:random}
 
-Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se ve necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no
+Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se ve necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no se trata de uno de los mejores existentes, y debido a que se da uso un gran número de veces, se ha preferido emplear un generador cuyo periodo sea mayor. Se ha optado por emplear el llamado xoroshiro128+ (más inforamción de en \url{http://prng.di.unimi.it/}) con un periodo de $2^{128}$ frente al de java, que es $2^{48}$.
+
+\subsubsection{Detalles del sistema}
+El sistema fue construido en base al diseño previo, que fue ampliado con la introducción de la funcionalidad relativa a la naturaleza probabilista de los entornos.
+
+Los algoritmos implementados para el VNS ya han sido descritos en detalle en el \autoref{capitulo:3}, sin embargo, la implementación de la naturaleza de los entornos no se ha descrito en profundidad.
+
+La naturaleza de los entornos determinista es simple: unicamente precisa de una estructura de datos de tipo lista y un índice que se vaya incrementando en cada llamada al método \texttt{nextNeighborhood()}. Sin embargo, para la implementación del probabilístico, se requiere de una estructura de datos auxiliar mucho mas compleja.
+
+Se han definido entornos cuyo fundamente es idéntico pero emplea diferentes restricciones de entorno (véase \autoref{paragraph:entornos}). Con este tipo de entornos podemos operar de dos maneras: 
+\begin{enumerate}[label={(\Alph*)}]
+	\item Considerarlos como sub-entornos y emplearlos en orden o aleatoriamente, es decir, seleccionamos los entornos aleatoriamente, y si el elegido tiene sub-entornos iterarlos en orden.
+	\item \label{modelo-no-ordenado} Considerarlos como entornos del mismo nivel, pudiendo ser elegidos con la misma probabilidad que todos los demás.
+\end{enumerate}
+
+Los entornos que tienen variantes los llamaremos compuestos, y son únicamente movMaxCarga y movRejilla. Mientras que el resto, movLibre, los llamaremos simples.
+
+En el diagrama de clases de la \autoref{sec:4:diseño} se ha llamado a las clases que implementan el modelo \ref{modelo-no-ordenado} como \texttt{CompuestoNoOrdenado}.
+
+Otros algoritmos tanto nuevos como ampliados se ha visto limitados por la implementación de \legacy{}, en especial la decisión tomada durante el desarrollo del mismo de emplear como representación de los turnos una cadena de texto (String) en lugar de la opción más sencilla de una tupla de elementos. Por ello, la manipulación de los turnos pierde legibilidad de código y gana dificultad de implementación, puesto que las cadenas de turnos son conjuntos sin separadores de 3 letras cada uno (recuérdese la decisión de representación de las soluciones, recopilado en la \autoref{sec:3:representacion-soluciones}) por lo que se deberán recorrer de 3 en 3.
+
+Por otro lado el tratamiento de los Strings es bastante costoso computacionalmente, pues nos obliga a cortar el String y reconstuirlo cada vez que se tenga que modificar. Inicialmente se planteó la posibilidad de tratar de mejorar éste aspecto sustituyendo la forma de representación de los turnos por tuplas, sin embargo, y debido a las decisiones de diseño tomadas durante el desarrollo de \legacy{}, implementar esta mejoría requiere de una gran cantidad de modificaciones y al no ser el aspecto fundamental de la tesis se optó por mantener el formato \legacy{}.
+
+Para el cálculo de probabilidades y simulación de sucesos se muestrea de una distribución aleatoria uniforme entre 0 y 1 $u ~ U[0,1]$ y si la probabilidad p es mayor ($p>u$) se interpreta como que el suceso ocurre, y en caso contrario como si no sucediera. 
+La otra alternativa empleada es muestrear uniformemente un entero entre dos números límite. 
+Ésto se emplea fundamentalmente para los entornos estocásticos y los las estructuras de entorno (movimientos).
+
+Por otro lado, poder tomar mediciones del rendimiento y desempeño del algoritmo, se ha creado una clase estática extra que permite almacenar en un fichero externo CSV la información requerida (recopilada en el requisito \ref{RIO:salida-csv}).
+
+\subsubsection{Mejorando la eficiencia del sistema}
+Para mejorar la eficiencia general del sistema, tal y como se propuso en la hipótesis inicial \ref{H3}, se han realizado pequeñas modificaciones para que el sistema consuma menos tiempo en determinadas acciones y que lo pueda emplear en la búsqueda.
+
+Para ello se ha analizado complejidad del sistema en cuanto a tiempo de ejecución de las diferentes partes y se ha obtenido lo dela figura: \NOTE{poner la figura con la eficiencia del sistema por clases. NECESITO EL PC DEL DESPACHO PARA FINALIZAR ESTA SECCIÓN} % TODO!!!
+
+% TODO: . . . 
 
 \subsection{Pruebas}
 \label{sec:4:tests}
 
-Lorem ipsum
+La mayor parte de las pruebas realizadas al sistema fueron manuales, observando el fichero excel de output y analizando el comportamiento del algoritmo y detectar así anomalías en él.
+
+Por otro lado, se llevaron a cabo test unitarios para testar la funcionalidad de métodos concretos, sobretodo debido a la dificultad de operar a nivel de carácter. 
+El primero es \texttt{getIntervalos(turno:String)} que se
+
+Respecto a test de integración o carga el sistema no querería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridas.
 
 \subsection{Despliegue y explotación} 
 \label{sec:4:despliegue}
