@@ -354,6 +354,8 @@ Los frameworks utilizados han sido:
 Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se ve necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no se trata de uno de los mejores existentes, y debido a que se da uso un gran número de veces, se ha preferido emplear un generador cuyo periodo sea mayor. Se ha optado por emplear el llamado xoroshiro128+ (más inforamción de en \url{http://prng.di.unimi.it/}) con un periodo de $2^{128}$ frente al de java, que es $2^{48}$.
 
 \subsubsection{Detalles del sistema}
+\label{sec:4:detalles-sistema}
+
 El sistema fue construido en base al diseño previo, que fue ampliado con la introducción de la funcionalidad relativa a la naturaleza probabilista de los entornos.
 
 Los algoritmos implementados para el VNS ya han sido descritos en detalle en el \autoref{capitulo:3}, sin embargo, la implementación de la naturaleza de los entornos no se ha descrito en profundidad.
@@ -381,6 +383,8 @@ La otra alternativa empleada es muestrear uniformemente un entero entre dos núm
 Por otro lado, poder tomar mediciones del rendimiento y desempeño del algoritmo, se ha creado una clase estática extra que permite almacenar en un fichero externo CSV la información requerida (recopilada en el requisito \ref{RIO:salida-csv}).
 
 \subsubsection{Mejorando la eficiencia del sistema}
+\label{sec:4:mejorando-eficiencia}
+
 Para mejorar la eficiencia general del sistema, tal y como se propuso en la hipótesis inicial \ref{H3}, se han realizado pequeñas modificaciones para que el sistema consuma menos tiempo en determinadas acciones y que lo pueda emplear en la búsqueda.
 
 Para ello se ha analizado complejidad del sistema en cuanto a tiempo de ejecución de las diferentes partes y se ha obtenido lo dela figura: \NOTE{poner la figura con la eficiencia del sistema por clases. NECESITO EL PC DEL DESPACHO PARA FINALIZAR ESTA SECCIÓN} % TODO!!!
@@ -390,12 +394,14 @@ Para ello se ha analizado complejidad del sistema en cuanto a tiempo de ejecuci�
 \subsection{Pruebas}
 \label{sec:4:tests}
 
-La mayor parte de las pruebas realizadas al sistema fueron manuales, observando el fichero excel de output y analizando el comportamiento del algoritmo y detectar así anomalías en él.
+La mayor parte de las pruebas realizadas al sistema fueron manuales, observando el fichero excel de salida y analizando el comportamiento del algoritmo y detectar así anomalías en él.
 
-Por otro lado, se llevaron a cabo test unitarios para testar la funcionalidad de métodos concretos, sobretodo debido a la dificultad de operar a nivel de carácter. 
-El primero es \texttt{getIntervalos(turno:String)} que se
+Por otro lado, se llevaron a cabo test unitarios para testar la funcionalidad de métodos concretos, sobretodo debido a la dificultad de operar a nivel de carácter (explicado en la \autoref{sec:4:detalles-sistema}).
+Por ejemplo, el método \texttt{getIntervalos(turno:String)} que se encarga de cortar el String que representa el turno y seleccionar intervalos de trabajo continuado, retornando los índices de comienzo y fin del intervalo de trabajo continuado. Se ha probado con una cadena de caracteres que comienzan por descanso (``111''), que terminen por descanso, que el descanso esté en el medio y que no haya descanso.
 
-Respecto a test de integración o carga el sistema no querería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridas.
+% TODO: ¿hay mas? MIRAR EN EL PC DEL DESPACHO
+
+Respecto a test de integración o carga el sistema no requería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridas.
 
 \subsection{Despliegue y explotación} 
 \label{sec:4:despliegue}
