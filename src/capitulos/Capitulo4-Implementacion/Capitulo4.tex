@@ -406,4 +406,22 @@ Respecto a test de integración o carga el sistema no requería de ellos. Sin em
 \subsection{Despliegue y explotación} 
 \label{sec:4:despliegue}
 
-Lorem ipsum
+Si bien esta fase software no se ha hecho en profundidad, si se ha preparado una exportación de la aplicación para entregar a los tutores y a \gls{CRIDA} para que estos puedan probar la aplicación por sus propios medios.
+
+La exportación tiene los siguientes ficheros:
+\begin{enumerate}
+	\item Un fichero ejecutable de tipo \textit{jar}
+	\item Un fichero properties con las siguientes propiedades:
+	\begin{enumerate}[label*={\arabic*}]
+		\item Metaheurística a usar (vns o sa).
+		\item Ponderación de cada Fitness.
+		\item Tiempo máximo de ejecución.
+	\end{enumerate}
+	\item Directorio de salida, que contendrá un fichero Excel con la planificación y un fichero txt con el valor de  los fitness desglosados de la solución final.
+	\item Directorio de entrada, con subdirectorios de cada Unidad de Control y otro con los diferentes casos definidos
+\end{enumerate}
+
+El ejecutable encapsula toda la lógica de negocio del proyecto y permite ejecutarla de forma externa. Hace uso de los demás ficheros externos.
+
+El fichero de propiedades que se emplea en el despliegue es una simplificación de aquel empleado internamente, pues tiene muchos más parámetros que de cara al usuario no son relevantes. El contenido del fichero fue propuesto por los tutores.
+
