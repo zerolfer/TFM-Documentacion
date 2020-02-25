@@ -26,45 +26,46 @@ Tienen dos conceptos básicos que conforman la clave para su implementación par
 La codificación permite representar una solución de la forma más compacta posible sin perder información del dominio. Una buena codificación tendrá las siguientes características~\cite{sota:metaheuristicas-design-impl}:
 
 \begin{itemize}
-    \item Completitud: Todas las soluciones asociadas con el problema deben poder ser representadas. Se debe garantizar una representatividad total dentro del espacio de soluciones: si no es definida correctamente podría haber soluciones incapaces de ser representadas y lógicamente afectará a la eficiencia de la metaheurística.
+    \item Completitud: Todas las soluciones asociadas con el problema deben poder ser representadas. Se debe garantizar una representatividad total dentro del espacio de soluciones. Si no es definida correctamente podría haber soluciones incapaces de ser representadas y lógicamente afectará a la eficiencia de la metaheurística.
     \item Conectividad: Debe existir un camino que permita moverse entre dos soluciones del espacio de búsqueda, de forma que cualquier solución del espacio pueda ser alcanzada (en especial el óptimo global).
     \item Eficiencia: Fácil de manipular por los operadores de la búsqueda (definidos por cada metaheurística).
 \end{itemize}
 
-Por su parte, la función objetivo o de evaluación (en inglés denominada \textit{fitness}) permite la comparación de soluciones entre sí y representará el objetivo de la búsqueda, de forma que si nos enfrentamos a un problema con varios parámetros objetivo, podamos ponderarlos u ordenarlos según los criterios que se adecuen al problema. Existen varios enfoques para definir una función de evaluación de un problema multiobjetivo: enfoques escalares, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más sencillos son los primeros, pues permiten trasformar el problema multiobjetivo en uniobjetivo y al ser el empleado en esta tesis será descrito con mayor detenimiento en el \autoref{apartado:adaptacion-fitness}
+Por su parte, la función objetivo o de evaluación (en inglés denominada \textit{fitness}) permite la comparación de soluciones entre sí y representará el objetivo de la búsqueda, de forma que si nos enfrentamos a un problema con varios parámetros objetivo, podamos ponderarlos u ordenarlos según los criterios que se adecúen al problema. Existen varios enfoques para definir una función de evaluación de un problema multiobjetivo: enfoques escalares, basados en criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más sencillos son los primeros, pues permiten trasformar el problema multiobjetivo en uniobjetivo y al ser el empleado en este TFM será descrito con mayor detenimiento en el \autoref{apartado:adaptacion-fitness}
 
 Un problema de optimización multiobjetivo es de la siguiente forma:
 %\[
 \begin{flalign*}
-    & \max_x \quad \textbf{f(x)} = \left( \, f_1(\textbf{x}), f_2(\textbf{x}), f_3(\textbf{x}), \dots, f_n(\textbf{x}) \, \right) \\
+    & \max_{x} \quad \textbf{f(x)} = \left( \, f_1(\textbf{x}), f_2(\textbf{x}), f_3(\textbf{x}), \dots, f_n(\textbf{x}) \, \right) \,,\\
     & \; \text{s.a.} \quad \textbf{x} \in X
 \end{flalign*}
 %\]
-Siendo $X$ en conjunto de soluciones factibles, definido mediante una serie de restricciones dadas por el dominio del problema.
+siendo $X$ el conjunto de soluciones factibles, definido mediante una serie de restricciones dadas por el dominio del problema.
 
 Por otro lado, las metaheurísticas emplean una o varias soluciones que son comparadas entre sí empleando una función de comparación o evaluación que suele ser de un coste computacional importante. Esta función será dependiente del problema a resolver.
 
-Estas técnicas fueron muy innovadoras, pues permitieron la resolución de muchos problemas clásicos que hasta entonces no podían resolverse con técnicas clásicas. Además, soportan perfectamente instancias grandes, por lo que hasta la fecha es la técnica más prometedora para el problema a resolver en esta tesis.
+Estas técnicas fueron muy innovadoras, pues permitieron la resolución de muchos problemas clásicos que hasta entonces no podían resolverse con técnicas clásicas. Además, soportan perfectamente instancias grandes, por lo que hasta la fecha es la técnica más prometedora para el problema a resolver en este TFM.
 
-No obstante, la mayor desventaja de las metaheurísticas es que, al tratarse de métodos aproximados, no garantizan que se encuentre una solución óptima global ni que se encuentre acotada en algún rango de valores~\cite{sota:metaheuristicas-design-impl} como sí permiten otras técnicas. Una pequeña desventaja frente a todas las posibilidades que las metaheurísticas nos ofrecen.
+No obstante, la mayor desventaja de las metaheurísticas es que, al tratarse de métodos aproximados, no garantizan que se encuentre una solución óptima global ni que se encuentre acotada en algún rango de valores~\cite{sota:metaheuristicas-design-impl} como sí permiten otras técnicas. 
+%Un inconveniente frente a todas las posibilidades que las metaheurísticas nos ofrecen. % RELIMINADO REV 0.3.2
 
 Una vez decidida la técnica a emplear para resolver el problema definido, el siguiente paso es elegir de entre el catálogo de metaheurísticas existentes hasta la fecha, una de ellas. A lo largo del tiempo se han ido proponiendo diferentes taxonomías para ordenar toda esta gran cantidad de metaheurísticas.
 Así, una de las clasificaciones más conocidas es la propuesta por Osman en~\cite{metaheuristicas:taxonomia1} que distingue entre aquellas basadas en búsquedas locales (pequeños cambios a una misma solución), las constructivas (en cada iteración se van añadiendo partes que al final conforman una solución al completo) y las poblacionales (se combinan varias soluciones entre sí).
 
 Gendreau y Potvin~\cite{metaheuristicas:taxonomia2} propusieron en 2005 una clasificación dicotómica: aquellas de tipo trayectorial y de tipo poblacional, combinando así las de búsqueda local y las constructivas en un mismo grupo que emplea únicamente una sola solución por iteración mientras que las segundas emplean un conjunto dinámico de soluciones que en cada iteración irá cambiando.
 
-Existen otras clasificaciones menos relevantes que dividen las metaheurísticas en aquellas inspiradas en la naturaleza y aquellas que no, en si emplean capacidad de memoria o no, o si son de naturaleza determinista o estocástica. Una de las últimas clasificaciones~\cite{sota:metaheuristicas} propone la división en metafóricas (metáforas de la biología, química, música, matemáticas, física o social-deportiva) o no metafóricas.
+Existen otras clasificaciones menos relevantes que dividen las metaheurísticas en aquellas inspiradas en la naturaleza y las que no, si emplean capacidad de memoria o no, o si son de naturaleza determinista o estocástica. Una de las últimas clasificaciones~\cite{sota:metaheuristicas} propone la división en metafóricas (metáforas de la biología, química, música, matemáticas, física o social-deportiva) o no metafóricas.
 
-En el caso de este proyecto, la elección fue de carácter histórica: los proyectos previos habían empleado dos metaheurísticas y una de ellas parecía dar resultados más prometedores que la otra. Estamos hablando de la metaheurística \textit{Variable Neighborhood Search} (\textit{Búsqueda de Entornos Variable}) que describiremos en las próximas secciones y veremos cómo ha sido adaptada a nuestro problema.
+En el caso de este TFM, la elección fue de carácter histórica: los proyectos previos habían empleado dos metaheurísticas y una de ellas parecía dar resultados más prometedores que la otra. Estamos hablando de la metaheurística \textit{Variable Neighborhood Search} (\textit{Búsqueda de Entornos Variable}) que describiremos en las próximas secciones y veremos cómo ha sido adaptada a nuestro problema.
 
-No obstante debemos destacar la metaheurística empleada previamente en el proyecto \legacy{} denominada \textit{Recocido Simulado (Simulated Annealing, SA)} debido a que si bien no ha sido implementada en este TFM se realizaron experimentos comparativos entre las dos metaheurísticas.
+No obstante debemos destacar la metaheurística empleada previamente en el proyecto \legacy{} denominada \textit{Recocido Simulado (Simulated Annealing, SA)} debido a que, si bien no ha sido implementada en este TFM, se realizaron experimentos comparativos entre las dos metaheurísticas.
 
 El SA es una metaheurística trayectorial de búsqueda local basada en la aceptación de soluciones peores con una cierta probabilidad que depende del valor de un parámetro llamado \textit{temperatura} que varía con el tiempo (cada cierto número de iteraciones) una cantidad constante (o variable en algunos casos) de forma que al final de la ejecución ya no se aceptan soluciones peores en ningún caso (probabilidad igual a cero), de esta forma en las primeras iteraciones la búsqueda será más diversificada y cuanto más tiempo transcurra irá disminuyendo y aumentando de manera complementaria la intensificación. Al igual que el VNS, parte de una solución inicial dada, ya sea generada aleatoriamente o mediante una heurística más sofisticada; pero a diferencia de este, se mueve hacia otras empleando un único entorno. Esta es la mayor limitación de esta metaheurística y por ello hemos planteado la alternativa del uso de un VNS, partiendo así de la hipótesis~\ref{H2}, que sugiere que empleando más entornos se mejoran los resultados del SA\@.
 
 \subsubsection{Búsqueda en Entornos Variables (VNS)} \label{sec:vns}
 Se trata de una metaheurística trayectorial, pues maneja una única solución en cada iteración, además de tipo búsqueda local pues trata de modificarla iterativamente para mejorarla empleando un catálogo de \textit{entornos} o vecindades (\textit{neighborhoods}). A su vez es de tipo no metafórica: no se inspira en ningún proceso de la naturaleza. Es además de tipo estocástico y no emplea memoria para su funcionamiento.
 
-Su nombre radica precisamente en sus dos conceptos fundamentales: búsqueda local y entornos variables. En su versión original~\cite{vns} se fundamenta en dos etapas: descenso y perturbación, la primera consiste en el intercambio sistemático del entorno empleado durante una búsqueda local simple que nos permite alcanzar un óptimo local; mientras que la segunda radica en la alteración aleatoria de la solución para evitar atascarse en óptimos locales evitando así una convergencia prematura. Ambas serán descritas en detalle más adelante en esta sección.
+Su nombre radica precisamente en sus dos conceptos fundamentales: búsqueda local y entornos variables. En su versión original~\cite{vns} se fundamenta en dos etapas: \textit{descenso} y \textit{perturbación}, la primera consiste en el intercambio sistemático del entorno empleado durante una búsqueda local simple que nos permite alcanzar un óptimo local; mientras que la segunda radica en la alteración aleatoria de la solución para evitar atascarse en óptimos locales evitando así una convergencia prematura. Ambas serán descritas en detalle más adelante en esta sección.
 
 Así pues, el VNS parte de una lista predefinida de entornos, que definen el criterio a emplear para moverse entre soluciones a partir de una inicial. Al entorno $k$ del conjunto de vecindades se les suele denotar como $N_k, \; k=1,\dots,k_{max}$ y al conjunto de soluciones alcanzables mediante la vecindad $k$ como $N_k(x)$.
 Un ejemplo sencillo de entorno podría ser en el caso de una optimización de una variable en el dominio $\mathbb{R}$: dos posibles entornos serían $N_1=[x-2, x+2]$ y $N_2=[x-7, x+7]$, ilustrados en la \autoref{fig:ejemplos-entorno}.
@@ -131,15 +132,17 @@ Como se puede observar, se llevan a cabo acciones diferentes en función de si l
     }
 \end{algorithm}
 
-No necesariamente un entorno amplio, i.e.\ con mayor conjunto de soluciones factibles, es mejor que uno más reducido, pues el espacio de búsqueda es mayor y esto repercutirá decisivamente en el rendimiento del algoritmo de búsqueda. Además, en problemas reales, con un mayor número de variables, el espacio de búsqueda es mucho más complejo y difícil de explorar. Es por ello que lo más conveniente es emplear las vecindades más sencillas y pequeñas al principio de forma que solo se pasa a las más grandes y costosas en caso de que las anteriores no resultes fructíferas.
+No necesariamente un entorno amplio, es decir, con mayor conjunto de soluciones factibles, es mejor que uno más reducido, pues el espacio de búsqueda es mayor y esto repercutirá decisivamente en el rendimiento del algoritmo de búsqueda. Además, en problemas reales, con un mayor número de variables, el espacio de búsqueda es mucho más complejo y difícil de explorar. Es por ello que lo más conveniente es emplear las vecindades más sencillas y pequeñas al principio de forma que solo se pasa a las más grandes y costosas en caso de que las anteriores no resultes fructíferas.
 
-En función de los subprocesos que se utilicen durante la búsqueda estaremos hablando de un tipo de VNS u otro. A continuación describiremos las características de aquellos tipos de VNS que se han implementado en este TFM\@.
+En función de los subprocesos que se utilicen durante la búsqueda estaremos hablando de un tipo de VNS u otro. A continuación, describiremos las características de aquellos tipos de VNS que se han implementado en este TFM\@.
 
 El VNS en su versión básica (conocido como \textit{Basic VNS}) se compone de dos fases: la búsqueda local y la ``agitación'' (\textit{shake}) siendo la primera determinista y la segunda estocástica. Una componente aleatoria aporta nueva información a la búsqueda que podría ser de ayuda a la componente determinista.
 
-La componente de búsqueda local se puede realizar en dos enfoques diferentes: buscando la primera solución que mejore la actual (\textit{First Improvement}) o empleando la mejor de todas las posibles soluciones del entorno (\textit{Best Improvement}) sin embargo no siempre es posible obtener todas las soluciones posibles de un entorno, especialmente en problemas complejos como el que tenemos entre manos. En este problema se ha empleado una técnica mixta que si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda hasta que la solución no se mejore en un porcentaje de tolerancia (véase \autoref{apartado:condiciones-parada} para una descripción detallada).
+La componente de búsqueda local se puede realizar en dos enfoques diferentes: buscando la primera solución que mejore la actual (\textit{First Improvement}) o empleando la mejor de todas las posibles soluciones del entorno (\textit{Best Improvement}). Sin embargo no siempre es posible obtener todas las soluciones posibles de un entorno, especialmente en problemas complejos como el que tenemos entre manos. 
 
-Los algoritmos~\ref{algoritmo:BestImprovement} y~\ref{algoritmo:FirstImprovement} se han obtenido directamente de Hansel et al.~\cite{vns} y describen el proceso asociado al \textit{Best Improvement} y al \textit{First Improvement} respectivamente.
+En este problema se ha empleado una técnica mixta que si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda hasta que la solución no se mejore en un porcentaje de tolerancia (véase la \autoref{apartado:condiciones-parada} para una descripción detallada).
+
+Los Algoritmos~\ref{algoritmo:BestImprovement} y~\ref{algoritmo:FirstImprovement} se han obtenido directamente de Hansel et al.~\cite{vns} y describen el proceso asociado al \textit{Best Improvement} y al \textit{First Improvement} respectivamente.
 
 \begin{algorithm}[htbp]
     \caption{Best Improvement}
@@ -185,7 +188,9 @@ Los algoritmos~\ref{algoritmo:BestImprovement} y~\ref{algoritmo:FirstImprovement
 
 \end{algorithm}
 
-Por el otro lado, la componente estocástica introduce en la búsqueda una solución generada de forma aleatoria, de manera que nueva información se introduce en el proceso de búsqueda que puede mejorar el valor de fitness empleando, por ejemplo fragmentos de aleatoria que de forma determinista nunca podrían haberse logrado o como mínimo habría sido necesario un mayor tiempo de cómputo. En el \autoref{algoritmo:Basic-VNS} se muestra el proceso esquemáticamente para el VNS Básico. Nótese que la condición de parada es únicamente el tiempo de cómputo, no obstante, se suele combinar con un porcentaje mínimo de mejoría de forma que si la búsqueda se estanca, no se pierda tiempo de cómputo innecesariamente. Las condiciones de parada del algoritmo se encuentran descritas en profundidad en la \autoref{apartado:condiciones-parada}.
+Por otro lado, la componente estocástica introduce en la búsqueda una solución generada de forma aleatoria, de manera que se introduce nueva información en el proceso de búsqueda que puede mejorar el valor de fitness empleando, por ejemplo, fragmentos de aleatoria que de forma determinista nunca podrían haberse logrado o como mínimo habría sido necesario un mayor tiempo de cómputo. 
+
+En el \autoref{algoritmo:Basic-VNS} se muestra el proceso esquemáticamente para el VNS Básico. Nótese que la condición de parada es únicamente el tiempo de cómputo, no obstante, se suele combinar con un porcentaje mínimo de mejora de forma que si la búsqueda se estanca, no se pierda tiempo de cómputo innecesariamente. Las condiciones de parada del algoritmo se encuentran descritas en profundidad en la \autoref{apartado:condiciones-parada}.
 
 \begin{algorithm}[htbp]
 	\caption{Basic VNS~\cite{vns}}
@@ -222,13 +227,13 @@ Por el otro lado, la componente estocástica introduce en la búsqueda una soluc
 	
 \end{algorithm}
 
-Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Éste último es el menos costoso computacionalmente, sin embargo es el que menos información del problema emplea y su rendimiento suele ser peor que los demás.
+Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Éste último es el menos costoso computacionalmente, sin embargo, es el que emplea menos información del problema, y su rendimiento suele ser peor que los demás.
 
 Otra posible variación respecto a la versión básica se basa en emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descent) en lugar de una búsqueda local simple para, estaremos empleando un \textit{General VNS}.
 
-Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas, mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en~\cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución, sin embargo, la exploración de debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y esto se sabe que es ineficiente para este tipo de problemas~\cite{vns}). Para evitar esto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
+Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas, mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en~\cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución. Sin embargo, la exploración debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y esto se sabe que es ineficiente para este tipo de problemas~\cite{vns}). Para evitar esto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
 
-Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y es el que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} explicado previamente se redefine de la siguiente manera:
+Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} explicado previamente se redefine de la siguiente manera:
 
 \begin{algorithm}[h]
     \caption{Redefinición del algoritmo de cambio de vecindades para un \textit{Skewed} VNS en un problema de maximización}
@@ -257,7 +262,7 @@ Para ello, el SVNS define un parámetro adicional denotado normalmente como $\al
 
 \end{algorithm}
 
-Donde $\rho(x,x')$ es la función de distancia definida para el problema concreto.
+$\rho(x,x')$ es la función de distancia definida para el problema concreto.
 
 El algoritmo central del SVNS es homólogo al \autoref{algoritmo:Basic-VNS} con la diferencia de que debido a que el nuevo algoritmo de cambio de entorno no retorna la mejor solución, sino la próxima a explorar (de peor \textit{fitness} pero alejada de ella), debemos almacenar la mejor para no perderla, y actualizarla en cada iteración. Además, será la que devolvamos al final del algoritmo.
 
@@ -266,7 +271,7 @@ Existen más variaciones del algoritmo básico del VNS que no se han contemplado
 \subsubsection{Adaptación del VNS al problema}
 \label{apartado:adaptacion-VNS}
 
-Recordemos que en secciones anteriores hemos definido la \faseuno{} que nos permite crear una solución inicial sobre la que el VNS pueda trabajar. El esquema planteado para la \fasedos{} es el de la \autoref{fig:esquema-fase2}, en el que podemos ver cómo se combinan los algoritmos definidos previamente del VNS y el cambio de vecindad, junto a la condición de parada, definida en \hyperref[apartado:condiciones-parada]{más adelante en la sección}. El proceso denominado ``VNS concreto'' se trata del tipo de VNS elegido de entre todos los descritos previamente. Más adelante en el \autoref{capitulo:5} veremos cuál es el más eficiente de todos ellos.
+Recordemos que en secciones anteriores hemos definido la \faseuno{} que nos permite crear una solución inicial sobre la que el VNS pueda trabajar. El esquema planteado para la \fasedos{} se muestra en la \autoref{fig:esquema-fase2}, donde podemos ver cómo se combinan los algoritmos definidos previamente del VNS y el cambio de vecindad, junto a la condición de parada, definida \hyperref[apartado:condiciones-parada]{más adelante en la sección}. El proceso denominado ``VNS concreto'' se trata del tipo de VNS elegido de entre todos los descritos previamente. Más adelante en el \autoref{capitulo:5} veremos cuál es el más eficiente de todos ellos.
 
 \begin{figure}[htbp]
     \centering
@@ -289,9 +294,13 @@ La primera característica necesaria para las metaheurísticas ---y cualquier t�
 
 \paragraph{Función Fitness} \label{apartado:adaptacion-fitness}
 
-La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor. Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de encontrar un único objetivo estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de seleccionar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. Otra opción para resolver esto consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus criterios. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción.
+La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor. Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de contar con un único objetivo, estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de identificar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. 
 
-Dentro de la primera opción, tenemos diferentes alternativas introducidas \hyperref[sec:3:metaheurística]{al principio de esta sección}, que son: enfoques de escalarización, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más empleados son los primeros, pues aportan una mayor sencillez a la resolución del problema ya que permiten trasformar el problema multiobjetivo en uniobjetivo. Dicha transformación se puede realizar a su vez de diferentes maneras, como se puede apreciar en la \autoref{fig:enfoques-fitness-multiobj}, definidas en detalle en~\cite{sota:metaheuristicas-design-impl} entre otros. Nosotros hemos optado con el primero de todos, pues es el más sencillo y nos permite una mayor flexibilidad en caso de tener que modificar las prioridades de los objetivos en un futuro, sin necesidad de recalcular nada. El enfoque de escalarización mediante agregación construye la función fitness de la forma:
+Otra opción para resolver esta situación consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus preferencias. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción.
+
+Dentro de la primera opción, tenemos diferentes alternativas introducidas \hyperref[sec:3:metaheurística]{al principio de esta sección}, que son: enfoques de escalarización, basados criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más empleados son los primeros, pues aportan una mayor sencillez a la resolución del problema, ya que permiten trasformar el problema multiobjetivo en uniobjetivo. Dicha transformación se puede realizar a su vez de diferentes maneras, como se puede apreciar en la \autoref{fig:enfoques-fitness-multiobj}, definidas en detalle en~\cite{sota:metaheuristicas-design-impl} entre otros.
+
+Nosotros hemos optado por el primero de todos, pues es el más sencillo y nos permite una mayor flexibilidad en caso de tener que modificar las prioridades de los objetivos en un futuro, sin necesidad de recalcular nada. El enfoque de escalarización mediante agregación construye la función fitness de la forma:
 
 \begin{figure}
     \centering
@@ -304,14 +313,14 @@ Dentro de la primera opción, tenemos diferentes alternativas introducidas \hype
     f(x) = \sum_{i=1}^{n} \lambda_i \cdot f_i(x) = \lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) + \dots
 \]
 
-Donde $f_i(x)$ es la función objetivo $i$-ésima y $\lambda$ un escalar entre 0 y 1 de manera que~$\sum_{i=1}^n \lambda_i = 1$.
+donde $f_i(x)$ es la $i$-ésima función objetivo y $\lambda$ un escalar entre 0 y 1 de manera que~$\sum_{i=1}^n \lambda_i = 1$.
 
-Cada función objetivo tiene asociado un escalar que pondera la relevancia de la función, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En este caso, CRIDA aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
+Cada función objetivo tiene asociado un escalar que pondera la relevancia de la misma, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En este caso, CRIDA aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
 
 \begin{enumerate}[label={O\arabic*}]
     \item \label{O1} Reducir el número de controladores: Si añadimos nuevos controladores imaginarios, debemos eliminarlos de forma que conservemos el número inicial y, si es posible, reducir el número inicial de los mismos.
 
-    \item \label{O2} Factibilidad de las soluciones: es importante que se cumplan los criterios del dominio del problema, pero debido a que se trata de una planificación de urgencia, el decisor lo considera menos importante que el objetivo anterior.
+    \item \label{O2} Factibilidad de las soluciones: es importante que se cumplan las condiciones del dominio del problema, pero debido a que se trata de una planificación de urgencia, el decisor lo considera menos importante que el objetivo anterior.
 
     \item \label{O3} Tras el momento en el que se sucede la incidencia, los cambios propuestos por nuestro sistema deberían ser \textit{suaves}, es decir, que el número de cambios de sala de los controladores sea el menor posible.
 
@@ -327,7 +336,7 @@ Cada función objetivo tiene asociado un escalar que pondera la relevancia de la
     \end{enumerate}
 \end{minipage}
 
-La técnica que mejores resultados ofrece es el método ROC, una definición precisa y un estudio comparativo de estas técnicas de ponderación de objetivos en problemas de decisión multi-criterio entre otras no nombradas, puede encontrarse en~\cite{ROC-comparativas-tecnicas}. \NOTE{ PENDIENTE DE RESPUESTA: ¿POR QUÉ ROC y no RS si RS es más robusto? } % TODO NOTE;
+La técnica que mejores resultados ofrece es el método ROC. Una definición precisa y un estudio comparativo de estas técnicas de ponderación de objetivos en problemas de decisión multiobjetivo entre otras no nombradas, puede encontrarse en~\cite{ROC-comparativas-tecnicas}. \NOTE{ PENDIENTE DE RESPUESTA: ¿POR QUÉ ROC y no RS si RS es más robusto? } % TODO NOTE;
 
 El método ROC utiliza la siguiente fórmula para la ponderación de cada objetivo $\lambda_i$ ordenados del más importante al menos importante:
 \[
@@ -335,7 +344,7 @@ El método ROC utiliza la siguiente fórmula para la ponderación de cada objeti
 \]
 
 \begin{minipage}{\textwidth}
-    De forma que calculamos todos los pesos $\lambda_i$ con $N=4$. Como podemos ver, suman $1$:
+    de forma que calculamos todos los pesos $\lambda_i$ con $N=4$. Como podemos ver, suman $1$:
     \begin{flalign*}
         & \lambda_1 =  \sfrac{1}{4} \sum_{j=1}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{1}+\frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.52 \\
         &\lambda_2 =  \sfrac{1}{4} \sum_{j=2}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.27 \\
@@ -343,9 +352,11 @@ El método ROC utiliza la siguiente fórmula para la ponderación de cada objeti
         &\lambda_4 =  \sfrac{1}{4} \sum_{j=4}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{4} \right) = 0.06
     \end{flalign*}
 \end{minipage}
-Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del del sistema \legacy{} (objetivos~\ref{O1},~\ref{O2} y~\ref{O3}). Esto es así debido a que, tal y como se detalló en el \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multi-criterio que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. En nuestro caso se han tomado aquellos objetivos decisivos para el sistema, aunando objetivos de diferentes fases de la metodología propuesta en el sistema \legacy{}. Véase~\cite{articulo1} para una mayor descripción tanto de la metodología \legacy{} como todas las funciones objetivo planteadas entonces, especialmente la normalización de las mismas, que se ha optado por no incluir aquí.
+Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del del sistema \legacy{} (objetivos~\ref{O1},~\ref{O2} y~\ref{O3}). Esto es así debido a que, tal y como se detalló en la \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multiobjetivo que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. 
 
-Adicionalmente se ha creado un nuevo objetivo,~\ref{O4}, nacido de las nuevas características del presente sistema: el momento del cambio.
+En nuestro caso se han tomado aquellos objetivos decisivos para el sistema, aunando objetivos de diferentes fases de la metodología propuesta en el sistema \legacy{}. Véase~\cite{articulo1} para una mayor descripción tanto de la metodología \legacy{} como todas las funciones objetivo planteadas entonces, especialmente la normalización de las mismas, que se ha optado por no incluir aquí.
+
+Adicionalmente, se ha creado un nuevo objetivo,~\ref{O4}, nacido de las nuevas características del presente sistema: el momento del cambio.
 
 
 La función objetivo final, empleando el método de escalarización ponderada tiene esta forma:
@@ -361,25 +372,31 @@ La función objetivo final, empleando el método de escalarización ponderada ti
     %   \right.
 \]
 
-Donde $nATC$ es el número de controladores aéreos (ATC) empleados en la solución actual ($x$) y $nATCdisp$ es el número de controladores disponible para esa instancia del problema. La idea es que el primer número sea igual o menor al primero, de esta forma la solución podrá llevarse a cabo sin necesidad de buscar controladores extra. Como ya se ha dicho previamente, el problema de optimización se expresará en forma de maximización de la expresión.
+donde $nATC$ es el número de controladores aéreos (ATC) empleados en la solución actual ($x$) y $nATCdisp$ es el número de controladores disponible para esa instancia del problema. 
+
+La idea es que el primer número sea igual o menor al primero, de esta forma la solución podrá llevarse a cabo sin necesidad de buscar controladores extra. Como ya se ha dicho previamente, el problema de optimización se expresará en forma de maximización de la expresión.
 
 Se ha definido así debido a que cuando el valor de la primera función objetivo alcanza su máximo valor (uno), ya no aporta nada al sistema, y podemos ahorrarnos un tiempo significativo de cómputo, pues el cálculo de cada una de ellas es costoso (véase \NOTE{Gráfica tiempo ejecución de cada parte del sistema. Comparación usando todos los fitness vs el primero no}).%TODO hacer gráfica y ponerla en implementación
 
-Para poder emplear este modelo de escalarización aditivo, todas las funciones objetivo se han normalizado, de esta forma las escalas manejadas por cada uno de ellos son las mismas y puedan ser añadidos al sumatorio ponderado.
+Para poder emplear este modelo de escalarización aditivo todas las funciones objetivo se han normalizado, de esta forma las escalas manejadas por cada uno de ellos son las mismas y puedan ser añadidos al sumatorio ponderado.
 
-A continuación describiremos brevemente cada una de estas funciones. Más detalles respecto tanto de la definición como de la normalización de cada una de las reutilizadas del sistema \legacy{} en~\cite{articulo2}.
+A continuación, describiremos brevemente cada una de estas funciones. Más detalles respecto tanto de la definición como de la normalización de cada una de las reutilizadas del sistema \legacy{} está disponible en~\cite{articulo2}.
 
 La primera función objetivo~\ref{O1} tiene la siguiente fórmula:
-\[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^c i\cdot h_i \]
-Donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{sec:3:representacion-soluciones}).
+\[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^c i\cdot h_i \,, \]
+donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. 
 
-Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de mayor carga a menos carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma la carga de los controladores de la solución tendrá forma piramidal. Una vez alcanzado el valor 1 de este primer objetivo, la ordenación deja de ser necesaria y nos podemos ahorrar ese tiempo de cómputo bastante significativo, pues todo método de ordenación es bastante costoso, del orden de $O(n^2)$. \NOTE{PONER UN ESQUEMA DE LA ESTRUCTURA PIRAMIDAL??}
+La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{sec:3:representacion-soluciones}).
+
+Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de mayor carga a menos carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma, la carga de los controladores de la solución tendrá forma piramidal.
+
+Una vez alcanzado el valor 1 de este primer objetivo, la ordenación deja de ser necesaria y nos podemos ahorrar ese tiempo de cómputo bastante significativo, pues todo método de ordenación es bastante costoso, del orden de $O(n^2)$. \NOTE{PONER UN ESQUEMA DE LA ESTRUCTURA PIRAMIDAL??} % TODO: Sí. Ponerlo
 
 La segunda función objetivo~\ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en la \autoref{sec:4:RD}---, favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado).
 
-En caso de que el trabajador tenga slots fuera de turno (véase \autoref{sec:baja-alta-controladores}) éstos serán contabilizados como descansos para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito~\ref{RD:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
+En caso de que el trabajador tenga slots fuera de turno (véase la \autoref{sec:baja-alta-controladores}) éstos serán contabilizados como descansos para que aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito~\ref{RD:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
 
-En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase \ldots) % TODO referencia!
+En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase \ldots) % TODO referenciaaaaaaaaaaaaaaaaaaaaa!
 
 La tercera función objetivo~\ref{O3}, implementada por vez primera para este sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, mejor eficiente y rápido podrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
 
@@ -832,6 +849,3 @@ y se ha utilizado la siguiente formula:
 \]
 
 Sabemos que $X_{min}=0$ y tras ejecutar la función $5\,000$ veces en total entre todos los casos disponibles, se ha obtenido un valor máximo de 400, por lo que al resultado de $d_2(x,x')$ se ha de dividir por 400 para su normalización.
-
-
-\NEW{PREGUNTA: QUITO ALGUNAS IMÁGENES QUE QUIZÁS SEAN REDUNDANTES Y LAS GUARDO PARA LA PRESENTACIÓN?? CUÁLES?}
