@@ -231,7 +231,7 @@ Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y
 
 Otra posible variación respecto a la versión básica se basa en emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descent) en lugar de una búsqueda local simple para, estaremos empleando un \textit{General VNS}.
 
-Por último, existen otras variaciones que rompen con la estructura básica del VNS pero que se ha visto que dan buenos resultados para ciertos problemas, mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en~\cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución. Sin embargo, la exploración debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y esto se sabe que es ineficiente para este tipo de problemas~\cite{vns}). Para evitar esto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
+Por último, existen otras variaciones que rompen con la estructura básica del VNS, pero que se ha visto que dan buenos resultados para ciertos problemas, mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en~\cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución. Sin embargo, la exploración debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y esto se sabe que es ineficiente para este tipo de problemas~\cite{vns}). Para evitar esto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
 
 Para ello, el SVNS define un parámetro adicional denotado normalmente como $\alpha$, que multiplica la función de distancia y que permite la exploración más o menos lejos de la solución actual. El \autoref{algoritmo:VNS-cambio-entornos} explicado previamente se redefine de la siguiente manera:
 
@@ -266,7 +266,7 @@ $\rho(x,x')$ es la función de distancia definida para el problema concreto.
 
 El algoritmo central del SVNS es homólogo al \autoref{algoritmo:Basic-VNS} con la diferencia de que debido a que el nuevo algoritmo de cambio de entorno no retorna la mejor solución, sino la próxima a explorar (de peor \textit{fitness} pero alejada de ella), debemos almacenar la mejor para no perderla, y actualizarla en cada iteración. Además, será la que devolvamos al final del algoritmo.
 
-Existen más variaciones del algoritmo básico del VNS que no se han contemplado en este proyecto, por lo que no se encuentran definidas aquí. Más información al respecto puede hallarse en~\cite{vns,info-adicional-vns}
+Existen más variaciones del algoritmo básico del VNS que no se han contemplado en este proyecto, por lo que no se encuentran definidas aquí. Más información al respecto puede hallarse en~\cite{vns}
 
 \subsubsection{Adaptación del VNS al problema}
 \label{apartado:adaptacion-VNS}
@@ -398,7 +398,7 @@ En caso de que el trabajador tenga slots fuera de turno (véase la \autoref{sec:
 
 En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase \ldots) % TODO referenciaaaaaaaaaaaaaaaaaaaaa!
 
-La tercera función objetivo~\ref{O3}, implementada por vez primera para este sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, mejor eficiente y rápido podrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
+La tercera función objetivo~\ref{O3}, implementada por vez primera para este sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, más eficiente y rápido podrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
 
 Para contar el número de cambios simplemente tendremos que recorrer la matriz por la columna del momento del cambio, el índice $slot_{actual}$ y compararla con la columna anterior $slot_{actual}-1$, matemáticamente lo podríamos expresar como:
 %
@@ -408,6 +408,7 @@ Para contar el número de cambios simplemente tendremos que recorrer la matriz p
         1 & \quad \textrm{si } x_i^{slot_{cambio}} = x_i^{slot_{cambio}-1} \\
         0 & \quad \textrm{en otro caso }
     \end{cases}
+    \,,
 \]
 
 
@@ -419,10 +420,12 @@ Para contar el número de cambios simplemente tendremos que recorrer la matriz p
 %	\end{cases}
 %\]
 
-Con $x_i^j$ el sector y la posición asignados por la solución $x$ al controlador $i$ (fila) en el slot $j$ (columna). Consideramos un cambio tanto cuando el sector es diferente como cuando lo es la posición, aunque sea el mismo sector.
-El quebrado $\sfrac{1}{nATC}$ sirve para normalizar la función, y poder usarla junto con todas las demás.
+con $x_i^j$ el sector y la posición asignados por la solución $x$ al controlador $i$ (fila) en el slot $j$ (columna).
 
-La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planificaciones resultantes sean parecidas a los estadillos (definidos en el \autoref{sec:3:inicializacion-soluciones}). Lo lograremos comparando para slot de la solución el sector asignado con aquél del slot inmediatamente a la derecha y aquel inmediatamente inferior. Matemáticamente de la siguiente forma:
+Consideramos un cambio tanto cuando el sector es diferente como cuando lo es la posición, aunque sea el mismo sector.
+El cociente $\sfrac{1}{nATC}$ sirve para normalizar la función y poder usarla junto con todas las demás.
+
+La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planificaciones resultantes sean parecidas a los estadillos (definidos en el \autoref{sec:3:inicializacion-soluciones}). Lo lograremos comparando cada slot de la solución el sector asignado con aquél del slot inmediatamente a la derecha y aquel inmediatamente inferior. Matemáticamente de la siguiente forma:
 %
 \[
     f_4(x) = \sum_{i=1}^{nATC} \sum_{i=1}^{nSlots}
@@ -431,21 +434,24 @@ La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planific
         \\
         1 & \; \textrm{si } \; x_i^j = x_{i}^{j+1}   \\
         \\
-        0 & \; \textrm{en otro caso }  \NOTE{\textrm{HACE FALTA ESTE? LO QUITO??}}
+        0 & \; \textrm{en otro caso }
     \end{cases}
+    \,,
 \]
 
-Con $nSlots$ en número de slots de la instancia concreta del problema. Cabe destacar que, en caso de alcanzar slots
-donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces dicho caso será ignorado.
+con $nSlots$ en número de slots de la instancia concreta del problema. 
 
-Por otra parte, para que el~\ref{O1} s
+Cabe destacar que, en caso de alcanzar slots
+donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces dicho caso será ignorado.
+%Por otra parte, para que el~\ref{O1} s %TODO: que es esto?
+%TODO que es esto?
 
 \paragraph{Definición de entornos} \label{paragraph:entornos}
 En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
 
 Para definir un entorno, necesitamos conocer la representación de las soluciones (recuérdese la \autoref{sec:3:representacion-soluciones}), pues en función de la misma definiremos los entornos. En nuestro caso, se trata de una representación discreta en forma matricial. Para este tipo de representaciones lo más habitual es la permutación de elementos de la solución para transformarlas en otras.
 
-Los antecedentes respecto a las definiciones de entorno no son demasiados, Jónatan Lara Valero realizó un estudio exhaustivo desde el punto de vista matemático de los entornos del sistema \legacy{} y propuso uno nuevo con una técnica innovadora de rejilla. En su tesis, Lara describe y analiza el comportamiento de los entornos definidos por Tello et al. en~\cite{articulo1} denominados como \textit{mov3} y \textit{mov6}.
+Los antecedentes respecto a las definiciones de entorno no son demasiados, Jónatan Lara Valero realizó un estudio exhaustivo desde el punto de vista matemático de los entornos del sistema \legacy{} y propuso uno nuevo con una técnica innovadora de rejilla. En su TFM, Lara describe y analiza el comportamiento de los entornos definidos por Tello et al. en~\cite{articulo1} denominados como \textit{mov3} y \textit{mov6}.
 
 El primer movimiento, \textit{mov3}, se define algorítmicamente de la forma indicada en el \autoref{algoritmo:entorno-mov3}. Como podemos ver, consiste en probar todas las posibles combinaciones de controladores y longitudes hasta encontrar una combinación que nos permita realizar el cambio.
 
@@ -512,7 +518,7 @@ El primer movimiento, \textit{mov3}, se define algorítmicamente de la forma ind
 
 El movimiento \textit{mov6} consiste simplemente en la repetición del anterior dos veces para potenciar la capacidad exploratoria del sistema.
 
-Lara en su tesis propone además los movimientos en una o varias rejillas, que tratan de mantener la estructura vertical que tienen las soluciones debido a los patrones regulares que presentan los estadillos empleados para definir la solución inicial:
+Lara en su TFM propone además los movimientos en una o varias rejillas, que tratan de mantener la estructura vertical que tienen las soluciones debido a los patrones regulares que presentan los estadillos empleados para definir la solución inicial:
 
 \begin{quotation} {\itshape
 %	Los movimientos en rejilla parten de una idea básica: mantener la estructura
@@ -529,10 +535,11 @@ que pueden hacerse entre controladores. Una rejilla no será más que una serie 
 puntos que dividirán el turno en intervalos, no necesariamente iguales en tamaño. El
 movimiento \textit{mov12} consistirá siempre en intercambiar uno de estos intervalos entre
 dos controladores.>>}
-    \rightline{---Jónatan Lara Valero~\cite{tesis-jonatan}}
+
+    \hfill ---Jónatan Lara Valero~\cite{tesis-jonatan}
 \end{quotation}
 
-A su vez propone otros movimientos como variaciones de este, pero para esta tesis únicamente hemos considerado su propuesta del uso de rejillas simple como un tipo de entornos que hemos definido. Este tipo de entornos limitan los intercambios de carga de trabajo permitidos a unas franjas de intervalos concretas. Véase la \autoref{fig:representacion-rejilla} para comprender visualmente cómo se constituye una rejilla a partir de una solución.
+A su vez propone otros movimientos como variaciones de este, pero para este TFM únicamente hemos considerado su propuesta del uso de rejillas simple como un tipo de entornos que hemos definido. Este tipo de entornos limitan los intercambios de carga de trabajo permitidos a unas franjas de intervalos concretas. Véase la \autoref{fig:representacion-rejilla} para comprender visualmente cómo se constituye una rejilla a partir de una solución.
 
 \begin{figure}
     \centering
@@ -545,19 +552,21 @@ Si bien no forma parte de este TFM, pues no se trata de trabajo propio, debido a
 y el SA fue ejecutado empleando todos ellos. El estudio concluyó con que el entorno que mejores resultados ofrecía para el SA es el \textit{mov15}, uno de los propuestos por Lara en~\cite{tesis-jonatan}, de tipo rejilla con la variación de que permite intercambiar más de un intervalo a la vez, entre 1 y 3 siempre y cuando estén consecutivos.
 % TODO: poner o referenciar en el capítulo 5!!!
 
-Por otro lado, para el sistema \legacy{} también se desarrolló un VNS previamente: Pablo Lozano Santiuste propuso unas estructuras de entornos que intercambiaban carga a nivel de slot, repitiéndose sucesivas veces hasta que no fuese posible realizar el cambio, de esta forma se intercambiaría toda la carga posible de los dos controladores seleccionados aleatoriamente. Lozano en su tesis~\cite{tesis-pablo} emplea 4 tipos de entornos cuyas diferencias residen en las restricciones de entorno de cada una: para poder realizar el cambio o bien es necesario que el primero trabaje y en segundo descanse o bien que ambos trabajen. Y otros dos equivalentes pero con la restricción adicional de que el trabajo segundo controlador sea en el mismo sector que el primero previamente, de forma que se continúe el trabajo.
+Por otro lado, para el sistema \legacy{} también se desarrolló un VNS previamente: Pablo Lozano Santiuste propuso unas estructuras de entornos que intercambiaban carga a nivel de slot, repitiéndose sucesivas veces hasta que no fuese posible realizar el cambio. De esta forma, se intercambiaría toda la carga posible de los dos controladores seleccionados aleatoriamente. 
+
+Lozano en su TFM~\cite{tesis-pablo} emplea 4 tipos de entornos cuyas diferencias residen en las restricciones de entorno de cada una: para poder realizar el cambio o bien es necesario que el primero trabaje y en segundo descanse o bien que ambos trabajen; y otros dos equivalentes pero con la restricción adicional de que el trabajo del segundo controlador sea en el mismo sector que el primero previamente, de forma que se continúe el trabajo.
 
 
-Para este proyecto se han empleado ideas de todos ellos y se han definido tres tipos de entornos, cada uno con un principio diferente:
+Para este TFM se han empleado ideas de todos ellos y se han definido tres tipos de entornos, cada uno con un principio diferente:
 \begin{itemize}
-    \item \textbf{Movimientos de máxima carga} \textit{(movMaxCarga)}: se basa en el traspaso de la mayor carga posible de trabajo entre los controladores
+    \item \textbf{Movimientos de máxima carga} \textit{(movMaxCarga)}: se basan en el traspaso de la mayor carga posible de trabajo entre los controladores.
 
-    \item \textbf{Movimientos en rejilla} \textit{(movRejilla)}: permite el traspaso de carga sin romper la estructura de la solución
+    \item \textbf{Movimientos en rejilla} \textit{(movRejilla)}: permiten el traspaso de carga sin romper la estructura de la solución.
 
-    \item \textbf{Movimiento libre} \textit{(movLibre)}: si no es posible un intercambio mediante ninguno de los anteriores, trataremos de tomar intervalos más pequeños de carga
+    \item \textbf{Movimiento libre} \textit{(movLibre)}: si no es posible un intercambio mediante ninguno de los anteriores, trataremos de tomar intervalos más pequeños de carga.
 \end{itemize}
 
-Como podemos ver, los dos primeros no tienen libertades de movimiento, sino que deberán mover un numero de slots concreto, nunca menor que la carga continuada o la sección limitada por la rejilla. Para no limitar el espacio de soluciones, añadimos el último, que permite esa libertad en cuanto al tamaño. A continuación describiremos cada uno de ellos.
+Como podemos ver, los dos primeros no tienen libertades de movimiento, sino que deberán mover un número de slots concreto, nunca menor que la carga continuada o la sección limitada por la rejilla. Para no limitar el espacio de soluciones, añadimos el último, que permite esa libertad en cuanto al tamaño. A continuación, describiremos cada uno de ellos.
 
 La idea inicial consiste en emplearlos en el orden descrito, de forma que primero se quite la máxima carga del controlador superior y si no es posible, se utilicen rejillas, y finalmente sin restricciones de entorno. No obstante, empíricamente descubrimos que esto no era lo óptimo, tal y como se ha indicado en el \autoref{capitulo:5}.
 
@@ -577,7 +586,7 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 \begin{algorithm}[h]
     \label{algoritmo:movMaxCarga}
     \SetAlgoNoEnd
-    Se elige arbitrariamente un controlador $c_1$ (en caso de existir algún imaginario, en lugar de arbitrariamente, se toma en orden partiendo del primer imaginario) \label{line:maxcarga:paso1}\;
+    Se elige arbitrariamente un controlador $c_1$ (en caso de existir algún imaginario, en lugar de arbitrariamente, se toma en orden partiendo \newline del primer imaginario) \label{line:maxcarga:paso1}\;
     \algovspace
 
     Obtener los intervalos de trabajo continuo de $c_1$\;
@@ -606,26 +615,26 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 
 \textbf{Restricciones de entorno (y nombre):}
 \begin{enumerate}[align=parleft, labelsep=2cm, itemindent=5em, font=\itshape]
-    \item[MovMaxCarga]\mbox{}\\No hay restricciones
+    \item[MovMaxCarga]\mbox{}\\No hay restricciones.
 
     \item[MovMaxCarga\_1]\mbox{}\\
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar descansando en el intervalo elegido
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar descansando en el intervalo elegido.
 
     \item[MovMaxCarga\_2]\mbox{}\\
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar trabajando en el intervalo elegido \\
-    El sector y la posición de trabajo de $c_1$ deberán ser la misma que la de $c_2$
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar trabajando en el intervalo elegido. \\
+    El sector y la posición de trabajo de $c_1$ deberán ser la misma que la de $c_2$.
 
     \item[MovMaxCarga\_3]\mbox{}\\
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar descansando en el intervalo elegido \\
-    El sector de $c_1$ deberá ser el mismo que el de $c_2$, pero la posición del trabajo no tiene por qué
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar descansando en el intervalo elegido. \\
+    El sector de $c_1$ deberá ser el mismo que el de $c_2$, pero la posición del trabajo no tiene por qué.
 
     \item[MovMaxCarga\_4]\mbox{}\\
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar descansando en el intervalo elegido \\
-    El sector y la posición de trabajo podrán ser diferentes
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar descansando en el intervalo elegido. \\
+    El sector y la posición de trabajo podrán ser diferentes.
 \end{enumerate}
 
 \subparagraph{Movimientos en rejilla}
@@ -633,7 +642,7 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 
 \textbf{Objetivo:} Intentar pasar la carga de trabajo de forma controlada para no romper la estructura de la solución.
 
-\textbf{Comportamiento:} El cambio de carga de trabajo se realiza únicamente entre intervalos limitados por las rejillas. La estructura de las rejillas puede cambiar en cada iteración debido a los demás movimientos, por lo que se debe de ejecutar la fragmentación del controlador en las rejillas en cada ejecución del movimiento.
+\textbf{Comportamiento:} El cambio de carga de trabajo se realiza únicamente entre intervalos limitados por las rejillas. La estructura de las rejillas puede cambiar en cada iteración debido a los demás movimientos, por lo que se debe ejecutar la fragmentación del controlador en las rejillas en cada ejecución del movimiento.
 
 \textbf{Algoritmo:}
 \RestyleAlgo{plain}
@@ -644,7 +653,7 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 \begin{algorithm}[h]
     \label{algoritmo:movRejilla}
     \SetAlgoNoEnd
-    Se elige arbitrariamente un controlador $c_1$ (en caso de existir algún imaginario, en lugar de arbitrariamente, se toma en orden partiendo del primer imaginario) \label{line:rejilla:paso1}\;
+    Se elige arbitrariamente un controlador $c_1$ (en caso de existir algún imaginario, en lugar de arbitrariamente, se toma en orden partiendo \newline del primer imaginario) \label{line:rejilla:paso1}\;
     \algovspace
 
     Obtener rejilla\;
@@ -672,27 +681,27 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 
 \textbf{Restricciones de entorno (y nombre):}
 \begin{enumerate}[align=parleft, labelsep=2cm, itemindent=5em, font=\itshape]
-    \item[MovRejilla]\mbox{}\\No hay restricciones
+    \item[MovRejilla]\mbox{}\\No hay restricciones.
 
     \item[MovRejilla\_1]\mbox{}\\
     Seleccionamos aleatoriamente uno de los intervalos de las rejillas que cumplan:
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar descansando en el intervalo elegido
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar descansando en el intervalo elegido.
 
     \item[MovRejilla\_2]\mbox{}\\
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar trabajando en el intervalo elegido \\
-    El sector y la posición de trabajo de $c_1$ deberán ser la misma que la de $c_2$
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar trabajando en el intervalo elegido. \\
+    El sector y la posición de trabajo de $c_1$ deberán ser la misma que la de $c_2$.
 
     \item[MovRejilla\_3]\mbox{}\\
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar descansando en el intervalo elegido \\
-    El sector de $c_1$ deberá ser el mismo que el de $c_2$, pero la posición del trabajo no tiene por qué
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar descansando en el intervalo elegido. \\
+    El sector de $c_1$ deberá ser el mismo que el de $c_2$, pero la posición del trabajo no tiene por qué.
 
     \item[MovRejilla\_4]\mbox{}\\
-    $c_1$ debe tener trabajo en el intervalo elegido \\
-    $c_2$ debe estar descansando en el intervalo elegido \\
-    El sector y la posición de trabajo podrán ser diferentes
+    $c_1$ debe tener trabajo en el intervalo elegido. \\
+    $c_2$ debe estar descansando en el intervalo elegido. \\
+    El sector y la posición de trabajo podrán ser diferentes.
 \end{enumerate}
 
 \subparagraph{Movimiento libre (\textit{movLibre})}
@@ -722,7 +731,7 @@ Para el caso de \textit{movLibre} no se han definido restricciones de dominio.
     Elegir un intervalo de trabajo aleatoriamente \label{line:libre:trabajo}\;
     \algovspace
 
-    Seleccionar un subintervalo desde el inicio del intervalo hasta un cierto tamaño que será inicialmente el máximo y se irá reduciendo en 1 slot cada vez que no encuentre opción de hacer el traspaso de carga \label{line:libre:subintervalo}\;
+    Seleccionar un subintervalo desde el inicio del intervalo hasta un cierto tamaño que será inicialmente el máximo y se irá reduciendo en 1 slot \newline cada vez que no encuentre opción de hacer el traspaso de carga \label{line:libre:subintervalo}\;
     \algovspace
 
     Elegir arbitrariamente un controlador $c_2$ \label{line:libre:c2}\;
@@ -747,10 +756,10 @@ Para el caso de \textit{movLibre} no se han definido restricciones de dominio.
 
 
 \paragraph{Búsqueda diversificada/intensificada} \label{capitulo:3:busqueda-divers-intens}
-Ya hemos visto que la búsqueda va orientada hacia unos objetivos, y es el valor del fitness quien permite evaluar y cuantificar cuanto se acercan a ellos. Por otro lado, para poder moverse entre soluciones, de forma que podamos aumentar
+Ya hemos visto que la búsqueda va orientada hacia unos objetivos, y es el valor del fitness quien permite evaluar y cuantificar cuánto se acercan a ellos. Por otro lado, para poder moverse entre soluciones, de forma que podamos aumentar
 el valor del fitness, se emplean varios entornos, definidos \hyperref[paragraph:entornos]{en la sección anterior}.
 
-En la definición de una metaheurística dos características juegan un papel importante: la intensificación (o explotación) y la diversificación (o exploración). En la intensificación, trataremos de explorar regiones prometedoras del espacio de soluciones, dando uso a la información prometedora de la solución para obtener mejores soluciones, mientras que en la diversificación trataremos de explorar regiones del espacio más amplias, para asegurarse de que la búsqueda no quede atrapada en un óptimo local de una región concreta del espacio.
+En la definición de una metaheurística dos características juegan un papel importante: la intensificación (o explotación) y la \textit{diversificación} (o exploración). En la \textit{intensificación}, trataremos de explorar regiones prometedoras del espacio de soluciones, dando uso a la información prometedora de la solución para obtener mejores soluciones, mientras que en la diversificación trataremos de explorar regiones del espacio más amplias, para asegurarse de que la búsqueda no quede atrapada en un óptimo local de una región concreta del espacio.
 
 Ambas técnicas enfocan el problema de la mejora de la solución actual de dos formas opuestas. Una buena metaheurística
 hace uso de ambas de forma equilibrada, si bien las basadas en una solución suelen ser más explotativas y las poblacionales más exploratorias.
@@ -770,10 +779,13 @@ La metaheurística VNS es considerablemente explotativa, pero permite dar juego 
 
 Vamos a analizarlos por separado en los siguientes párrafos.
 
-El tipo de VNS es la forma más clara y sencilla de ajustar la capacidad exploratoria/explotatoria de la búsqueda. Si partimos de la definición básica del VNS, el \textit{Basic VNS} (recuérdese mediante el \autoref{algoritmo:Basic-VNS} a principio del capítulo) podemos ver claramente que la componente de búsqueda local es puramente intensificación, mientras que la componente de shaking es únicamente exploración mediante una perturbación aleatoria.
-Ésta es precisamente la técnica más usual para introducir exploración en una metaheurística, la \autoref{fig:esquema-idea-basica-perturbacion} ilustra cómo permite salir de la zona ya explotada a otras potencialmente mejores.
+El \textbf{tipo de VNS} es la forma más clara y sencilla de ajustar la capacidad exploratoria/explotatoria de la búsqueda. Si partimos de la definición básica del VNS, el \textit{Basic VNS} (recuérdese mediante el \autoref{algoritmo:Basic-VNS} a principio del capítulo) podemos ver claramente que la componente de búsqueda local es puramente intensificación, mientras que la componente de shaking es únicamente exploración mediante una perturbación aleatoria.
+
+Ésta es precisamente la técnica más usual para introducir exploración en una metaheurística. La \autoref{fig:esquema-idea-basica-perturbacion} ilustra cómo permite salir de la zona ya explotada a otras potencialmente mejores.
+
 Si eliminamos la componente de búsqueda local, el \textit{Reduced VNS}, potencia la exploración, mientras que si eliminamos la componente de búsqueda local, el \textit{VND}, se potencia la capacidad de explotación.
 En el caso del \textit{General VNS}, potenciamos la capacidad de exploración, pues si bien un VND es meramente determinista, a diferencia de una búsqueda local simple, emplea más de un entorno y cada uno de ellos llega a diferentes puntos del espacio de búsqueda.
+
 Por último, el SVNS tiene por fundamento elegir soluciones peores para mejorar su eficiencia explorando por otros lugares menos prometedores, por lo que claramente potencia una capacidad exploratoria extra en la búsqueda.
 
 \begin{figure}
@@ -782,12 +794,12 @@ Por último, el SVNS tiene por fundamento elegir soluciones peores para mejorar 
     \label{fig:esquema-idea-basica-perturbacion}
 \end{figure}
 
-En segundo lugar, el orden de los entornos puede ser muy relevante a la hora de explorar y explotar el espacio de búsqueda, puesto que si en primer lugar la búsqueda opta por entornos más intensificadores, entonces esta dará preferencia a explotar la solución hasta que no sea posible mejorarla aún más, en cuyo caso, empleará el resto de entornos menos intensificadores y más exploratorios. Por ello tendremos que clasificar los entornos definidos anteriormente (véase la \autoref{paragraph:entornos}) en función de la característica que potencian más.
+En segundo lugar, el \textbf{orden de los entornos} puede ser muy relevante a la hora de explorar y explotar el espacio de búsqueda, puesto que si en primer lugar la búsqueda opta por entornos más intensificadores, entonces esta dará preferencia a explotar la solución hasta que no sea posible mejorarla aún más, en cuyo caso, empleará el resto de entornos menos intensificadores y más exploratorios. Por ello tendremos que clasificar los entornos definidos anteriormente (véase la \autoref{paragraph:entornos}) en función de la característica que potencian más.
 %La lista de entornos se puede recorrer de varias formas, hacia adelante ($1,\dots,k_{max}$), hacia adelante ($k_{max},\dots,1$) o con un salto, pero sin más
 
-Se ha considerado los entornos \hyperref[entorno:movMaxCarga]{\textit{movMaxCarga}} y \hyperref[entorno:movLibre]{\textit{movLibre}} como más exploratorios, pues permiten moverse hacia soluciones más lejanas en el primero, y más difíciles de alcanzar por los demás en el caso del segundo. Por el otro lado, el entorno \hyperref[entorno:movRejilla]{\textit{movRejilla}} se considera más intensificador, pues está limitado y cambios muy concretos y limitados de la solución.
+\NEW{Se ha considerado los entornos \hyperref[entorno:movMaxCarga]{\textit{movMaxCarga}} y \hyperref[entorno:movLibre]{\textit{movLibre}} como más exploratorios, pues permiten moverse hacia soluciones más lejanas en el primero, y más difíciles de alcanzar por los demás en el caso del segundo. Por otro lado, el entorno \hyperref[entorno:movRejilla]{\textit{movRejilla}} se considera más intensificador, pues está condicionado a cambios muy concretos y limitados de la solución.}
 
-Esta clasificación es importante para la tercera y última técnica para ajustar la diversificación/intensificación del sistema: la naturaleza de la selección de los entornos. En esta tesis se han probado dos enfoques, el clásico determinista, y uno probabilista.
+Esta clasificación es importante para la tercera y última técnica para ajustar la diversificación/intensificación del sistema: la \textbf{naturaleza de la selección de los entornos}. En esta tesis se han probado dos enfoques, el clásico determinista, y uno probabilista.
 
 El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilista permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. La \autoref{fig:diagrama-flujo-naturaleza-entornos} representa en formato de diagrama de flujo estos procesos. Como se puede apreciar, en el caso de entornos deterministas únicamente se modifica el entorno en orden, mientras que el probabilista precisa de varios procesos.
 
@@ -797,11 +809,11 @@ El enfoque determinista recorre la lista de entornos definida para el sistema de
     \label{fig:diagrama-flujo-naturaleza-entornos}
 \end{figure}
 
-En primer lugar tenemos una probabilidad de diversificación (la probabilidad de intensificación es la complementaria, $1-p$) que irá variando cada cierto número de iteraciones que hemos denominado ciclos.
+En primer lugar, tenemos una probabilidad de diversificación (la probabilidad de intensificación es la complementaria, $1-p$), que irá variando cada cierto número de iteraciones que hemos denominado ciclos.
 
-Con esa probabilidad elegimos uno de los tipos de entornos: diversificadores o intensificadores. Como es probabilístico se usará cualquiera de ambos, pero con mayor probabilidad uno que otro. Una vez escogido el movimiento (entorno) este no podrá volver a ser elegido hasta que todos los entornos pertenecientes a su grupo hayan sido utilizados (de esta forma evitamos repeticiones y garantizamos que todos sean utilizados).
+Con esa probabilidad elegimos uno de los tipos de entornos: diversificadores o intensificadores. Como es probabilístico se usará cualquiera de ambos, pero con mayor probabilidad uno que otro. Una vez escogido el movimiento (entorno), este no podrá volver a ser elegido hasta que todos los entornos pertenecientes a su grupo hayan sido utilizados (de esta forma evitamos repeticiones y garantizamos que todos sean utilizados).
 
-La idea es tratar de que al principio las soluciones analizadas sean más diversas entre sí y a medida que la ejecución avanza se vaya reduciendo la diversificación dando paso a la intensificación de la mejor solución alcanzada, siempre de forma estocástica. Una vez obtenido el tipo de entorno probabilísticamente, se elige el movimiento (entorno) concreto de ese tipo. En caso de utilizar entornos con restricciones, estos se ejecutan de forma determinista: en el orden en el que se han definido. La \autoref{fig:esquema-entornos-probabilisticos} resume esta información gráficamente. Más detalles desde el punto de vista de implementación en la \autoref{capitulo:4}\NOTE{REFERENCIA!!}. %TODO: referencia!!!!!!
+La idea es tratar de que al principio las soluciones analizadas sean más diversas entre sí y a medida que la ejecución avanza se vaya reduciendo la diversificación dando paso a la intensificación de la mejor solución alcanzada, siempre de forma estocástica. Una vez obtenido el tipo de entorno probabilísticamente, se elige el movimiento (entorno) concreto de ese tipo. En caso de utilizar entornos con restricciones, estos se ejecutan de forma determinista: en el orden en el que se han definido. La \autoref{fig:esquema-entornos-probabilisticos} resume esta información gráficamente. Más detalles desde el punto de vista de implementación están disponibles en la \autoref{sec:4:detalles-sistema}.
 
 \begin{figure}
     \centering    \includegraphics[width=\linewidth]{esquema-entornos-probabilisticos}
@@ -815,37 +827,45 @@ La idea es tratar de que al principio las soluciones analizadas sean más divers
 
 Sin una condición de parada, el algoritmo se estaría ejecutando de forma indefinida, por lo que siempre precisamos de al menos una.
 
-La más intuitiva consiste en finalizar la ejecución una vez transcurrido un cierto periodo de tiempo, de esta forma si el usuario/a necesita la planificación en un plazo máximo de 10 minutos, el sistema estará buscando constantemente mejorar la solución hasta que pasen 10 minutos. Entonces simplemente retornará al usuario/a la mejor solución alcanzada hasta el momento.
+La más intuitiva consiste en finalizar la ejecución una vez transcurrido un cierto periodo de tiempo, de esta forma si el usuario/a necesita la planificación en un plazo máximo de 10 minutos, el sistema estará buscando constantemente mejorar la solución hasta que pasen 10 minutos. Entonces, simplemente retornará al usuario/a la mejor solución alcanzada hasta el momento.
 
-Si el sistema no requiriera de un tiempo concreto, otra posible opción sería la de detener la ejecución cuando la búsqueda no logra encontrar soluciones mejores tras el transcurso de un determinado número de iteraciones. No obstante esto tiene un problema, y es que cambios muy pequeños que manualmente no consideramos significativos el algoritmo sí los tomaría como mejoras, y un nuevo ciclo de iteraciones comenzaría, alargando tal vez innecesariamente el tiempo de ejecución. Por ello, la opción más común es utilizar un porcentaje mínimo de mejoría (véase \autoref{fig:porcentaje-mejora}) cuyo cálculo consiste en el incremento de la función fitness $\Delta f = |f_{inicio\, ciclo}-f_{fin\, ciclo}|$ multiplicado por 100. De esta forma utilizamos un porcentaje mínimo que se comprueba cada cierto número de iteraciones (ciclos) que permite indicar al sistema qué mejora es significativa y cual no, finalizando la ejecución en caso de no serlo.
+Si el sistema no requiriera de un tiempo concreto, otra posible opción sería la de detener la ejecución cuando la búsqueda no logra encontrar soluciones mejores tras el transcurso de un determinado número de iteraciones. No obstante esto tiene un problema, y es que cambios muy pequeños que manualmente no consideramos significativos el algoritmo sí los tomaría como mejoras, y un nuevo ciclo de iteraciones comenzaría, alargando tal vez innecesariamente el tiempo de ejecución. 
+
+Por ello, la opción más común es utilizar un porcentaje mínimo de mejora (véase la \autoref{fig:porcentaje-mejora}) cuyo cálculo consiste en el incremento de la función fitness $\Delta f = |f_{inicio\, ciclo}-f_{fin\, ciclo}|$ multiplicado por 100. De esta forma, utilizamos un porcentaje mínimo que se comprueba cada cierto número de iteraciones (ciclos) que permite indicar al sistema qué mejora es significativa y cual no, finalizando la ejecución en caso de no serlo.
 
 \begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{porcentaje-mejora}
+    \includegraphics[width=.8\linewidth]{porcentaje-mejora}
     \caption{El porcentaje de mejora actual se calcula mediante el incremento del fitness logrado en el ciclo}
     \label{fig:porcentaje-mejora}
 \end{figure}
 
-En este sistema se han considerado ambas condiciones de parada, de forma que se detenga la ejecución tanto si no hay mejora suficiente antes de llegar al tiempo máximo y en el caso opuesto, que si bien esté mejorando ya se haya alcanzado el límite de tiempo. Ambas condiciones se evalúan tras cada cambio de vecindad como se ha representado en la \autoref{fig:esquema-fase2}
+En este sistema se han considerado ambas condiciones de parada, de forma que se detenga la ejecución tanto si no hay mejora suficiente antes de llegar al tiempo máximo y en el caso opuesto, que si bien esté mejorando ya se haya alcanzado el límite de tiempo. Ambas condiciones se evalúan tras cada cambio de vecindad como se ha representado en la \autoref{fig:esquema-fase2}.
 
 Por otro lado, las iteraciones de la búsqueda local, tal y como se describió al comienzo de la sección, se utiliza una mixtura entre el \textit{Best Improvement} y el \textit{First Improvement}: si bien no emplea la mejor solución, tampoco emplea la primera mejor, sino que continúa la búsqueda con la condición de parada definida mediante un porcentaje de tolerancia equivalente al descrito previamente.
 
 \paragraph{Función de distancia en el Skewed-VNS}
 El Skewed VNS precisa de dos parámetros adicionales: la función de distancia $d(x,x')$ y el llamado $\alpha$, ambos explicados en la \autoref{sec:vns}. El parámetro $\alpha$ se ajusta experimentalmente, y la función de distancia se ha de definir previamente.
 
+\begin{minipage}{\textwidth}
 Hemos planteado dos opciones. La distancia basada en la diferencia de sus respectivos fitness: $d_1(x,x')=f(x)-f(x')$ y basada en el número de slots diferentes entre sí:
-$
+
+\[
 d_2(x,x')=\sum_{i=1}^{nATC} \sum_{j=1}^{nSlots}
 \begin{cases}
     1 & \quad \textrm{si } x_i^j = {x'}_i^j \\
     0 & \quad \textrm{en otro caso }
 \end{cases}
-$ con la peculiaridad de que en caso de que la solución no esté ordenada, se deberán de tomar los mismos controladores en cada comparación, es decir que el lugar de comparar mediante índice se compara mediante identificador.
+\]
 
-Para normalizar esta función (la primera ya está entre 0 y 1) medido empíricamente el valor máximo posible de la función
+\end{minipage}
+
+con la peculiaridad de que en caso de que la solución no esté ordenada, se deberán de tomar los mismos controladores en cada comparación, es decir, que el lugar de comparar mediante índice se compara mediante identificador.
+
+Para normalizar esta función (la primera ya está entre 0 y 1) se ha medido empíricamente el valor máximo posible de la función
 y se ha utilizado la siguiente formula:
 \[
-    X' = \frac{X-X_{min}}{X_{max}-X_{min}}
+    X' = \frac{X-X_{min}}{X_{max}-X_{min}} \,.
 \]
 
 Sabemos que $X_{min}=0$ y tras ejecutar la función $5\,000$ veces en total entre todos los casos disponibles, se ha obtenido un valor máximo de 400, por lo que al resultado de $d_2(x,x')$ se ha de dividir por 400 para su normalización.

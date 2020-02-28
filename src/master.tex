@@ -72,6 +72,7 @@
 
 
 \usepackage[spanish]{babel}
+
 \decimalpoint
 \usepackage[utf8]{inputenc}
 
@@ -172,11 +173,21 @@
 \addto\extrasspanish{\def\subsubsectionautorefname{Sección}}
 \addto\extrasspanish{\def\paragraphautorefname{Sección}}
 
+\addto\extrasspanish{\def\max{\text{max\,}}}
+\addto\extrasspanish{\def\min{\text{min\,}}}
+
 \addto\extrasspanish{\def\appendixautorefname{Anexo}}
 
 \addto\extrasspanish{\def\algorithmautorefname{Algoritmo}}
 \renewcommand{\algorithmcflinename}{Paso}
 
+\usepackage[fixlanguage]{babelbib}
+\selectbiblanguage{spanish}
+\declarebtxcommands{spanish}{%
+	\def\btxmastthesis#1{\protect\foreignlanguage{spanish}{Trabajo de Fin de Máster}}%
+%	\def\btxmastthesis##1{\protect\foreignlanguage{#1}{Trabajo de Fin de Máster}}%
+%	861 \def\btxmastthesis##1{\protect\foreignlanguage{#1}{Master’s thesis}}%
+}
 
 \captionsetup{labelfont=bf}
 \captionsetup[subfigure]{labelfont=bf}
@@ -327,11 +338,11 @@
 %	\appendix
 	\graphicspath{{anexos/recursos/}}
 	
-%    \include{anexos/AnexoA-Formato-Planificacion-Inicial}
+%    \include{anexos/AneB-Diagrama-Clases-Completo}
+%	\newpagexoA-Formato-Planificacion-Inicial}
 %	\newpage
-	
-% 	\include{anexos/AnexoB-Diagrama-Clases-Completo}
-%	\newpage
+
+% 	\include{anexos/Anexo
 
 	\end{appendices}
 
@@ -342,7 +353,7 @@
 	%  BIBLIOGRAPHY
 	%
     \normalem
-    \bibliographystyle{abbrv}
+    \bibliographystyle{bababbrv}
     \bibliography{master}
 
 \end{document}
