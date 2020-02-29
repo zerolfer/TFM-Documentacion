@@ -8,13 +8,13 @@ Clásicamente se han empleado algoritmos para problemas concretos de este tipo q
 Algunos son: el \textit{Open Shop Scheduling} (OSS), \textit{Job Shop Scheduling} (JSS), \textit{Flow Shop Scheduling} (FSS) o \textit{Permutational Flow Shop Scheduling} (PFSS). Una clasificación más detallada de este tipo de problemas clásicos se encuentra en~\cite{sota:tesis-doctoral}.
 
 Lejos del entorno académico, los problemas reales de \textit{scheduling} (como el que tenemos entre manos en este TFM) pueden ser muy diferentes entre sí, habiendo pues mucha variedad en función del ámbito de aplicación.
-Por ejemplo se han estudiado casos para transporte público~\cite{sota:transporte-publico} o universidades~\cite{sota:universidad} y podemos ver cómo son completamente diferentes en cuanto a restricciones y necesidades de cada una de las soluciones, por lo que las metodologías empleadas para su resolución son bien diferentes.
+Por ejemplo, se han estudiado casos para transporte público~\cite{sota:transporte-publico} o universidades~\cite{sota:universidad} y podemos ver cómo son completamente diferentes en cuanto a restricciones y necesidades de cada una de las soluciones, por lo que las metodologías empleadas para su resolución son bien diferentes.
 
 Existen gran cantidad de técnicas que se han empleado previamente para resolver este tipo de problemas, comenzando por sencillos heurísticos aplicados a los problemas clásicos bien estudiados y formalizados, pero como hemos puntualizado antes, este tipo de algoritmos solamente son aplicables a instancias pequeñas debido a la mencionada naturaleza no polinómica, por lo que no son útiles en problemas reales. Por otro lado, se ha analizado cómo transformar un problema de \textit{scheduling} en un problema de coloreado de grafos~\cite{sota:estudio-coloreado-grafos, sota:algotimo-coloreado-grafos}, lo que nos permite emplear los algoritmos existentes para este tipo de problemas, entre los que podemos encontrar exactos y aproximados.
 
 También existen enfoques más modernos que emplean técnicas de \textit{Aprendizaje Automático} habitualmente combinados con metaheurísticas~\cite{sota:machine-learning-geneticos} y recientemente \textit{Hiperheurísticas} (como por ejemplo en~\cite{sota:hiperheuristicas}). En el libro~\cite{sota:libro-sota-scheduling} se encuentran explicadas de forma detallada todas estas técnicas aquí nombradas.
 
-Por último, la técnica más empleada actualmente para resolver este tipo de problemas son las metaheurísticas: una familia de algoritmos de carácter genérico empleados como \textit{framework} para resolver un problema dado enfocandolo como un problema de optimización. Tienen dos características principales~\cite{sota:metaheuristicas}:
+Por último, la técnica más empleada actualmente para resolver este tipo de problemas son las metaheurísticas: una familia de algoritmos de carácter genérico empleados como \textit{framework} para resolver un problema dado enfocándolo como un problema de optimización. Tienen dos características principales~\cite{sota:metaheuristicas}:
 
 \begin{enumerate}
     \item En contraposición a los heurísticos, no dependen directamente del problema específico, únicamente han de ser adaptados parcialmente.
@@ -26,9 +26,9 @@ Tienen dos conceptos básicos que conforman la clave para su implementación par
 La codificación permite representar una solución de la forma más compacta posible sin perder información del dominio. Una buena codificación tendrá las siguientes características~\cite{sota:metaheuristicas-design-impl}:
 
 \begin{itemize}
-    \item Completitud: Todas las soluciones asociadas con el problema deben poder ser representadas. Se debe garantizar una representatividad total dentro del espacio de soluciones. Si no es definida correctamente podría haber soluciones incapaces de ser representadas y lógicamente afectará a la eficiencia de la metaheurística.
-    \item Conectividad: Debe existir un camino que permita moverse entre dos soluciones del espacio de búsqueda, de forma que cualquier solución del espacio pueda ser alcanzada (en especial el óptimo global).
-    \item Eficiencia: Fácil de manipular por los operadores de la búsqueda (definidos por cada metaheurística).
+    \item \textit{Completitud}: Todas las soluciones asociadas con el problema deben poder ser representadas. Se debe garantizar una representatividad total dentro del espacio de soluciones. Si no es definida correctamente podría haber soluciones incapaces de ser representadas y lógicamente afectará a la eficiencia de la metaheurística.
+    \item \textit{Conectividad}: Debe existir un camino que permita moverse entre dos soluciones del espacio de búsqueda, de forma que cualquier solución del espacio pueda ser alcanzada (en especial el óptimo global).
+    \item \textit{Eficiencia}: Fácil de manipular por los operadores de la búsqueda (definidos por cada metaheurística).
 \end{itemize}
 
 Por su parte, la función objetivo o de evaluación (en inglés denominada \textit{fitness}) permite la comparación de soluciones entre sí y representará el objetivo de la búsqueda, de forma que si nos enfrentamos a un problema con varios parámetros objetivo, podamos ponderarlos u ordenarlos según los criterios que se adecúen al problema. Existen varios enfoques para definir una función de evaluación de un problema multiobjetivo: enfoques escalares, basados en criterios, basados en dominaciones (óptimos de Pareto) entre las soluciones o basados en indicadores de calidad. Los más sencillos son los primeros, pues permiten trasformar el problema multiobjetivo en uniobjetivo y al ser el empleado en este TFM será descrito con mayor detenimiento en el \autoref{apartado:adaptacion-fitness}
@@ -77,7 +77,7 @@ Un ejemplo sencillo de entorno podría ser en el caso de una optimización de un
     \label{fig:ejemplos-entorno}
 \end{figure}
 
-Como podemos observar, los entornos se definen con respecto a una solución, denotada por $x$. En el ejemplo, los entornos se han definido de forma que el conjunto de soluciones alcanzables mediante el segundo sea un superconjunto de aquel empleando el primero, ampliando de esta forma las fronteras de la búsqueda (no es necesario definirlos así pero suele ser una práctica habitual). Si lanzamos una búsqueda local sobre la función del ejemplo empleando el entorno $k_1$, el punto más optimo que podemos alcanzar en caso de maximización es el punto $A$, mientras que si empleamos el $k_2$ será el $B$. El punto $C$ es el óptimo global de la función, que no es alcanzado por ninguno de los entornos definidos, aunque $k_2$ se aproxima bastante.
+Como podemos observar, los entornos se definen con respecto a una solución, denotada por $x$. En el ejemplo, los entornos se han definido de forma que el conjunto de soluciones alcanzables mediante el segundo sea un superconjunto de aquel empleando el primero, ampliando de esta forma las fronteras de la búsqueda (no es necesario definirlos así, pero suele ser una práctica habitual). Si lanzamos una búsqueda local sobre la función del ejemplo empleando el entorno $k_1$, el punto más óptimo que podemos alcanzar en caso de maximización es el punto $A$, mientras que si empleamos el $k_2$ será el $B$. El punto $C$ es el óptimo global de la función, que no es alcanzado por ninguno de los entornos definidos, aunque $k_2$ se aproxima bastante.
 
 %No necesariamente un entorno amplio, i.e.\ con mayor conjunto de soluciones factibles, es mejor que uno más reducido, pues el espacio de búsqueda es mayor y esto repercutirá decisivamente en el rendimiento del algoritmo de búsqueda. Además, en problemas más complejos con un mayor número de variables, el espacio de búsqueda es mucho más complejo y difícil de explorar. Es por ello que lo más conveniente es emplear las vecindades más sencillas y pequeñas al principio de forma que solo se pasa a los más grandes y costosos en caso de que los anteriores no resultes fructíferos. % TRASLADADO UNOS PARRAFOS MAS ABAJO
 
@@ -109,7 +109,7 @@ Como se puede observar, se llevan a cabo acciones diferentes en función de si l
 \end{figure}
 
 \begin{algorithm}[htbp]
-    \caption{Algoritmo del VNS empleado para el cambio de vecindades en caso de un problema de maximización}
+    \caption{Algoritmo del cambio de vecindades empleado por el VNS en el caso de un problema de maximización}
     \label{algoritmo:VNS-cambio-entornos}
 
     \DontPrintSemicolon
@@ -188,7 +188,7 @@ Los Algoritmos~\ref{algoritmo:BestImprovement} y~\ref{algoritmo:FirstImprovement
 
 \end{algorithm}
 
-Por otro lado, la componente estocástica introduce en la búsqueda una solución generada de forma aleatoria, de manera que se introduce nueva información en el proceso de búsqueda que puede mejorar el valor de fitness empleando, por ejemplo, fragmentos de aleatoria que de forma determinista nunca podrían haberse logrado o como mínimo habría sido necesario un mayor tiempo de cómputo. 
+Por otro lado, la componente estocástica introduce en la búsqueda una solución generada de forma aleatoria, de manera que se introduce nueva información en el proceso de búsqueda que puede mejorar el valor de fitness empleando, por ejemplo, fragmentos de solución aleatorios que de forma determinista nunca podrían haberse logrado o como mínimo habría sido necesario un mayor tiempo de cómputo.
 
 En el \autoref{algoritmo:Basic-VNS} se muestra el proceso esquemáticamente para el VNS Básico. Nótese que la condición de parada es únicamente el tiempo de cómputo, no obstante, se suele combinar con un porcentaje mínimo de mejora de forma que si la búsqueda se estanca, no se pierda tiempo de cómputo innecesariamente. Las condiciones de parada del algoritmo se encuentran descritas en profundidad en la \autoref{apartado:condiciones-parada}.
 
@@ -294,7 +294,7 @@ La primera característica necesaria para las metaheurísticas ---y cualquier t�
 
 \paragraph{Función Fitness} \label{apartado:adaptacion-fitness}
 
-La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor. Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de contar con un único objetivo, estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, algunos quizás contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de identificar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. 
+La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor. Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de contar con un único objetivo, estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, normalmente contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de identificar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. 
 
 Otra opción para resolver esta situación consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus preferencias. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción.
 
@@ -310,10 +310,10 @@ Nosotros hemos optado por el primero de todos, pues es el más sencillo y nos pe
 \end{figure}
 %
 \[
-    f(x) = \sum_{i=1}^{n} \lambda_i \cdot f_i(x) = \lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) + \dots
+    f(x) = \sum_{i=1}^{N} \lambda_i \cdot f_i(x) = \lambda_1 f_1(x) + \lambda_2 f_2(x) + \dots + \lambda_n f_n(x) + \dots
 \]
 
-donde $f_i(x)$ es la $i$-ésima función objetivo y $\lambda$ un escalar entre 0 y 1 de manera que~$\sum_{i=1}^n \lambda_i = 1$.
+donde $f_i(x)$ es la $i$-ésima función objetivo y $\lambda_i$ un escalar entre 0 y 1 de manera que~$\sum_{i=1}^n \lambda_i = 1$.
 
 Cada función objetivo tiene asociado un escalar que pondera la relevancia de la misma, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En este caso, CRIDA aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
 
@@ -344,7 +344,7 @@ El método ROC utiliza la siguiente fórmula para la ponderación de cada objeti
 \]
 
 \begin{minipage}{\textwidth}
-    de forma que calculamos todos los pesos $\lambda_i$ con $N=4$. Como podemos ver, suman $1$:
+    Por lo tanto, calculamos todos los pesos $\lambda_i$ con $N=4$. Como podemos ver, suman $1$:
     \begin{flalign*}
         & \lambda_1 =  \sfrac{1}{4} \sum_{j=1}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{1}+\frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.52 \\
         &\lambda_2 =  \sfrac{1}{4} \sum_{j=2}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{2}+\frac{1}{3}+\frac{1}{4} \right) = 0.27 \\
@@ -352,22 +352,22 @@ El método ROC utiliza la siguiente fórmula para la ponderación de cada objeti
         &\lambda_4 =  \sfrac{1}{4} \sum_{j=4}^4 \frac{1}{j} = \frac{1}{4} \left( \frac{1}{4} \right) = 0.06
     \end{flalign*}
 \end{minipage}
-Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del del sistema \legacy{} (objetivos~\ref{O1},~\ref{O2} y~\ref{O3}). Esto es así debido a que, tal y como se detalló en la \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multiobjetivo que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. 
+Tres de las definiciones de las funciones objetivo han sido reutilizadas de diferentes partes del sistema \legacy{} (objetivos~\ref{O1},~\ref{O2} y~\ref{O3}). Esto es así debido a que, tal y como se detalló en la \autoref{capitulo:2:detalles-sistema}, el sistema \legacy{} también realizaba una optimización multiobjetivo que, debido a la ausencia de urgencia temporal de ejecución, el número de funciones objetivo era considerablemente mayor. 
 
 En nuestro caso se han tomado aquellos objetivos decisivos para el sistema, aunando objetivos de diferentes fases de la metodología propuesta en el sistema \legacy{}. Véase~\cite{articulo1} para una mayor descripción tanto de la metodología \legacy{} como todas las funciones objetivo planteadas entonces, especialmente la normalización de las mismas, que se ha optado por no incluir aquí.
 
 Adicionalmente, se ha creado un nuevo objetivo,~\ref{O4}, nacido de las nuevas características del presente sistema: el momento del cambio.
 
 
-La función objetivo final, empleando el método de escalarización ponderada tiene esta forma:
+La función objetivo final, empleando el método de ponderación tiene esta forma:
 \[
     f(x)=
     %	\left\{
     \begin{cases}
-        \lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x) & \quad \textrm{si } \, nATC > nATCdisp  \\
+        \lambda_1 f_1(x) + \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x)\,, & \quad \textrm{si } \, nATC > nATCdisp  \\
         \\
         %		                                                                          &    &                   \\
-        \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x)                    & \quad \textrm{si } \,  nATC \le nATCdisp
+        \lambda_2 f_2(x) + \lambda_3 f_3(x) + \lambda_4 f_4(x)\,,                    & \quad \textrm{si } \,  nATC \le nATCdisp
     \end{cases}
     %   \right.
 \]
@@ -383,7 +383,7 @@ Para poder emplear este modelo de escalarización aditivo todas las funciones ob
 A continuación, describiremos brevemente cada una de estas funciones. Más detalles respecto tanto de la definición como de la normalización de cada una de las reutilizadas del sistema \legacy{} está disponible en~\cite{articulo2}.
 
 La primera función objetivo~\ref{O1} tiene la siguiente fórmula:
-\[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^c i\cdot h_i \,, \]
+\[ f_1 = \frac{1}{nATC^2} \sum_{i=1}^{nATC} i\cdot h_i \,, \]
 donde $nATC$ es el número de controladores aéreos empleados en la solución actual ($x$) y $h_i$ es el número de slots en los que el $i$-ésimo controlador está trabajando. 
 
 La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{sec:3:representacion-soluciones}).
@@ -398,15 +398,15 @@ En caso de que el trabajador tenga slots fuera de turno (véase la \autoref{sec:
 
 En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo. (véase \ldots) % TODO referenciaaaaaaaaaaaaaaaaaaaaa!
 
-La tercera función objetivo~\ref{O3}, implementada por vez primera para este sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, más eficiente y rápido podrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
+La tercera función objetivo~\ref{O3}, implementada por vez primera para este sistema, trata de minimizar el número de cambios en sala al momento de producirse la incidencia. Esto es debido a que cuanto menos se muevan los trabajadores de su puesto, más eficiente y rápida podrá realizarse la transición desde la planificación previa (la parte inamovible de la planificación, a la izquierda del momento del cambio) y la nueva (la creada por el sistema, a partir del momento del cambio).
 
 Para contar el número de cambios simplemente tendremos que recorrer la matriz por la columna del momento del cambio, el índice $slot_{actual}$ y compararla con la columna anterior $slot_{actual}-1$, matemáticamente lo podríamos expresar como:
 %
 \[
     f_3(x) = \frac{1}{nATC} \sum_{i=1}^{nATC}
     \begin{cases}
-        1 & \quad \textrm{si } x_i^{slot_{cambio}} = x_i^{slot_{cambio}-1} \\
-        0 & \quad \textrm{en otro caso }
+        1\,, & \quad \textrm{si } x_i^{slot_{cambio}} = x_i^{slot_{cambio}-1} \\
+        0\,, & \quad \textrm{en otro caso }
     \end{cases}
     \,,
 \]
@@ -430,16 +430,16 @@ La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planific
 \[
     f_4(x) = \sum_{i=1}^{nATC} \sum_{i=1}^{nSlots}
     \begin{cases}
-        1 & \; \textrm{si } \; x_i^j = x_{i+1}^{j} \\
+        1\,, & \; \textrm{si } \; x_i^j = x_{i+1}^{j} \\
         \\
-        1 & \; \textrm{si } \; x_i^j = x_{i}^{j+1}   \\
+        1\,, & \; \textrm{si } \; x_i^j = x_{i}^{j+1}   \\
         \\
-        0 & \; \textrm{en otro caso }
+        0\,, & \; \textrm{en otro caso }
     \end{cases}
     \,,
 \]
 
-con $nSlots$ en número de slots de la instancia concreta del problema. 
+con $nSlots$ el número de slots de la instancia concreta del problema. 
 
 Cabe destacar que, en caso de alcanzar slots
 donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces dicho caso será ignorado.
@@ -774,7 +774,7 @@ La metaheurística VNS es considerablemente explotativa, pero permite dar juego 
 \begin{enumerate}[label=\alph*.]
     \item Tipo de VNS: VND, BVNS, RVNS\ldots
     \item Orden de los entornos: hacia adelante, hacia atrás, etc.
-    \item Naturaleza de selección de los entornos: determinista, probabilista
+    \item Naturaleza de selección de los entornos: determinista, probabilístico
 \end{enumerate}
 
 Vamos a analizarlos por separado en los siguientes párrafos.
@@ -799,9 +799,9 @@ En segundo lugar, el \textbf{orden de los entornos} puede ser muy relevante a la
 
 \NEW{Se ha considerado los entornos \hyperref[entorno:movMaxCarga]{\textit{movMaxCarga}} y \hyperref[entorno:movLibre]{\textit{movLibre}} como más exploratorios, pues permiten moverse hacia soluciones más lejanas en el primero, y más difíciles de alcanzar por los demás en el caso del segundo. Por otro lado, el entorno \hyperref[entorno:movRejilla]{\textit{movRejilla}} se considera más intensificador, pues está condicionado a cambios muy concretos y limitados de la solución.}
 
-Esta clasificación es importante para la tercera y última técnica para ajustar la diversificación/intensificación del sistema: la \textbf{naturaleza de la selección de los entornos}. En esta tesis se han probado dos enfoques, el clásico determinista, y uno probabilista.
+Esta clasificación es importante para la tercera y última técnica para ajustar la diversificación/intensificación del sistema: la \textbf{naturaleza de la selección de los entornos}. En esta tesis se han probado dos enfoques, el clásico determinista, y uno probabilístico.
 
-El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilista permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. La \autoref{fig:diagrama-flujo-naturaleza-entornos} representa en formato de diagrama de flujo estos procesos. Como se puede apreciar, en el caso de entornos deterministas únicamente se modifica el entorno en orden, mientras que el probabilista precisa de varios procesos.
+El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilístico permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. La \autoref{fig:diagrama-flujo-naturaleza-entornos} representa en formato de diagrama de flujo estos procesos. Como se puede apreciar, en el caso de entornos deterministas únicamente se modifica el entorno en orden, mientras que el probabilístico precisa de varios procesos.
 
 \begin{figure}
     \centering    \includegraphics[width=\linewidth]{diagrama-flujo-naturaleza-entornos-bold}
@@ -853,8 +853,8 @@ Hemos planteado dos opciones. La distancia basada en la diferencia de sus respec
 \[
 d_2(x,x')=\sum_{i=1}^{nATC} \sum_{j=1}^{nSlots}
 \begin{cases}
-    1 & \quad \textrm{si } x_i^j = {x'}_i^j \\
-    0 & \quad \textrm{en otro caso }
+    1\,, & \quad \textrm{si } x_i^j = {x'}_i^j \\
+    0\,, & \quad \textrm{en otro caso }
 \end{cases}
 \]
 
@@ -863,7 +863,7 @@ d_2(x,x')=\sum_{i=1}^{nATC} \sum_{j=1}^{nSlots}
 con la peculiaridad de que en caso de que la solución no esté ordenada, se deberán de tomar los mismos controladores en cada comparación, es decir, que el lugar de comparar mediante índice se compara mediante identificador.
 
 Para normalizar esta función (la primera ya está entre 0 y 1) se ha medido empíricamente el valor máximo posible de la función
-y se ha utilizado la siguiente formula:
+y se ha utilizado la siguiente fórmula:
 \[
     X' = \frac{X-X_{min}}{X_{max}-X_{min}} \,.
 \]
