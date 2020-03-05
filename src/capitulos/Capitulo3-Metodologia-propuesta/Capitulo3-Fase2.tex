@@ -227,9 +227,15 @@ En el \autoref{algoritmo:Basic-VNS} se muestra el proceso esquemáticamente para
 	
 \end{algorithm}
 
-Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Éste último es el menos costoso computacionalmente, sin embargo, es el que emplea menos información del problema, y su rendimiento suele ser peor que los demás.
+\NEW{El VNS en su versión básica fue propuesto en 1997 por Hansen y Mladenovi\'{c} en~\cite{vns1997}. Sin embargo, dado que cada problema es diferente y se adapta mejor a un método u otro, con el tiempo los propios autores han definido algunas variaciones, propuestas en~\cite{vns1999,vns2003}, y que serán descritas a continuación.}
+
+%Por supuesto, cada problema es diferente y se adapta mejor a un método u otro y es por eso que con el tiempo se han definido algunas variaciones de VNS básico y que reciben nombres diferentes. El VNS en su versión básica fue propuesto en 1997 por Hansen y Mladenovi en~\cite{vns1997}, y fue ampliado con las variaciones indicadas en~\cite{vns1999,vns2003}
+%
+La forma más sencilla de variar el método es suprimir una de las dos componentes: si sustituimos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Éste último es el menos costoso computacionalmente, sin embargo, es el que emplea menos información del problema, y su rendimiento suele ser peor que los demás.
 
 Otra posible variación respecto a la versión básica se basa en emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descent) en lugar de una búsqueda local simple para, estaremos empleando un \textit{General VNS}.
+
+
 
 Por último, existen otras variaciones que rompen con la estructura básica del VNS, pero que se ha visto que dan buenos resultados para ciertos problemas, mejorando las variaciones anteriores. Entre ellas, el \textit{Skewed VNS} (SVNS) definido en~\cite{svns-def} cuya idea se basa en explorar óptimos locales lejanos a óptimo actual, potenciando la exploración sobre la explotación intrínseca al propio VNS por definición. Así, podrá moverse entre soluciones peores con el fin de encontrar información reutilizable en la solución. Sin embargo, la exploración debe realizarse demasiado lejos de la solución actual, pues podría degenerar en una búsqueda de inicio múltiple (\textit{multistart}), donde se hacen búsquedas repetidamente empleando como solución de inicio una generada aleatoriamente, y esto se sabe que es ineficiente para este tipo de problemas~\cite{vns}). Para evitar esto, se define una función de distancia de forma que si la solución peor a explorar está demasiado lejos de la actual, se descarte.
 
@@ -294,7 +300,7 @@ La primera característica necesaria para las metaheurísticas ---y cualquier t�
 
 \paragraph{Función Fitness} \label{apartado:adaptacion-fitness}
 
-La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor. Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de contar con un único objetivo, estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, normalmente contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de identificar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso) de esta forma se resuelven los conflictos entre objetivos. 
+La función fitness tiene por objeto la evaluación de una solución de manera que se puedan comparar entre sí dos o más soluciones del problema y poder decidir cuál es la mejor. Para poder definir una función de evaluación hacen falta uno o más \textit{objetivos} o \textit{criterios}. En caso de contar con un único objetivo, estaremos ante una búsqueda \textit{uniobjetivo}, mientras que si hay varios, sería \textit{multiobjetivo} o \textit{multicriterio}. En los problemas reales es habitual encontrarse con más de un criterio, normalmente contradictorios entre sí, por lo que aparece la figura del \textit{decisor}, que suele ser el cliente o el principal stakeholder del proyecto, y es el encargado de identificar aquellos objetivos que considere más relevantes (e incluso ponderarlos si es preciso), dando más peso dentro de la función a ciertos objetivos.
 
 Otra opción para resolver esta situación consiste en presentar al decisor un conjunto de soluciones y que este elija la que más le convenga en función de sus preferencias. En nuestro caso, si bien podríamos haber optado por cualquiera de las dos decisiones, por razones históricas, se empleó la primera opción.
 
@@ -305,7 +311,7 @@ Nosotros hemos optado por el primero de todos, pues es el más sencillo y nos pe
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{enfoques-resolucion-fitness-optimizacion-multiobj}
-    \caption[Esquema de los posibles enfoques para la resolución del problema del fitness en optimización multiobjetivo]{Esquema de los posibles enfoques para la resolución del problema del fitness en optimización multiobjetivo. Obtenido de~\cite{sota:metaheuristicas-design-impl}}
+    \caption[Esquema de los posibles enfoques para la definición de la función fitness para casos de optimización multiobjetivo]{Esquema de los posibles enfoques para la definición de la función fitness para casos de optimización multiobjetivo. Obtenido de~\cite{sota:metaheuristicas-design-impl}}
     \label{fig:enfoques-fitness-multiobj}
 \end{figure}
 %
@@ -315,7 +321,9 @@ Nosotros hemos optado por el primero de todos, pues es el más sencillo y nos pe
 
 donde $f_i(x)$ es la $i$-ésima función objetivo y $\lambda_i$ un escalar entre 0 y 1 de manera que~$\sum_{i=1}^n \lambda_i = 1$.
 
-Cada función objetivo tiene asociado un escalar que pondera la relevancia de la misma, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En este caso, CRIDA aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor. Los objetivos, ordenados del más prioritario al menos prioritario son:
+Cada función objetivo tiene asociado un escalar que pondera la relevancia de la misma, de manera que nuestro decisor, los responsables del proyecto por parte de \gls{CRIDA}, deberá ponderar los objetivos según sus criterios. En este caso, CRIDA aún no ha ponderado los objetivos, pero sí nos ha proporcionado una lista de los mismos ordenada por importancia, de forma que podemos utilizar diferentes valores para los pesos (escalares) siempre y cuando respetemos el orden de relevancia del decisor.
+
+Los objetivos, ordenados del más prioritario al menos prioritario son:
 
 \begin{enumerate}[label={O\arabic*}]
     \item \label{O1} Reducir el número de controladores: Si añadimos nuevos controladores imaginarios, debemos eliminarlos de forma que conservemos el número inicial y, si es posible, reducir el número inicial de los mismos.
@@ -327,16 +335,22 @@ Cada función objetivo tiene asociado un escalar que pondera la relevancia de la
     \item \label{O4} Cuanto más se parezca una solución del sistema a una plantilla mejor, pues los empleados están acostumbrados a manejar este tipo de planificaciones ya que resultan más intuitivas.
 \end{enumerate}
 
-\begin{minipage}{\textwidth}
-    Cuatro objetivos que podemos ponderar de diferentes formas, entre los que encontramos:
+%\begin{minipage}{\textwidth}
+%
+	Cuatro objetivos que podemos ponderar de diferentes formas. En este caso, en lugar de ponderarlos con valores aleatorios, se decidió tomar una técnica del estado del arte para la ponderación de objetivos en caso de que el decisor aporte información que permite su ordenación según importancia. Entre las posibles opciones encontramos:
+    
     \begin{enumerate}[label=\alph*)]
-        \item mismos pesos para todos los objetivos
-        \item pesos del método Rank-Sum (RS)
-        \item pesos del método \textit{Rank Order-Centroid} (ROC)
+        \item mismos pesos para todos los objetivos, \textit{Equal Weights} (EW)~\cite{ew-paper}
+        \item pesos del método Rank-Sum (RS)~\cite{rs-rr-paper}
+        \item pesos del método Rank-Reciprocal (RR)~\cite{rs-rr-paper}
+        \item pesos del método \textit{Rank Order-Centroid} (ROC)~\cite{roc-paper}
     \end{enumerate}
-\end{minipage}
+%
+%\end{minipage}
 
-La técnica que mejores resultados ofrece es el método ROC. Una definición precisa y un estudio comparativo de estas técnicas de ponderación de objetivos en problemas de decisión multiobjetivo entre otras no nombradas, puede encontrarse en~\cite{ROC-comparativas-tecnicas}. \NOTE{ PENDIENTE DE RESPUESTA: ¿POR QUÉ ROC y no RS si RS es más robusto? } % TODO NOTE;
+\NEW{El primero, \textit{Equal Weights}, se emplea en casos donde el decisor no aporte información de preferencia de objetivos. Los demás toman ese orden y nos permiten calcular el valor de cada peso mediante una fórmula diferentes para cada uno.} 
+
+\NEW{Una definición precisa y un estudio comparativo de estas técnicas de ponderación de objetivos en problemas de decisión multiobjetivo entre otras no nombradas, puede encontrarse en~\cite{ROC-comparativas-tecnicas,ROC-comparativas-tecnicas-upm}, donde podemos observar que una de las técnica que mejores resultados ofrece es el método ROC, por lo que será la que utilicemos.}
 
 El método ROC utiliza la siguiente fórmula para la ponderación de cada objetivo $\lambda_i$ ordenados del más importante al menos importante:
 \[
@@ -388,9 +402,16 @@ donde $nATC$ es el número de controladores aéreos empleados en la solución ac
 
 La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{sec:3:representacion-soluciones}).
 
-Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de mayor carga a menos carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma, la carga de los controladores de la solución tendrá forma piramidal.
+Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de mayor carga a menos carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma, la carga de los controladores de la solución tendrá forma piramidal (véase la \autoref{fig:3:estructura-piramidal}).
 
-Una vez alcanzado el valor 1 de este primer objetivo, la ordenación deja de ser necesaria y nos podemos ahorrar ese tiempo de cómputo bastante significativo, pues todo método de ordenación es bastante costoso, del orden de $O(n^2)$. \NOTE{PONER UN ESQUEMA DE LA ESTRUCTURA PIRAMIDAL??} % TODO: Sí. Ponerlo
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{capitulos/Capitulo3-Metodologia-propuesta/recursos/estructura-piramidal}
+	\caption{Esquema de la estructura piramidal de las soluciones}
+	\label{fig:3:estructura-piramidal}
+\end{figure}
+
+Una vez alcanzado el valor 1 de este primer objetivo, la ordenación deja de ser necesaria y nos podemos ahorrar ese tiempo de cómputo bastante significativo, pues todo método de ordenación es bastante costoso, del orden de $O(n^2)$.
 
 La segunda función objetivo~\ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en la \autoref{sec:4:RD}---, favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado).
 
@@ -556,8 +577,8 @@ Por otro lado, para el sistema \legacy{} también se desarrolló un VNS previame
 
 Lozano en su TFM~\cite{tesis-pablo} emplea 4 tipos de entornos cuyas diferencias residen en las restricciones de entorno de cada una: para poder realizar el cambio o bien es necesario que el primero trabaje y en segundo descanse o bien que ambos trabajen; y otros dos equivalentes pero con la restricción adicional de que el trabajo del segundo controlador sea en el mismo sector que el primero previamente, de forma que se continúe el trabajo.
 
-
 Para este TFM se han empleado ideas de todos ellos y se han definido tres tipos de entornos, cada uno con un principio diferente:
+
 \begin{itemize}
     \item \textbf{Movimientos de máxima carga} \textit{(movMaxCarga)}: se basan en el traspaso de la mayor carga posible de trabajo entre los controladores.
 
@@ -577,14 +598,17 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 
 \textbf{Comportamiento:} Se intenta pasar toda la máxima carga posible de trabajo de $c_1$ a $c_2$
 
-\textbf{Algoritmo:}
-\RestyleAlgo{plain}
+%\textbf{Algoritmo:}
+\RestyleAlgo{ruled}
 \SetAlgoNoLine
 \LinesNumbered
 \SetAlgoNoEnd
 \DontPrintSemicolon
 \begin{algorithm}[h]
     \label{algoritmo:movMaxCarga}
+    
+   	\caption{Movimiento de máxima carga}
+    	
     \SetAlgoNoEnd
     Se elige arbitrariamente un controlador $c_1$ (en caso de existir algún imaginario, en lugar de arbitrariamente, se toma en orden partiendo \newline del primer imaginario) \label{line:maxcarga:paso1}\;
     \algovspace
@@ -644,14 +668,17 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 
 \textbf{Comportamiento:} El cambio de carga de trabajo se realiza únicamente entre intervalos limitados por las rejillas. La estructura de las rejillas puede cambiar en cada iteración debido a los demás movimientos, por lo que se debe ejecutar la fragmentación del controlador en las rejillas en cada ejecución del movimiento.
 
-\textbf{Algoritmo:}
-\RestyleAlgo{plain}
-\SetAlgoNoLine
-\LinesNumbered
-\SetAlgoNoEnd
-\DontPrintSemicolon
+%\textbf{Algoritmo:}
+%\RestyleAlgo{plain}
+%\SetAlgoNoLine
+%\LinesNumbered
+%\SetAlgoNoEnd
+%\DontPrintSemicolon
 \begin{algorithm}[h]
-    \label{algoritmo:movRejilla}
+	
+	\caption{Movimiento en rejilla}
+
+	\label{algoritmo:movRejilla}
     \SetAlgoNoEnd
     Se elige arbitrariamente un controlador $c_1$ (en caso de existir algún imaginario, en lugar de arbitrariamente, se toma en orden partiendo \newline del primer imaginario) \label{line:rejilla:paso1}\;
     \algovspace
@@ -712,15 +739,18 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 \textbf{Comportamiento:} Prueba tamaños de mayor a menor hasta que se pueda hacer el cambio
 
 Para el caso de \textit{movLibre} no se han definido restricciones de dominio.
-\newpage
-\textbf{Algoritmo:}
-\RestyleAlgo{plain}
-\SetAlgoNoLine
-\LinesNumbered
-\SetAlgoNoEnd
-\DontPrintSemicolon
+
+%\textbf{Algoritmo:}
+%\RestyleAlgo{plain}
+%\SetAlgoNoLine
+%\LinesNumbered
+%\SetAlgoNoEnd
+%\DontPrintSemicolon
 \begin{algorithm}[h]
     \label{algoritmo:movLibre}
+    
+   	\caption{Movimiento libre}
+    	
     \SetAlgoNoEnd
     Elegir aleatoriamente un controlador $c_1$  \label{line:libre:paso1}\;
     \algovspace
@@ -797,11 +827,11 @@ Por último, el SVNS tiene por fundamento elegir soluciones peores para mejorar 
 En segundo lugar, el \textbf{orden de los entornos} puede ser muy relevante a la hora de explorar y explotar el espacio de búsqueda, puesto que si en primer lugar la búsqueda opta por entornos más intensificadores, entonces esta dará preferencia a explotar la solución hasta que no sea posible mejorarla aún más, en cuyo caso, empleará el resto de entornos menos intensificadores y más exploratorios. Por ello tendremos que clasificar los entornos definidos anteriormente (véase la \autoref{paragraph:entornos}) en función de la característica que potencian más.
 %La lista de entornos se puede recorrer de varias formas, hacia adelante ($1,\dots,k_{max}$), hacia adelante ($k_{max},\dots,1$) o con un salto, pero sin más
 
-\NEW{Se ha considerado los entornos \hyperref[entorno:movMaxCarga]{\textit{movMaxCarga}} y \hyperref[entorno:movLibre]{\textit{movLibre}} como más exploratorios, pues permiten moverse hacia soluciones más lejanas en el primero, y más difíciles de alcanzar por los demás en el caso del segundo. Por otro lado, el entorno \hyperref[entorno:movRejilla]{\textit{movRejilla}} se considera más intensificador, pues está condicionado a cambios muy concretos y limitados de la solución.}
+Se ha considerado los entornos \hyperref[entorno:movMaxCarga]{\textit{movMaxCarga}} y \hyperref[entorno:movLibre]{\textit{movLibre}} como más exploratorios, pues permiten moverse hacia soluciones más lejanas en el primero, y más difíciles de alcanzar por los demás en el caso del segundo. Por otro lado, el entorno \hyperref[entorno:movRejilla]{\textit{movRejilla}} se considera más intensificador, pues está condicionado a cambios muy concretos y limitados de la solución.
 
 Esta clasificación es importante para la tercera y última técnica para ajustar la diversificación/intensificación del sistema: la \textbf{naturaleza de la selección de los entornos}. En esta tesis se han probado dos enfoques, el clásico determinista, y uno probabilístico.
 
-El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilístico permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. La \autoref{fig:diagrama-flujo-naturaleza-entornos} representa en formato de diagrama de flujo estos procesos. Como se puede apreciar, en el caso de entornos deterministas únicamente se modifica el entorno en orden, mientras que el probabilístico precisa de varios procesos.
+El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, mientras que el enfoque probabilístico permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. La \autoref{fig:diagrama-flujo-naturaleza-entornos} representa  estos procesos en formato de diagrama de flujo. Como se puede apreciar, en el caso de entornos deterministas únicamente se modifica el entorno en orden, mientras que el probabilístico precisa de varios procesos.
 
 \begin{figure}
     \centering    \includegraphics[width=\linewidth]{diagrama-flujo-naturaleza-entornos-bold}
