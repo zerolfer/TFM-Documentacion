@@ -118,7 +118,7 @@
 
 %\renewcommand{\cftsectnumwidth}{6em}
 
-\usepackage[page]{appendix}
+\usepackage[page,title,titletoc]{appendix}
 \usepackage{pdfpages}
 
 
@@ -187,7 +187,8 @@
 	\def\btxmastthesis#1{\protect\foreignlanguage{spanish}{Trabajo de Fin de Máster}}%
 %	\def\btxmastthesis##1{\protect\foreignlanguage{#1}{Trabajo de Fin de Máster}}%
 %	861 \def\btxmastthesis##1{\protect\foreignlanguage{#1}{Master’s thesis}}%
-}
+}
+
 
 \captionsetup{labelfont=bf}
 \captionsetup[subfigure]{labelfont=bf}
@@ -204,8 +205,8 @@
 %    \renewcommand{\figureshortname}{Figura}
 %    \renewcommand{\tableshortname}{Tabla}
 
-	\renewcommand{\appendixname}{Anexo}
-	\renewcommand\appendixpagename{Anexos}
+	\renewcommand\appendixname{Anexo}
+	\renewcommand\appendixpagename{Anexo}
    	\renewcommand\appendixtocname{Anexos}
    	
     %\maketitle
@@ -338,11 +339,11 @@
 %	\appendix
 	\graphicspath{{anexos/recursos/}}
 	
-%    \include{anexos/AneB-Diagrama-Clases-Completo}
-%	\newpagexoA-Formato-Planificacion-Inicial}
-%	\newpage
+    \include{anexos/AnexoA-Formato-Planificacion-Inicial}
+	\newpage
 
-% 	\include{anexos/Anexo
+ 	\include{anexos/AnexoB-Diagrama-Clases-Completo}
+	\newpage
 
 	\end{appendices}
 
