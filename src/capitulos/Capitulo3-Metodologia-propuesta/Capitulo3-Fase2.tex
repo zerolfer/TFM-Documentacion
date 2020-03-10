@@ -402,7 +402,7 @@ donde $nATC$ es el número de controladores aéreos empleados en la solución ac
 
 La componente $\sfrac{1}{nATC^2}$ garantiza al algoritmo que siempre merezca la pena eliminar un controlador. El resto de la expresión orienta la metaheurística para que mueva carga de los controladores de la parte superior de la matriz hacia índices inferiores, acumulando carga hacia abajo permitiendo que los controladores superiores ---los imaginarios--- se queden sin carga y puedan ser eliminados (véase \autoref{sec:3:representacion-soluciones}).
 
-Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de mayor carga a menos carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma, la carga de los controladores de la solución tendrá forma piramidal (véase la \autoref{fig:3:estructura-piramidal}).
+Para favorecer el proceso de eliminación de controladores se realiza una ordenación de los controladores de menor carga a mayor carga pero manteniendo los controladores imaginarios en las primeras filas, puesto que su eliminación es más prioritaria que la de los demás. De esta forma, la carga de los controladores de la solución tendrá forma piramidal (véase la \autoref{fig:3:estructura-piramidal}).
 
 \begin{figure}
 	\centering
