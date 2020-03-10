@@ -43,7 +43,7 @@ El primer ciclo incluía el proceso de planificación y de análisis junto al es
 
 Los demás ciclos únicamente requerirán de las fases de diseño, implementación y pruebas. La meta para el segundo era la implementación de la \faseuno{} (diseño, implementación y pruebas). El tercer ciclo como meta fue la implementación de una primera versión funcional del sistema implementando únicamente el VND, definiendo previamente los diferentes entornos a emplear. Para el cuarto ciclo se debían implementar el resto de variaciones del VNS así como realizar un despliegue del sistema empaquetándolo y enviándolo en forma de entregable a los tutores (véase la \autoref{sec:4:despliegue}). El cuarto ciclo fue añadido posteriormente para subsanar errores e implementar los entornos probabilísticos que ya fueron descritos en la \autoref{capitulo:3:busqueda-divers-intens}. Finalmente se encuentra el ciclo de experimentación, donde comparamos los resultados y analizamos la eficiencia del sistema.
 
-En la \autoref{sec:4:implementacion} se describen las tecnologías software utilizadas. %TODO: hacerlo efectivamente
+En la \autoref{sec:4:implementacion} se describen las tecnologías software utilizadas.
 
 % TODO: ¿cronograma?
 
@@ -326,9 +326,9 @@ En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también la
 
 \subsubsection{Herramientas y tecnologías software utilizadas}
 
-Debido a la condicionante del sistema \legacy{}, la mayoría de las decisiones de la tecnología son heredadas. 
+Debido a la condicionante del sistema \legacy{}, la mayoría de las decisiones relativas a la tecnología a emplear son heredadas. 
 
-La más importante es el lenguaje de programación. Debido a la alta complejidad del sistema y a la eficiencia que éste requiere, el lenguaje de programación preferible hubiese sido C++, pues es orientado a objetos y altamente eficiente. Sin embargo, \legacy{} fue implementado en Java 8, y para poder realizar estudios comparativos de SA frente al VNS, se requiere que ambos estén implementados con la misma tecnología.
+La más importante es el lenguaje de programación. Debido a la alta complejidad del sistema y a la eficiencia que éste requiere, el lenguaje de programación preferible hubiese sido C++, pues es orientado a objetos y altamente eficiente. Sin embargo, el sistema \legacy{} fue implementado en Java 8, y para poder realizar estudios comparativos de SA frente al VNS, se requiere que ambos estén implementados con la misma tecnología.
 
 El resto de tecnologías que se decidieron utilizar son:
 
@@ -358,6 +358,7 @@ Los frameworks utilizados han sido:
 \label{sec:4:impl:random}
 
 Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se ve necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no se trata de uno de los mejores existentes, y debido a que se da uso un gran número de veces, se ha preferido emplear un generador cuyo periodo sea mayor. Se ha optado por emplear el llamado xoroshiro128+ (más información de en \url{http://prng.di.unimi.it/}) con un periodo de $2^{128}$ frente al de java, que es $2^{48}$.
+\NOTE{¿Hacer comparación entre generadores? ¿Cómo?}
 
 \subsubsection{Detalles del sistema}
 \label{sec:4:detalles-sistema}
@@ -378,11 +379,11 @@ Los entornos que tienen variantes los llamaremos compuestos, y son únicamente m
 
 En el diagrama de clases de la \autoref{sec:4:diseño} se ha llamado a las clases que implementan el modelo \ref{modelo-no-ordenado} como \texttt{CompuestoNoOrdenado}.
 
-Otros algoritmos tanto nuevos como ampliados se ha visto limitados por la implementación de \legacy{}, en especial la decisión tomada durante el desarrollo del mismo de emplear como representación de los turnos una cadena de texto (String) en lugar de la opción más sencilla de una tupla de elementos. Por ello, la manipulación de los turnos pierde legibilidad de código y gana dificultad de implementación, puesto que las cadenas de turnos son conjuntos sin separadores de 3 letras cada uno (recuérdese la decisión de representación de las soluciones, recopilado en la \autoref{sec:3:representacion-soluciones}) por lo que se deberán recorrer de 3 en 3.
+Otros algoritmos, tanto nuevos como ampliados, se ha visto limitados por la implementación de \legacy{}, en especial la decisión tomada durante el desarrollo del mismo de emplear como representación de las soluciones una lista dinámica de turnos, representados a su vez mediante una cadena de texto (String), cuando la opción más sencilla de representar los turnos es mediante una tupla de elementos. Por ello, la manipulación de los turnos pierde legibilidad de código y gana dificultad de implementación, puesto que las cadenas de turnos son grupos sin separadores de 3 letras cada uno (recuérdese la decisión de representación de las soluciones, recopilado en la \autoref{sec:3:representacion-soluciones}) por lo que se deberán recorrer de 3 en 3.
 
-Por otro lado el tratamiento de los Strings es bastante costoso computacionalmente, pues nos obliga a cortar el String y reconstruirlo cada vez que se tenga que modificar. Inicialmente se planteó la posibilidad de tratar de mejorar este aspecto sustituyendo la forma de representación de los turnos por tuplas, sin embargo, y debido a las decisiones de diseño tomadas durante el desarrollo de \legacy{}, implementar esta mejoría requiere de una gran cantidad de modificaciones y al no ser el aspecto fundamental de la tesis se optó por mantener el formato \legacy{}.
+Además, el tratamiento de los \textit{String}s es bastante costoso computacionalmente, pues nos obliga a cortar el String y reconstruirlo cada vez que se tenga que modificar. Inicialmente se planteó la posibilidad de tratar de mejorar la eficiencia para con este aspecto, sustituyendo la forma de representación de los turnos por tuplas, sin embargo, y debido a las decisiones de diseño tomadas durante el desarrollo de \legacy{}, implementar esta mejoría requiere de una gran cantidad de modificaciones y al no ser el aspecto fundamental de la tesis se optó por mantener el formato \legacy{}.
 
-Para el cálculo de probabilidades y simulación de sucesos se muestrea de una distribución aleatoria uniforme entre 0 y 1 $u ~ U[0,1]$ y si la probabilidad p es mayor ($p>u$) se interpreta como que el suceso ocurre, y en caso contrario como si no sucediera. 
+Para el cálculo de probabilidades y simulación de sucesos se muestrea de una distribución aleatoria uniforme entre 0 y 1 $u \sim U[0,1]$ y si la probabilidad p es mayor ($p>u$) se interpreta como que el suceso ocurre, y en caso contrario como si no sucediera. 
 La otra alternativa empleada es muestrear uniformemente un entero entre dos números límite. 
 Esto se emplea fundamentalmente para los entornos estocásticos y las estructuras de entorno (movimientos).
 
@@ -393,9 +394,13 @@ Por otro lado, poder tomar mediciones del rendimiento y desempeño del algoritmo
 
 Para mejorar la eficiencia general del sistema, tal y como se propuso en la hipótesis inicial \ref{H3}, se han realizado pequeñas modificaciones para que el sistema consuma menos tiempo en determinadas acciones y que lo pueda emplear en la búsqueda.
 
-Para ello se ha analizado complejidad del sistema en cuanto a tiempo de ejecución de las diferentes partes y se ha obtenido lo de la figura: \NOTE{poner la figura con la eficiencia del sistema por clases. NECESITO EL PC DEL DESPACHO PARA FINALIZAR ESTA SECCIÓN} % TODO!!!
+Para ello se ha analizado complejidad del sistema en cuanto a tiempo de ejecución de las diferentes partes y se ha obtenido lo de la figura: \NOTE{poner la figura con la eficiencia del sistema por clases. PENDIENTE DE USAR EL PC DEL DESPACHO PARA FINALIZAR ESTA SECCIÓN} % TODO!!!
 
-% TODO: . . . 
+La parte del sistema más costosa computacionalmente es el cómputo de la función fitness, una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. % TODO: GRAFICA DE COMPARACION DE EMPLEAR O NO RESTRICCIONES EN PARALELO
+
+Por otro lado, para mejorar la eficiencia de todo el sistema, la \faseuno{}, la \fasedos y de la lectura de datos; se han cambiado las estructuras que representan conjuntos de Objectos ---un conjunto de Sectores, por ejemplo --- pasando de ser representados mediante Listas (\textit{List}) a \textit{Set}s de Java en todos los casos posibles dentro del código \legacy{} reutilizado (en el caso del código nuevo implementado se utilizan también). Los \textit{Set}s tienen una complejidad tanto para insertar un elemento como para comprobar si ya lo contiene ---operaciones que se realizan un gran número de veces--- de $O(1)$ a diferencia de la lista, que es $O(n)$. Además, permite evitar de forma nativa la repetición de elementos, lo que ahorra comprobaciones que, empleando listas, sí eran necesarias.
+
+Para la representación de las Altas y Bajas se empleó un \textit{enumerado}, que emplea de forma interna un número entero para la representación, pues es más eficiente que emplear en su lugar una cadena de texto (\textit{String}) que es como se venía empleando en \legacy{} para, por ejemplo representar las acreditaciones.
 
 \subsection{Pruebas}
 \label{sec:4:tests}
@@ -404,8 +409,6 @@ La mayor parte de las pruebas realizadas al sistema fueron manuales, observando 
 
 Por otro lado, se llevaron a cabo test unitarios para testar la funcionalidad de métodos concretos, sobre todo debido a la dificultad de operar a nivel de carácter (explicado en la \autoref{sec:4:detalles-sistema}).
 Por ejemplo, el método \texttt{getIntervalos(turno:String)} que se encarga de cortar el String que representa el turno y seleccionar intervalos de trabajo continuado, retornando los índices de comienzo y fin del intervalo de trabajo continuado. Se ha probado con una cadena de caracteres que comienzan por descanso (``111''), que terminen por descanso, que el descanso esté en el medio y que no haya descanso.
-
-% TODO: ¿hay más? MIRAR EN EL PC DEL DESPACHO
 
 Respecto a test de integración o carga el sistema no requería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridas.
 
