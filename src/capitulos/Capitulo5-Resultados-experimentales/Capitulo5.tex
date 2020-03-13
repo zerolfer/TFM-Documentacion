@@ -1,11 +1,165 @@
+\graphicspath{{capitulos/Capitulo5-Resultados-experimentales/recursos/}}
 
 \section{Resultados experimentales} \label{capitulo:5}
+%En este capítulo se detallan los casos de prueba empleados para la parte de experimentación realizada para este TFM. La metaheurística de la \fasedos{} del sistema (definida en la \autoref{sec:3:metaheurística}) consta de un conjunto de parámetros, enumerados en esta sección, que afectan al rendimiento de esta. Se ha analizado para cada caso, los valores de cada parámetro que mejores resultados ofrecen.
+
+En este capítulo se detallan los procesos realizados para la parte de experimentación realizada en este TFM. En primer lugar se definen los casos de prueba empleados, posteriormente se detalla el proceso de ajuste de los parámetros, presente en toda metaheurística y que nos permite fijar los valores del VNS empleado en la \fasedos{} del sistema (definida en la \autoref{sec:3:metaheurística}) a aquellos que ofrecen mejores resultados. Por último, se ha hecho una comparación de rendimiento de la metaheurística implementada frente a la ya mencionada metaheurística \textit{Simulated Annealing}.
+
+Las ejecuciones presentadas a lo largo de este capítulo han sido realizadas en un ordenador con las características recopiladas en la \autoref{table:5:caracteristicas-pc}
+
+\begin{table}[h]
+	\centering
+	\caption{Características del ordenador empleado para la experimentación}
+	\begin{tabular}{lcc}
+		\hline
+		Procesador   & Intel Core i7 &  \\
+		Memoria      &     16GB      &  \\
+		Version Java &    JDK 8.1    &  \\ \hline
+		             &               &
+	\end{tabular}
+\label{table:5:caracteristicas-pc}
+\end{table}
 
 \subsection{Definición de los casos de prueba}
-Lorem ipsum
+Para este capítulo se han utilizado un conjunto de casos de prueba reales que fueron proporcionados por CRIDA. Inicialmente CRIDA proporcionó información en los formatos de ficheros propuesto (véase \autoref{sec:4:req-io}) que fue adaptada para conformar los 8 casos de prueba distintos que se han empleado y definiremos a continuación. Se ha incluido en el \autoref{Anexo:C} una tabla de los casos que permite ver de forma más detallada y clara las características de cada uno de ellos.
+
+\subsubsection{Caso 1}
+
+\textbf{Unidad de Control}: Barcelona
+
+\textbf{Incidencia}: Modificación de sectorizaciones. La \autoref{fig:5:caso1} muestra cómo es este cambio.
+Como podemos ver...
+
+
+
+%\begin{table}[h]
+%	\begin{tabular}{|c|c|c|}
+%		\hline
+%		          \textbf{Núcleo}            & \textbf{Sectorización} & \textbf{Intervalo} \\ \hline
+%		\multirow{2}{*}{Barcelona Ruta Este} &           3D           & 7:30:00--15:00:00  \\ \cline{2-3}
+%		                                     &           5A           & 7:30:00--10:30:00  \\ \hline
+%		        Barcelona Ruta Oeste         &           6C           & 10:30:00--15:00:00 \\ \hline
+%	\end{tabular}
+%\end{table}
+\begin{table}[h]
+		\centering
+	\caption{Sectorización modificada del Caso 1}
+	\begin{tabular}{ccc}
+		\hline
+		\textbf{Núcleo}                                           & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
+		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+		\multicolumn{1}{c|}{\multirow{2}{*}{Barcelona Ruta Este}} & 3D                     & 7:30:00--15:00:00    \\
+		\multicolumn{1}{c|}{}                                     & 5A                     & 7:30:00--10:30:00    \\
+		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+		Barcelona Ruta Oeste                                      & 6C                     & 10:30:00--15:00:00   \\ \hline
+	\end{tabular}
+	\label{table:5:caso1-modif}
+\end{table}
+
+
+\subsubsection{Caso 3}
+
+\textbf{Unidad de Control}: Barcelona
+
+\textbf{Situación inicial}:
+\begin{itemize}[label={}]
+	
+	\item \textbf{Turno}: MC, 7:30-15:00
+	
+	\item \textbf{Recursos}: \\
+	7 PTD Barcelona Ruta Este \\
+	17 PTD Barcelona Ruta Oeste
+	
+	
+	\item \textbf{Sectorización}: véase la \autoref{table:5:caso3-inicial}
+	\begin{table}[h]
+		\centering
+		\caption{Sectorización inicial del Caso 1}
+		\begin{tabular}{ccc}
+			\hline
+			\textbf{Núcleo}      & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
+			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+			Barcelona Ruta Este  & 3D                     & 7:30:00--15:00:00    \\
+			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+			Barcelona Ruta Oeste & 5A                     & 10:30:00--15:00:00   \\ \hline
+		\end{tabular}
+		\label{table:5:caso3-inicial}
+	\end{table}
+	
+	
+\end{itemize}
+
+\textbf{Momento Actual}: 10:00:00
+
+\textbf{Tipo incidencia}: Baja de un controlador
+
+\textbf{Descripción}:Se produce una baja del controlador $c_{23}$ a las 9:30. No se producen altas. Se necesita 1 controlador imaginarios para inicializar este caso.
+
+\subsubsection{Caso 4}
+
+\textbf{Unidad de Control}: Madrid
+
+\textbf{Situación inicial}:
+\begin{itemize}[label={}]
+	
+	\item \textbf{Turno}: MC, 7:30-15:00
+	
+	\item \textbf{Recursos}: \\
+	7 PTD Barcelona Ruta Este \\
+	17 PTD Barcelona Ruta Oeste
+	
+	
+	\item \textbf{Sectorización}: véase la \autoref{table:5:caso1-inicial}
+	\begin{table}[h]
+		\centering
+		\caption{Sectorización inicial del Caso 1}
+		\begin{tabular}{ccc}
+			\hline
+			\textbf{Núcleo}      & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
+			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+			Barcelona Ruta Este  & 3D                     & 7:30:00--15:00:00    \\
+			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+			Barcelona Ruta Oeste & 5A                     & 10:30:00--15:00:00   \\ \hline
+		\end{tabular}
+		\label{table:5:caso1-inicial}
+	\end{table}
+	
+	
+\end{itemize}
+
+\textbf{Momento Actual}: 10:00:00
+
+\textbf{Tipo incidencia}: Modificación de sectorizaciones
+
+\textbf{Descripción}:Pasamos de una 3D a una 5A, lo que implica el cierre de un sector y la apertura de otros dos. Además se abre un sector adicional en el núcleo \textit{Barcelona Ruta Oeste}. La nueva sectorización es la de la \autoref{table:5:caso1-modif}. Se necesitan 3 controladores imaginarios para inicializar éste caso.
+
+%\begin{table}[h]
+%	\begin{tabular}{|c|c|c|}
+%		\hline
+%		          \textbf{Núcleo}            & \textbf{Sectorización} & \textbf{Intervalo} \\ \hline
+%		\multirow{2}{*}{Barcelona Ruta Este} &           3D           & 7:30:00--15:00:00  \\ \cline{2-3}
+%		                                     &           5A           & 7:30:00--10:30:00  \\ \hline
+%		        Barcelona Ruta Oeste         &           6C           & 10:30:00--15:00:00 \\ \hline
+%	\end{tabular}
+%\end{table}
+\begin{table}[h]
+	\centering
+	\caption{Sectorización modificada del Caso 1}
+	\begin{tabular}{ccc}
+		\hline
+		\textbf{Núcleo}                                           & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
+		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+		\multicolumn{1}{c|}{\multirow{2}{*}{Barcelona Ruta Este}} & 3D                     & 7:30:00--15:00:00    \\
+		\multicolumn{1}{c|}{}                                     & 5A                     & 7:30:00--10:30:00    \\
+		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+		Barcelona Ruta Oeste                                      & 6C                     & 10:30:00--15:00:00   \\ \hline
+	\end{tabular}
+	\label{table:5:caso1-modif}
+\end{table}
 
 \subsection{Ajuste paramétrico}
 Lorem ipsum
+\subsubsection{Parámetros del sistema} \label{capitulo:5:parametros-sistema}
 
 \subsection{Comparación de metaheurísticas}
 Lorem ipsum
