@@ -2,7 +2,7 @@
 
 \section{Implementación} \label{capitulo:4}
 
-Como ingeniero informático, este proyecto se ha desarrollado de forma orientada al proceso de ingeniería de software que consta de las siguientes etapas o procesos: 
+Como ingeniero informático, este proyecto se ha desarrollado de forma orientada al proceso de Ingeniería de Software que consta de las siguientes etapas o procesos: 
 \begin{enumerate}
 	\item Planificación
 	\item Análisis
@@ -12,16 +12,16 @@ Como ingeniero informático, este proyecto se ha desarrollado de forma orientada
 	\item Despliegue y explotación    
 \end{enumerate}
 %planificación, análisis, diseño, implementación propiamente dicha, pruebas y despliegue/explotación. 
-Adicionalmente existe la etapa de monitorización y seguimiento que se desarrollan posteriormente de la puesta en marcha del sistema en un entorno real, y esto no forma parte del presente TFM debido a su naturaleza de investigación (al igual que el propio máster), así que no se han llevado a cabo dichos procesos.
+Adicionalmente, existe la etapa de monitorización y seguimiento que se desarrollan posteriormente de la puesta en marcha del sistema en un entorno real, y esto no forma parte del presente TFM debido a su naturaleza de investigación (al igual que el propio máster), por lo que no se han llevado a cabo dichos procesos.
 
-En las sucesivas secciones de este capítulo iremos describiendo los procesos llevados a cabo en cada una de estas etapas y las conclusiones alcanzadas en las mismas.
+En las sucesivas secciones de este capítulo iremos describiendo los procesos llevados a cabo en cada una de estas etapas y los resultados alcanzados en las mismas. %TODO: resultados? (antes: conclusiones)
 
 \subsection{Planificación}
 \label{sec:4:planificacion}
-En esta primera etapa presente en todo proyecto tratamos de fijar principalmente el concepto de alcance, que podríamos definir como el trabajo realizado para entregar un producto, servicio o resultado con
+En esta primera etapa presente en todo proyecto informático tratamos de fijar principalmente el concepto de alcance, que podríamos definir como el trabajo realizado para entregar un producto, servicio o resultado con
 las funciones y características especificadas~\cite{PMBOK}.
 
-Los proyectos de naturaleza de investigación e innovación como éste requieren de una cierta flexibilidad a la hora de definir el alcance, puesto que planteamos hipótesis iniciales que en función de ser válidas o no, plantearemos otras nuevas. Como éste TFM forma parte de un proyecto mayor, es más sencillo definir el alcance, aunque este sufrió alguna modificación.
+Los proyectos de naturaleza de investigación e innovación como éste requieren de una cierta flexibilidad a la hora de definir el alcance, puesto que planteamos hipótesis iniciales que en función de ser válidas o no, plantearemos otras nuevas. Como éste TFM forma parte de un proyecto mayor, es más sencillo definir el alcance, aunque este ha sufrido alguna modificación.
 
 El proyecto parte con la definición de las hipótesis iniciales recogidas en la \autoref{sec:Hipotesis}. 
 Pretendía abarcar en primera instancia la comprensión del dominio del problema y la lógica de negocio sobre la que poder comenzar a trabajar, y tras ello, podría dar comienzo el desarrollo de la metaheurística VNS descrita en el \autoref{capitulo:3} y analizar los resultados comparándolos con el SA (experimentación, recopilado en el \autoref{capitulo:5}). Al comienzo del proyecto se implementarían los 5 tipos de VNS descritos previamente:
@@ -33,15 +33,15 @@ Pretendía abarcar en primera instancia la comprensión del dominio del problema
 	\item Skewed Variable Neighborhood Search (SVNS)
 \end{itemize}
 
-Y posteriormente fue ampliado con la variación de la naturaleza de los entornos probabilísticos.
+Posteriormente, fue ampliado con la variación de la naturaleza de los entornos probabilísticos.
 
-Por otro lado, el sistema organizativo acordado con los tutores para este TFM consistió en un desarrollo iterativo en ciclos marcados por metas en una jornada de trabajo en un despacho ofrecido por el grupo de investigación de 8 horas diarias de febrero de 2019 a junio de 2019. Finalmente las fechas fueron ampliadas. Se trata de una variación de los \textit{sprints} de SCRUM combinada con un tablero KANBAN creado en la aplicación web Tello. 
+Por otro lado, el sistema organizativo acordado con los tutores para este TFM consistió en un desarrollo iterativo en ciclos marcados por metas en una jornada de trabajo en un despacho ofrecido por el grupo de investigación de 8 horas diarias de febrero a junio de 2019. Finalmente, las fechas fueron ampliadas. Se trata de una variación de los \textit{sprints} de SCRUM combinada con un tablero KANBAN creado en la aplicación web Tello. 
 
-A continuación describiremos cada uno de esos ciclos.
+A continuación, describiremos cada uno de esos ciclos.
 
-El primer ciclo incluía el proceso de planificación y de análisis junto al estudio del sistema y los documentos previos facilitados por los tutores (\textit{literature review}). Tuvo por meta la comprensión del dominio del problema (primera parte) y de la lógica de negocio utilizada en los antecedentes del TFM (véase la \autoref{capitulo:2:detalles-sistema})
+El primer ciclo incluía el proceso de planificación y de análisis junto al estudio del sistema y los documentos previos facilitados por los tutores (\textit{literature review}). Tuvo por meta la comprensión del dominio del problema (primera parte) y de la lógica de negocio utilizada en los antecedentes del TFM (véase la \autoref{capitulo:2:detalles-sistema}).
 
-Los demás ciclos únicamente requerirán de las fases de diseño, implementación y pruebas. La meta para el segundo era la implementación de la \faseuno{} (diseño, implementación y pruebas). El tercer ciclo como meta fue la implementación de una primera versión funcional del sistema implementando únicamente el VND, definiendo previamente los diferentes entornos a emplear. Para el cuarto ciclo se debían implementar el resto de variaciones del VNS así como realizar un despliegue del sistema empaquetándolo y enviándolo en forma de entregable a los tutores (véase la \autoref{sec:4:despliegue}). El cuarto ciclo fue añadido posteriormente para subsanar errores e implementar los entornos probabilísticos que ya fueron descritos en la \autoref{capitulo:3:busqueda-divers-intens}. Finalmente se encuentra el ciclo de experimentación, donde comparamos los resultados y analizamos la eficiencia del sistema.
+Los demás ciclos únicamente requerirán de las fases de diseño, implementación y pruebas. La meta para el segundo era la implementación de la \faseuno{} (diseño, implementación y pruebas). El tercer ciclo como meta fue la implementación de una primera versión funcional del sistema implementando únicamente el VND, definiendo previamente los diferentes entornos a emplear. Para el cuarto ciclo se debían implementar el resto de variaciones del VNS, así como realizar un despliegue del sistema empaquetándolo y enviándolo en forma de entregable a los tutores (véase la \autoref{sec:4:despliegue}). El cuarto ciclo fue añadido posteriormente para subsanar errores e implementar los entornos probabilísticos que ya fueron descritos en la \autoref{capitulo:3:busqueda-divers-intens}. Finalmente, se encuentra el ciclo de experimentación, donde comparamos los resultados y analizamos la eficiencia del sistema.
 
 En la \autoref{sec:4:implementacion} se describen las tecnologías software utilizadas.
 
@@ -50,9 +50,11 @@ En la \autoref{sec:4:implementacion} se describen las tecnologías software util
 \subsection{Análisis}
 El objetivo de esta fase consiste en la educción de los requisitos que precisa el software a partir de los documentos e información facilitada por los tutores y demás \textit{stakeholders}.
 
-Los \textit{stakeholders} del proyecto son: CRIDA, los tutores, y los estudiantes de doctorado o máster implicados actual o anteriormente (Tino Tello, Jónatan Lara y Pablo Lozano) y será a quienes se deberá recurrir para responder dudas. El \textit{stakeholder} principal por supuesto es CRIDA, que guiará los objetivos principales y responderá a las preguntas de mayor complejidad y que competan al dominio del problema. Los tutores tendrán las mismas competencias pero a nivel del TFM y no del proyecto en su totalidad, y serán quienes faciliten la documentación inicial relativa al dominio del problema. El resto de \textit{stakeholders} y especialmente Tino Tello, proporcionarán la información relativa al software y aclararán conceptos de esta índole.
+Los \textit{stakeholders} del proyecto son: CRIDA, los tutores, y los estudiantes de doctorado o máster implicados actual o anteriormente (Tino Tello, Jónatan Lara y Pablo Lozano) y será a quienes se deberá recurrir para aclarar dudas. 
+% TODO: se puede??
+El \textit{stakeholder} principal por supuesto es CRIDA, que guiará los objetivos principales y responderá a las preguntas de mayor complejidad y que competan al dominio del problema. Los tutores tendrán las mismas competencias pero a nivel del TFM y no del proyecto en su totalidad, y serán quienes faciliten la documentación inicial relativa al dominio del problema. El resto de \textit{stakeholders} y, especialmente, Tino Tello, proporcionarán la información relativa al software y aclararán conceptos de esta índole.
 
-La documentación inicial facilitada por los tutores se basa en dos papers: uno publicado y otro sin publicar a fecha de inicio del TFM~\cite{articulo1, articulo2}. Una vez leída la documentación inicial y comprendido el dominio del problema, se realizó una entrevista con Tino Tello para comprender la implementación del sistema \legacy{} y poder comenzar a trabajar. En dicha entrevista se obtuvo como conclusión la creación de un repositorio con control de versiones Git disponible para todos los \textit{stakeholders} y el inicio del primer ciclo de la planificación (definidos en \autoref{sec:4:planificacion}). % TODO: los he llamado PAPERS y no ARTICULOS
+La documentación inicial facilitada por los tutores se basa en dos papers: uno publicado y otro sin publicar a fecha de inicio del TFM~\cite{articulo1, articulo2}. Una vez leída la documentación inicial y comprendido el dominio del problema, se realizó una entrevista con Tino Tello para comprender la implementación del sistema \legacy{} y poder comenzar a trabajar. En dicha entrevista se obtuvo como conclusión la creación de un repositorio con control de versiones Git disponible para todos los \textit{stakeholders} y el inicio del primer ciclo de la planificación (definidos en la \autoref{sec:4:planificacion}). % TODO: los he llamado PAPERS y no ARTICULOS
 
 En este punto se identifican los requisitos del sistema tanto del dominio (obtenidos del software \legacy{} y de la documentación inicial) como del sistema (entrada/salida, interfaces, etc.) que se encuentran recopilados en las próximas secciones.
 
@@ -75,10 +77,10 @@ En el sistema \legacy{} existían dos tipos de restricciones: obligatorias y des
 
 
 
-En primer lugar tenemos las fundamentales:
+En primer lugar, tenemos las fundamentales:
 
 %\begin{enumerate}[label={\textbf{RDF\arabic*}}]
-\begin{enumerate}[label={\textbf{RD\arabic*}}, ref={RD\arabic*},  align=left]
+\begin{enumerate}[label={\textbf{RD\arabic*}}, ref={Requisito RD\arabic*},  align=left]
 	
 	\item Todas las posiciones de control deben estar cubiertas por controladores de manera exclusiva, exhaustiva y bajo las restricciones definidas.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
@@ -89,14 +91,14 @@ En primer lugar tenemos las fundamentales:
 	\item Un controlador no puede tener dos asignaciones diferentes en el mismo instante.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
 		\item Entendemos por asignación la combinación de sector y posición.
-		\item un controlador no puede estar cubriendo en el mismo
+		\item Un controlador no puede estar cubriendo en el mismo
 		instante la posición de ejecutivo y planificador de un sector y tampoco puede estar
 		asignado a dos sectores diferentes en el mismo instante, sea cual sea la posición.
 	\end{enumerate}
 	
-	\item \label{RD:tipos-sector}  Cada sector tendrá un tipo de sector, que podrá ser Aproximación o Ruta
+	\item \label{RD:tipos-sector}  Cada sector tendrá un tipo de sector, que podrá ser Aproximación o Ruta.
 	
-	\item  \label{RD:sector-nucleo} Cada sector tendrá uno o varios núcleos asociados, así como cada núcleo tendrá un conjunto de sectores (relación N a N)
+	\item  \label{RD:sector-nucleo} Cada sector tendrá uno o varios núcleos asociados, así como cada núcleo tendrá un conjunto de sectores (relación N a N).
 	
 	\item \label{RD:nucleo-controlador} Cada controlador estará acreditado para controlar un único núcleo.
 	
@@ -104,15 +106,15 @@ En primer lugar tenemos las fundamentales:
 
 
 
-A continuación las relativas a la posición y asignación de los controladores:
+A continuación, las relativas a la posición y asignación de los controladores:
 
 \begin{enumerate}[resume*]
-	\item \label{RD:acreditacion-valida} Una determinada posición podrá ser asignada a un controlador si el controlador está habilitado en el núcleo al que pertenece el sector que le corresponde, o bien en uno de los núcleos a los que pertenece el sector
+	\item \label{RD:acreditacion-valida} Una determinada posición podrá ser asignada a un controlador si este está habilitado en el núcleo al que pertenece el sector que le corresponde, o bien en uno de los núcleos a los que pertenece el sector
 	(si este es un sector común) independientemente de la sectorización por la que el sector se encuentre abierto.
 	
-	\item A un controlador tipo CON solo podrá asignársele una posición cuyo sector sea Ruta (véase la \autoref{table:2:acreditaciones})
+	\item A un controlador tipo CON solo podrá asignársele una posición cuyo sector sea Ruta (véase la \autoref{table:2:acreditaciones}).
 	
-	\item Los sectores o agrupaciones de dos sectores que se indique en la entrada del problema, se deberán cubrir con 4 controladores en el turno	de noche.
+	\item Los sectores o agrupaciones de dos sectores que se indique en la entrada del problema se deberán cubrir con 4 controladores en el turno	de noche.
 	
 	\item Un controlador solo puede operar en su turno correspondiente: si pertenece al turno largo, en el turno largo y si pertenece al turno corto en el turno corto.
 	
@@ -123,7 +125,7 @@ A continuación las relativas a la posición y asignación de los controladores:
 
 
 
-Y por último las relativas a los tiempos de trabajo y descanso de los controladores:
+Y por último, las relativas a los tiempos de trabajo y descanso de los controladores:
 
 \begin{enumerate}[resume*]
 	
@@ -151,21 +153,20 @@ Y por último las relativas a los tiempos de trabajo y descanso de los controlad
 \subsubsection{Requisitos de entrada/salida} \label{sec:4:req-io}
 Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y formatos definidos tanto para la entrada al sistema como en la salida.
 
-\begin{enumerate}[label={\textbf{RIO\arabic*}}, ref={RIO\arabic*},  align=left]
+\begin{enumerate}[label={\textbf{RIO\arabic*}}, ref={Requisito RIO\arabic*},  align=left]
 	
 	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso, de esta forma, la información común a varios casos será independiente de cada caso concreto.
 	
-	\item Adicionalmente se empleará un fichero de propiedades que permita modificar los parámetros del sistema (véase lista parámetros del sistema) %TODO: referencia!!!
-	sin necesidad de recompilar todo el código.	
+	\item Adicionalmente, se empleará un fichero de propiedades que permita modificar los parámetros del sistema (véase la \autoref{sec:5:parametros-sistema}) sin necesidad de recompilar todo el código.	
 	
-	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, contendrá 4 ficheros:
+	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, y contendrá 4 ficheros:
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
 		\item  Relación de todos los sectores pertenecientes la unidad de control con los sectores elementales\footnote{
-			Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} se podía sustituir por otros más pequeños, por lo tanto no es elemental
+			Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} que se podía sustituir por otros más pequeños, por lo tanto no es elemental.
 		} por los que están formados cada uno de los sectores.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
-			\item Tendrá las siguientes columnas: Nombre sector (p. ej. LECBBAS) y sector elemental
-			\item En caso de ser elemental, la segunda columna deberá ser vacía
+			\item Tendrá las siguientes columnas: Nombre sector (por ejemplo LECBBAS) y sector elemental.
+			\item En caso de ser elemental, la segunda columna deberá ser vacía.
 		\end{enumerate}
 		
 		\item  Matriz de Afinidad de los sectores de la dependencia (definida en la \autoref{section:2:sectores-y-sectorizacion}).
@@ -179,51 +180,51 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 			\item Nótese que todo sector es afín consigo mismo.
 		\end{enumerate}
 		
-		\item Lista de los sectores pertenecientes a la Unidad de Control, en la que se indica el tipo de sector (véase~\ref{RD:tipos-sector}) y los núcleos a los que pertenece (ver~\ref{RD:sector-nucleo}).
+		\item Lista de los sectores pertenecientes a la Unidad de Control, en la que se indica el tipo de sector (véase el \ref{RD:tipos-sector}) y los núcleos a los que pertenece (véase el \ref{RD:sector-nucleo}).
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
 			\item Tendrá las siguientes columnas: 
 			\begin{enumerate}[label*={\textbf{.\arabic*}}]
-				\item Nombre sector (p. ej. LECBBAS) 
-				\item Tipo Sector. Posibles valores APP o RUTA
-				\item Número variable de columnas que representen los núcleos que tiene la dependencia concreta (p. ej. Barcelona TMA, Barcelona Ruta Este y Barcelona Ruta Oeste)
-				\item Cada fila tendrá el carácter x en caso de que pertenezca al núcleo
-				\item Cada fila podrá tener varias columnas de núcleo marcadas (véase el requisito~\ref{RD:sector-nucleo}).
+				\item Nombre sector (por ejemplo LECBBAS).
+				\item Tipo Sector. Posibles valores APP o RUTA.
+				\item Número variable de columnas que representen los núcleos que tiene la dependencia concreta (por ejemplo Barcelona TMA, Barcelona Ruta Este y Barcelona Ruta Oeste).
+				\item Cada fila tendrá el carácter x en caso de que pertenezca al núcleo.
+				\item Cada fila podrá tener varias columnas de núcleo marcadas (véase el \ref{RD:sector-nucleo}).
 			\end{enumerate}
 		\end{enumerate}
 		\item Lista de sectorizaciones de la Unidad de Control y sectores que conforman la sectorización y los volúmenes a los que pertenece cada sector.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
 			\item Tendrá como columnas: la sectorización (2B, 1A,...), el nombre del sector, el volumen al que pertenece y el núcleo al que pertenece.
-			\item Debido que cada volumen puede abarcar varios sectores, el nombre del sector y la sectorización se repetirán en varias filas pero cambiando el valor del volumen.
+			\item Debido a que cada volumen puede abarcar varios sectores, el nombre del sector y la sectorización se repetirán en varias filas pero cambiando el valor del volumen.
 		\end{enumerate}
 	\end{enumerate}
 	
 	\item La información del caso concreto está desglosada en 6 ficheros, dos de ellos opcionales.
-	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+	\begin{enumerate}[label*={\textbf{.\arabic*}}, ref={\theenumi.\arabic*}]
 		\item Definición del turno. Contiene la hora de inicio y fin del turno completo así como del tipo (mañana, tarde, noche y largo o corto).
 		\item \label{RIO:apertura-sectorizaciones} Apertura de sectorizaciones: contiene una lista de las franjas horarias en las que cada sectorización se abre, posiblemente más de una simultáneamente pero de diferente núcleo.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
-			\item contiene los campos: nombre del núcleo, nombre de la sectorización, hora de inicio y hora de fin.
+			\item Contiene los campos: nombre del núcleo, nombre de la sectorización, hora de inicio y hora de fin.
 		\end{enumerate}
 		\item \label{RIO:rrhh-disponibles}  Recursos humanos disponibles. Lista con los campos: identificador del controlador (unívoco), acreditación PTD o CON, núcleo al que pertenece y tipo de turno para el que trabaja.
 		\item Modificación de las sectorizaciones. Fichero opcional, únicamente se debe incluir si hay alguna incidencia que afecte a las sectorizaciones.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
-			\item Tiene el mismo formato que el fichero de apertura de sectorizaciones (\ref{RIO:apertura-sectorizaciones}) pero debe incluir las sectorizaciones nuevas a partir del momento de la incidencia.
+			\item Tiene el mismo formato que el fichero de apertura de sectorizaciones (véase el \ref{RIO:apertura-sectorizaciones}) pero debe incluir las sectorizaciones nuevas a partir del momento de la incidencia.
 		\end{enumerate}
 		\item Modificación de los recursos. Fichero opcional, únicamente se debe incluir si hay alguna incidencia que afecte a los controladores.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
-			\item Cada campo (fila) indica si se trata de una baja o alta, el identificador del controlador pertinente y el momento (hh:mm:ss) del evento (que puede ser diferente al momento del cambio).
+			\item Cada campo (fila) indica si se trata de una baja o alta, el identificador del controlador pertinente y el momento (hh:mm:ss) del evento (que puede ser diferente en el momento del cambio).
 		\end{enumerate}
 		\item La planificación inicial. Para esta versión se ha creado un formato ad-hoc para facilitar el trabajo a \gls{CRIDA} en la definición de casos para la experimentación:
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
 			\item La primera fila contendrá la hora del momento del cambio (hh:mm:ss).
-			\item el resto de filas tendrás las diferentes distribuciones del turno que maneja el personal para cada caso, que consta de una tabla definida de la forma:
+			\item El resto de filas tendrá las diferentes distribuciones del turno que maneja el personal para cada caso, que consta de una tabla definida de la forma:
 			\begin{enumerate}[label*={\textbf{.\arabic*}}]
-				\item la cabecera comienza con el carácter identificativo ``-''
-				\item el resto de columnas de la cabecera serán el rango de tiempo que representa en la tabla de la planificación. Deberá ser múltiplo de 5
-				\item el resto de columnas serán los nombres de los sectores (mayúscula si el puesto es ejecutivo, minúscula si es planificador) o ``111'' si es un descanso. 
+				\item La cabecera comienza con el carácter identificativo ``-''.
+				\item El resto de columnas de la cabecera serán el rango de tiempo que representa en la tabla de la planificación. Deberá ser múltiplo de 5.
+				\item El resto de columnas serán los nombres de los sectores (mayúscula si el puesto es ejecutivo, minúscula si es planificador) o ``111'' si es un descanso. 
 			\end{enumerate}		
 			\item Un mismo fichero podrá contener más de una distribución con diferentes intervalos de tiempo.
-			\item Más detalles sobre el formato y el proceso de creación en el \autoref{Anexo:A} %TODO
+			\item Más detalles sobre el formato y el proceso de creación en el \autoref{Anexo:A}. %TODO
 		\end{enumerate}
 	\end{enumerate}
 	
@@ -231,34 +232,34 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 	
 	\item Existen dos grupos de fichero de salida: los ficheros solución y las trazas.
 	\item Los ficheros solución, a su vez, tienen dos formatos: para máquina y para humanos.
-	\begin{enumerate}[label*={\textbf{.\arabic*}}]
+	\begin{enumerate}[label*={\textbf{.\arabic*}}, ref={\theenumi.\arabic*}]
 		\item El formato para máquina (txt) permite cargar en la memoria del sistema la planificación de salida rápidamente en caso de tener que hacer cálculos a posteriori.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
 			\item Consiste en la sucesión de todos los turnos creados sin espacios, cada uno de ellos separados por comas.
-			\item Pierde la información de los controladores, pero para cálculos como el número de restricciones incumplidas sí puede utilizarse.
+			\item No incorpora la información de los controladores, pero para cálculos como el número de restricciones incumplidas sí puede utilizarse.
 		\end{enumerate}
 		\item \label{RIO:formato-excel} El formato para humanos será un fichero Excel (xlsx) con tres partes:
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
-			\item Una tabla con la planificación resultante, empleando colores y el formato de salida (véase la \autoref{sec:3:representacion-soluciones} y especialmente la \autoref{fig:3:ejemplo-distribucion-inicial})
+			\item Una tabla con la planificación resultante, empleando colores y el formato de salida (véase la \autoref{sec:3:representacion-soluciones} y especialmente la \autoref{fig:3:ejemplo-distribucion-inicial}).
 			\item Resumen de la solución. Indica el identificador del controlador y el índice del turno asignado.
 			\item Información de las restricciones. Número de veces que cada restricción de incumple. Permite evaluar la calidad de la solución a posteriori.
 		\end{enumerate}
 	\end{enumerate}
 	\item \label{RIO:salida-csv} Los ficheros de salida de tipo trazas son utilizados en la fase de experimentación (véase el \autoref{capitulo:5}) para representar gráficas de la evolución del sistema.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
-		\item En cada iteración se registrará la información en un fichero CSV separado por punto y coma
+		\item En cada iteración se registrará la información en un fichero CSV separado por punto y coma.
 		\item El fichero de salida de tipo trazas contendrá las siguientes columnas:
 		\begin{itemize}
 			\item Número de la iteración.
-			\item Tiempo de ejecución (en milisegundos)
-			\item Valor del fitness total (ponderado)
-			\item Valor del objetivo \ref{O1}
-			\item Valor del objetivo \ref{O2}
-			\item Valor del objetivo \ref{O3}
-			\item Valor del objetivo \ref{O4}
-			\item Número de controladores (tamaño de la solución)
-			\item Porcentaje mejora respecto al ciclo de ejecución actual (condición de parada)
-			\item Vecindad en uso			
+			\item Tiempo de ejecución (en milisegundos).
+			\item Valor del fitness total (ponderado).
+			\item Valor del objetivo \ref{O1}.
+			\item Valor del objetivo \ref{O2}.
+			\item Valor del objetivo \ref{O3}.
+			\item Valor del objetivo \ref{O4}.
+			\item Número de controladores (tamaño de la solución).
+			\item Porcentaje mejora respecto al ciclo de ejecución actual (condición de parada).
+			\item Entorno en uso.
 		\end{itemize}
 	\end{enumerate}
 \end{enumerate}
@@ -273,7 +274,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 En esta etapa diseñamos, mediante la esquematización, el sistema a implementar. 
 El sistema se ha diseñado de tal manera que podamos reutilizar la mayor cantidad de código implementado y para ello se ha tomado como fundamento el paradigma Orientado a Objetos (POO) en contraposición con el paradigma procedimental. 
 Además, las limitaciones de implementación de usar el lenguaje de programación Java (véase la \autoref{sec:4:implementacion}), favorecen el uso de este paradigma. 
-Además de la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante ampliación y evolución y, posiblemente, más de una persona empleará el código en un futuro. La selección del paradigma afectará a la forma de diseñar el sistema.
+Por otro lado, la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante ampliación y evolución y, posiblemente, más de una persona empleará el código en un futuro. La selección del paradigma afectará a la forma de diseñar el sistema.
 % Este salto de línea estropea las figuras de esquema, NO PONER
 El software se diseñó en el lenguaje universal de diseño UML, y debe notarse que los esquemas mostrados en los capítulos anteriores también forman parte del proceso de diseño, pero por claridad en la memoria se han incluido en sus correspondientes secciones.
 
@@ -281,41 +282,41 @@ Se ha dividido el sistema en cuatro módulos:
 \begin{itemize}
 	\item Módulo de lectura de datos: lleva a cabo las tareas de lectura e inicialización de estructuras de datos.
 	\item Módulo de inicialización (\faseuno{}): inicializa la solución inicial de acuerdo con la(s) contingencias recibidas (input) del módulo anterior.
-	\item Módulo de búsqueda (\fasedos{}): lleva a cabo la búsqueda de una solución factible al problema.
+	\item Módulo de búsqueda (\fasedos{}): lleva a cabo la búsqueda de una solución factible para el problema.
 	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
 \end{itemize}
 
-Los módulos de entrada y salida se han resumido en dos clases que encapsulan toda la lógica de negocio, al igual que el módulo de conforma la \faseuno{}, sin embargo, para el módulo de búsqueda se ha diseñado un esquema de clases que se recoge a continuación en esta sección. El esquema se ha separado en 3 partes para una mayor claridad, pero se ha incluido de forma completa en el \autoref{Anexo:B}. 
+Los módulos de entrada y salida se han resumido en dos clases que encapsulan toda la lógica de negocio, al igual que el módulo que conforma la \faseuno{}. Sin embargo, para el módulo de búsqueda se ha diseñado un esquema de clases que se recoge a continuación en esta sección. El esquema se ha separado en 3 partes para una mayor claridad, pero se ha incluido de forma completa en el \autoref{Anexo:B}. 
 %En esta sección explicaremos el esquema separándolo en 3 partes para una mayor claridad.
 
-En primer lugar, tenemos la lógica relativa a los VNS propiamente dichos, que serán implementados siguiente el diseño de la \autoref{fig:4:diseño:vns}.
+En primer lugar, tenemos la lógica relativa a los VNS propiamente dichos, que serán implementados siguiendo el diseño de la \autoref{fig:4:diseño:vns}.
 
-En segundo lugar, la lógica de los entornos, en la \autoref{fig:4:diseño:entornos}. Que realizarán la búsqueda en sí, generando soluciones y modificando las existentes de diferentes formas según el tipo de vecindad.
+En segundo lugar, la lógica de los entornos, en la \autoref{fig:4:diseño:entornos}, que realizarán la búsqueda en sí, generando soluciones y modificando las existentes de diferentes formas según el tipo de entorno.
 
-Por último, los VNS darán uso de las estructuras de vecindad mediante los sets, en la \autoref{fig:4:diseño:tipoEntorno}, que implementan el comportamiento de los entornos según su naturaleza probabilístico o determinista
+Por último, los VNS darán uso de las estructuras de entorno mediante los sets, en la \autoref{fig:4:diseño:tipoEntorno}, que implementan el comportamiento de los entornos según su naturaleza probabilística o determinista.
 
-El módulo de inicialización (\faseuno{}) empleará las clases de tipo factoría (\textit{<<Factory>>}) para inicializar el VNS, las estructuras de vecindad y el tipo de Set de los entornos según la entrada del sistema y dar comienzo a la \faseuno{}.
+El módulo de inicialización (\faseuno{}) empleará las clases de tipo \textit{factoría} (\textit{<<Factory>>}) para inicializar el VNS, las estructuras de entorno y el tipo de Set de los entornos según la entrada del sistema y dar comienzo a la \faseuno{}.
 
-En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también las clases reutilizadas del sistema \legacy{} en rosa, y las modificadas, ampliadas o creadas en magenta. Nótese que la interfaz de la clase Fitness es utilizada únicamente por las estructuras de vecindad. La última decisión de diseño se trata de emplear un mapa de soluciones para guardar los fitness de las soluciones y recuperarlos rápidamente y con bajo coste computacional ($O(1)$) en el resto de ocasiones que sean requeridos en las clases del paquete vns, de esta forma su cálculo se realizará una única vez.
+En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también las clases reutilizadas del sistema \legacy{} en rosa, y las modificadas, ampliadas o creadas en magenta. Nótese que la interfaz de la clase Fitness es utilizada únicamente por las estructuras de entorno. La última decisión de diseño se trata de emplear un mapa de soluciones para guardar los fitness de las soluciones y recuperarlos rápidamente y con bajo coste computacional ($O(1)$) en el resto de ocasiones que sean requeridos en las clases del paquete \textit{vns}, de esta forma su cálculo se realizará una única vez.
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{diagrama-clases-VNS-alt}
-	\caption{Esquema del paquete vns (verde)}
+	\caption{Esquema del paquete \textit{vns} (verde)}
 	\label{fig:4:diseño:vns}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\linewidth]{diagrama-clases-TipoEntornos}
-	\caption{Esquema del paquete naturaleza-entornos (amarillo+naranja)}
+	\caption{Esquema del paquete \textit{naturaleza-entornos} (amarillo+naranja)}
 	\label{fig:4:diseño:tipoEntorno}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=1\linewidth]{diagrama-clases-Vecindades}
-	\caption{Esquema del paquete estructuras-entorno (cian)}
+	\caption{Esquema del paquete \textit{estructuras-entorno} (cian)}
 	\label{fig:4:diseño:entornos}
 \end{figure}
 
@@ -326,7 +327,7 @@ En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también la
 
 \subsubsection{Herramientas y tecnologías software utilizadas}
 
-Debido a la condicionante del sistema \legacy{}, la mayoría de las decisiones relativas a la tecnología a emplear son heredadas. 
+Debido a la necesidad de reutilizar y ampliar el sistema \legacy{}, la mayoría de las decisiones relativas a la tecnología a emplear son heredadas. 
 
 La más importante es el lenguaje de programación. Debido a la alta complejidad del sistema y a la eficiencia que éste requiere, el lenguaje de programación preferible hubiese sido C++, pues es orientado a objetos y altamente eficiente. Sin embargo, el sistema \legacy{} fue implementado en Java 8, y para poder realizar estudios comparativos de SA frente al VNS, se requiere que ambos estén implementados con la misma tecnología.
 
@@ -348,59 +349,59 @@ Los frameworks utilizados han sido:
 
 \begin{itemize}
 	\item Maven, para la gestión dinámica de librerías y frameworks. Nos evita tener que gestionar manualmente la inclusión de las librerías/frameworks.
-	\item Apache Poi 3.15, Para la escritura de ficheros en formato Microsoft Office Excel (véase el requisito \ref{RIO:formato-excel}).
+	\item Apache Poi 3.15, para la escritura de ficheros en formato Microsoft Office Excel (véase el \ref{RIO:formato-excel}).
 	\item Apache Commons Lang 3.0, Para un manejo de cadenas de caracteres más eficiente.
 	\item The DSI Utilities, dsiutils 2.5.4 (Università degli Studi di Milano). Implementa entre otras cosas, algoritmos de generación de números aleatorios eficientes (véase la \autoref{sec:4:impl:random}).
-	\item JUnit 3.5.2, Para las pruebas unitarias (véase la \autoref{sec:4:tests}).
+	\item JUnit 3.5.2, para las pruebas unitarias (véase la \autoref{sec:4:tests}).
 \end{itemize}
 
 \subsubsection{Generador de números aleatorios}
 \label{sec:4:impl:random}
 
-Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se ve necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no se trata de uno de los mejores existentes, y debido a que se da uso un gran número de veces, se ha preferido emplear un generador cuyo periodo sea mayor. Se ha optado por emplear el llamado xoroshiro128+ (más información de en \url{http://prng.di.unimi.it/}) con un periodo de $2^{128}$ frente al de java, que es $2^{48}$.
+Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se hace necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no se trata de uno de los mejores existentes, y debido a que se da uso un gran número de veces, se ha preferido emplear un generador cuyo periodo sea mayor. Se ha optado por emplear el llamado xoroshiro128+ (más información de en \url{http://prng.di.unimi.it/}) con un periodo de $2^{128}$ frente al de java, que es $2^{48}$.
 \NOTE{¿Hacer comparación entre generadores? ¿Cómo?}
 
 \subsubsection{Detalles del sistema}
 \label{sec:4:detalles-sistema}
 
-El sistema fue construido en base al diseño previo, que fue ampliado con la introducción de la funcionalidad relativa a la naturaleza probabilístico de los entornos.
+El sistema fue construido en base al diseño previo, que fue ampliado con la introducción de la funcionalidad relativa a la naturaleza probabilística de los entornos.
 
 Los algoritmos implementados para el VNS ya han sido descritos en detalle en el \autoref{capitulo:3}, sin embargo, la implementación de la naturaleza de los entornos no se ha descrito en profundidad.
 
-La naturaleza de los entornos determinista es simple: únicamente precisa de una estructura de datos de tipo lista y un índice que se vaya incrementando en cada llamada al método \texttt{nextNeighborhood()}. Sin embargo, para la implementación del probabilístico, se requiere de una estructura de datos auxiliar mucho más compleja.
+La naturaleza de los entornos determinista es simple. Únicamente precisa de una estructura de datos de tipo lista y un índice que se vaya incrementando en cada llamada al método \texttt{nextNeighborhood()}. Sin embargo, para la implementación del probabilístico se requiere de una estructura de datos auxiliar mucho más compleja.
 
-Se han definido entornos cuyo fundamente es idéntico pero emplea diferentes restricciones de entorno (véase \autoref{paragraph:entornos}). Con este tipo de entornos podemos operar de dos maneras: 
+Se han definido entornos cuyo fundamento es idéntico pero emplea diferentes restricciones de entorno (véase la \autoref{paragraph:entornos}). Con este tipo de entornos podemos operar de dos maneras: 
 \begin{enumerate}[label={(\Alph*)}]
 	\item Considerarlos como sub-entornos y emplearlos en orden o aleatoriamente, es decir, seleccionamos los entornos aleatoriamente, y si el elegido tiene sub-entornos iterarlos en orden.
 	\item \label{modelo-no-ordenado} Considerarlos como entornos del mismo nivel, pudiendo ser elegidos con la misma probabilidad que todos los demás.
 \end{enumerate}
 
-Los entornos que tienen variantes los llamaremos compuestos, y son únicamente movMaxCarga y movRejilla. Mientras que el resto, movLibre, los llamaremos simples.
+Los entornos que tienen variantes los llamaremos compuestos, y son únicamente movMaxCarga y movRejilla; mientras que el resto, movLibre, los llamaremos simples.
 
 En el diagrama de clases de la \autoref{sec:4:diseño} se ha llamado a las clases que implementan el modelo \ref{modelo-no-ordenado} como \texttt{CompuestoNoOrdenado}.
 
-Otros algoritmos, tanto nuevos como ampliados, se ha visto limitados por la implementación de \legacy{}, en especial la decisión tomada durante el desarrollo del mismo de emplear como representación de las soluciones una lista dinámica de turnos, representados a su vez mediante una cadena de texto (String), cuando la opción más sencilla de representar los turnos es mediante una tupla de elementos. Por ello, la manipulación de los turnos pierde legibilidad de código y gana dificultad de implementación, puesto que las cadenas de turnos son grupos sin separadores de 3 letras cada uno (recuérdese la decisión de representación de las soluciones, recopilado en la \autoref{sec:3:representacion-soluciones}) por lo que se deberán recorrer de 3 en 3.
+Otros algoritmos, tanto nuevos como ampliados, se han visto limitados por la implementación de \legacy{}, en especial la decisión tomada durante el desarrollo del mismo de emplear como representación de las soluciones una lista dinámica de turnos, representados a su vez mediante una cadena de texto (String), cuando la opción más sencilla de representar los turnos es mediante una tupla de elementos. Por ello, la manipulación de los turnos pierde legibilidad de código y gana dificultad de implementación, puesto que las cadenas de turnos son grupos sin separadores de 3 letras cada uno (recuérdese la decisión de representación de las soluciones, recopilado en la \autoref{sec:3:representacion-soluciones}) por lo que se deberán recorrer de 3 en 3.
 
-Además, el tratamiento de los \textit{String}s es bastante costoso computacionalmente, pues nos obliga a cortar el String y reconstruirlo cada vez que se tenga que modificar. Inicialmente se planteó la posibilidad de tratar de mejorar la eficiencia para con este aspecto, sustituyendo la forma de representación de los turnos por tuplas, sin embargo, y debido a las decisiones de diseño tomadas durante el desarrollo de \legacy{}, implementar esta mejoría requiere de una gran cantidad de modificaciones y al no ser el aspecto fundamental de la tesis se optó por mantener el formato \legacy{}.
+Además, el tratamiento de los \textit{String}s es bastante costoso computacionalmente, pues nos obliga a cortar el String y reconstruirlo cada vez que se tenga que modificar. Inicialmente se planteó la posibilidad de tratar de mejorar la eficiencia para con este aspecto, sustituyendo la forma de representación de los turnos por tuplas. Sin embargo, debido a las decisiones de diseño tomadas durante el desarrollo de \legacy{}, implementar esta mejoría requiere de una gran cantidad de modificaciones y al no ser el aspecto fundamental del TFM se optó por mantener el formato \legacy{}.
 
-Para el cálculo de probabilidades y simulación de sucesos se muestrea de una distribución aleatoria uniforme entre 0 y 1 $u \sim U[0,1]$ y si la probabilidad p es mayor ($p>u$) se interpreta como que el suceso ocurre, y en caso contrario como si no sucediera. 
+Para el cálculo de probabilidades y simulación de sucesos se muestrea de una distribución aleatoria uniforme entre 0 y 1, $u \sim U[0,1]$ y si la probabilidad $p$ es mayor ($p>u$) se interpreta como que el suceso ocurre, y en caso contrario como si no sucediera. 
 La otra alternativa empleada es muestrear uniformemente un entero entre dos números límite. 
 Esto se emplea fundamentalmente para los entornos estocásticos y las estructuras de entorno (movimientos).
 
-Por otro lado, poder tomar mediciones del rendimiento y desempeño del algoritmo, se ha creado una clase estática extra que permite almacenar en un fichero externo CSV la información requerida (recopilada en el requisito \ref{RIO:salida-csv}).
+Por otro lado, para poder tomar mediciones del rendimiento y desempeño del algoritmo se ha creado una clase estática extra que permite almacenar en un fichero externo CSV la información requerida (recopilada en el \ref{RIO:salida-csv}).
 
 \subsubsection{Mejorando la eficiencia del sistema}
 \label{sec:4:mejorando-eficiencia}
 
 Para mejorar la eficiencia general del sistema, tal y como se propuso en la hipótesis inicial \ref{H3}, se han realizado pequeñas modificaciones para que el sistema consuma menos tiempo en determinadas acciones y que lo pueda emplear en la búsqueda.
 
-Para ello se ha analizado complejidad del sistema en cuanto a tiempo de ejecución de las diferentes partes y se ha obtenido lo de la figura: \NOTE{poner la figura con la eficiencia del sistema por clases. PENDIENTE DE USAR EL PC DEL DESPACHO PARA FINALIZAR ESTA SECCIÓN} % TODO!!!
+Para ello, se ha analizado complejidad del sistema en cuanto a tiempo de ejecución de las diferentes partes y se ha obtenido lo de la figura: \NOTE{poner la figura con la eficiencia del sistema por clases. PENDIENTE DE USAR EL PC DEL DESPACHO PARA FINALIZAR ESTA SECCIÓN} % TODO!!!
 
-La parte del sistema más costosa computacionalmente es el cómputo de la función fitness, una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. % TODO: GRAFICA DE COMPARACION DE EMPLEAR O NO RESTRICCIONES EN PARALELO
+La parte del sistema más costosa computacionalmente es el cómputo de la función fitness. Una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. % TODO: GRAFICA DE COMPARACION DE EMPLEAR O NO RESTRICCIONES EN PARALELO
 
-Por otro lado, para mejorar la eficiencia de todo el sistema, la \faseuno{}, la \fasedos y de la lectura de datos; se han cambiado las estructuras que representan conjuntos de Objectos ---un conjunto de Sectores, por ejemplo --- pasando de ser representados mediante Listas (\textit{List}) a \textit{Set}s de Java en todos los casos posibles dentro del código \legacy{} reutilizado (en el caso del código nuevo implementado se utilizan también). Los \textit{Set}s tienen una complejidad tanto para insertar un elemento como para comprobar si ya lo contiene ---operaciones que se realizan un gran número de veces--- de $O(1)$ a diferencia de la lista, que es $O(n)$. Además, permite evitar de forma nativa la repetición de elementos, lo que ahorra comprobaciones que, empleando listas, sí eran necesarias.
+Por otro lado, para mejorar la eficiencia de todo el sistema, la \faseuno{}, la \fasedos{} y de la lectura de datos; se han cambiado las estructuras que representan conjuntos de Objetos ---un conjunto de Sectores, por ejemplo --- pasando de ser representados mediante Listas (\textit{List}) a \textit{Set}s de Java en todos los casos posibles dentro del código \legacy{} reutilizado (en el caso del código nuevo implementado se utilizan también). Los \textit{Set}s tienen una complejidad tanto para insertar un elemento como para comprobar si ya lo contiene ---operaciones que se realizan un gran número de veces--- de $O(1)$ a diferencia de la lista, que es $O(n)$. Además, permite evitar la repetición de elementos de forma nativa para Java, lo que ahorra comprobaciones explícitas que, empleando listas, sí que eran necesarias.
 
-Para la representación de las Altas y Bajas se empleó un \textit{enumerado}, que emplea de forma interna un número entero para la representación, pues es más eficiente que emplear en su lugar una cadena de texto (\textit{String}) que es como se venía empleando en \legacy{} para, por ejemplo representar las acreditaciones.
+Para la representación de las Altas y Bajas se empleó un \textit{enumerado}, que emplea de forma interna un número entero para la representación, pues es más eficiente que emplear en su lugar una cadena de texto (\textit{String}), tal y como se venía empleando en \legacy{} para, por ejemplo, representar las acreditaciones.
 
 \subsection{Pruebas}
 \label{sec:4:tests}
@@ -410,7 +411,7 @@ La mayor parte de las pruebas realizadas al sistema fueron manuales, observando 
 Por otro lado, se llevaron a cabo test unitarios para testar la funcionalidad de métodos concretos, sobre todo debido a la dificultad de operar a nivel de carácter (explicado en la \autoref{sec:4:detalles-sistema}).
 Por ejemplo, el método \texttt{getIntervalos(turno:String)} que se encarga de cortar el String que representa el turno y seleccionar intervalos de trabajo continuado, retornando los índices de comienzo y fin del intervalo de trabajo continuado. Se ha probado con una cadena de caracteres que comienzan por descanso (``111''), que terminen por descanso, que el descanso esté en el medio y que no haya descanso.
 
-Respecto a test de integración o carga el sistema no requería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridas.
+Respecto a test de integración o carga, el sistema no requería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridas.
 
 \subsection{Despliegue y explotación} 
 \label{sec:4:despliegue}
@@ -420,14 +421,14 @@ Si bien esta fase software no se ha hecho en profundidad, si se ha preparado una
 La exportación tiene los siguientes ficheros:
 \begin{enumerate}
 	\item Un fichero ejecutable de tipo \textit{jar}
-	\item Un fichero properties con las siguientes propiedades:
+	\item Un fichero \textit{properties} con las siguientes propiedades:
 	\begin{enumerate}[label*={\arabic*}]
 		\item Metaheurística a usar (VNS o SA).
 		\item Ponderación de cada Fitness.
 		\item Tiempo máximo de ejecución.
 	\end{enumerate}
 	\item Directorio de salida, que contendrá un fichero Excel con la planificación y un fichero txt con el valor de  los fitness desglosados de la solución final.
-	\item Directorio de entrada, con subdirectorios de cada Unidad de Control y otro con los diferentes casos definidos
+	\item Directorio de entrada, con subdirectorios de cada Unidad de Control y otro con los diferentes casos definidos.
 \end{enumerate}
 
 El ejecutable encapsula toda la lógica de negocio del proyecto y permite ejecutarla de forma externa. Hace uso de los demás ficheros externos.

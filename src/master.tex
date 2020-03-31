@@ -183,10 +183,9 @@
 
 \usepackage[fixlanguage]{babelbib}
 \selectbiblanguage{spanish}
-\declarebtxcommands{spanish}{%
+\declarebtxcommands{spanish}{% Esto es para el estilo de bibliografía "bababbrv"
 	\def\btxmastthesis#1{\protect\foreignlanguage{spanish}{Trabajo de Fin de Máster}}%
-%	\def\btxmastthesis##1{\protect\foreignlanguage{#1}{Trabajo de Fin de Máster}}%
-%	861 \def\btxmastthesis##1{\protect\foreignlanguage{#1}{Master’s thesis}}%
+	\def\btxphdthesis#1{\protect\foreignlanguage{spanish}{Tesis Doctoral}}%
 }
 
 
@@ -357,7 +356,7 @@
 	%  BIBLIOGRAPHY
 	%
     \normalem
-    \bibliographystyle{bababbrv}
+    \bibliographystyle{ieeetr}
     \bibliography{master}
 
 \end{document}
