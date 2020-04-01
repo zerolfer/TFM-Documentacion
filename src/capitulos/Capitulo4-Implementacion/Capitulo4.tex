@@ -51,10 +51,12 @@ En la \autoref{sec:4:implementacion} se describen las tecnologías software util
 El objetivo de esta fase consiste en la educción de los requisitos que precisa el software a partir de los documentos e información facilitada por los tutores y demás \textit{stakeholders}.
 
 Los \textit{stakeholders} del proyecto son: CRIDA, los tutores, y los estudiantes de doctorado o máster implicados actual o anteriormente (Tino Tello, Jónatan Lara y Pablo Lozano) y será a quienes se deberá recurrir para aclarar dudas. 
-% TODO: se puede??
+
 El \textit{stakeholder} principal por supuesto es CRIDA, que guiará los objetivos principales y responderá a las preguntas de mayor complejidad y que competan al dominio del problema. Los tutores tendrán las mismas competencias pero a nivel del TFM y no del proyecto en su totalidad, y serán quienes faciliten la documentación inicial relativa al dominio del problema. El resto de \textit{stakeholders} y, especialmente, Tino Tello, proporcionarán la información relativa al software y aclararán conceptos de esta índole.
 
-La documentación inicial facilitada por los tutores se basa en dos papers: uno publicado y otro sin publicar a fecha de inicio del TFM~\cite{articulo1, articulo2}. Una vez leída la documentación inicial y comprendido el dominio del problema, se realizó una entrevista con Tino Tello para comprender la implementación del sistema \legacy{} y poder comenzar a trabajar. En dicha entrevista se obtuvo como conclusión la creación de un repositorio con control de versiones Git disponible para todos los \textit{stakeholders} y el inicio del primer ciclo de la planificación (definidos en la \autoref{sec:4:planificacion}). % TODO: los he llamado PAPERS y no ARTICULOS
+La documentación inicial facilitada por los tutores se basa en dos papers: uno publicado y otro sin publicar a fecha de inicio del TFM~\cite{articulo1, articulo2}. 
+
+Una vez leída la documentación inicial y comprendido el dominio del problema, se realizó una entrevista con Tino Tello para comprender la implementación del sistema \legacy{} y poder comenzar a trabajar. En dicha entrevista se obtuvo como conclusión la creación de un repositorio con control de versiones Git disponible para todos los \textit{stakeholders} y el inicio del primer ciclo de la planificación (definidos en la \autoref{sec:4:planificacion}). % TODO: los he llamado PAPERS y no ARTÍCULOS
 
 En este punto se identifican los requisitos del sistema tanto del dominio (obtenidos del software \legacy{} y de la documentación inicial) como del sistema (entrada/salida, interfaces, etc.) que se encuentran recopilados en las próximas secciones.
 
@@ -120,7 +122,7 @@ A continuación, las relativas a la posición y asignación de los controladores
 	
 	\item Un controlador no puede cambiar de posición de control de una posición ejecutiva de un determinado sector a una posición ejecutiva de otro sector diferente, sin que exista un descanso entre medias, a no ser que ambos sectores sean afines (cambio de configuración). Nota: si no hay cambio de configuración de sectores no es posible que dos sectores diferentes posean volúmenes comunes.
 	
-	\item El número máximo de sectores por los que rota un controlador es 3.	
+	\item El número máximo de sectores por los que rota un controlador es de 3.	
 \end{enumerate}
 
 
@@ -274,9 +276,10 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 En esta etapa diseñamos, mediante la esquematización, el sistema a implementar. 
 El sistema se ha diseñado de tal manera que podamos reutilizar la mayor cantidad de código implementado y para ello se ha tomado como fundamento el paradigma Orientado a Objetos (POO) en contraposición con el paradigma procedimental. 
 Además, las limitaciones de implementación de usar el lenguaje de programación Java (véase la \autoref{sec:4:implementacion}), favorecen el uso de este paradigma. 
-Por otro lado, la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante ampliación y evolución y, posiblemente, más de una persona empleará el código en un futuro. La selección del paradigma afectará a la forma de diseñar el sistema.
+Por otro lado, la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante ampliación y evolución y, posiblemente, más de una persona empleará el código en un futuro. 
 % Este salto de línea estropea las figuras de esquema, NO PONER
-El software se diseñó en el lenguaje universal de diseño UML, y debe notarse que los esquemas mostrados en los capítulos anteriores también forman parte del proceso de diseño, pero por claridad en la memoria se han incluido en sus correspondientes secciones.
+
+La selección del paradigma afectará a la forma de diseñar el sistema. El software se diseñó en el lenguaje universal de diseño UML, y debe notarse que los esquemas mostrados en los capítulos anteriores también forman parte del proceso de diseño, pero por claridad en la memoria se han incluido en sus correspondientes secciones.
 
 Se ha dividido el sistema en cuatro módulos:
 \begin{itemize}
@@ -296,8 +299,6 @@ En segundo lugar, la lógica de los entornos, en la \autoref{fig:4:diseño:entor
 Por último, los VNS darán uso de las estructuras de entorno mediante los sets, en la \autoref{fig:4:diseño:tipoEntorno}, que implementan el comportamiento de los entornos según su naturaleza probabilística o determinista.
 
 El módulo de inicialización (\faseuno{}) empleará las clases de tipo \textit{factoría} (\textit{<<Factory>>}) para inicializar el VNS, las estructuras de entorno y el tipo de Set de los entornos según la entrada del sistema y dar comienzo a la \faseuno{}.
-
-En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también las clases reutilizadas del sistema \legacy{} en rosa, y las modificadas, ampliadas o creadas en magenta. Nótese que la interfaz de la clase Fitness es utilizada únicamente por las estructuras de entorno. La última decisión de diseño se trata de emplear un mapa de soluciones para guardar los fitness de las soluciones y recuperarlos rápidamente y con bajo coste computacional ($O(1)$) en el resto de ocasiones que sean requeridos en las clases del paquete \textit{vns}, de esta forma su cálculo se realizará una única vez.
 
 \begin{figure}[htbp]
 	\centering
@@ -319,6 +320,11 @@ En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también la
 	\caption{Esquema del paquete \textit{estructuras-entorno} (cian)}
 	\label{fig:4:diseño:entornos}
 \end{figure}
+
+En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también las clases reutilizadas del sistema \legacy{} en rosa, y las modificadas, ampliadas o creadas en magenta. Nótese que la interfaz de la clase Fitness es utilizada únicamente por las estructuras de entorno. La última decisión de diseño se trata de emplear un mapa de soluciones para guardar los fitness de las soluciones y recuperarlos rápidamente y con bajo coste computacional ($O(1)$) en el resto de ocasiones que sean requeridos en las clases del paquete \textit{vns}, de esta forma su cálculo se realizará una única vez.
+
+
+
 
 
 %\subsection{Implementación}
@@ -358,8 +364,8 @@ Los frameworks utilizados han sido:
 \subsubsection{Generador de números aleatorios}
 \label{sec:4:impl:random}
 
-Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se hace necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no se trata de uno de los mejores existentes, y debido a que se da uso un gran número de veces, se ha preferido emplear un generador cuyo periodo sea mayor. Se ha optado por emplear el llamado xoroshiro128+ (más información de en \url{http://prng.di.unimi.it/}) con un periodo de $2^{128}$ frente al de java, que es $2^{48}$.
-\NOTE{¿Hacer comparación entre generadores? ¿Cómo?}
+Debido a la naturaleza estocástica de la \fasedos{} en cuanto a la generación de soluciones aleatorias, la selección de entornos probabilísticos y la implementación de los movimientos definidos, se hace necesario el uso de alguna librería para muestrear números aleatorios. Java incluye un paquete con una implementación propia, sin embargo, no se trata de uno de los mejores existentes, y debido a que se da uso un gran número de veces, se ha preferido emplear un generador cuyo periodo sea mayor. Se ha optado por emplear el llamado xoroshiro128+ (más información de en \url{http://prng.di.unimi.it/}) con un periodo de $2^{128}$ frente al de java, que es $2^{48}$. Se ha elegido ésta librería por su facilidad de uso y su disponibilidad en el repositorio de \textit{Maven}.
+%\NOTE{¿Hacer comparación entre generadores? ¿Cómo?}
 
 \subsubsection{Detalles del sistema}
 \label{sec:4:detalles-sistema}
@@ -406,7 +412,7 @@ Para la representación de las Altas y Bajas se empleó un \textit{enumerado}, q
 \subsection{Pruebas}
 \label{sec:4:tests}
 
-La mayor parte de las pruebas realizadas al sistema fueron manuales, observando el fichero Excel de salida y analizando el comportamiento del algoritmo y detectar así anomalías en él.
+La mayor parte de las pruebas de validación realizadas al sistema fueron manuales, observando el fichero Excel de salida y analizando el comportamiento del algoritmo y detectar así anomalías en él. Éstas pruebas manuales fueron realizadas empleado diferentes instancias del problema cada una variando una característica, ya sea la Unidad de Control o el tipo de incidencia. Éstas instancias se definen en detalle en la \autoref{sec:5:def-casos}.
 
 Por otro lado, se llevaron a cabo test unitarios para testar la funcionalidad de métodos concretos, sobre todo debido a la dificultad de operar a nivel de carácter (explicado en la \autoref{sec:4:detalles-sistema}).
 Por ejemplo, el método \texttt{getIntervalos(turno:String)} que se encarga de cortar el String que representa el turno y seleccionar intervalos de trabajo continuado, retornando los índices de comienzo y fin del intervalo de trabajo continuado. Se ha probado con una cadena de caracteres que comienzan por descanso (``111''), que terminen por descanso, que el descanso esté en el medio y que no haya descanso.
