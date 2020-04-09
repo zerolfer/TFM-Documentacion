@@ -5,7 +5,7 @@
 
 En este capítulo se detallan los procesos realizados para la parte de experimentación realizada en este TFM. En primer lugar se definen los casos de prueba empleados, posteriormente se detalla el proceso de ajuste de los parámetros, presente en toda metaheurística y que nos permite fijar los valores del VNS empleado en la \fasedos{} del sistema (definida en la \autoref{sec:3:metaheurística}) a aquellos que ofrecen mejores resultados. Por último, se ha hecho una comparación de rendimiento de la metaheurística implementada frente a la ya mencionada metaheurística \textit{Simulated Annealing}.
 
-Las ejecuciones presentadas a lo largo de este capítulo han sido realizadas en un ordenador con las características recopiladas en la \autoref{table:5:caracteristicas-pc}
+Las ejecuciones presentadas a lo largo de este capítulo han sido realizadas en un ordenador con las características recopiladas en la \autoref{table:5:caracteristicas-pc}.
 
 \begin{table}[h]
 	\centering
@@ -21,7 +21,9 @@ Las ejecuciones presentadas a lo largo de este capítulo han sido realizadas en 
 \end{table}
 
 \subsection{Definición de los casos de prueba}
-Para este capítulo se han utilizado un conjunto de casos de prueba reales que fueron proporcionados por CRIDA. Inicialmente CRIDA proporcionó información en los formatos de ficheros propuesto (véase \autoref{sec:4:req-io}) que fue adaptada para conformar los 8 casos de prueba distintos que se han empleado y definiremos a continuación. Se ha incluido en el \autoref{Anexo:C} una tabla de los casos que permite ver de forma más detallada y clara las características de cada uno de ellos.
+\label{sec:5:def-casos}
+
+Para este capítulo se han utilizado un conjunto de casos (instancias) de prueba reales que fueron proporcionados por CRIDA. Inicialmente CRIDA proporcionó información en los formatos de ficheros propuesto (véase \autoref{sec:4:req-io}) que fue adaptada para conformar los 8 casos de prueba distintos que se han empleado y definiremos a continuación. Se ha incluido en el \autoref{Anexo:C} una tabla de los casos que permite ver de forma más detallada y clara las características de cada uno de ellos.
 
 \subsubsection{Caso 1}
 
@@ -158,8 +160,65 @@ Como podemos ver...
 \end{table}
 
 \subsection{Ajuste paramétrico}
-Lorem ipsum
-\subsubsection{Parámetros del sistema} \label{capitulo:5:parametros-sistema}
+En toda metaheurística y demás sistemas de optimización, tienen un conjunto de parámetros que pueden tomar un conjunto de posibles valores y que afectan activamente al rendimiento del sistema. Para poder fijar estos valores, se lleva a cambo un proceso denominado Ajuste Paramétrico, o \textit{Parameter Tunning}, que se puede realizar de diferentes formas.
+
+El enfoque de inicialización \textit{off-line} consiste en fijar los valores previamente a la ejecución de la metaheurística de forma empírica para cada instancia del problema dado. Este proceso suele realizar de forma secuencial, es decir, de uno en uno. Sin embargo esta estrategia no considera las interacciones entre los parámetros y no garantiza hallar la configuración optima de los parámetros. Existen otras estrategias como \textit{Latin Hypercube}, emplear \textit{Racing Algorithms} o incluso puede ser planteado como otro problema de optimización a resolver mediante otra metaheurística.
+
+Por otro lado se considera el enfoque de inicialización de parámetros \textit{on-line}, que permite una evolución dinámica, en tiempo de ejecución, de los valores de cada parámetro en función del rendimiento del sistema u otro criterio determinista o estocástico.
+
+En este TFM, por ser lo más común y sencillo, se decidió emplear un enfoque \textit{off-line} de forma secuencial. Para ello, se han de ordenar los parámetros en función de su robustez, es decir, lo mucho que afecte un pequeño cambio en el parámetro al desempeño del algoritmo y, secuencialmente en ese orden, fijar el valor de todos los demás y realizar ejecuciones de la metaheurística con diferentes valores para el parámetro en cuestión para finalmente seleccionar aquel valor que mejores resultados ofrece. A continuación se repite el proceso para el siguiente parámetro, sucesivamente.
+Una vez ajustados todos los parámetros, se repite el proceso desde el principio hasta que ningún parámetro cambie de valor.
+
+% ALFONSO SAID:
+% Empieza por aquel parámetro que creas que es menos robusto, es decir, aquel que al realizar un pequeño cambio en el parámetro pueda hacer que cambie significativamente el desempeño del algoritmo. Una vez que determines su valor más adecuado, lo fijas y analizas el segundo parámetro menos rubusto. Una vez que determines su valor más adecuado, lo fijas y analizas el tercer parámetro menos robusto. Y así sucesivamente, hasta el último y vuelves a empezar para realizar otro ciclo hasta que los parámetros no cambien o cambien muy poco. Siempre cambias un parámetro, nunca realices cambios en más de un parámetro a la vez.
+
+\subsubsection{Parámetros del sistema} \label{sec:5:parametros-sistema}
+Los parámetros del sistema, ordenados por su robustez son:
+\begin{enumerate}
+	\item Tipo de VNS
+	\begin{enumerate}[label={},left=-1pt]
+		\item Para skewed:
+	\end{enumerate}
+	\begin{enumerate}[label*={\arabic*}]
+		\item Alpha
+		\item Función de distancia 
+	\end{enumerate}
+	\item Estructuras de vecindad y orden
+	\item Naturaleza del orden de los entornos (determinísticos o probabilísticos)
+	\begin{enumerate}[label={},left=-1pt]
+		\item Para Probabilístico:
+	\end{enumerate}
+	\begin{enumerate}[label*={\arabic*}]
+		\item Probabilidad de diversificación
+		\item Variación de la probabilidad de diversificación 
+		\item Numero de iteraciones sin variar la probabilidad de diversificación 
+	\end{enumerate}
+	\item Número de iteraciones para comprobar el porcentaje de mejoría (ciclos)
+	\item Porcentaje mínimo de mejoría
+	\item Número máximo de iteraciones sin mejora para la búsqueda local
+	\item Porcentaje mínimo de mejoría para la búsqueda local
+\end{enumerate}
+
+\subsubsection{Resultados del ajuste para cada caso}
+
+Los resultados tras el ajuste paramétrico se encuentran recogidos en la \autoref{table:5:tunning-results}
+
+\begin{table}[h]
+	\centering
+	\caption{Sectorización modificada del Caso 1}
+	\begin{tabular}{ccc}
+		\hline
+		\textbf{Núcleo}                                           & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
+		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+		\multicolumn{1}{c|}{\multirow{2}{*}{Barcelona Ruta Este}} & 3D                     & 7:30:00--15:00:00    \\
+		\multicolumn{1}{c|}{}                                     & 5A                     & 7:30:00--10:30:00    \\
+		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
+		Barcelona Ruta Oeste                                      & 6C                     & 10:30:00--15:00:00   \\ \hline
+	\end{tabular}
+	\label{table:5:tunning-results}
+\end{table}
+
+La calidad de las soluciones alcanzadas con este ajuste son las de la \autoref{table:5:soluciones}. Como puede verse.... \NOTE{TODO: Continuar}% TODO: continuar
 
 \subsection{Comparación de metaheurísticas}
 Lorem ipsum
