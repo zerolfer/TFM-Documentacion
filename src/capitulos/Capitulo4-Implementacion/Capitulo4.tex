@@ -397,17 +397,74 @@ Esto se emplea fundamentalmente para los entornos estocásticos y las estructura
 Por otro lado, para poder tomar mediciones del rendimiento y desempeño del algoritmo se ha creado una clase estática extra que permite almacenar en un fichero externo CSV la información requerida (recopilada en el \ref{RIO:salida-csv}).
 
 \subsubsection{Mejorando la eficiencia del sistema}
+%\subsubsection{Análisis de rendimiento del sistema}
 \label{sec:4:mejorando-eficiencia}
 
 Para mejorar la eficiencia general del sistema, tal y como se propuso en la hipótesis inicial \ref{H3}, se han realizado pequeñas modificaciones para que el sistema consuma menos tiempo en determinadas acciones y que lo pueda emplear en la búsqueda.
 
-Para ello, se ha analizado complejidad del sistema en cuanto a tiempo de ejecución de las diferentes partes y se ha obtenido lo de la figura: \NOTE{poner la figura con la eficiencia del sistema por clases. PENDIENTE DE USAR EL PC DEL DESPACHO PARA FINALIZAR ESTA SECCIÓN} % TODO!!!
+Se realizó un análisis empleando las tecnologías de \textit{Java Mission Control} incluido en la JDK. En primer lugar contra el sistema \legacy{} y cuyos resultados pueden observarse en la \autoref{fig:4:method-profiling-legacy}.
 
-La parte del sistema más costosa computacionalmente es el cómputo de la función fitness. Una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. % TODO: GRAFICA DE COMPARACION DE EMPLEAR O NO RESTRICCIONES EN PARALELO
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{Method-Profiling-Legacy}
+	\caption{}
+	\label{fig:4:method-profiling-legacy}
+\end{figure}
+
+Como puede verse, la función que más se utiliza y más computo total emplea es, como era de esperar, el cálculo del fitness, concretamente el sub-objetivo \ref{O1}, relativo al numero de restricciones. Una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. Además, el mapa de soluciones empleado, ya definido al final de la \autoref{sec:4:diseño}, permite reutilizar el cálculo realizado en cada fitness siempre que sea posible, disminuyendo carga en éste lugar del sistema.
 
 Por otro lado, para mejorar la eficiencia de todo el sistema, la \faseuno{}, la \fasedos{} y de la lectura de datos; se han cambiado las estructuras que representan conjuntos de Objetos ---un conjunto de Sectores, por ejemplo --- pasando de ser representados mediante Listas (\textit{List}) a \textit{Set}s de Java en todos los casos posibles dentro del código \legacy{} reutilizado (en el caso del código nuevo implementado se utilizan también). Los \textit{Set}s tienen una complejidad tanto para insertar un elemento como para comprobar si ya lo contiene ---operaciones que se realizan un gran número de veces--- de $O(1)$ a diferencia de la lista, que es $O(n)$. Además, permite evitar la repetición de elementos de forma nativa para Java, lo que ahorra comprobaciones explícitas que, empleando listas, sí que eran necesarias.
 
 Para la representación de las Altas y Bajas se empleó un \textit{enumerado}, que emplea de forma interna un número entero para la representación, pues es más eficiente que emplear en su lugar una cadena de texto (\textit{String}), tal y como se venía empleando en \legacy{} para, por ejemplo, representar las acreditaciones.
+
+\paragraph{Análisis de rendimiento}
+Por último, se ha realizado un análisis de rendimiento comparando la eficiencia del sistema \legacy{} con el sistema actual. La \autoref{fig:4:method-profiling-legacy} mostraba el llamado \textit{Method profiling} que cuenta el número de veces que emplea el procesador cada paquete (sección \textit{Top Package}), cada clase (sección \textit{Top Class}) y cada método (sección \textit{Stack Trace}). Lo que más se emplea son las clases realacionadas con los Strings, esto ya fue tratado en la \autoref{sec:4:detalles-sistema} (en la que se señalaron posibles alternativas para mejorar este punto), donde se señaló que es una limitación importante del sistema que se decidió preservar en este sistema, por lo que no es extraño observar en la \autoref{fig:4:method-profiling-system} que en el sistema definido sigue siendo el paquete \textit{java.lang} (que es el que contiene la clase String) como la propia clase String sigan siendo los más utilizados.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{Method-Profiling-System}
+	\caption{}
+	\label{fig:4:method-profiling-system}
+\end{figure}
+
+
+
+Por otro lado, el número de veces que se emplean los métodos, clases y paquetes relativos al fitness y el cálculo de restricciones ha disminuido notablemente. Para éste nuevo sistema, el método más empleado se trata de \textit{esTrabajo(turno: String)}, que comprueba de manera resursiva si una cadena de texto que representa un fragmento de turno es en su totalidad trabajo. Se trata nuevamente de la limitación de modelar el turno como un único String, que ya se explicó previamente.
+
+%En la figura \autoref{fig:4:flame-diagram} se incluye un diagrama de llama (\autoref{Flame-diagram})
+En el \autoref{Anexo:D} se incluye una comparativa del rendimiento de ambos sistemas mediante el uso de diagramas de llama (\textit{Flame Diagram}) que resume la información del \textit{Method Profiling} indicada anteriormente pero de una forma más visual. En él puede apreciarse que se ha logrado el objetivo de dedicar mayor tiempo de cómputo a la búsqueda en lugar de al cálculo de fitness.
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=\linewidth]{Flame-diagram}
+%	\caption{}
+%	\label{fig:4:flame-diagram}
+%\end{figure}
+
+Respecto al rendimiento general de CPU y memoria podemos ver en la \autoref{fig:4:performance-comparativa4} una comparativa de ambas gráficas. El uso de CPU es notablemente menor, mientras que el de memoria es similar pero con una tendencia incremental en lugar de continua, esto es debido al uso del mapa de soluciones, la estructura de datos que más memoria requiere.
+
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{capitulos/Capitulo4-Implementacion/recursos/Performance-legacy}
+		\caption{sectorización 3B\linebreak}
+		\label{fig:4:performance-legacy}
+	\end{subfigure}
+	
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{capitulos/Capitulo4-Implementacion/recursos/Performance-system}
+		\caption{sectorización 3D\linebreak}
+		\label{fig:4:performance-system}
+	\end{subfigure}
+	
+	\caption[Comparativa de rendimiento global del sistema]{Comparativa de rendimiento global del sistema, en primer lugar de CPU, a continuación de memoria RAM dedidaca al proceso (Heap) y por último el número de métodos empleados agrupados por tiempo.}
+	\label{fig:4:performance-comparativa}
+\end{figure}
+
+
 
 \subsection{Pruebas}
 \label{sec:4:tests}

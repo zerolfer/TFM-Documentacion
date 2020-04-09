@@ -1,0 +1,11 @@
+%\graphicspath{anexos/recursos/}
+\section{Comparativa del rendimiento del sistema. Visión general} \label{Anexo:D}
+
+En la \autoref{sec:4:mejorando-eficiencia} se plantean diferentes gráficas para analizar y comparar el rendimiento del sistema \legacy{} frente al sistema construido para este TFM. Sin embargo, debido a limitaciones de tamaño de página, no se ha podido incluir lo que es el formato más empleado en éste tipo de comparativas, el llamado \textit{Flame Diagram} (llamado así por su forma similar a una llamarada). Ésta gráfica resume el \textit{Method Profiling}, explicado en la sección referenciada previamente, de una forma más visual, ponde podemos observar además del numero de llamadas, cada uno de los métodos de forma jerarquizada, según ciertos métodos invoquen a otros.
+
+Gracias a ésto, podemos analizar el porcentaje de cómputo que el sistema trata para cada método o parte del sistema, a continuación se incluye los dos diagramas de llama para sendos sistemas. Se destacan los porcentajes relativos al computo del fitness y de la búsqueda. Para el sistema \legacy{} el cómputo de restricciones es del 94.91\% mientras que en el sistema construido es del 25.10\%.
+
+En el diagrama podemos observar dos partes, cada una representa un hilo de ejecución específico, el del sistema en general y el creado en cada llamada a la función de evaluación (fitness) para la paralelización del cómputo del sub-objetivo \ref{O1}: el conteo del número de restricciones incumplidas (las incluidas en la \autoref{sec:4:RD}). Además del propio cómputo paralelizado, tambien se requiere de una cierta cantidad de procesamiento para aunar estos hilos y agrupar el número de restricciones, así como computar el resto del fitness. Esta es la razon por la que aparezca en dos lugares en el diagrama, marcados en negro y en morado.
+Por último, en verde se han indicado la localización del hilo de ejecución del sistema en sí, \sa{} para el sistema \legacy{}, \vns{} para el sistema final.
+
+\includepdf[landscape=True]{Flame-diagram}

@@ -198,7 +198,7 @@ El personal del centro normalmente tendría conocimiento de las contingencias an
 Por todo ello, no solamente cambia la naturaleza del sistema, sino también los objetivos del mismo.
 
 El enfoque llevado a cabo en el nuevo sistema para su resolución sigue la misma línea de investigación que los anteriores, una metaheurística como aplicación directa de la Inteligencia Artificial en el ámbito de la optimización multiobjetivo.
-Los antecedentes del proyecto resuelven el problema de planificación mediante dos metaheurísticas diferentes: \textit{Simulated Annealing} (SA) y \textit{Variable Neighborhood Search} (VNS), ambas de naturaleza muy diferente.
+Los antecedentes del proyecto resuelven el problema de planificación mediante dos metaheurísticas diferentes: \sa{} (SA) y \vns{} (VNS), ambas de naturaleza muy diferente.
  
 Esta serie de proyectos anteriores llegó a su culminación mediante una publicación en la revista \textit{Mathematical Problems in Engineering}~\cite{articulo1} y posteriormente otra en \textit{Mathematics -- Open Access Journal}~\cite{articulo2}. 
 En este último se comparan resultados de sendas metaheurísticas, donde puede apreciarse que el SA es superior en casi todos los casos, aunque en tiempo de ejecución el VNS le supera, salvo en dos instancias. Por ello, en este caso en el que el tiempo es crucial, parece prometedora la idea del VNS para este nuevo sistema. 
@@ -206,9 +206,5 @@ En este último se comparan resultados de sendas metaheurísticas, donde puede a
 La metodología propuesta (véase \autoref{capitulo:3}) para este nuevo sistema es completamente diferente a la propuesta por Tello et al. en~\cite{articulo1}, no obstante, existen conceptos y subprocesos equivalentes en ambos. 
 A lo largo de las próximas secciones subrayaremos otras diferencias entre ambos sistemas más concretas en cuanto a implementación y a la metodología.
 
-Finalmente, es importante destacar que el origen de ambos proyectos pretende automatizar el proceso de planificación que actualmente llevan a cabo manualmente, y que el sistema \legacy{} será utilizado como herramienta para generar planificaciones diarias, por lo que el sistema aquí presentado podrá utilizar el formato de salida del anterior como una entrada (más detalles en el \autoref{capitulo:3}) 
+Finalmente, es importante destacar que el origen de ambos proyectos pretende automatizar el proceso de planificación que actualmente llevan a cabo manualmente, y que el sistema \legacy{} será utilizado como herramienta para generar planificaciones diarias, por lo que el sistema aquí presentado podrá utilizar el formato de salida del anterior como una entrada (más detalles en el \autoref{capitulo:3}), con un porcentaje complementario al del hilo de ejecución de las restricciones.
 
-
-
-% TODO: reeler y adecuar, llamar regiones en lugar de dependencias y comentar los tipos de estaciones (ACC o torre) y 
-%despues listar las diferentes que hay (la lista de arriba)
