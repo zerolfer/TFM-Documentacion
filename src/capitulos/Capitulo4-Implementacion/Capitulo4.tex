@@ -226,7 +226,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 				\item El resto de columnas serán los nombres de los sectores (mayúscula si el puesto es ejecutivo, minúscula si es planificador) o ``111'' si es un descanso. 
 			\end{enumerate}		
 			\item Un mismo fichero podrá contener más de una distribución con diferentes intervalos de tiempo.
-			\item Más detalles sobre el formato y el proceso de creación en el \autoref{Anexo:A}. %TODO
+			\item Más detalles sobre el formato y el proceso de creación en el \autoref{Anexo:formato-planificacion-inicial}. %TODO
 		\end{enumerate}
 	\end{enumerate}
 	
@@ -289,7 +289,7 @@ Se ha dividido el sistema en cuatro módulos:
 	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
 \end{itemize}
 
-Los módulos de entrada y salida se han resumido en dos clases que encapsulan toda la lógica de negocio, al igual que el módulo que conforma la \faseuno{}. Sin embargo, para el módulo de búsqueda se ha diseñado un esquema de clases que se recoge a continuación en esta sección. El esquema se ha separado en 3 partes para una mayor claridad, pero se ha incluido de forma completa en el \autoref{Anexo:B}. 
+Los módulos de entrada y salida se han resumido en dos clases que encapsulan toda la lógica de negocio, al igual que el módulo que conforma la \faseuno{}. Sin embargo, para el módulo de búsqueda se ha diseñado un esquema de clases que se recoge a continuación en esta sección. El esquema se ha separado en 3 partes para una mayor claridad, pero se ha incluido de forma completa en el \autoref{Anexo:diagrama-clases}. 
 %En esta sección explicaremos el esquema separándolo en 3 partes para una mayor claridad.
 
 En primer lugar, tenemos la lógica relativa a los VNS propiamente dichos, que serán implementados siguiendo el diseño de la \autoref{fig:4:diseño:vns}.
@@ -411,7 +411,7 @@ Se realizó un análisis empleando las tecnologías de \textit{Java Mission Cont
 	\label{fig:4:method-profiling-legacy}
 \end{figure}
 
-Como puede verse, la función que más se utiliza y más computo total emplea es, como era de esperar, el cálculo del fitness, concretamente el sub-objetivo \ref{O1}, relativo al numero de restricciones. Una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. Además, el mapa de soluciones empleado, ya definido al final de la \autoref{sec:4:diseño}, permite reutilizar el cálculo realizado en cada fitness siempre que sea posible, disminuyendo carga en éste lugar del sistema.
+Como puede verse, la función que más se utiliza y más computo total emplea es, como era de esperar, el cálculo del fitness, concretamente el objetivo \ref{O1}, relativo al numero de restricciones. Una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. Además, el mapa de soluciones empleado, ya definido al final de la \autoref{sec:4:diseño}, permite reutilizar el cálculo realizado en cada fitness siempre que sea posible, disminuyendo carga en éste lugar del sistema.
 
 Por otro lado, para mejorar la eficiencia de todo el sistema, la \faseuno{}, la \fasedos{} y de la lectura de datos; se han cambiado las estructuras que representan conjuntos de Objetos ---un conjunto de Sectores, por ejemplo --- pasando de ser representados mediante Listas (\textit{List}) a \textit{Set}s de Java en todos los casos posibles dentro del código \legacy{} reutilizado (en el caso del código nuevo implementado se utilizan también). Los \textit{Set}s tienen una complejidad tanto para insertar un elemento como para comprobar si ya lo contiene ---operaciones que se realizan un gran número de veces--- de $O(1)$ a diferencia de la lista, que es $O(n)$. Además, permite evitar la repetición de elementos de forma nativa para Java, lo que ahorra comprobaciones explícitas que, empleando listas, sí que eran necesarias.
 
@@ -432,7 +432,7 @@ Por último, se ha realizado un análisis de rendimiento comparando la eficienci
 Por otro lado, el número de veces que se emplean los métodos, clases y paquetes relativos al fitness y el cálculo de restricciones ha disminuido notablemente. Para éste nuevo sistema, el método más empleado se trata de \textit{esTrabajo(turno: String)}, que comprueba de manera resursiva si una cadena de texto que representa un fragmento de turno es en su totalidad trabajo. Se trata nuevamente de la limitación de modelar el turno como un único String, que ya se explicó previamente.
 
 %En la figura \autoref{fig:4:flame-diagram} se incluye un diagrama de llama (\autoref{Flame-diagram})
-En el \autoref{Anexo:D} se incluye una comparativa del rendimiento de ambos sistemas mediante el uso de diagramas de llama (\textit{Flame Diagram}) que resume la información del \textit{Method Profiling} indicada anteriormente pero de una forma más visual. En él puede apreciarse que se ha logrado el objetivo de dedicar mayor tiempo de cómputo a la búsqueda en lugar de al cálculo de fitness.
+En el \autoref{Anexo:flame-diagram} se incluye una comparativa del rendimiento de ambos sistemas mediante el uso de diagramas de llama (\textit{Flame Diagram}) que resume la información del \textit{Method Profiling} indicada anteriormente pero de una forma más visual. En él puede apreciarse que se ha logrado el objetivo de dedicar mayor tiempo de cómputo a la búsqueda en lugar de al cálculo de fitness.
 
 %\begin{figure}
 %	\centering

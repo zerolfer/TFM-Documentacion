@@ -3,7 +3,7 @@
 \section{Resultados experimentales} \label{capitulo:5}
 %En este capítulo se detallan los casos de prueba empleados para la parte de experimentación realizada para este TFM. La metaheurística de la \fasedos{} del sistema (definida en la \autoref{sec:3:metaheurística}) consta de un conjunto de parámetros, enumerados en esta sección, que afectan al rendimiento de esta. Se ha analizado para cada caso, los valores de cada parámetro que mejores resultados ofrecen.
 
-En este capítulo se detallan los procesos realizados para la parte de experimentación realizada en este TFM. En primer lugar se definen los casos de prueba empleados, posteriormente se detalla el proceso de ajuste de los parámetros, presente en toda metaheurística y que nos permite fijar los valores del VNS empleado en la \fasedos{} del sistema (definida en la \autoref{sec:3:metaheurística}) a aquellos que ofrecen mejores resultados. Por último, se ha hecho una comparación de rendimiento de la metaheurística implementada frente a la ya mencionada metaheurística \textit{Simulated Annealing}.
+En este capítulo se detallan los procesos realizados para la parte de experimentación realizada en este TFM. En primer lugar se definen los casos de prueba empleados, posteriormente se detalla el proceso de ajuste de los parámetros, presente en toda metaheurística y que nos permite fijar los valores del VNS empleado en la \fasedos{} del sistema (definida en la \autoref{sec:3:metaheurística}) a aquellos que ofrecen mejores resultados. Por último, se ha hecho una comparación de rendimiento de la metaheurística implementada frente a la ya mencionada metaheurística \sa{}.
 
 Las ejecuciones presentadas a lo largo de este capítulo han sido realizadas en un ordenador con las características recopiladas en la \autoref{table:5:caracteristicas-pc}.
 
@@ -23,141 +23,16 @@ Las ejecuciones presentadas a lo largo de este capítulo han sido realizadas en 
 \subsection{Definición de los casos de prueba}
 \label{sec:5:def-casos}
 
-Para este capítulo se han utilizado un conjunto de casos (instancias) de prueba reales que fueron proporcionados por CRIDA. Inicialmente CRIDA proporcionó información en los formatos de ficheros propuesto (véase \autoref{sec:4:req-io}) que fue adaptada para conformar los 8 casos de prueba distintos que se han empleado y definiremos a continuación. Se ha incluido en el \autoref{Anexo:C} una tabla de los casos que permite ver de forma más detallada y clara las características de cada uno de ellos.
+Para este capítulo se han utilizado un conjunto de casos (instancias) de prueba reales que fueron proporcionados por CRIDA. Inicialmente CRIDA proporcionó información en los formatos de ficheros propuesto (véase \autoref{sec:4:req-io}) que fue adaptada para conformar los 8 casos de prueba distintos que se han empleado y definiremos a continuación. Una descripción de los casos de prueba se encuentra incluida en el \autoref{Anexo:tabla-casos}, junto con una tabla resumen de los casos que permite ver de forma más detallada y clara las características de cada uno de ellos.
 
-\subsubsection{Caso 1}
+Los casos de prueba van del 1 al 9, a excepción del caso 2, para el que \gls{CRIDA} no facilitó todos los datos y se decidió mantener el número identificativo de los demás casos por si en un futuro se completase con la información restante.
 
-\textbf{Unidad de Control}: Barcelona
+Los casos prueban el sistema empleando distintas Unidades de Control: Madrid, Barcelona y Palma de Mallorca; variando en cada uno el problema a resolver: modificación de la sectorización, baja (y alta en algún caso) de un controlador, o incluso ambos.
 
-\textbf{Incidencia}: Modificación de sectorizaciones. La \autoref{fig:5:caso1} muestra cómo es este cambio.
-Como podemos ver...
+Los casos 4 y 7 resuelven los dos problemas a la vez: el cambio de sectorización y baja+alta de un controlador, por lo que son las instancias del problema más costosas de todas, y como veremos, son las que peores resultados alcanzan. % TODO: verificar que esto es cierto
 
+Por otro lado, cabe destacar que los casos 5 requiere del uso de un controlador imaginario (para la inicialización realizada en la \faseuno{}), el caso 7 requiere de cuatro (3 para un nuevo sector, 1 para la baja del controlador) y el caso 8 y el 9 precisan de uno, mientras que el resto no necesitan ningún controlador imaginario para la inicialización. En los citados casos, el objetivo \ref{O1} tomará la máxima importancia hasta que alcance su valor máximo de 1, mientras que el los demás, el valor inicial de este ya es de uno, por lo que la búsqueda se dedicará exclusivamente al resto de los objetivos.
 
-
-%\begin{table}[h]
-%	\begin{tabular}{|c|c|c|}
-%		\hline
-%		          \textbf{Núcleo}            & \textbf{Sectorización} & \textbf{Intervalo} \\ \hline
-%		\multirow{2}{*}{Barcelona Ruta Este} &           3D           & 7:30:00--15:00:00  \\ \cline{2-3}
-%		                                     &           5A           & 7:30:00--10:30:00  \\ \hline
-%		        Barcelona Ruta Oeste         &           6C           & 10:30:00--15:00:00 \\ \hline
-%	\end{tabular}
-%\end{table}
-\begin{table}[h]
-		\centering
-	\caption{Sectorización modificada del Caso 1}
-	\begin{tabular}{ccc}
-		\hline
-		\textbf{Núcleo}                                           & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
-		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-		\multicolumn{1}{c|}{\multirow{2}{*}{Barcelona Ruta Este}} & 3D                     & 7:30:00--15:00:00    \\
-		\multicolumn{1}{c|}{}                                     & 5A                     & 7:30:00--10:30:00    \\
-		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-		Barcelona Ruta Oeste                                      & 6C                     & 10:30:00--15:00:00   \\ \hline
-	\end{tabular}
-	\label{table:5:caso1-modif}
-\end{table}
-
-
-\subsubsection{Caso 3}
-
-\textbf{Unidad de Control}: Barcelona
-
-\textbf{Situación inicial}:
-\begin{itemize}[label={}]
-	
-	\item \textbf{Turno}: MC, 7:30-15:00
-	
-	\item \textbf{Recursos}: \\
-	7 PTD Barcelona Ruta Este \\
-	17 PTD Barcelona Ruta Oeste
-	
-	
-	\item \textbf{Sectorización}: véase la \autoref{table:5:caso3-inicial}
-	\begin{table}[h]
-		\centering
-		\caption{Sectorización inicial del Caso 1}
-		\begin{tabular}{ccc}
-			\hline
-			\textbf{Núcleo}      & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
-			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-			Barcelona Ruta Este  & 3D                     & 7:30:00--15:00:00    \\
-			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-			Barcelona Ruta Oeste & 5A                     & 10:30:00--15:00:00   \\ \hline
-		\end{tabular}
-		\label{table:5:caso3-inicial}
-	\end{table}
-	
-	
-\end{itemize}
-
-\textbf{Momento Actual}: 10:00:00
-
-\textbf{Tipo incidencia}: Baja de un controlador
-
-\textbf{Descripción}:Se produce una baja del controlador $c_{23}$ a las 9:30. No se producen altas. Se necesita 1 controlador imaginarios para inicializar este caso.
-
-\subsubsection{Caso 4}
-
-\textbf{Unidad de Control}: Madrid
-
-\textbf{Situación inicial}:
-\begin{itemize}[label={}]
-	
-	\item \textbf{Turno}: MC, 7:30-15:00
-	
-	\item \textbf{Recursos}: \\
-	7 PTD Barcelona Ruta Este \\
-	17 PTD Barcelona Ruta Oeste
-	
-	
-	\item \textbf{Sectorización}: véase la \autoref{table:5:caso1-inicial}
-	\begin{table}[h]
-		\centering
-		\caption{Sectorización inicial del Caso 1}
-		\begin{tabular}{ccc}
-			\hline
-			\textbf{Núcleo}      & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
-			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-			Barcelona Ruta Este  & 3D                     & 7:30:00--15:00:00    \\
-			\multicolumn{1}{l}{} & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-			Barcelona Ruta Oeste & 5A                     & 10:30:00--15:00:00   \\ \hline
-		\end{tabular}
-		\label{table:5:caso1-inicial}
-	\end{table}
-	
-	
-\end{itemize}
-
-\textbf{Momento Actual}: 10:00:00
-
-\textbf{Tipo incidencia}: Modificación de sectorizaciones
-
-\textbf{Descripción}:Pasamos de una 3D a una 5A, lo que implica el cierre de un sector y la apertura de otros dos. Además se abre un sector adicional en el núcleo \textit{Barcelona Ruta Oeste}. La nueva sectorización es la de la \autoref{table:5:caso1-modif}. Se necesitan 3 controladores imaginarios para inicializar éste caso.
-
-%\begin{table}[h]
-%	\begin{tabular}{|c|c|c|}
-%		\hline
-%		          \textbf{Núcleo}            & \textbf{Sectorización} & \textbf{Intervalo} \\ \hline
-%		\multirow{2}{*}{Barcelona Ruta Este} &           3D           & 7:30:00--15:00:00  \\ \cline{2-3}
-%		                                     &           5A           & 7:30:00--10:30:00  \\ \hline
-%		        Barcelona Ruta Oeste         &           6C           & 10:30:00--15:00:00 \\ \hline
-%	\end{tabular}
-%\end{table}
-\begin{table}[h]
-	\centering
-	\caption{Sectorización modificada del Caso 1}
-	\begin{tabular}{ccc}
-		\hline
-		\textbf{Núcleo}                                           & \textbf{Configuración} & \textbf{Intervalo}   \\ \hline
-		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-		\multicolumn{1}{c|}{\multirow{2}{*}{Barcelona Ruta Este}} & 3D                     & 7:30:00--15:00:00    \\
-		\multicolumn{1}{c|}{}                                     & 5A                     & 7:30:00--10:30:00    \\
-		\multicolumn{1}{l}{}                                      & \multicolumn{1}{l}{}   & \multicolumn{1}{l}{} \\
-		Barcelona Ruta Oeste                                      & 6C                     & 10:30:00--15:00:00   \\ \hline
-	\end{tabular}
-	\label{table:5:caso1-modif}
-\end{table}
 
 \subsection{Ajuste paramétrico}
 En toda metaheurística y demás sistemas de optimización, tienen un conjunto de parámetros que pueden tomar un conjunto de posibles valores y que afectan activamente al rendimiento del sistema. Para poder fijar estos valores, se lleva a cambo un proceso denominado Ajuste Paramétrico, o \textit{Parameter Tunning}, que se puede realizar de diferentes formas.
@@ -168,6 +43,8 @@ Por otro lado se considera el enfoque de inicialización de parámetros \textit{
 
 En este TFM, por ser lo más común y sencillo, se decidió emplear un enfoque \textit{off-line} de forma secuencial. Para ello, se han de ordenar los parámetros en función de su robustez, es decir, lo mucho que afecte un pequeño cambio en el parámetro al desempeño del algoritmo y, secuencialmente en ese orden, fijar el valor de todos los demás y realizar ejecuciones de la metaheurística con diferentes valores para el parámetro en cuestión para finalmente seleccionar aquel valor que mejores resultados ofrece. A continuación se repite el proceso para el siguiente parámetro, sucesivamente.
 Una vez ajustados todos los parámetros, se repite el proceso desde el principio hasta que ningún parámetro cambie de valor.
+
+Para que los datos sean más robustos y fiables, cada configuración ha sido ejecutada un total de 10 veces y se han hecho datos medios. En el \autoref{Anexo:ejemplo-ajuste-parametrico} pueden verse con detenimiento la forma de realizar el ajuste para la instancia concreta del caso 1 %TODO hacer anexo
 
 % ALFONSO SAID:
 % Empieza por aquel parámetro que creas que es menos robusto, es decir, aquel que al realizar un pequeño cambio en el parámetro pueda hacer que cambie significativamente el desempeño del algoritmo. Una vez que determines su valor más adecuado, lo fijas y analizas el segundo parámetro menos rubusto. Una vez que determines su valor más adecuado, lo fijas y analizas el tercer parámetro menos robusto. Y así sucesivamente, hasta el último y vuelves a empezar para realizar otro ciclo hasta que los parámetros no cambien o cambien muy poco. Siempre cambias un parámetro, nunca realices cambios en más de un parámetro a la vez.
@@ -201,7 +78,7 @@ Los parámetros del sistema, ordenados por su robustez son:
 
 \subsubsection{Resultados del ajuste para cada caso}
 
-Los resultados tras el ajuste paramétrico se encuentran recogidos en la \autoref{table:5:tunning-results}
+El proceso que nos ocupa fue realizado siguiendo el procedimiento descrito anteriormente, obteniéndose los resultados que se encuentran recogidos en la \autoref{table:5:tunning-results}.
 
 \begin{table}[h]
 	\centering
@@ -218,7 +95,38 @@ Los resultados tras el ajuste paramétrico se encuentran recogidos en la \autore
 	\label{table:5:tunning-results}
 \end{table}
 
-La calidad de las soluciones alcanzadas con este ajuste son las de la \autoref{table:5:soluciones}. Como puede verse.... \NOTE{TODO: Continuar}% TODO: continuar
+Como puede verse, por lo general la implementación de VNS que mejores resultados alcanza para la mayoría de los casos es su versión más sencilla: el VND. No obstante, encontrarnos en los casos X e Y %TODO
+que la versión que acepta soluciones peores, el SVNS, aporta una mejora suficientemente significativa a las soluciones que logra alcanzar el sistema. Como muestra la \autoref{caso4-tipo-orden-tiempo} las variaciones no suelen ser muy grandes entre sí.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/caso4-tipo-orden-tiempo}
+	\caption{Variación del fitness según el tipo de VNS para el caso 4. Ordenado según el tiempo de ejecución de cada uno}
+	\label{fig:caso4-tipo-orden-tiempo}
+\end{figure}
+
+Sin embargo, esta mejora se obtiene a costa de una mayor necesidad de tiempo de cómputo, con una diferencia de $31.341$ segundos para el caso 4. Sin duda hemos observado que el VND es el tipo de VNS que menos tiempo de cómputo requiere. La \autoref{fig:caso4-tipo-orden-tiempo} ofrece adicionalmente un ranking donde nos muestra de forma ordenada los tipos de VNS que más tiempo consumen: como era de esperar, el SVNS y el GVNS son los más costosos, mientras que el VND y RVNS los que menos.
+
+En cuanto al orden de los entornos, no hay una clara tendencia, sino que depende más bien del caso concreto. Sin embargo, la selección óptima de los mismos es claramente determinista, salvo en el caso 5 %TODO: alguno más??
+en el una comparativa nos dice que la mejoría que aporta no es demasiado grande, del orden de una milésima (véase la \autoref{fig:caso5-naturaleza-entornos}) aunque para éste caso concreto, con la opción probabilística, el número de restricciones incumplidas en la solución final es menos dispersa que en la determinista, es decir, que la diferencia entre una ejecución u otra no es tan grande como en el caso de la determinista. No obstante, para el resto de casos ésta dispersión no sucede de una forma tan significativa.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{caso5-naturaleza-entornos}
+	\caption{Comparación desglosada por valor de cada objetivo para el tipo de cambio de entorno en el caso 5}
+	\label{fig:caso5-naturaleza-entornos}
+\end{figure}
+
+%Observamos que los parámetros óptimos que afectan a la modalidad probabilista de los entornos se adecuan al VNS en cuanto a que, por ejemplo emplear una probabilidad inicial de $0.7$ con una variación pequeña, en lugar de una probabilidad de 1, pues el número de iteraciones no es suficientemente grande como para que 
+
+En cuanto a los demás parámetros, no hay diferencias importantes entre sí. En número de iteraciones que conforman el ciclo mínimo para comprobar la condición de parada se mueven entre $6\,000$ y $45\,000$. ... %TODO continuar
+
+
+
+\NOTE{TODO: poner indicaciones de una visión genérica}% TODO: poner indicaciones de una visión genérica
 
 \subsection{Comparación de metaheurísticas}
+Lorem ipsum
+
+\subsection{Otros experimentos}
 Lorem ipsum
