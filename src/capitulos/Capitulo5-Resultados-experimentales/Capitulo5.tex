@@ -95,38 +95,104 @@ El proceso que nos ocupa fue realizado siguiendo el procedimiento descrito anter
 	\label{table:5:tunning-results}
 \end{table}
 
-Como puede verse, por lo general la implementación de VNS que mejores resultados alcanza para la mayoría de los casos es su versión más sencilla: el VND. No obstante, encontrarnos en los casos X e Y %TODO
-que la versión que acepta soluciones peores, el SVNS, aporta una mejora suficientemente significativa a las soluciones que logra alcanzar el sistema. Como muestra la \autoref{caso4-tipo-orden-tiempo} las variaciones no suelen ser muy grandes entre sí.
+Como puede verse, por lo general la implementación de VNS que mejores resultados alcanza para la mayoría de los casos es su versión más sencilla: el \textit{VND}. No obstante, encontrarnos cuatro casos en los que la variante Basic, \textit{BVNS}, aporta resultados significativamente mejores en las soluciones que logra alcanzar el sistema. Sin embargo, tal y como muestra la \autoref{fig:caso4-tipo-orden-tiempo} las variaciones no suelen ser muy grandes entre sí, a escepción del \textit{SVNS}, que es el que peores resultados obtiene.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=1\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/caso4-tipo-orden-tiempo}
+	\includegraphics[width=\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/caso4-tipo-orden-tiempo}
 	\caption{Variación del fitness según el tipo de VNS para el caso 4. Ordenado según el tiempo de ejecución de cada uno}
 	\label{fig:caso4-tipo-orden-tiempo}
 \end{figure}
 
-Sin embargo, esta mejora se obtiene a costa de una mayor necesidad de tiempo de cómputo, con una diferencia de $31.341$ segundos para el caso 4. Sin duda hemos observado que el VND es el tipo de VNS que menos tiempo de cómputo requiere. La \autoref{fig:caso4-tipo-orden-tiempo} ofrece adicionalmente un ranking donde nos muestra de forma ordenada los tipos de VNS que más tiempo consumen: como era de esperar, el SVNS y el GVNS son los más costosos, mientras que el VND y RVNS los que menos.
+Sin embargo, esta mejora se obtiene a costa de una mayor necesidad de tiempo de cómputo, con una diferencia de $31.2762$ segundos para el caso 4 del \textit{BVNS} frente al \textit{VND}. Sin duda hemos observado que el \textit{RVND} es el tipo de VNS que menos tiempo de cómputo requiere, pero suele ser el que peores resultados alcanza junto con el \textit{SVNS}. La \autoref{fig:caso4-tipo-orden-tiempo} ofrece adicionalmente un ranking donde nos muestra de forma ordenada los tipos de VNS que más tiempo consumen: como era de esperar, el \textit{SVNS} y el \textit{GVNS} son los más costosos, mientras que el \textit{VND} y \textit{RVNS} los que menos. Por su parte, el \textit{GVNS} y el \textit{BVNS} dan resultados que en la mayoría de los casos son muy similares entre sí, a excepción de en el caso 1 y el 3, donde los resultados son más dispares, en casos de empate, se ha optado por usar la versión menos costosa computacionalmente, que es el \textit{BVNS}.
 
-En cuanto al orden de los entornos, no hay una clara tendencia, sino que depende más bien del caso concreto. Sin embargo, la selección óptima de los mismos es claramente determinista, salvo en el caso 5 %TODO: alguno más??
-en el una comparativa nos dice que la mejoría que aporta no es demasiado grande, del orden de una milésima (véase la \autoref{fig:caso5-naturaleza-entornos}) aunque para éste caso concreto, con la opción probabilística, el número de restricciones incumplidas en la solución final es menos dispersa que en la determinista, es decir, que la diferencia entre una ejecución u otra no es tan grande como en el caso de la determinista. No obstante, para el resto de casos ésta dispersión no sucede de una forma tan significativa.
+En la \autoref{fig:caso4y9comparativa-tipos-vnsiteracion} podemos observar la evolución por iteraciones de cada VNS, donde podemos apreciar cómo, a diferencia del resto, el \textit{SVNS} no es estrictamente creciente, aceptando soluciones peores. La línea \textit{SVNS-optimo} señala la mejor solución alcanzada hasta el momento por el \textit{SVNS}, que como podemos ver, no alcanza resultados tan buenos como los del resto. Cada ejecución termina cuando se alcanza la condición de parada del porcentaje mínimo de mejora. Además, el desempeño del \textit{BVNS} y el \textit{GVNS} es el mismo en ambos casos, aunque esto no siempre sucede en todas las iteraciones ni en todos los casos.
+
+\begin{figure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{Caso4_comparativa-tipos-vns_iteracion}
+		\caption{Caso 4}
+		\label{fig:caso4comparativa-tipos-vnsiteracion}
+	\end{subfigure}
+
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{Caso9_comparativa-tipos-vns_iteracion}
+		\caption{Caso 9}
+		\label{fig:caso9comparativa-tipos-vnsiteracion}
+	\end{subfigure}
+	\caption{Evolución de cada \textbf{tipo de VNS} para una ejecución concreta del caso 4 y 9.}
+	\label{fig:caso4y9comparativa-tipos-vnsiteracion}
+\end{figure}
+
+En cuanto al orden de los entornos, no hay una clara tendencia, sino que depende más bien del caso concreto. Sin embargo, la selección óptima de los mismos es claramente determinista, salvo en el caso 5 y 9. 
+Una comparativa nos dice que la mejoría que aporta no es demasiado grande, del orden de una milésima (véase la \autoref{fig:caso5-naturaleza-entornos}) aunque para éste caso concreto, con la opción probabilística, el número de restricciones incumplidas en la solución final es menos dispersa que en la determinista, es decir, que la diferencia entre una ejecución u otra no es tan grande como en el caso de la determinista. No obstante, para el resto de casos ésta dispersión no sucede de una forma tan significativa.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=1\linewidth]{caso5-naturaleza-entornos}
-	\caption{Comparación desglosada por valor de cada objetivo para el tipo de cambio de entorno en el caso 5}
+	\caption{Comparación desglosada por valor de cada objetivo para el \textbf{tipo de cambio de entorno} en el caso 5}
 	\label{fig:caso5-naturaleza-entornos}
 \end{figure}
 
+En la \autoref{fig:caso4y9determinista-vs-probabilisticoiteracion} podemos observar la evolución de una ejecución comparando el desempeño de sistema para cambios de entorno de tipo determinista y probabilístico, una vez seleccionados los parámetros óptimos relativos a este último. Se aprecia cómo para el caso 9  (\autoref{fig:caso9determinista-vs-probabilisticoiteracion}), la diferencia es significativa: el probabilístico aporta lo suficiente como para considerarlo. Sin embargo, para el caso 4 (\autoref{fig:caso4determinista-vs-probabilisticoiteracion}) el tipo de cambio de entornos determinista supera al probabilístico pero por muy poca diferencia.l
+
+\begin{figure}
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/Caso9_determinista-vs-probabilistico_iteracion}
+		\caption{Caso 9}
+		\label{fig:caso9determinista-vs-probabilisticoiteracion}
+	\end{subfigure}
+
+	\begin{subfigure}{\linewidth}
+		\centering
+		\includegraphics[width=1\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/Caso4_determinista-vs-probabilistico_iteracion}
+		\caption{Caso 4}
+		\label{fig:caso4determinista-vs-probabilisticoiteracion}
+	\end{subfigure}
+	\caption{Evolución del sistema para una ejecución concreta del caso 9 y 4 con \textbf{cambios de entorno} de tipo determinista o probabilistico.}
+	\label{fig:caso4y9determinista-vs-probabilisticoiteracion}
+\end{figure}
+
+
 %Observamos que los parámetros óptimos que afectan a la modalidad probabilista de los entornos se adecuan al VNS en cuanto a que, por ejemplo emplear una probabilidad inicial de $0.7$ con una variación pequeña, en lugar de una probabilidad de 1, pues el número de iteraciones no es suficientemente grande como para que 
 
-En cuanto a los demás parámetros, no hay diferencias importantes entre sí. En número de iteraciones que conforman el ciclo mínimo para comprobar la condición de parada se mueven entre $6\,000$ y $45\,000$. ... %TODO continuar
+En cuanto a los demás parámetros, no hay diferencias importantes entre sí. En número de iteraciones que conforman el ciclo mínimo para comprobar la condición de parada se mueven entre $6\,000$ y $45\,000$.
 
+La función de distancia aplicada para el \textit{SVNS} que mejores resultados alcanza es aquella que calcula el número de slots dispares entre ambas soluciones. Hemos observado que el valor del parámetro $\alpha$ óptimo oscila entre 0.5 y 2, y para tamaños superiores a 2, o bien deja de admitir soluciones peores, o bien se comporta de la misma forma que con otros valores inferiores. En la \autoref{fig:caso9comparativa-alphasiteracion0-5} podemos observar cómo se comporta la metaheurística \textit{SVNS} con diferentes $\alpha$ para el caso 9, si bien exploran de diferentes formas, no logran mejorar significativamente los resultados iniciales, aunque esto sí sucede aunque muy levemente, para el caso 3, como muestra la
+\autoref{fig:Caso3_comparativa-alphas_iteracion}.
 
+\begin{figure}
+	\begin{subfigure}{\linewidth}
+	\includegraphics[width=\linewidth]{Caso9_comparativa-alphas_iteracion_0-5}
+	\caption{Caso 9}
+	\label{fig:caso9comparativa-alphasiteracion0-5}
+	\centering
+	\end{subfigure}
 
-\NOTE{TODO: poner indicaciones de una visión genérica}% TODO: poner indicaciones de una visión genérica
+	\begin{subfigure}{\linewidth}
+	\includegraphics[width=\linewidth]{Caso3_comparativa-alphas_iteracion}
+	\caption{Caso 3}
+	\label{fig:Caso3_comparativa-alphas_iteracion}
+	\centering
+\end{subfigure}
+	\caption{Evolución comparativa del desempeño del \textit{SVNS} con diferentes \textbf{alphas} para el caso 3 y el 9.}
+\end{figure}
+
+Para el caso 3, 
+
+%A continuación describiremos algunas de las observaciones en mayor profundidad.
+%
+%\subsubsection{Comparativa de Tipos de VNS}
+%
+%Como se ha mencionado anteriormente, se han obtenido dos tipos de VNS con resultados especialmente mejores: el \textit{VND} y el \textit{BVNS}. Por lo general, la diferencia no es realmente grande, a excepción del caso 5, donde la diferencia es de 5 centésimas, sin embargo, en los casos indicados, el aporte sigue siendo significativo al conjunto, y la diferencia de tiempo
 
 \subsection{Comparación de metaheurísticas}
-Lorem ipsum
+Una vez ajustados todos los parámetros para sacar el máximo rendimiento del sistema, podemos compararlo con otros, y en este caso, se ha hecho una comparación de resultados con la metaheurística \sa{} (SA), definida en la \autoref{sec:3:metaheurística}. Recuérdese que se trata de la metaheurística empleada para el desarrollo del sistema \legacy{} y que fue adaptada a las nuevas condiciones y restricciones del sistema implementado en este TFM.
 
-\subsection{Otros experimentos}
-Lorem ipsum
+La \autoref{tabla} recopila los resultados para ambas metaheurísticas. Como podemos ver, % TODO . . . 
+
+%\subsection{Otros experimentos}
+%Lorem ipsum
