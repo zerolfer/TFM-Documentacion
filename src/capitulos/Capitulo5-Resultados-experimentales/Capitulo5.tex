@@ -281,6 +281,8 @@ Por otra parte, lo más significativo que observamos se encuentra en el caso 1 y
 
 A continuación, analizaremos y mostraremos las soluciones obtenidas en cada fase del sistema para los dos casos mencionados anteriormente, no obstante, el resto de ellas se encuentran recopiladas en el \autoref{Anexo:recopilacion-soluciones-por-fases}.
 
+En general, el VNS da mejores resultados, y especialmente para la función objetivo $f_1$ (\ref{O1}), pues la metaheurística implementada logra un valor máximo de $1.0$ para todos los casos salvo uno, el caso 3, que será analizado también más adelante, mientras que el SA tampoco es capaz de resolver el caso 7.
+
 \subsubsection{Análisis del Caso 1}
 
 Para el caso 1, inicialmente tenemos un total de 24 controladores, como se puede ver en la \autoref{fig:5:solucion-inicial-caso1}, que asciende a 27 tras la \faseuno{} de inicialización: para poder codificar las condiciones del caso, se necesitan 3 adicionales, ''imaginarios", pues se abren dos sectores y se cierra uno a partir del slot 36, de forma que el sector que se cierra \texttt{ADL} (azul) es afín al sector \texttt{ADG} (marrón), que se abre, por lo que su carga se introduce directamente en esos controladores, siguiendo la heurística de inicialización ya descrita en la \autoref{sec:3:inicializacion-soluciones}. El otro sector que se abre no tiene posibilidades de ser sustituido, por lo que se añaden 3 controladores siguiendo una plantilla $3\times1$.
@@ -321,7 +323,7 @@ En cuanto a restricciones (\ref{O2}), la solución de VNS pasa inicialmente de i
 Al adaptar la planificación inicial al problema del caso 1, añadimos el incumplimiento de una restricción más: \ref{RD:controlador-por-cada-turno}, pues existen 3 turnos sin controlador real asignado.
 Por último, la solución final logra reparar los problemas relativos a ambas restricciones antes nombradas, sin embargo a costa de incumplir las restricciones \ref{R:5:max-trabajo-continuado} y \ref{RD:3:porcentaje-min-descanso}, que están relacionadas entre sí, en 6 y 4 ocasiones respectivamente: para la solución que propone el sistema, algunos controladores deberán de trabajar más tiempo del adecuado y por consiguiente, descansar menos tiempo, algunos incluso por debajo del mínimo de tiempo total de la jornada.
 
-Respecto al objetivo \ref{O3} y, el % TODO comentar el O3
+Respecto al objetivo \ref{O3} y, el VNS parece que lo afronta mejor, 
 Respecto al objetivo \ref{O4}, la similitud a las plantillas es mayor en el VNS, lo podemos apreciar visualmente en las figuras.
 
 \subsubsection{Análisis del Caso 7}
@@ -377,13 +379,17 @@ De esta forma, la solución inicial que ofrece la \faseuno{} consta de un total 
 	\label{fig:5:solucion-fase2-sa-caso7}
 \end{figure}
 
-En cuanto a los demás objetivos, VNS es superior aunque similar tanto para el número de restricciones incumplidas \ref{O2} como para la semejanza a las plantillas \ref{O4}, aunque observamos resultados notablemente mejor, en media, para el \ref{O3}: la minimización del número de cambios en sala.
+En cuanto a los demás objetivos, VNS es superior aunque similar tanto para el número de restricciones incumplidas \ref{O2} como para la semejanza a las plantillas \ref{O4}, aunque observamos resultados notablemente mejor, en media, para el \ref{O3}: la minimización del número de cambios en sala en el momento de la incidencia.
 
 \subsubsection{Análisis del Caso 3}
 
-Por último, parece importante destacar también las limitaciones del sistema, que se ponen de manifiesto notablemente en el caso 3, 
+Por último, parece importante destacar también las limitaciones del sistema, que se ponen de manifiesto notablemente en el caso 3, donde hay muy pocos huecos donde poder mover carga. 
 
+El caso 3 consta de la incidencia de una baja del controlador C23 en el slot 24. No se producen altas, por lo que se necesita de un controlador imaginario. Y ese es el mayor inconveniente, pues eliminarlo será una tarea muy dificil de resolver teniendo en cuenta el poco margen de movimientos que tiene. 
 
+Además, debido al orden establecido de importancia, los demás objetivos no será tomados tan en cuenta, especialmente el \ref{O4}, que trata de asemejar lo máximo posible la solución con las plantillas, puesto que su funcionamiento contradice al del objetivo \ref{O1}, en el sentido de que este último precisa de la ordenación de los turnos según la carga de trabajo asignada, mientras que \ref{O4} necesita que los turnos estén en el orden inicial, para poder comparar con la forma de las plantillas. % TODO: poner esto también en el capítulo 3!!!
+
+Debido a ello, las soluciones alcanzadas son de peor calidad. Y es que el caso 3 es el que peor desempeña el sistema, aumentando el número de restricciones incumplidas respecto a la solución inicial y asignando una sobrecarga a la mayoría controladores, con el fin de encontrar hueco para eliminar el controlador imaginario, algo que nunca llega a producirse.
 
 %\subsection{Otros experimentos}
 %Lorem ipsum
