@@ -84,7 +84,7 @@ En primer lugar, tenemos las fundamentales:
 %\begin{enumerate}[label={\textbf{RDF\arabic*}}]
 \begin{enumerate}[label={\textbf{RD\arabic*}}, ref={Requisito RD\arabic*},  align=left]
 	
-	\item Todas las posiciones de control deben estar cubiertas por controladores de manera exclusiva, exhaustiva y bajo las restricciones definidas.
+	\item \label{RD:controlador-por-cada-turno} Todas las posiciones de control deben estar cubiertas por controladores de manera exclusiva, exhaustiva y bajo las restricciones definidas.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
 		\item Cada sector y posición, deben ser cubiertos en los intervalos donde estén abiertos (exhaustividad).
 		\item Cada sector y posición, deben ser cubiertos por un único controlador (exclusividad).
@@ -131,19 +131,19 @@ Y por último, las relativas a los tiempos de trabajo y descanso de los controla
 
 \begin{enumerate}[resume*]
 	
-	\item \label{RD:porcentaje-min-descanso} El porcentaje de tiempo de descanso mínimo en turno diurno (mañana o tarde), incluyendo turnos largos es del 25\% como mínimo.
+	\item \label{RD:3:porcentaje-min-descanso} El porcentaje de tiempo de descanso mínimo en turno diurno (mañana o tarde), incluyendo turnos largos es del 25\% como mínimo.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
 		\item En caso de los turnos de noche, el porcentaje de tiempo de descanso mínimo en el turno de noche será
 		como mínimo del 33 \%.
 	\end{enumerate}
 	
-	\item No es posible un periodo de trabajo continuo mayor de dos horas en los que el controlador no realice ningún periodo de descanso.
+	\item \label{R:5:max-trabajo-continuado} No es posible un periodo de trabajo continuo mayor de dos horas (24 slots) en los que el controlador no realice ningún periodo de descanso.
 	
 	\item No puede existir ningún periodo de dos horas y media en los que un controlador realice un periodo total de descanso menor de media hora. Es decir, dentro de una ventana de tiempo de dos horas y media un controlador debe tener mínimo 30 minutos de descanso, sin ser necesario que estos se realicen de forma continua.
 	
-	\item El tiempo mínimo de trabajo continuado es de 15 minutos.
+	\item \label{RD:9:tiempo-min-trabajo-continuado} El tiempo mínimo de trabajo continuado es de 15 minutos.
 	
-	\item El tiempo mínimo de descanso continuado es de 15 minutos.
+	\item \label{RD:9:tiempo-min-descanso-continuado} El tiempo mínimo de descanso continuado es de 15 minutos.
 	
 	\item El tiempo mínimo en posición de un controlador es de 15 minutos.
 	

@@ -108,9 +108,9 @@ El proceso que nos ocupa fue realizado siguiendo el procedimiento descrito anter
 
 Como puede verse, por lo general la implementación de VNS que mejores resultados alcanza para la mayoría de los casos es su versión más sencilla: el \textit{VND}. No obstante, encontrarnos cuatro casos en los que la variante Basic, \textit{BVNS}, aporta resultados significativamente mejores en las soluciones que logra alcanzar el sistema. Sin embargo, tal y como muestra la \autoref{fig:caso4-tipo-orden-tiempo} las variaciones no suelen ser muy grandes entre sí, a excepción del \textit{SVNS}, que es el que peores resultados obtiene.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/caso4-tipo-orden-tiempo}
+	\includegraphics[width=\linewidth]{caso4-tipo-orden-tiempo}
 	\caption{Variación del fitness según el tipo de VNS para el caso 4. Ordenado según el tiempo de ejecución de cada uno}
 	\label{fig:caso4-tipo-orden-tiempo}
 \end{figure}
@@ -119,7 +119,7 @@ Sin embargo, esta mejora se obtiene a costa de una mayor necesidad de tiempo de 
 
 En la \autoref{fig:caso4y9comparativa-tipos-vnsiteracion} podemos observar la evolución por iteraciones de cada VNS, donde podemos apreciar cómo, a diferencia del resto, el \textit{SVNS} no es estrictamente creciente, aceptando soluciones peores. La línea \textit{SVNS-optimo} señala la mejor solución alcanzada hasta el momento por el \textit{SVNS}, que como podemos ver, no alcanza resultados tan buenos como los del resto. Cada ejecución termina cuando se alcanza la condición de parada del porcentaje mínimo de mejora. Además, el desempeño del \textit{BVNS} y el \textit{GVNS} es el mismo en ambos casos, aunque esto no siempre sucede en todas las iteraciones ni en todos los casos.
 
-\begin{figure}
+\begin{figure}[h]
 	\begin{subfigure}{\linewidth}
 		\centering
 		\includegraphics[width=\linewidth]{Caso4_comparativa-tipos-vns_iteracion}
@@ -140,7 +140,7 @@ En la \autoref{fig:caso4y9comparativa-tipos-vnsiteracion} podemos observar la ev
 En cuanto al orden de los entornos, no hay una clara tendencia, sino que depende más bien del caso concreto. Sin embargo, la selección óptima de los mismos es claramente determinista, salvo en el caso 5 y 9. 
 Una comparativa nos dice que la mejoría que aporta no es demasiado grande, del orden de una milésima (véase la \autoref{fig:caso5-naturaleza-entornos}) aunque para éste caso concreto, con la opción probabilística, el número de restricciones incumplidas en la solución final es menos dispersa que en la determinista, es decir, que la diferencia entre una ejecución u otra no es tan grande como en el caso de la determinista. No obstante, para el resto de casos ésta dispersión no sucede de una forma tan significativa.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=1\linewidth]{caso5-naturaleza-entornos}
 	\caption{Comparación desglosada por valor de cada objetivo para el \textbf{tipo de cambio de entorno} en el caso 5}
@@ -152,14 +152,14 @@ En la \autoref{fig:caso4y9determinista-vs-probabilisticoiteracion} podemos obser
 \begin{figure}[h]
 	\begin{subfigure}{\linewidth}
 		\centering
-		\includegraphics[width=1\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/Caso9_determinista-vs-probabilistico_iteracion}
+		\includegraphics[width=1\linewidth]{Caso9_determinista-vs-probabilistico_iteracion}
 		\caption{Caso 9}
 		\label{fig:caso9determinista-vs-probabilisticoiteracion}
 	\end{subfigure}
 
 	\begin{subfigure}{\linewidth}
 		\centering
-		\includegraphics[width=1\linewidth]{capitulos/Capitulo5-Resultados-experimentales/recursos/Caso4_determinista-vs-probabilistico_iteracion}
+		\includegraphics[width=1\linewidth]{Caso4_determinista-vs-probabilistico_iteracion}
 		\caption{Caso 4}
 		\label{fig:caso4determinista-vs-probabilisticoiteracion}
 	\end{subfigure}
@@ -229,7 +229,7 @@ La \autoref{table:comparativa-sa-vns-porcentaje} y \ref{table:comparativa-sa-vns
 			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 8} & {\color[HTML]{003532} 2.00}                                          & {\color[HTML]{003532} 22}                                          & {\color[HTML]{003532} 0.9684}                           & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9949} & {\color[HTML]{003532} 0.9090} & {\color[HTML]{003532} 0.7238} & {\color[HTML]{003532} 10.31}                                         \\
 			\multicolumn{1}{c|}{\multirow{-8}{*}{SA}}  & Caso 9                        & 0.00                                                                 & 23                                                                 & 0.9711                                                  & 1.0000                        & 1.0000                        & 0.9130                        & 0.7360                        & 6.01                                                                 \\
 			\multicolumn{10}{c}{}                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \\
-			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 1} & {\color[HTML]{003532} 12.8183}                                       & {\color[HTML]{9A0000} \textbf{24}}                                 & {\color[HTML]{9A0000} \textbf{0.9718}}                  & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9703} & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.6632} & {\color[HTML]{003532} 6.1894}                                        \\
+			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 1} & {\color[HTML]{003532} 12.8183}                                       & {\color[HTML]{9A0000} \textbf{24}}                                 & {\color[HTML]{9A0000} \textbf{0.9718}}                  & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9703} & {\color[HTML]{003532} 0.8333} & {\color[HTML]{003532} 0.6632} & {\color[HTML]{003532} 6.1894}                                        \\
 			\multicolumn{1}{c|}{}                      & Caso 3                        & 37.1767                                                              & 25                                                                 & 0.8041                                                  & 0.7015                        & 0.9174                        & 1.0000                        & 0.6933                        & 7.2020                                                               \\
 			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 4} & {\color[HTML]{003532} 2.0000}                                        & {\color[HTML]{003532} 19}                                          & {\color[HTML]{003532} 0.9105}                           & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9942} & {\color[HTML]{003532} 0.4737} & {\color[HTML]{003532} 0.8505} & {\color[HTML]{003532} 2.8527}                                        \\
 			\multicolumn{1}{c|}{}                      & Caso 5                        & 1.8000                                                               & 20                                                                 & 0.9668                                                  & 1.0000                        & 0.9950                        & 0.9000                        & 0.7194                        & 25.7926                                                              \\
@@ -264,7 +264,7 @@ La \autoref{table:comparativa-sa-vns-porcentaje} y \ref{table:comparativa-sa-vns
 			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 8} & {\color[HTML]{003532} 3.00}                                          & {\color[HTML]{003532} 22}                                          & {\color[HTML]{003532} 0.9702}                           & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9924} & {\color[HTML]{003532} 0.9000} & {\color[HTML]{003532} 0.7644} & {\color[HTML]{003532} 10}                                            \\
 			\multicolumn{1}{c|}{\multirow{-8}{*}{SA}}  & Caso 9                        & 3.00                                                                 & 23                                                                 & 0.9689                                                  & 1.0000                        & 0.9928                        & 0.9130                        & 0.7312                        & 10                                                                   \\
 			\multicolumn{10}{c}{}                                                                                                                                                                                                                                                                                                                                                                                                                                                                   \\
-			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 1} & {\color[HTML]{003532} 11.7111}                                       & {\color[HTML]{9A0000} \textbf{24}}                                 & {\color[HTML]{9A0000} \textbf{0.9721}}                  & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9729} & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.6575} & {\color[HTML]{003532} 10}                                            \\
+			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 1} & {\color[HTML]{003532} 11.7111}                                       & {\color[HTML]{9A0000} \textbf{24}}                                 & {\color[HTML]{9A0000} \textbf{0.9721}}                  & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9729} & {\color[HTML]{003532} 0.8333} & {\color[HTML]{003532} 0.6575} & {\color[HTML]{003532} 10}                                            \\
 			\multicolumn{1}{c|}{}                      & Caso 3                        & 37.8778                                                              & 25                                                                 & 0.8016                                                  & 0.6981                        & 0.9158                        & 1.0000                        & 0.6894                        & 10                                                                   \\
 			\multicolumn{1}{c|}{}                      & {\color[HTML]{003532} Caso 4} & {\color[HTML]{003532} 2.0000}                                        & {\color[HTML]{003532} 19}                                          & {\color[HTML]{003532} 0.9107}                           & {\color[HTML]{003532} 1.0000} & {\color[HTML]{003532} 0.9942} & {\color[HTML]{003532} 0.4737} & {\color[HTML]{003532} 0.8532} & {\color[HTML]{003532} 10}                                            \\
 			\multicolumn{1}{c|}{}                      & Caso 5                        & 1.7500                                                               & 20                                                                 & 0.9659                                                  & 1.0000                        & 0.9951                        & 0.9000                        & 0.7033                        & 10                                                                   \\
@@ -279,21 +279,109 @@ La \autoref{table:comparativa-sa-vns-porcentaje} y \ref{table:comparativa-sa-vns
 
 Por otra parte, lo más significativo que observamos se encuentra en el caso 1 y 7, marcados en sendas tablas en negrita color rojo. Y es que nuestra metaheurística, el VNS es claramente superior en relación al primer fitness, \ref{O1}, que recordemos, es el más relevante de todos, con mayor ponderación. Este valor está relacionado con aquel situado a su izquierda: el número de controladores que emplea la solución final. 
 
-Para el caso 1, inicialmente tenemos un total de 24 controladores, como se puede ver en la \autoref{fig:5:solucion-inicial-caso1}, que asciende a 27 tras la \faseuno{} de inicialización: para poder codificar las condiciones del caso, se necesitan 3 adicionales, ''imaginarios". La \autoref{fig:5:solucion-fase1-caso1} muestra el resultado de la manipulación de la inicial llevada a cabo por la \faseuno{} y que será tomada como solución inicial de la \fasedos{}.
+A continuación, analizaremos y mostraremos las soluciones obtenidas en cada fase del sistema para los dos casos mencionados anteriormente, no obstante, el resto de ellas se encuentran recopiladas en el \autoref{Anexo:recopilacion-soluciones-por-fases}.
 
-Por su parte, la \fasedos{} que emplea la metaheurística de VNS logra eliminar todos los controladores imaginarios y reducir los recursos empleados a los mismos que los iniciales. Sin embargo, el SA no lo logra, dando como resultado una solución que emplea 25 controladores. Como hemos mencionado, este valor es crítico para el sistema y por ello repercute en un gran impacto en el fitness, logrando, el VNS, un fitness total de $0.9718$ frente al $0.7117$ del SA. En la \autoref{fig:5:solucion-final-caso1} podemos ver una de las soluciones obtenidas en ambas metaheurísticas.
+\subsubsection{Análisis del Caso 1}
 
-En el caso 7 obtenemos unas soluciones peores que en el caso anterior, algo comprensible teniendo en cuenta la dificultad del caso (véase la \autoref{sec:5:def-casos}), pero muy superiores pese a ello, a las del SA. Inicialmente el caso parte de 25 controladores, que se amplían en la \faseuno{} con cuatro imaginarios, un total de 28 que logramos reducir a 26 en su solución final. Una diferencia muy grande respecto al SA, que ni siquiera logra reducir un solo controlador. Por ello, la diferencia de valor total de la solución es muy grande: el SA obtiene una media de $0.6146$ mientras que el VNS logra la cifra de $0.9335$.
+Para el caso 1, inicialmente tenemos un total de 24 controladores, como se puede ver en la \autoref{fig:5:solucion-inicial-caso1}, que asciende a 27 tras la \faseuno{} de inicialización: para poder codificar las condiciones del caso, se necesitan 3 adicionales, ''imaginarios", pues se abren dos sectores y se cierra uno a partir del slot 36, de forma que el sector que se cierra \texttt{ADL} (azul) es afín al sector \texttt{ADG} (marrón), que se abre, por lo que su carga se introduce directamente en esos controladores, siguiendo la heurística de inicialización ya descrita en la \autoref{sec:3:inicializacion-soluciones}. El otro sector que se abre no tiene posibilidades de ser sustituido, por lo que se añaden 3 controladores siguiendo una plantilla $3\times1$.
 
-A continuación, mostraremos las soluciones obtenidas en cada fase del sistema para los dos casos mencionados anteriormente, no obstante, el resto de ellas se encuentran recopiladas en el \autoref{Anexo:recopilacion-soluciones-por-fases}.
+La \autoref{fig:5:solucion-fase1-caso1} muestra el resultado de la manipulación de la inicial llevada a cabo por la \faseuno{} y que será tomada como solución inicial de la \fasedos{}.
 
-%\subsubsection{Soluciones del Caso 1}
-%
-%Como se ha mencionado previamente, el problema inicial del caso parte de 24 controladores, tal y como se puede apreciar en la \autoref{fig:5:solucion-inicial-caso5}. Tras la \faseuno{}, de inicialización
-%
-%
-%\subsubsection{Soluciones del Caso 1}
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{1-solucion-inicial-caso1}
+	\caption{Aspecto visual de una de la planificación inicial del caso 1}
+	\label{fig:5:solucion-inicial-caso1}
+\end{figure}
 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{2-solucion-fase1-caso1}
+	\caption{Aspecto visual de la solución inicial del caso 1, obtenida como salida de la \faseuno{}}
+	\label{fig:5:solucion-fase1-caso1}
+\end{figure}
+
+Por su parte, la \fasedos{} que emplea la metaheurística de VNS (véase la \autoref{fig:5:solucion-fase2-vns-caso1}) logra eliminar todos los controladores imaginarios y reducir los recursos empleados a los mismos que los iniciales. Sin embargo, el SA (véase la \autoref{fig:5:solucion-fase2-sa-caso1}) no lo logra, dando como resultado una solución que emplea 25 controladores. Como hemos mencionado, este valor es crítico para el sistema y por ello repercute en un gran impacto en el fitness, logrando, el VNS, un fitness total de $0.9718$ frente al $0.7117$ del SA. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{3-solucion-fase2-VNS-caso1}
+	\caption{Aspecto visual de la solución final del sistema para el caso 1, empleando para la \fasedos{} la metaheurística VNS}
+	\label{fig:5:solucion-fase2-vns-caso1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{3-solucion-fase2-SA-caso1}
+	\caption{Aspecto visual de la solución final del sistema para el caso 1, empleando para la \fasedos{} la metaheurística SA}
+	\label{fig:5:solucion-fase2-sa-caso1}
+\end{figure}
+
+En cuanto a restricciones (\ref{O2}), la solución de VNS pasa inicialmente de incumplir 3 veces \ref{RD:9:tiempo-min-trabajo-continuado}, pues los dos últimos slots asignados a los controladores C16, C19 y C22 son de trabajo y el antepenúltimo no, cuando el tiempo mínimo es de 15 minutos, que son 2 slots.
+Al adaptar la planificación inicial al problema del caso 1, añadimos el incumplimiento de una restricción más: \ref{RD:controlador-por-cada-turno}, pues existen 3 turnos sin controlador real asignado.
+Por último, la solución final logra reparar los problemas relativos a ambas restricciones antes nombradas, sin embargo a costa de incumplir las restricciones \ref{R:5:max-trabajo-continuado} y \ref{RD:3:porcentaje-min-descanso}, que están relacionadas entre sí, en 6 y 4 ocasiones respectivamente: para la solución que propone el sistema, algunos controladores deberán de trabajar más tiempo del adecuado y por consiguiente, descansar menos tiempo, algunos incluso por debajo del mínimo de tiempo total de la jornada.
+
+Respecto al objetivo \ref{O3} y, el % TODO comentar el O3
+Respecto al objetivo \ref{O4}, la similitud a las plantillas es mayor en el VNS, lo podemos apreciar visualmente en las figuras.
+
+\subsubsection{Análisis del Caso 7}
+
+En el caso 7 obtenemos unas soluciones peores que en el caso anterior, algo comprensible teniendo en cuenta la dificultad del caso (véase la \autoref{sec:5:def-casos}), pero muy superiores pese a ello, a las del SA. 
+
+La planificación inicial de la que partimos consta de un total de 25 controladores. 
+En la \faseuno{} se producen tres incidencias: varios cambios de sectorización, una baja y una alta. En la \autoref{fig:5:solucion-inicial-caso7} puede observarse el resultado del proceso que describiremos a continuación.
+
+La forma en la que las sectorizaciones cambian, se encuentra representada en la \autoref{fig:5:esquema-sectorizacion-caso7}, que agrupa por colores aquellos sectores afines. 
+Recuérdese que no es la misma sectorización 3A para el núcleo Ruta Este que para el Oeste. 
+
+Por ejemplo, el núcleo Oeste pasa de una configuración 5A a una 5C a partir del slot 20, cerrándose cuatro sectores (ADL, ADP, ADQ y ADR) y abriéndose otros cuatro (ADH, ADI, ADM y ADN); uno de ellos permanece estático (AEA). 
+A la hora de sustituir por afinidades (véase la \autoref{sec:3:inicializacion-soluciones}), la heurística implementada sustituirá ADL por ADH, ADP por ADM y ADR por ADN, tal y como muestra la figura. Por lo tanto no es necesario añadir plantillas para estos sectores. Por último, al no haber afinidades entre los dos sectores que faltan, se ha de eliminar, durante el periodo de tiempo pertinente, la presencia del sector ADQ en la solución y añadir una nueva plantilla con tres controladores imaginarios para el sector ADI.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{esquema-sectorizacion-caso7}
+	\caption{Diagrama que representa la sectorización inicial y la modificada para el caso 7}
+	\label{fig:5:esquema-sectorizacion-caso7}
+\end{figure}
+
+Por otro lado, para gestionar la baja del controlador C23 que se produce en el slot 42, se mueve toda su carga a partir de ese instante a un nuevo controlador imaginario, marcando ese intervalo de tiempo de C3 como inamovible para la \fasedos{} (mediante el ''000").
+Para gestionar el alta del nuevo controlador C26, se añade al final, y solo se permite que la \fasedos{} añada carga a partir del slot 60.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{1-solucion-inicial-caso7}
+	\caption{Aspecto visual de la planificación inicial del caso 7}
+	\label{fig:5:solucion-inicial-caso7}
+\end{figure}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\linewidth]{2-solucion-fase1-caso7}
+	\caption{Aspecto visual de la solución inicial del caso 7, obtenida como salida de la \faseuno{}}
+	\label{fig:5:solucion-fase1-caso7}
+\end{figure}
+
+De esta forma, la solución inicial que ofrece la \faseuno{} consta de un total de 28 controladores, de los cuales cuatro son imaginarios (véase la \autoref{fig:5:solucion-inicial-caso7}). La \fasedos{} toma dicha planificación y la logra reducir a 26 controladores en su solución final (véase la \autoref{fig:5:solucion-fase2-vns-caso7}). Una diferencia muy grande respecto al SA, que ni siquiera logra reducir un solo controlador (véase la \autoref{fig:5:solucion-fase2-sa-caso7}). Por ello, la diferencia de valor total de la solución es muy grande: el SA obtiene una media de $0.6146$ mientras que el VNS logra la cifra de $0.9335$.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{3-solucion-fase2-VNS-caso7}
+	\caption{Aspecto visual de la solución final del sistema para el caso 7, empleando para la \fasedos{} la metaheurística VNS}
+	\label{fig:5:solucion-fase2-vns-caso7}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{3-solucion-fase2-SA-caso7}
+	\caption{Aspecto visual de la solución final del sistema para el caso 7, empleando para la \fasedos{} la metaheurística SA}
+	\label{fig:5:solucion-fase2-sa-caso7}
+\end{figure}
+
+En cuanto a los demás objetivos, VNS es superior aunque similar tanto para el número de restricciones incumplidas \ref{O2} como para la semejanza a las plantillas \ref{O4}, aunque observamos resultados notablemente mejor, en media, para el \ref{O3}: la minimización del número de cambios en sala.
+
+\subsubsection{Análisis del Caso 3}
+
+Por último, parece importante destacar también las limitaciones del sistema, que se ponen de manifiesto notablemente en el caso 3, 
 
 
 
