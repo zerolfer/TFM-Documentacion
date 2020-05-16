@@ -82,7 +82,7 @@ En el sistema \legacy{} existían dos tipos de restricciones: obligatorias y des
 En primer lugar, tenemos las fundamentales:
 
 %\begin{enumerate}[label={\textbf{RDF\arabic*}}]
-\begin{enumerate}[label={\textbf{RD\arabic*}}, ref={Requisito RD\arabic*},  align=left]
+\begin{enumerate}[label={\textbf{RD\arabic*}}, ref={RD\arabic*},  align=left]
 	
 	\item \label{RD:controlador-por-cada-turno} Todas las posiciones de control deben estar cubiertas por controladores de manera exclusiva, exhaustiva y bajo las restricciones definidas.
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
@@ -182,7 +182,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 			\item Nótese que todo sector es afín consigo mismo.
 		\end{enumerate}
 		
-		\item Lista de los sectores pertenecientes a la Unidad de Control, en la que se indica el tipo de sector (véase el \ref{RD:tipos-sector}) y los núcleos a los que pertenece (véase el \ref{RD:sector-nucleo}).
+		\item Lista de los sectores pertenecientes a la Unidad de Control, en la que se indica el tipo de sector (véase el Requisito \ref{RD:tipos-sector}) y los núcleos a los que pertenece (véase el Requisito \ref{RD:sector-nucleo}).
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
 			\item Tendrá las siguientes columnas: 
 			\begin{enumerate}[label*={\textbf{.\arabic*}}]
@@ -190,7 +190,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 				\item Tipo Sector. Posibles valores APP o RUTA.
 				\item Número variable de columnas que representen los núcleos que tiene la dependencia concreta (por ejemplo Barcelona TMA, Barcelona Ruta Este y Barcelona Ruta Oeste).
 				\item Cada fila tendrá el carácter x en caso de que pertenezca al núcleo.
-				\item Cada fila podrá tener varias columnas de núcleo marcadas (véase el \ref{RD:sector-nucleo}).
+				\item Cada fila podrá tener varias columnas de núcleo marcadas (véase el Requisito \ref{RD:sector-nucleo}).
 			\end{enumerate}
 		\end{enumerate}
 		\item Lista de sectorizaciones de la Unidad de Control y sectores que conforman la sectorización y los volúmenes a los que pertenece cada sector.
@@ -359,6 +359,7 @@ Los frameworks utilizados han sido:
 	\item Apache Commons Lang 3.0, Para un manejo de cadenas de caracteres más eficiente.
 	\item The DSI Utilities, dsiutils 2.5.4 (Università degli Studi di Milano). Implementa entre otras cosas, algoritmos de generación de números aleatorios eficientes (véase la \autoref{sec:4:impl:random}).
 	\item JUnit 3.5.2, para las pruebas unitarias (véase la \autoref{sec:4:tests}).
+	\item Plot.ly librería para Python para la creación de gráficos interactivos.
 \end{itemize}
 
 \subsubsection{Generador de números aleatorios}
