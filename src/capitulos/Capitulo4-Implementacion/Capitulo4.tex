@@ -419,7 +419,7 @@ Por otro lado, para mejorar la eficiencia de todo el sistema, la \faseuno{}, la 
 Para la representación de las Altas y Bajas se empleó un \textit{enumerado}, que emplea de forma interna un número entero para la representación, pues es más eficiente que emplear en su lugar una cadena de texto (\textit{String}), tal y como se venía empleando en \legacy{} para, por ejemplo, representar las acreditaciones.
 
 \paragraph{Análisis de rendimiento}
-Por último, se ha realizado un análisis de rendimiento comparando la eficiencia del sistema \legacy{} con el sistema actual. La \autoref{fig:4:method-profiling-legacy} mostraba el llamado \textit{Method profiling} que cuenta el número de veces que emplea el procesador cada paquete (sección \textit{Top Package}), cada clase (sección \textit{Top Class}) y cada método (sección \textit{Stack Trace}). Lo que más se emplea son las clases realacionadas con los Strings, esto ya fue tratado en la \autoref{sec:4:detalles-sistema} (en la que se señalaron posibles alternativas para mejorar este punto), donde se señaló que es una limitación importante del sistema que se decidió preservar en este sistema, por lo que no es extraño observar en la \autoref{fig:4:method-profiling-system} que en el sistema definido sigue siendo el paquete \textit{java.lang} (que es el que contiene la clase String) como la propia clase String sigan siendo los más utilizados.
+Por último, se ha realizado un análisis de rendimiento comparando la eficiencia del sistema \legacy{} con el sistema actual. La \autoref{fig:4:method-profiling-legacy} mostraba el llamado \textit{Method profiling} que cuenta el número de veces que emplea el procesador cada paquete (sección \textit{Top Package}), cada clase (sección \textit{Top Class}) y cada método (sección \textit{Stack Trace}). Lo que más se emplea son las clases relacionadas con los Strings, esto ya fue tratado en la \autoref{sec:4:detalles-sistema} (en la que se señalaron posibles alternativas para mejorar este punto), donde se señaló que es una limitación importante del sistema que se decidió preservar en este sistema, por lo que no es extraño observar en la \autoref{fig:4:method-profiling-system} que en el sistema definido sigue siendo el paquete \textit{java.lang} (que es el que contiene la clase String) como la propia clase String sigan siendo los más utilizados.
 
 \begin{figure}
 	\centering
@@ -430,7 +430,7 @@ Por último, se ha realizado un análisis de rendimiento comparando la eficienci
 
 
 
-Por otro lado, el número de veces que se emplean los métodos, clases y paquetes relativos al fitness y el cálculo de restricciones ha disminuido notablemente. Para éste nuevo sistema, el método más empleado se trata de \textit{esTrabajo(turno: String)}, que comprueba de manera resursiva si una cadena de texto que representa un fragmento de turno es en su totalidad trabajo. Se trata nuevamente de la limitación de modelar el turno como un único String, que ya se explicó previamente.
+Por otro lado, el número de veces que se emplean los métodos, clases y paquetes relativos al fitness y el cálculo de restricciones ha disminuido notablemente. Para éste nuevo sistema, el método más empleado se trata de \textit{esTrabajo(turno: String)}, que comprueba de manera recursiva si una cadena de texto que representa un fragmento de turno es en su totalidad trabajo. Se trata nuevamente de la limitación de modelar el turno como un único String, que ya se explicó previamente.
 
 %En la figura \autoref{fig:4:flame-diagram} se incluye un diagrama de llama (\autoref{Flame-diagram})
 En el \autoref{Anexo:flame-diagram} se incluye una comparativa del rendimiento de ambos sistemas mediante el uso de diagramas de llama (\textit{Flame Diagram}) que resume la información del \textit{Method Profiling} indicada anteriormente pero de una forma más visual. En él puede apreciarse que se ha logrado el objetivo de dedicar mayor tiempo de cómputo a la búsqueda en lugar de al cálculo de fitness.
@@ -461,7 +461,7 @@ Respecto al rendimiento general de CPU y memoria podemos ver en la \autoref{fig:
 		\label{fig:4:performance-system}
 	\end{subfigure}
 	
-	\caption[Comparativa de rendimiento global del sistema]{Comparativa de rendimiento global del sistema, en primer lugar de CPU, a continuación de memoria RAM dedidaca al proceso (Heap) y por último el número de métodos empleados agrupados por tiempo.}
+	\caption[Comparativa de rendimiento global del sistema]{Comparativa de rendimiento global del sistema, en primer lugar de CPU, a continuación de memoria RAM dedicada al proceso (Heap) y por último el número de métodos empleados agrupados por tiempo.}
 	\label{fig:4:performance-comparativa}
 \end{figure}
 

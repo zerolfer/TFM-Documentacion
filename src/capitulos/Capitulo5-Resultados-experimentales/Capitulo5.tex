@@ -46,7 +46,7 @@ Una vez ajustados todos los parámetros, se repite el proceso desde el principio
 Para que los datos sean más robustos y fiables, cada configuración ha sido ejecutada un total de 10 veces y se han hecho datos medios. En el \autoref{Anexo:ejemplo-ajuste-parametrico} pueden verse con detenimiento la forma de realizar el ajuste para la instancia concreta del caso 1 %TODO hacer anexo
 
 % ALFONSO SAID:
-% Empieza por aquel parámetro que creas que es menos robusto, es decir, aquel que al realizar un pequeño cambio en el parámetro pueda hacer que cambie significativamente el desempeño del algoritmo. Una vez que determines su valor más adecuado, lo fijas y analizas el segundo parámetro menos rubusto. Una vez que determines su valor más adecuado, lo fijas y analizas el tercer parámetro menos robusto. Y así sucesivamente, hasta el último y vuelves a empezar para realizar otro ciclo hasta que los parámetros no cambien o cambien muy poco. Siempre cambias un parámetro, nunca realices cambios en más de un parámetro a la vez.
+% Empieza por aquel parámetro que creas que es menos robusto, es decir, aquel que al realizar un pequeño cambio en el parámetro pueda hacer que cambie significativamente el desempeño del algoritmo. Una vez que determines su valor más adecuado, lo fijas y analizas el segundo parámetro menos robusto. Una vez que determines su valor más adecuado, lo fijas y analizas el tercer parámetro menos robusto. Y así sucesivamente, hasta el último y vuelves a empezar para realizar otro ciclo hasta que los parámetros no cambien o cambien muy poco. Siempre cambias un parámetro, nunca realices cambios en más de un parámetro a la vez.
 
 \subsubsection{Parámetros del sistema} \label{sec:5:parametros-sistema}
 Los parámetros del sistema, ordenados por su robustez son:
@@ -172,7 +172,7 @@ En la \autoref{fig:caso4y9comparativa-tipos-vnsiteracion} podemos observar la ev
 \end{figure}
 
 En cuanto al orden de los entornos, no hay una clara tendencia, pero sí observamos que el primero planteado, (a), es el menos efectivo, puesto que sus resultados son superados por otros. Por otro lado, la selección óptima de los mismos es claramente determinista, salvo en el caso 5 y 9. 
-Una comparativa nos dice que la mejoría que aporta no es demasiado grande, del orden de una milésima (véase la \autoref{fig:caso5-naturaleza-entornos}) aunque para éste caso concreto, con la opción probabilística, el número de restricciones incumplidas en la solución final es menos dispersa que en la determinista, es decir, la diferencia entre una ejecución u otra no es tan grande como en el caso de la determinista. No obstante, para el resto de casos ésta dispersión no sucede de una forma tan significativa.
+Una comparativa nos dice que la mejoría que aporta no es demasiado grande, del orden de una milésima (véase la \autoref{fig:caso5-naturaleza-entornos}) aunque para este caso concreto, con la opción probabilística, el número de restricciones incumplidas en la solución final es menos dispersa que en la determinista, es decir, la diferencia entre una ejecución u otra no es tan grande como en el caso de la determinista. No obstante, para el resto de casos esta dispersión no sucede de una forma tan significativa.
 
 \begin{figure}
 	\centering
@@ -376,8 +376,8 @@ Respecto al objetivo \ref{O4}, la similitud a las plantillas es mayor en el VNS,
 En el caso 7 obtenemos unas soluciones peores que en el caso anterior, algo comprensible teniendo en cuenta la dificultad del caso (véase la \autoref{sec:5:def-casos}), pero muy superiores pese a ello, a las del SA. 
 
 La planificación inicial de la que partimos consta de un total de 25 controladores. 
-En la \faseuno{} se producen tres incidencias: varios cambios de sectorización, una baja y una alta.
-La forma en la que las sectorizaciones cambian, se encuentra representada en la \autoref{fig:5:esquema-sectorizacion-caso7}, que agrupa por colores aquellos sectores afines. 
+En la \faseuno{} se producen tres incidencias: varios cambios de sectorización, una baja y un alta.
+La forma en la que las sectorizaciones cambian se encuentra representada en la \autoref{fig:5:esquema-sectorizacion-caso7}, que agrupa por colores aquellos sectores afines. 
 Recuérdese que no es la misma sectorización 3A para el núcleo Ruta Este que para el Oeste. 
 
 En la \autoref{fig:5:solucion-inicial-caso7} puede observarse el resultado del proceso que describiremos a continuación.
@@ -431,7 +431,7 @@ En cuanto a los demás objetivos, VNS es superior aunque similar tanto para el n
 
 Por último, parece importante destacar también las limitaciones del sistema, que se ponen de manifiesto notablemente en el caso 3, donde hay muy pocos huecos donde poder mover carga. 
 
-El caso 3 consta de la incidencia de una baja del controlador C23 en el slot 24. No se producen altas, por lo que se necesita de un controlador imaginario. Y ese es el mayor inconveniente, pues eliminarlo será una tarea muy dificil de resolver teniendo en cuenta el poco margen de movimientos que tiene. 
+El caso 3 consta de la incidencia de una baja del controlador C23 en el slot 24. No se producen altas, por lo que se necesita de un controlador imaginario. Y ese es el mayor inconveniente, pues eliminarlo será una tarea muy difícil de resolver teniendo en cuenta el poco margen de movimientos que tiene. 
 
 Además, debido al orden establecido de importancia, los demás objetivos no será tomados tan en cuenta, especialmente el \ref{O4}, que trata de asemejar lo máximo posible la solución con las plantillas, puesto que su funcionamiento contradice al del objetivo \ref{O1}, en el sentido de que este último precisa de la ordenación de los turnos según la carga de trabajo asignada, mientras que \ref{O4} necesita que los turnos estén en el orden inicial, para poder comparar con la forma de las plantillas. % TODO: poner esto también en el capítulo 3!!!
 
@@ -445,7 +445,7 @@ Debido a ello, las soluciones alcanzadas son de peor calidad. Y es que el caso 3
 
 En el \autoref{capitulo:3} describimos las alternativas de metodología y parámetros barajadas en el TFM y por qué fueron elegidas finalmente las empleadas. Una de esas alternativas se trata del comportamiento de la búsqueda local, pudiendo ser \textit{First Improvement} y \textit{Best Improvement}. La segunda, no puede ser aplicada en este problema debido a que no podemos generar todas las posibles soluciones (para quedarnos con la mejor), por lo que se propuso una opción híbrida que precisaba de dos nuevos parámetros al sistema: el número máximo de iteraciones sin mejora para la búsqueda local y el porcentaje mínimo de mejoría para la búsqueda local.
 
-Un experimento interesante puede ser una comparativa entre ambos comportamientos, que puede verse la \autoref{fig:5:first-vs-bestiteracioncaso1}, que representa gráficamente el desempeño medio en cada iteración para el caso 1, que emplea un \textit{VND}, que es únicamente determinista, por lo que tan solo emplea la búsqueda local como medio de búsqueda dentro del entorno. Se ha llamado al comportamiento híbrido como simplemente \textit{Best Improvement} por ser una adaptación de éste.
+Un experimento interesante puede ser una comparativa entre ambos comportamientos, que puede verse la \autoref{fig:5:first-vs-bestiteracioncaso1}, que representa gráficamente el desempeño medio en cada iteración para el caso 1, que emplea un \textit{VND}, que es únicamente determinista, por lo que tan solo emplea la búsqueda local como medio de búsqueda dentro del entorno. Se ha llamado al comportamiento híbrido como simplemente \textit{Best Improvement} por ser una adaptación de este.
 
 \begin{figure}
 	\centering
