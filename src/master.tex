@@ -209,6 +209,7 @@
 
 %\includeonly{capitulos/Capitulo1-Introduccion/Capitulo1, capitulos/Capitulo2-Definicion-del-problema/Capitulo2}
 \begin{document}
+	\pagenumbering{gobble}% Remove page numbers (and reset to 1)
     % renombrar strings de babel:
     \renewcommand{\listtablename}{Índice de tablas}
     \renewcommand{\tablename}{Tabla}
@@ -278,19 +279,22 @@
     \afterpage{\blankpage}
     \pagenumbering{roman}
 
-    %
-    %
-    %	TODO AGRADECIMIENTOS?
-    %
-    %
-    %	AGRADECIMIENTOS
-    %    \section*{AGRADECIMIENTOS}
-    %    Agradezco especialmente a Tino Tello Caballo por toda su paciencia y tiempo para ayudarme
-    %    a dar vida a este proyecto.
+
+    \section*{AGRADECIMIENTOS}
+    Quiero dar las gracias a todos los amigos/as, compañeras/os y familiares que se han interesado por cómo iba mi proyecto y se han ilusionado conmigo en cada avance. 
+    
+    Agradezco especialmente a Tino por toda su paciencia y dedicación para ayudarme
+    a dar vida a este proyecto, sin su ayuda aquellos primeros días en su despacho todo habría sido más difícil. 
+    
+    Doy las gracias al apoyo de mis tutores, Alfonso y Antonio, por sus consejos y ayudas siempre que lo necesitaba.
+    
+    A todo el grupo de investigación, por facilitarme un lugar de trabajo disponible; así como ofrecerme esta beca con la que pude costearme la habitación en aquel piso de Madrid. También por darme la posibilidad de volver a \textit{la mio tierrina} y terminar el TFM a distancia.
+    
+    Y por supuesto gracias a \textit{ti}, por leerme.
 
     %	RESUMEN
     \section*{RESUMEN}
-    Extensión máxima de una página
+    Extensión máxima de una página %TODO: hacer resumen/abstract
 
 
     %	SUMMARY
