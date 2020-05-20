@@ -111,16 +111,16 @@ Nótese, además, que los sectores LECMSAN (amarillo) y LECMASI (verde) son los 
 
 
 Cuando cambiamos de una configuración de partida a otra, nos encontramos 2 posibles situaciones: que pasemos de una sectorización con un menor número de sectores a otra con mayor (como en el ejemplo anterior) donde se \textit{abrirán} sectores; o por el contrario que pasemos de una sectorización con un mayor número de sectores a otra menor (por ejemplo, el caso contrario: de una 5A a una 3D) donde se \textit{cerrarán} sectores, pero como hemos visto, algunos serán comunes y no sufrirán cambio. 
-Teniendo siempre en cuenta que se ha de controlar la totalidad de espacio aéreo de la zona, sin superposiciones o espacios sin controlar, por ello en algunos casos un mayor número de sectores se ve afectado, pudiendo tanto abrirse como cerrarse diferentes sectores para adecuarse a la nueva configuración.
+Teniendo siempre en cuenta que se ha de controlar la totalidad de espacio aéreo de la zona, sin superposiciones o espacios sin controlar. Por ello, en algunos casos un mayor número de sectores se ve afectado, pudiendo tanto abrirse como cerrarse diferentes sectores para adecuarse a la nueva configuración.
 
 Existen dos tipos de sectores: Ruta y Aproximación (APP), que tienen que ver con el tipo de tareas que los 
 controladores llevan a cabo.
 Los sectores de tipo Ruta precisan de tareas de control de ruta: garantizar la seguridad en las rutas de las naves aéreas; mientras que los sectores de tipo Aproximación precisan de tareas de aproximación o de área terminal: principalmente la gestión de los aterrizajes y despegues en el aeropuerto.
 
 El siguiente concepto importante es el de \textit{afinidad} entre sectores. Sin entrar en demasiado detalle, la unidad mínima de división del espacio aéreo son los volúmenes, de esta forma los sectores cubrirán un determinado número de volúmenes.
-Pues diremos que dos sectores \textit{son afines entre sí} si comparten al menos un volumen entre sí. Para saber si dos sectores son afines, utilizaremos la llamada \textit{matriz de afinidad} que, si bien puede ser construida manualmente, en nuestro caso será tratada como un input del sistema para ahorrar tiempo innecesario de cómputo, pues es constante para cada dependencia (en el Capítulo XXX se muestra un ejemplo). %TODO referencia!!
+Pues diremos que dos sectores \textit{son afines entre sí} si comparten al menos un volumen entre ellos. Para saber si dos sectores son afines, utilizaremos la llamada \textit{matriz de afinidad} que, si bien puede ser construida manualmente, en nuestro caso será tratada como un input del sistema para ahorrar tiempo innecesario de cómputo, pues es constante para cada dependencia (en el \autoref{Anexo:formato-planificacion-inicial} se muestra un ejemplo). %TODO revisar que efectivamente lo hay!!!
 
-Por último, resta introducir el concepto de \textit{núcleo}. Un núcleo no es más que una agrupación de alto nivel de varios sectores, pudiendo un sector pertenecer a varios núcleos (relación N a N). El uso de los núcleos facilita la gestión de la acreditación los controladores aéreos, pudiendo estos controlar únicamente un determinado núcleo (véase el Requisito \ref{RD:nucleo-controlador}).
+Por último, resta introducir el concepto de \textit{núcleo}. Un núcleo no es más que una agrupación de alto nivel de varios sectores, pudiendo un sector pertenecer a varios núcleos (relación N a N). El uso de los núcleos facilita la gestión de la acreditación de los controladores aéreos, pudiendo estos controlar únicamente un determinado núcleo (véase el Requisito \ref{RD:nucleo-controlador}).
 
 
 \subsection{Gestión de tráfico aéreo}
@@ -137,12 +137,12 @@ Cuando el turno es Largo quiere decir que se toma parte del turno de noche, exte
 \end{figure}
 
 Por otro lado, en cada puesto de control debe haber dos controladores, cada uno en una posición diferente: 
-\textit{ejecutivo} y \textit{planificador}. El controlador en posición planificador es responsable de anticiparse a posibles problemas y avisar al otro controlador (en posición ejecutivo) antes de que éstos lleguen a producirse. Por su parte, el ejecutivo es quien debe llevar a cabo la tarea principal, así como solucionar los conflictos que el planificador le comunique. La fotografía de la \autoref{fig:2:enaire-atc} muestra cómo es uno de estos puestos de trabajo, con un controlador de cada tipo.
+\textit{ejecutivo} y \textit{planificador}. El controlador en posición planificador es responsable de anticiparse a posibles problemas y avisar al otro controlador (en posición ejecutivo) antes de que éstos lleguen a producirse. Por su parte, el ejecutivo es quien debe llevar a cabo la tarea principal, así como solucionar los conflictos que el planificador le comunique. La fotografía de la \autoref{fig:2:enaire-atc} muestra cómo es uno de estos puestos de trabajo, con un controlador en cada posición.
 
 Como ya se comentó en el apartado anterior, cada controlador tiene una acreditación que le permite controlar un \gls{Nucleo} específico y, por ende, únicamente podrá trabajar en puestos que impliquen el control del 
 tráfico aéreo de un determinado conjunto de sectores, lo que equivaldría a una sección específica del espacio aéreo total.
 
-Adicionalmente, en vista de las diferentes tareas a realizar por los controladores en función del tipo de sectores, parece lógico pensar que exista acreditación adicional, que aumenta el nivel de restricción de los sectores que puede controlar en función del tipo que estos sean. Por ello, hay dos tipos de acreditaciones, que tienen el nombre de PTD y CON. Los controladores con acreditación CON, únicamente podrán controlar los sectores de tipo Ruta, mientras que los de tipo PTD pueden controlar tanto Ruta como Aproximación (véase la \autoref{table:2:acreditaciones}).
+Adicionalmente, en vista de las diferentes tareas a realizar por los controladores en función del tipo de sectores, parece lógico pensar que exista una acreditación adicional, que aumente el nivel de restricción de los sectores que puede controlar en función del tipo que estos sean. Por ello, hay dos tipos de acreditaciones, que tienen el nombre de PTD y CON. Los controladores con acreditación CON, únicamente podrán controlar los sectores de tipo Ruta, mientras que los de tipo PTD pueden controlar tanto Ruta como Aproximación (véase la \autoref{table:2:acreditaciones}).
 
 %\begin{table}[h]
 %	\centering
@@ -206,5 +206,5 @@ En este último se comparan resultados de sendas metaheurísticas, donde puede a
 La metodología propuesta (véase \autoref{capitulo:3}) para este nuevo sistema es completamente diferente a la propuesta por Tello et al. en~\cite{articulo1}, no obstante, existen conceptos y subprocesos equivalentes en ambos. 
 A lo largo de las próximas secciones subrayaremos otras diferencias entre ambos sistemas más concretas en cuanto a implementación y a la metodología.
 
-Finalmente, es importante destacar que el origen de ambos proyectos pretende automatizar el proceso de planificación que actualmente llevan a cabo manualmente, y que el sistema \legacy{} será utilizado como herramienta para generar planificaciones diarias, por lo que el sistema aquí presentado podrá utilizar el formato de salida del anterior como una entrada (más detalles en el \autoref{capitulo:3}), con un porcentaje complementario al del hilo de ejecución de las restricciones.
+Finalmente, es importante destacar que el origen de ambos proyectos pretende automatizar el proceso de planificación que actualmente llevan a cabo manualmente, y que el sistema \legacy{} será utilizado como herramienta para generar planificaciones diarias, por lo que el sistema aquí presentado podrá utilizar, en un futuro, el formato de salida del anterior como una entrada (más detalles en el \autoref{capitulo:3}), % con un porcentaje complementario al del hilo de ejecución de las restricciones. %XXX: no entiendo esta frase, la quito...
 

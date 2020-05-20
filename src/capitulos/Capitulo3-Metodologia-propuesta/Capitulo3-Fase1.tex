@@ -1,7 +1,7 @@
 %! Suppress = LineBreak
 \subsection{Fase 1: Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
 
-La fase de inicialización toma como entrada la planificación inicial: aquella planificada para el día y que ya no tiene validez debido a la incidencia; junto a los datos relativos a la incidencia, que son:
+La fase de inicialización toma como entrada la planificación inicial: aquella planificada para el día que ya \underline{no tiene validez debido a la incidencia}; junto a los datos relativos a la incidencia, que son:
 
 \begin{itemize}
 	\item Hora a la que se produce la incidencia.
@@ -26,7 +26,7 @@ Adicionalmente, un quinto paso fue planteado para poder facilitar la tarea de la
 Finalmente, no fue implementada y fue añadida como línea de trabajo futura.
 
 En la \autoref{fig:3:ejemplo-distribucion-inicial} se muestra cómo sería una posible planificación inicial.
-En este caso ha sido creada en base a \textit{plantillas} o \textit{estadillos}, que es el método empleado habitualmente por el personal para crear la planificación.
+En este caso ha sido creada en base a \textit{plantillas} o \textit{estadillos}, que es el método empleado habitualmente por el personal para crear la planificación manualmente.
 Consiste en la repetición de un patrón conformado por tres controladores para un sector, en el que se suceden trabajo en puesto planificador, trabajo en puesto ejecutivo y descanso con un desfase en incremento para cada controlador, de forma que en cada instante de tiempo (imagínese una línea transversal) habrá un controlador en puesto ejecutivo, otro en planificador y otro descansado (véase  la \autoref{fig:3:plantilla-3x1}).
 
 \gls{CRIDA} sabe que el uso de estas plantillas, si bien no es lo más óptimo, es lo más cómodo tanto para la creación manual de la planificación como de cara a no incumplir las restricciones de cada trabajador (véase la  \autoref{sec:4:RD}).
@@ -39,7 +39,7 @@ Consiste en la repetición de un patrón conformado por tres controladores para 
 	\label{fig:3:plantilla-3x1}
 \end{figure}
 
-El tipo de plantilla representando en la \autoref{fig:3:plantilla-3x1} se le denomina $3\times1$ (3 controladores para 1 sector) pero existen otros tipos como $8\times3$ o $4\times1$, no obstante, la más importante para el sistema es la $3\times1$, que será empleada durante esta Fase.
+El tipo de plantilla representando en la \autoref{fig:3:plantilla-3x1} se le denomina $3\times1$ (3 controladores para 1 sector) pero existen otros tipos como $8\times3$ o $4\times1$, no obstante, la más importante para el sistema es la $3\times1$, que será empleada durante esta fase.
 
 \subsubsection{Paso 1: Eliminar sectores que se cierran}
 \label{sec:3:fase1-paso1}
@@ -57,17 +57,21 @@ sectorización 5A que pasa a ser una 6C en un momento dado, tal y como se ilustr
 
 
 Identificamos pues, el momento de la incidencia a las 10:30, sin embargo el \textit{momento actual} viene dado como parte de la entrada. En este caso, han decidido que sea media hora antes de la incidencia, a las 10:00 horas, que equivale al slot número 30:
+%\begin{gather*}
+%    10 \,h-7 \,h \,30 \,\min = 2 \,h \,30 \,\min = \left(2 \, \cancel{h} \times \frac{60 \,\min}{1 \,\cancel{h}}\right)
+%	\,\min + 30\,\min = 150
+%	\,\min\\\\
+%    150 \,\cancel{\min} \times \frac{1\,slot}{5\,\cancel{\min}} = 30\,slots\\
+%\end{gather*}
 \begin{gather*}
-    10 \,h-7 \,h \,30 \,\min = 2 \,h \,30 \,\min = \left(2 \, \cancel{h} \times \frac{60 \,\min}{1 \,\cancel{h}}\right)
-	\,\min + 30\,\min = 150
-	\,\min\\\\
-    150 \,\cancel{\min} \times \frac{1\,slot}{5\,\cancel{\min}} = 30\,slots\\
+10:00 - 7:30 = 2 \,h \,30 \,\min = 2 \, \cancel{h} \times \frac{60}{1 \,\cancel{h}}\,\min + 30\,\min = 150\,\min\\\\
+150 \,\cancel{\min} \times \frac{1\,slot}{5\,\cancel{\min}} = 30\,slots
 \end{gather*}
 
 Antes de dicha hora, la planificación no debe ser alterada en ningún caso, pues representa el pasado. En la 
 \autoref{fig:3:ejemplo-distribucion-inicial} lo hemos representado con una línea roja. 
 
-En el resto de la planificación, debemos eliminar todos los sectores que no aparecen. Para ello eliminamos aquellos que se cierran: los que dentro de la sectorización antigua, no pertenezcan a la nueva (una resta de conjuntos) (es decir, los que siguen en color negro en el cuadro azul de la \autoref{fig:3:ejemplo-cambio-sectorizacion}). 
+En el resto de la planificación, debemos eliminar todos los sectores que no aparecen. Para ello eliminamos aquellos que se cierran: los que dentro de la sectorización antigua, no pertenezcan a la nueva (una diferencia de conjuntos) (es decir, los que siguen en color negro en el cuadro azul de la \autoref{fig:3:ejemplo-cambio-sectorizacion}). 
 Adicionalmente, para obtener una mejor solución inicial y favorecer así a la búsqueda, en el momento de eliminar un sector de la sectorización inicial, tratamos de sustituirlo por uno de los sectores nuevos que se abren (los de la nueva sectorización, los del cuadro naranja en color negro) \textbf{de forma que sean afines entre sí}, pues el controlador seguirá pudiendo controlarlo sin problemas de acreditación. %FIXME es esto cierto?
 
 Para hacer más eficiente el recorrido del algoritmo, en lugar de ir slot a slot, podemos agruparlos mientras la sectorización sea la misma. Buscamos un sector afín a cada sector que se cierra y lo sustituimos en todas las apariciones dentro de ese conjunto de slots. Así sucesivamente para cada tramo de slots con la misma sectorización. 
@@ -87,11 +91,11 @@ La búsqueda del sector afín es un algoritmo voraz que obtiene el primer sector
 	\medskip
 	
 	\ForEach{conjunto de slots con la misma sectorización}{
-		$cerrados \leftarrow { Sectorizacion_{modificada}[slot] \setminus Sectorizacion_{inicial}[slot] }$\;
-		$abiertos \leftarrow { Sectorizacion_{inicial}[slot] \setminus Sectorizacion_{modificada}[slot] }$\;
+		$cerrados \leftarrow { Sectorizacion_{inicial}[slot] \setminus Sectorizacion_{modificada}[slot] }$\;
+		$abiertos \leftarrow { Sectorizacion_{modificada}[slot] \setminus Sectorizacion_{inicial}[slot] }$\;
 		
 		\ForEach{$sector_c \in cerrados$}{
-			$afin \leftarrow$ buscarPrimerAfin($Sectorizacion_{modificada}[slot]$)\;
+			$afin \leftarrow$ buscarPrimerAfin($abiertos$)\;
 			
 			\If{$\nexists{afin}$}{
 				$\forall$ aparición de $sector_c$, sustituir por descansos $(111)$\;
@@ -114,36 +118,36 @@ Partimos de la lista de sectores nuevos que se abren y que no han sido ya emplea
 \autoref{fig:3:plantilla-3x1}, donde alternamos trabajo y descanso a tamaños iguales: el doble de trabajo (uno en cada puesto) por cada uno de descanso. Las plantillas pueden emplearse con cualquier escala de tiempo, manteniendo las proporciones, por ejemplo 2 horas de trabajo y una de descanso.
 Para este proyecto se ha utilizado un tamaño de 6 slots de descanso (12 de trabajo) debido a que los resultados eran mejores empleando esta proporción en proyectos previos al presente TFM, por lo que se ha mantenido dicha proporción.
 
-Para cada uno de los sectores mencionados añadiremos una de estas plantillas, con 3 controladores adicionales inexistentes que emplearemos auxiliarmente y que trataremos de eliminar en la \fasedos{}. En caso de no ser posible eliminar todos los auxiliares, diremos que para resolver el problema actual necesitamos obligatoriamente de un controlador extra.
+Para cada uno de los sectores mencionados añadiremos una de estas plantillas, con 3 controladores adicionales inexistentes que emplearemos auxiliarmente, que llamaremos \textit{imaginarios} y que trataremos de eliminar en la \fasedos{}. En caso de no ser posible eliminar todos los imaginarios, diremos que para resolver el problema actual necesitamos obligatoriamente de un controlador extra.
 
 De esta forma, obtendremos una planificación en la que se han tenido en cuenta las contingencias relativas a los cambios de sectorización. Si la instancia concreta del problema incluye únicamente esta incidencia, la planificación de la \autoref{fig:3:ejemplo-distribucion-pasos-1-y-2} sería una \textit{solución inicial} preparada para emplear como entrada a la \fasedos{}, que deberá, entre otras cosas, eliminar los controladores imaginarios, es decir, que no existen pero son necesarios en la inicialización y que se representan mediante el identificador ``C0''.
 
-\begin{figure}[htbp]
+\begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{Ejemplo-distribucion-pasos-1-y-2}
-	\caption[Planificación tras los Pasos 1 y 2 de la Fase 1]{Planificación tras los Pasos 1 y 2 de la \faseuno{} siguiendo el ejemplo de la \autoref{fig:3:ejemplo-distribucion-inicial}}. 
+	\caption[Planificación tras los Pasos 1 y 2 de la Fase 1]{Planificación tras los Pasos 1 y 2 de la \faseuno{} siguiendo el ejemplo de la \autoref{fig:3:ejemplo-distribucion-inicial}.}
 	\label{fig:3:ejemplo-distribucion-pasos-1-y-2}
 \end{figure}
 
 \subsubsection{Paso 3 y 4: Dar de baja/alta a los controladores}
 \label{sec:baja-alta-controladores}
 
-Estos pasos son ejecutados únicamente en caso de que haya una incidencia relacionada con el personal. Podría suceder que tras ponerse de baja repentinamente, otro controlador cubra ese puesto a lo largo de la jornada, por lo que tendremos que hacer dos modificaciones a la planificación.
+Estos pasos son ejecutados únicamente en caso de que haya una incidencia relacionada con el personal. Podría suceder que tras ponerse de baja repentinamente un controlador, otro cubra ese puesto a lo largo de la jornada, por lo que tendremos que hacer dos modificaciones a la planificación.
 
-El controlador que se da de baja dejará de trabajar ese día. Sin embargo, no podemos eliminarlo de la planificación puesto que en momentos previos al \textit{momento actual} si ha trabajado, y hemos de contabilizarlo como carga de trabajo. Emplearemos el carácter especial ``000'' para indicar que se trata de un slot en el que el controlador no está trabajando pero tampoco descansado, al que se deberá tratar de forma especial durante la ejecución de la \fasedos{}, pues no se podrá mover a otro controlador ni se le podrá asignar nuevo trabajo. 
+El controlador que se da de baja dejará de trabajar ese día. Sin embargo, no podemos eliminarlo de la planificación puesto que en momentos previos al \textit{momento del cambio} sí ha trabajado, y hemos de contabilizarlo como carga de trabajo. Emplearemos el carácter especial ``000'' para indicar que se trata de un slot en el que el controlador no está trabajando pero tampoco descansado, al que se deberá tratar de forma especial durante la ejecución de la \fasedos{}, pues no se podrá mover a otro controlador ni se le podrá asignar nuevo trabajo. 
 
 Si ningún trabajador se reincorpora a su puesto de trabajo, emplearemos un controlador imaginario al que se le asignará toda la carga de trabajo que tenía el controlador de baja a partir del momento de la incidencia.
 
 La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el controlador ``C23'' se ha puesto de baja a las 9:30 (slot 30) y no hay reincorporación (en caso de haberla el controlador ``C0'' tendría su identificador correspondiente). Nótese que se emplean los caracteres de fuera de turno (``000'') en todos los slots a partir de la incidencia en el caso del controlador de baja mientras que para el controlador imaginario (o el reincorporado según se aplique) sucede lo contrario, todos los slots previos a la incidencia tienen el mencionado carácter. 
 
-Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase la \autoref{apartado:adaptacion-fitness}) ---concretamente la función objetivo~\ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas el descanso mínimo (recopiladas en la \autoref{sec:4:RD})~--- no se han de computar como tiempo de descanso para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito \ref{RD:3:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
-
-\begin{figure}[htbp]
+\begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{Ejemplo-distribucion-pasos-3-y-4}
 	\caption[Ejemplo de planificación tras los pasos 3 y 4 de la \faseuno{}]{Ejemplo de planificación tras los Pasos 3 y 4 de la \faseuno{}, sin reincorporaciones.}
 	\label{fig:3:ejemplo-distribucion-pasos-3-y-4}
 \end{figure}
+
+Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase la \autoref{apartado:adaptacion-fitness}) ---concretamente la función objetivo~\ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas el descanso mínimo (recopiladas en la \autoref{sec:4:RD})~--- no se han de computar como tiempo de descanso para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito \ref{RD:3:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
 %
 %
 %
