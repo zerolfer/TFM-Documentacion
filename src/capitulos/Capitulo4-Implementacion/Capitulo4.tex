@@ -402,9 +402,9 @@ Los algoritmos implementados para el VNS ya han sido descritos en detalle en el 
 
 La naturaleza de los entornos determinista es simple. Únicamente precisa de una estructura de datos de tipo lista y un índice que se vaya incrementando en cada llamada al método \texttt{nextNeighborhood()}. Sin embargo, para la implementación del probabilístico se requiere de una estructura de datos auxiliar mucho más compleja.
 
-Se han definido entornos cuyo fundamento es idéntico pero emplea diferentes restricciones de entorno (véase la \autoref{paragraph:entornos}). Con este tipo de entornos podemos operar de dos maneras: 
+Como se han definido entornos cuyo fundamento es idéntico pero emplea diferentes restricciones de entorno (véase la \autoref{paragraph:entornos}), podemos operar con ellos de dos maneras posibles: 
 \begin{enumerate}[label={(\Alph*)}]
-	\item Considerarlos como sub-entornos y emplearlos en orden o aleatoriamente, es decir, seleccionamos los entornos aleatoriamente, y si el elegido tiene sub-entornos iterarlos en orden.
+	\item Considerarlos como sub-entornos y emplearlos en orden o aleatoriamente. Es decir, seleccionamos los entornos aleatoriamente y, si el elegido tiene sub-entornos, iterarlos en orden.
 	\item \label{modelo-no-ordenado} Considerarlos como entornos del mismo nivel, pudiendo ser elegidos con la misma probabilidad que todos los demás.
 \end{enumerate}
 
@@ -437,14 +437,16 @@ Se realizó un análisis empleando las tecnologías de \textit{Java Mission Cont
 	\label{fig:4:method-profiling-legacy}
 \end{figure}
 
-Como puede verse, la función que más se utiliza y más computo total emplea es, como era de esperar, el cálculo del fitness, concretamente el objetivo \ref{O1}, relativo al numero de restricciones. Una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. Además, el mapa de soluciones empleado, ya definido al final de la \autoref{sec:4:diseño}, permite reutilizar el cálculo realizado en cada fitness siempre que sea posible, disminuyendo carga en éste lugar del sistema.
+Como puede verse, la función que más se utiliza y más computo total emplea es, como era de esperar, el cálculo del fitness, concretamente el objetivo \ref{O2}, relativo al numero de restricciones. Una característica empleada, heredada en el sistema \legacy{}, es la paralelización del cálculo de restricciones, puesto que cada restricción requiere de una lectura completa de la solución, de complejidad de hasta $O(n^4)$, que no implica ninguna modificación en la misma. Aprovechando las capacidades multihilo del computador, podemos reducir el tiempo de respuesta de la función fitness. 
 
-Por otro lado, para mejorar la eficiencia de todo el sistema, la \faseuno{}, la \fasedos{} y de la lectura de datos; se han cambiado las estructuras que representan conjuntos de Objetos ---un conjunto de Sectores, por ejemplo --- pasando de ser representados mediante Listas (\textit{List}) a \textit{Set}s de Java en todos los casos posibles dentro del código \legacy{} reutilizado (en el caso del código nuevo implementado se utilizan también). Los \textit{Set}s tienen una complejidad tanto para insertar un elemento como para comprobar si ya lo contiene ---operaciones que se realizan un gran número de veces--- de $O(1)$ a diferencia de la lista, que es $O(n)$. Además, permite evitar la repetición de elementos de forma nativa para Java, lo que ahorra comprobaciones explícitas que, empleando listas, sí que eran necesarias.
+Por otro lado, el mapa de soluciones creado para la la \fasedos{} del nuevo sistema, ya definido al final de la \autoref{sec:4:diseño}, permite reutilizar el cálculo realizado en cada fitness siempre que sea posible, disminuyendo carga en éste lugar del sistema. 
+
+Para mejorar la eficiencia de todo el sistema, la \faseuno{}, la \fasedos{} y de la lectura de datos; se han cambiado las estructuras que representan conjuntos de Objetos ---un conjunto de Sectores, por ejemplo --- pasando de ser representados mediante Listas (\textit{List}) a \textit{Set}s de Java en todos los casos posibles dentro del código \legacy{} reutilizado (en el caso del código nuevo implementado se utilizan también). Los \textit{Set}s tienen una complejidad tanto para insertar un elemento como para comprobar si ya lo contiene ---operaciones que se realizan un gran número de veces--- de $O(1)$ a diferencia de la lista, que es $O(n)$. Además, permite evitar la repetición de elementos de forma nativa para Java, lo que ahorra comprobaciones explícitas que, empleando listas, sí que eran necesarias.
 
 Para la representación de las Altas y Bajas se empleó un \textit{enumerado}, que emplea de forma interna un número entero para la representación, pues es más eficiente que emplear en su lugar una cadena de texto (\textit{String}), tal y como se venía empleando en \legacy{} para, por ejemplo, representar las acreditaciones.
 
 \paragraph{Análisis de rendimiento}
-Por último, se ha realizado un análisis de rendimiento comparando la eficiencia del sistema \legacy{} con el sistema actual. La \autoref{fig:4:method-profiling-legacy} mostraba el llamado \textit{Method profiling} que cuenta el número de veces que emplea el procesador cada paquete (sección \textit{Top Package}), cada clase (sección \textit{Top Class}) y cada método (sección \textit{Stack Trace}). Lo que más se emplea son las clases relacionadas con los Strings, esto ya fue tratado en la \autoref{sec:4:detalles-sistema} (en la que se señalaron posibles alternativas para mejorar este punto), donde se señaló que es una limitación importante del sistema que se decidió preservar en este sistema, por lo que no es extraño observar en la \autoref{fig:4:method-profiling-system} que en el sistema definido sigue siendo el paquete \textit{java.lang} (que es el que contiene la clase String) como la propia clase String sigan siendo los más utilizados.
+Por último, se ha realizado un análisis de rendimiento comparando la eficiencia del sistema \legacy{} con el sistema actual. La \autoref{fig:4:method-profiling-legacy} mostraba el llamado \textit{Method profiling} que cuenta el número de veces que emplea el procesador cada paquete (sección \textit{Top Package}), cada clase (sección \textit{Top Class}) y cada método (sección \textit{Stack Trace}). Lo que más se emplea son las clases relacionadas con los Strings, esto ya fue tratado en la \autoref{sec:4:detalles-sistema} (en la que se señalaron posibles alternativas para mejorar este punto), donde se señaló que es una limitación importante del sistema \legacy{} que se decidió preservar en el nuevo, por lo que no es extraño observar en la \autoref{fig:4:method-profiling-system} que en el sistema definido el paquete \textit{java.lang} (que es el que contiene la clase String) y la propia clase String sigan siendo los más utilizados.
 
 \begin{figure}
 	\centering
@@ -474,15 +476,15 @@ Respecto al rendimiento general de CPU y memoria podemos ver en la \autoref{fig:
 	\centering
 	\begin{subfigure}{\linewidth}
 		\centering
-		\includegraphics[width=1\linewidth]{capitulos/Capitulo4-Implementacion/recursos/Performance-legacy}
-		\caption{sectorización 3B\linebreak}
+		\includegraphics[width=1\linewidth]{Performance-legacy}
+		\caption{sistema \legacy{}}
 		\label{fig:4:performance-legacy}
 	\end{subfigure}
 	
 	\begin{subfigure}{\linewidth}
 		\centering
-		\includegraphics[width=1\linewidth]{capitulos/Capitulo4-Implementacion/recursos/Performance-system}
-		\caption{sectorización 3D\linebreak}
+		\includegraphics[width=1\linewidth]{Performance-system}
+		\caption{sistema implementado}
 		\label{fig:4:performance-system}
 	\end{subfigure}
 	
@@ -495,12 +497,12 @@ Respecto al rendimiento general de CPU y memoria podemos ver en la \autoref{fig:
 \subsection{Pruebas}
 \label{sec:4:tests}
 
-La mayor parte de las pruebas de validación realizadas al sistema fueron manuales, observando el fichero Excel de salida y analizando el comportamiento del algoritmo y detectar así anomalías en él. Éstas pruebas manuales fueron realizadas empleado diferentes instancias del problema cada una variando una característica, ya sea la Unidad de Control o el tipo de incidencia. Éstas instancias se definen en detalle en la \autoref{sec:5:def-casos}.
+La mayor parte de las pruebas de validación realizadas al sistema fueron manuales, observando el fichero Excel de salida y analizando el comportamiento del algoritmo y detectar así anomalías en él. Éstas pruebas manuales fueron realizadas empleado diferentes instancias del problema, cada una variando una característica, ya sea la Unidad de Control o el tipo de incidencia. Éstas instancias se definen en detalle en la \autoref{sec:5:def-casos}.
 
 Por otro lado, se llevaron a cabo test unitarios para testar la funcionalidad de métodos concretos, sobre todo debido a la dificultad de operar a nivel de carácter (explicado en la \autoref{sec:4:detalles-sistema}).
 Por ejemplo, el método \texttt{getIntervalos(turno:String)} que se encarga de cortar el String que representa el turno y seleccionar intervalos de trabajo continuado, retornando los índices de comienzo y fin del intervalo de trabajo continuado. Se ha probado con una cadena de caracteres que comienzan por descanso (``111''), que terminen por descanso, que el descanso esté en el medio y que no haya descanso.
 
-Respecto a test de integración o carga, el sistema no requería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridas.
+Respecto a test de integración o carga, el sistema no requería de ellos. Sin embargo, y ya fuera del alance definido del proyecto, cuando se produzca el despliegue real de la aplicación en los sistemas aeroportuarios, sí serán requeridos.
 
 \subsection{Despliegue y explotación} 
 \label{sec:4:despliegue}
