@@ -7,7 +7,7 @@ Como ingeniero informático, este proyecto se ha desarrollado de forma orientada
 	\item Planificación
 	\item Análisis
 	\item Diseño
-	\item Implementación propiamente dicha
+	\item Implementación% propiamente dicha
 	\item Pruebas
 	\item Despliegue y explotación    
 \end{enumerate}
@@ -24,7 +24,7 @@ las funciones y características especificadas~\cite{PMBOK}.
 Los proyectos de naturaleza de investigación e innovación como éste requieren de una cierta flexibilidad a la hora de definir el alcance, puesto que planteamos hipótesis iniciales que en función de ser válidas o no, plantearemos otras nuevas. Como éste TFM forma parte de un proyecto mayor, es más sencillo definir el alcance, aunque este ha sufrido alguna modificación.
 
 El proyecto parte con la definición de las hipótesis iniciales recogidas en la \autoref{sec:Hipotesis}. 
-Pretendía abarcar en primera instancia la comprensión del dominio del problema y la lógica de negocio sobre la que poder comenzar a trabajar, y tras ello, podría dar comienzo el desarrollo de la metaheurística VNS descrita en el \autoref{capitulo:3} y analizar los resultados comparándolos con el SA (experimentación, recopilado en el \autoref{capitulo:5}). Al comienzo del proyecto se implementarían los 5 tipos de VNS descritos previamente:
+Pretendía abarcar en primera instancia la comprensión del dominio del problema y la lógica de negocio sobre la que poder comenzar a trabajar, y tras ello, podría dar comienzo el desarrollo del software del sistema, descrito en el \autoref{capitulo:3}, y analizar los resultados comparándolos con el SA (experimentación, recopilado en el \autoref{capitulo:5}). Al comienzo del proyecto se implementarían los 5 tipos de VNS descritos previamente:
 \begin{itemize}
 	\item Variable Neighborhood Descent (VND)
 	\item Reduced Variable Neighborhood Search (RVNS)
@@ -65,7 +65,7 @@ En este punto se identifican los requisitos del sistema tanto del dominio (obten
 
 Los requisitos de dominio son aquellas restricciones del sistema que son impuestas únicamente por el dominio del problema, y no por la propia naturaleza del sistema ni de forma externa.
 
-Este tipo de requisitos son necesarios para la constitución de una solución factible y permite cuantificar lo mejor o peor que son una solución de otra mediante el conteo (ponderado) del número de restricciones incumplidas (véase el objetivo \ref{O2}). 
+Este tipo de requisitos son necesarios para la constitución de una solución factible y permite cuantificar lo mejor o peor que es una solución respecto a otra mediante el conteo (ponderado) del número de restricciones incumplidas (véase el objetivo \ref{O2}). 
 
 En el sistema \legacy{} existían dos tipos de restricciones: obligatorias y deseables, pues una vez alcanzada la factibilidad se intentaba mejorar. Sin embargo, en este sistema nos moveremos por soluciones infactibles buscando la que sea mejor, a ser posible factible pero no como condición necesaria. Estas restricciones son impuestas por la legislación española, recogidas en el BOE, fundamentalmente en:
 
@@ -116,7 +116,7 @@ A continuación, las relativas a la posición y asignación de los controladores
 	
 	\item A un controlador tipo CON solo podrá asignársele una posición cuyo sector sea Ruta (véase la \autoref{table:2:acreditaciones}).
 	
-	\item Los sectores o agrupaciones de dos sectores que se indique en la entrada del problema se deberán cubrir con 4 controladores en el turno	de noche.
+	\item Los sectores o agrupaciones de dos sectores que se indiquen en la entrada del problema se deberán cubrir con 4 controladores en caso de que el turno sea de noche.
 	
 	\item Un controlador solo puede operar en su turno correspondiente: si pertenece al turno largo, en el turno largo y si pertenece al turno corto en el turno corto.
 	
@@ -157,11 +157,11 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 
 \begin{enumerate}[label={\textbf{RIO\arabic*}}, ref={Requisito RIO\arabic*},  align=left]
 	
-	\item  Una entrada al sistema se compondrá de dos partes: la información de la dependencia y la información del caso, de esta forma, la información común a varios casos será independiente de cada caso concreto.
+	\item  Una entrada al sistema se compondrá de dos partes: la información de la Dependencia y la información del caso, de esta forma, la información común a varios casos será independiente de cada caso concreto.
 	
 	\item Adicionalmente, se empleará un fichero de propiedades que permita modificar los parámetros del sistema (véase la \autoref{sec:5:parametros-sistema}) sin necesidad de recompilar todo el código.	
 	
-	\item La información de la dependencia será un subdirectorio con el nombre de la dependencia, y contendrá 4 ficheros:
+	\item La información de la Dependencia será un subdirectorio con el nombre de la Dependencia, y contendrá 4 ficheros:
 	\begin{enumerate}[label*={\textbf{.\arabic*}}]
 		\item  Relación de todos los sectores pertenecientes la unidad de control con los sectores elementales\footnote{
 			Sector que comprende una zona del espacio aéreo que no es subdivisible empleando otros sectores. Recuérdese el sector LECMBDP (azul) de la \autoref{fig:2:sectorizacion-3d} que se podía sustituir por otros más pequeños, por lo tanto no es elemental.
@@ -214,7 +214,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 		\end{enumerate}
 		\item Modificación de los recursos. Fichero opcional, únicamente se debe incluir si hay alguna incidencia que afecte a los controladores.
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
-			\item Cada campo (fila) indica si se trata de una baja o alta, el identificador del controlador pertinente y el momento (hh:mm:ss) del evento (que puede ser diferente en el momento del cambio).
+			\item Cada entrada (fila) indica si se trata de una baja o alta, el identificador del controlador pertinente y el momento (hh:mm:ss) del evento (que puede ser diferente en el momento del cambio).
 		\end{enumerate}
 		\item La planificación inicial. Para esta versión se ha creado un formato ad-hoc para facilitar el trabajo a \gls{CRIDA} en la definición de casos para la experimentación:
 		\begin{enumerate}[label*={\textbf{.\arabic*}}]
@@ -255,14 +255,21 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 			\item Número de la iteración.
 			\item Tiempo de ejecución (en milisegundos).
 			\item Valor del fitness total (ponderado).
-			\item Valor del objetivo \ref{O1}.
-			\item Valor del objetivo \ref{O2}.
-			\item Valor del objetivo \ref{O3}.
-			\item Valor del objetivo \ref{O4}.
+			\item Valores de los objetivos \ref{O1}, \ref{O2}, \ref{O3} y \ref{O4} de forma independiente.
 			\item Número de controladores (tamaño de la solución).
-			\item Porcentaje mejora respecto al ciclo de ejecución actual (condición de parada).
+			\item Porcentaje de mejora respecto al ciclo de ejecución actual (condición de parada).
 			\item Entorno en uso.
+			\item Número de restricciones incumplidas.
+			\item Número de reinicios del VNS.
+%			\item En caso del \textit{Skewed VNS}, adicionalmente: mejor fitness alcanzado hasta el momento y distancia entre las soluciones generadas en la iteración.
 		\end{itemize}
+		\begin{enumerate}[label*={\textbf{.\arabic*}}]
+			\item En caso del \textit{Skewed VNS}, adicionalmente:
+			\begin{itemize}
+				\item Valor del mejor fitness alcanzado hasta el momento, y no el de la iteración concreta.
+				\item valor de la distancia entre las soluciones generadas en la iteración.
+			\end{itemize}
+		\end{enumerate}	
 	\end{enumerate}
 \end{enumerate}
 
@@ -275,7 +282,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 
 En esta etapa diseñamos, mediante la esquematización, el sistema a implementar. 
 El sistema se ha diseñado de tal manera que podamos reutilizar la mayor cantidad de código implementado y para ello se ha tomado como fundamento el paradigma Orientado a Objetos (POO) en contraposición con el paradigma procedimental. 
-Además, las limitaciones de implementación de usar el lenguaje de programación Java (véase la \autoref{sec:4:implementacion}), favorecen el uso de este paradigma. 
+Además, las limitaciones de implementación de usar el lenguaje de programación Java (véase la \autoref{sec:4:implementacion}) favorecen el uso de este paradigma. 
 Por otro lado, la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante ampliación y evolución y, posiblemente, más de una persona empleará el código en un futuro. 
 % Este salto de línea estropea las figuras de esquema, NO PONER
 
@@ -284,7 +291,7 @@ La selección del paradigma afectará a la forma de diseñar el sistema. El soft
 Se ha dividido el sistema en cuatro módulos:
 \begin{itemize}
 	\item Módulo de lectura de datos: lleva a cabo las tareas de lectura e inicialización de estructuras de datos.
-	\item Módulo de inicialización (\faseuno{}): inicializa la solución inicial de acuerdo con la(s) contingencias recibidas (input) del módulo anterior.
+	\item Módulo de inicialización (\faseuno{}): inicializa la solución inicial de acuerdo con las contingencias recibidas (input) del módulo anterior.
 	\item Módulo de búsqueda (\fasedos{}): lleva a cabo la búsqueda de una solución factible para el problema.
 	\item Módulo de entrega de datos: lleva a cabo las tareas de escritura y trazabilidad de las soluciones.
 \end{itemize}
@@ -296,9 +303,28 @@ En primer lugar, tenemos la lógica relativa a los VNS propiamente dichos, que s
 
 En segundo lugar, la lógica de los entornos, en la \autoref{fig:4:diseño:entornos}, que realizarán la búsqueda en sí, generando soluciones y modificando las existentes de diferentes formas según el tipo de entorno.
 
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=0.9\linewidth]{diagrama-clases-VNS-alt}
+%	\caption{Esquema del paquete \textit{vns} (verde)}
+%	\label{fig:4:diseño:vns}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=\linewidth]{diagrama-clases-TipoEntornos}
+%	\caption{Esquema del paquete \textit{naturaleza-entornos} (amarillo+naranja)}
+%	\label{fig:4:diseño:tipoEntorno}
+%\end{figure}
+%
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=1\linewidth]{diagrama-clases-Vecindades}
+%	\caption{Esquema del paquete \textit{estructuras-entorno} (cian)}
+%	\label{fig:4:diseño:entornos}
+%\end{figure}
+%
 Por último, los VNS darán uso de las estructuras de entorno mediante los sets, en la \autoref{fig:4:diseño:tipoEntorno}, que implementan el comportamiento de los entornos según su naturaleza probabilística o determinista.
-
-El módulo de inicialización (\faseuno{}) empleará las clases de tipo \textit{factoría} (\textit{<<Factory>>}) para inicializar el VNS, las estructuras de entorno y el tipo de Set de los entornos según la entrada del sistema y dar comienzo a la \faseuno{}.
 
 \begin{figure}[htbp]
 	\centering
@@ -321,10 +347,9 @@ El módulo de inicialización (\faseuno{}) empleará las clases de tipo \textit{
 	\label{fig:4:diseño:entornos}
 \end{figure}
 
-En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también las clases reutilizadas del sistema \legacy{} en rosa, y las modificadas, ampliadas o creadas en magenta. Nótese que la interfaz de la clase Fitness es utilizada únicamente por las estructuras de entorno. La última decisión de diseño se trata de emplear un mapa de soluciones para guardar los fitness de las soluciones y recuperarlos rápidamente y con bajo coste computacional ($O(1)$) en el resto de ocasiones que sean requeridos en las clases del paquete \textit{vns}, de esta forma su cálculo se realizará una única vez.
+El módulo de inicialización (\faseuno{}) empleará las clases de tipo \textit{factoría} (\textit{<<Factory>>}) para inicializar el VNS, las estructuras de entorno y el tipo de Set de los entornos según la entrada del sistema y dar comienzo a la \faseuno{}.
 
-
-
+En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también las clases reutilizadas del sistema \legacy{} en rosa, y las modificadas, ampliadas o creadas en magenta. Nótese que la interfaz de la clase Fitness es utilizada únicamente por las estructuras de entorno. La última decisión de diseño se trata de emplear un mapa de soluciones para guardar los fitness de las soluciones y recuperarlos rápidamente y con bajo coste computacional ($O(1)$) en el resto de ocasiones que sean requeridos por las clases del paquete \textit{vns}, de esta forma su cálculo se realizará una única vez.
 
 
 %\subsection{Implementación}
@@ -340,7 +365,7 @@ La más importante es el lenguaje de programación. Debido a la alta complejidad
 El resto de tecnologías que se decidieron utilizar son:
 
 \begin{itemize}
-	\item Tello (planificación). Empleado como tablero KANBAN con las tareas a realizar, en proceso y finalizadas.
+	\item Trello (planificación). Empleado como tablero KANBAN con las tareas a realizar, en proceso y finalizadas.
 	\item IntelliJ IDEA (implementación). Entorno de Desarrollo Integrado (IDE) de Java.
 	\item Git (implementación). Control de versiones software y compartición de código.
 	\item Jupyter Notebook (experimentación). Entorno desarrollado sobre Python empleado para el tratamiento de datos y su representación en forma de gráficas.
