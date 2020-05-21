@@ -14,7 +14,7 @@ Como ingeniero informático, este proyecto se ha desarrollado de forma orientada
 %planificación, análisis, diseño, implementación propiamente dicha, pruebas y despliegue/explotación. 
 Adicionalmente, existe la etapa de monitorización y seguimiento que se desarrollan posteriormente de la puesta en marcha del sistema en un entorno real, y esto no forma parte del presente TFM debido a su naturaleza de investigación (al igual que el propio máster), por lo que no se han llevado a cabo dichos procesos.
 
-En las sucesivas secciones de este capítulo iremos describiendo los procesos llevados a cabo en cada una de estas etapas y los resultados alcanzados en las mismas. %TODO: resultados? (antes: conclusiones)
+En las sucesivas secciones de este capítulo iremos describiendo los procesos llevados a cabo en cada una de estas etapas y las conclusiones alcanzadas en las mismas.
 
 \subsection{Planificación}
 \label{sec:4:planificacion}
@@ -45,7 +45,6 @@ Los demás ciclos únicamente requerirán de las fases de diseño, implementaci�
 
 En la \autoref{sec:4:implementacion} se describen las tecnologías software utilizadas.
 
-% TODO: ¿cronograma?
 
 \subsection{Análisis}
 El objetivo de esta fase consiste en la educción de los requisitos que precisa el software a partir de los documentos e información facilitada por los tutores y demás \textit{stakeholders}.
@@ -54,9 +53,9 @@ Los \textit{stakeholders} del proyecto son: CRIDA, los tutores, y los estudiante
 
 El \textit{stakeholder} principal por supuesto es CRIDA, que guiará los objetivos principales y responderá a las preguntas de mayor complejidad y que competan al dominio del problema. Los tutores tendrán las mismas competencias pero a nivel del TFM y no del proyecto en su totalidad, y serán quienes faciliten la documentación inicial relativa al dominio del problema. El resto de \textit{stakeholders} y, especialmente, Tino Tello, proporcionarán la información relativa al software y aclararán conceptos de esta índole.
 
-La documentación inicial facilitada por los tutores se basa en dos papers: uno publicado y otro sin publicar a fecha de inicio del TFM~\cite{articulo1, articulo2}. 
+La documentación inicial facilitada por los tutores se basa en dos artículos: uno publicado y otro sin publicar a fecha de inicio del TFM~\cite{articulo1, articulo2}. 
 
-Una vez leída la documentación inicial y comprendido el dominio del problema, se realizó una entrevista con Tino Tello para comprender la implementación del sistema \legacy{} y poder comenzar a trabajar. En dicha entrevista se obtuvo como conclusión la creación de un repositorio con control de versiones Git disponible para todos los \textit{stakeholders} y el inicio del primer ciclo de la planificación (definidos en la \autoref{sec:4:planificacion}). % TODO: los he llamado PAPERS y no ARTÍCULOS
+Una vez leída la documentación inicial y comprendido el dominio del problema, se realizó una entrevista con Tino Tello para comprender la implementación del sistema \legacy{} y poder comenzar a trabajar. En dicha entrevista se obtuvo como conclusión la creación de un repositorio con control de versiones Git disponible para todos los \textit{stakeholders} y el inicio del primer ciclo de la planificación (definidos en la \autoref{sec:4:planificacion}).
 
 En este punto se identifican los requisitos del sistema tanto del dominio (obtenidos del software \legacy{} y de la documentación inicial) como del sistema (entrada/salida, interfaces, etc.) que se encuentran recopilados en las próximas secciones.
 
@@ -153,7 +152,7 @@ Y por último, las relativas a los tiempos de trabajo y descanso de los controla
 
 
 \subsubsection{Requisitos de entrada/salida} \label{sec:4:req-io}
-Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y formatos definidos tanto para la entrada al sistema como en la salida.
+Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y formatos definidos tanto para la entrada al sistema como en la salida. En el \autoref{Anexo:formato-planificacion-inicial} se pueden ver ejemplos de los mismos. % En el \autoref{Anexo:formato-planificacion-inicial} se encuentran definidos en mayor profundidad junto con ejemplos de los mismos.
 
 \begin{enumerate}[label={\textbf{RIO\arabic*}}, ref={Requisito RIO\arabic*},  align=left]
 	
@@ -226,7 +225,7 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 				\item El resto de columnas serán los nombres de los sectores (mayúscula si el puesto es ejecutivo, minúscula si es planificador) o ``111'' si es un descanso. 
 			\end{enumerate}		
 			\item Un mismo fichero podrá contener más de una distribución con diferentes intervalos de tiempo.
-			\item Más detalles sobre el formato y el proceso de creación en el \autoref{Anexo:formato-planificacion-inicial}. %TODO
+			\item Más detalles sobre el formato y el proceso de creación en el \autoref{Anexo:formato-planificacion-inicial}.
 		\end{enumerate}
 	\end{enumerate}
 	
@@ -273,9 +272,6 @@ Los requisitos de entrada y salida (I/O) son aquellos relativos a los ficheros y
 	\end{enumerate}
 \end{enumerate}
 
-%\subsubsection{Requisitos de interfaz}
-%En esta sección se recopilan los requisitos definidos para la adaptación del sistema diseñado con el sistema \legacy{}
-% TODO: OTROS REQUISITOS??
 
 \subsection{Diseño}
 \label{sec:4:diseño}
@@ -433,7 +429,7 @@ Se realizó un análisis empleando las tecnologías de \textit{Java Mission Cont
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{Method-Profiling-Legacy}
-	\caption{}
+	\caption{\textit{Method profiling} del sistema \legacy{} obtenido mediante textit{Java Mission Control}}
 	\label{fig:4:method-profiling-legacy}
 \end{figure}
 
@@ -451,7 +447,7 @@ Por último, se ha realizado un análisis de rendimiento comparando la eficienci
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{Method-Profiling-System}
-	\caption{}
+	\caption{\textit{Method profiling} del sistema construido para este TFM, obtenido mediante textit{Java Mission Control}}
 	\label{fig:4:method-profiling-system}
 \end{figure}
 
