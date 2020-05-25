@@ -29,7 +29,7 @@ Los casos de prueba van del 1 al 9, a excepción del caso 2, para el que \gls{CR
 
 Los casos prueban el sistema empleando distintas Unidades de Control: Madrid, Barcelona y Palma de Mallorca; variando en cada uno el problema a resolver: modificación de la sectorización, baja (y alta en algún caso) de un controlador, o incluso ambos.
 
-Los casos 4 y 7 resuelven los dos problemas a la vez: el cambio de sectorización y baja+alta de un controlador, por lo que son las instancias del problema más costosas de todas, y como veremos, son las que peores resultados alcanzan. % TODO: verificar que esto es cierto
+Los casos 5 y 7 resuelven los dos problemas a la vez: el cambio de sectorización y baja+alta de un controlador, por lo que son las instancias del problema más costosas de todas, y como veremos, son las que peores resultados alcanzan. % TODO: verificar que esto es cierto
 
 Por otro lado, cabe destacar que el caso 5, 8 y 9 requiere del uso de un controlador imaginario (para la inicialización realizada en la \faseuno{}), y el caso 7 requiere de cuatro (3 para un nuevo sector, 1 para la baja del controlador), mientras que el resto no necesitan ningún controlador imaginario para la inicialización. En los citados casos, el objetivo \ref{O1} tomará la máxima importancia hasta que alcance su valor máximo de 1, mientras que el los demás, el valor inicial de este ya es de uno, por lo que la búsqueda se dedicará exclusivamente al resto de los objetivos.
 
