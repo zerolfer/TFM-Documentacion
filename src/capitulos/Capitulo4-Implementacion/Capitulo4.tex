@@ -515,6 +515,7 @@ La exportación tiene los siguientes ficheros:
 		\item Metaheurística a usar (VNS o SA).
 		\item Ponderación de cada fitness.
 		\item Tiempo máximo de ejecución.
+		\item Porcentaje mínimo de mejora.
 	\end{enumerate}
 	\item Directorio de entrada, con subdirectorios de cada Unidad de Control y otro con los diferentes casos definidos.
 	\item Directorio de salida, que contendrá un fichero Excel con la planificación y un fichero txt con el valor de  los fitness desglosados de la solución final.
@@ -523,3 +524,5 @@ La exportación tiene los siguientes ficheros:
 El ejecutable encapsula toda la lógica de negocio del proyecto y permite ejecutarla de forma externa. Hace uso de los demás ficheros externos.
 
 El fichero de propiedades que se emplea en el despliegue es una simplificación de aquel empleado internamente, pues tiene muchos más parámetros que de cara al usuario no son relevantes. El contenido del fichero fue propuesto por los tutores.
+
+La ejecución se detiene o bien debido a que los valores de fitness no mejoran el porcentaje mínimo de mejora indicado, o bien debido a que se ha superado el límite de tiempo.

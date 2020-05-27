@@ -461,8 +461,9 @@ La cuarta y última función objetivo~\ref{O4}, trata de lograr que las planific
 
 con $nSlots$ el número de slots de la instancia concreta del problema. 
 
-Cabe destacar que, en caso de alcanzar slots
-donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces ese caso (inferior o derecha) será ignorado.
+Cabe destacar que, en caso de alcanzar slots donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces ese caso (inferior o derecha) será ignorado.
+
+\NEW{El funcionamiento de este objetivo contradice al \ref{O1} en el sentido de que este precisa de la ordenación de los turnos según la carga de trabajo asignada, mientras que \ref{O4} necesita que los turnos estén en el orden inicial, para poder comparar con la forma de las plantillas, por lo que cuando el \ref{O1} alcance el valor de 1, el orden inicial de los turnos deberá ser restablecido para que el \ref{O4} tenga un positivo sobre la solución.} 
 
 \paragraph{Definición de entornos} \label{paragraph:entornos}
 En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
@@ -822,7 +823,7 @@ Esta clasificación es importante para la tercera y última técnica para ajusta
 El enfoque determinista recorre la lista de entornos definida para el sistema de forma convencional, en el orden definido, mientras que el enfoque probabilístico permite equilibrar el uso de entornos de cada uno de los dos tipos seleccionando uno aleatoriamente. La \autoref{fig:diagrama-flujo-naturaleza-entornos} representa  estos procesos en formato de diagrama de flujo. Como se puede apreciar, en el caso de la selección de los entornos de forma determinista únicamente se toma el entorno en orden, mientras que el probabilístico precisa de varios procesos.
 
 \begin{figure}
-    \centering    \includegraphics[width=\linewidth]{diagrama-flujo-naturaleza-entornos-bold}
+    \centering    \includegraphics[width=\linewidth]{diagrama-flujo-naturaleza-entornos-bold-FINAL}
     \caption{Diagrama de flujo del proceso de selección de la naturaleza de entornos}
     \label{fig:diagrama-flujo-naturaleza-entornos}
 \end{figure}
