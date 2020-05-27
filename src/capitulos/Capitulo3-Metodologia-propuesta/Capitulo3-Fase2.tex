@@ -231,7 +231,7 @@ En el \autoref{algoritmo:Basic-VNS} se muestra el proceso esquemáticamente para
 
 El VNS en su versión básica fue propuesto en 1997 por Hansen y Mladenovi\'{c} en~\cite{vns1997}. Sin embargo, dado que cada problema es diferente y se adapta mejor a un método u otro, con el tiempo los propios autores han definido algunas variaciones, propuestas en~\cite{vns1999, vns2003}, y que serán descritas a continuación.
 
-La forma más sencilla de variar el método es suprimir una de las dos componentes: si eliminamos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Éste último es el menos costoso computacionalmente, sin embargo, es el que emplea menos información del problema, y su rendimiento suele ser peor que los demás.
+La forma más sencilla de variar el método es suprimir una de las dos componentes: si eliminamos la componente estocástica, dejando la búsqueda únicamente determinista tenemos el \textit{Variable Neighborhood Descent} (VND); mientras que si la búsqueda es únicamente estocástica tenemos el \textit{Reduced Variable Neighborhood Search} (RVNS). Este último es el menos costoso computacionalmente, sin embargo, es el que emplea menos información del problema, y su rendimiento suele ser peor que los demás.
 
 Otra posible variación respecto a la versión básica se basa en emplear una técnica distinta para la búsqueda local. Si por ejemplo empleamos otro VNS únicamente determinista, es decir un VND (descent) en lugar de una búsqueda local simple, estaremos empleando un \textit{General VNS} (GVNS).
 
