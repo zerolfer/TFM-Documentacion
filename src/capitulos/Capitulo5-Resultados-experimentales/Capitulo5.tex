@@ -38,7 +38,9 @@ Por otro lado, cabe destacar que el Caso 5, 8 y 9 requiere del uso de un control
 \subsection{Ajuste paramétrico}
 Toda metaheurística y demás sistemas de optimización tiene un conjunto de parámetros que pueden tomar un conjunto de valores posibles y que afectan activamente al rendimiento del sistema. Para poder fijar estos valores, se lleva a cambio un proceso denominado \textit{ajuste paramétrico}, o \textit{parameter tunning}, que se puede realizar de diferentes formas.
 
-El enfoque de inicialización \textit{off-line} consiste en fijar los valores previamente a la ejecución de la metaheurística de forma empírica para cada instancia del problema dado. Este proceso suele realizarse de forma secuencial, es decir, de uno en uno. Sin embargo, esta estrategia no considera las interacciones entre los parámetros y no garantiza hallar la configuración óptima de los mismos. Existen otras estrategias como \textit{Latin Hypercube}, emplear \textit{Racing Algorithms} o incluso puede ser planteado como otro problema de optimización a resolver mediante otra metaheurística.
+\NEW{El enfoque de inicialización \textit{off-line} consiste en fijar los valores previamente a la ejecución de la metaheurística de forma empírica para cada instancia del problema dado. Este proceso suele realizarse de forma secuencial, es decir, de uno en uno. Sin embargo, esta estrategia no considera las interacciones entre los parámetros y no garantiza hallar la configuración óptima de los mismos. Existen otras estrategias como \textit{Latin Hypercube}~\cite{latin-hypercube}, que consiste en muestrear del llamado ``Hipercubo Latino'' de tantas dimensiones como parámetros, presuponiendo que la configuración optima se encuentra en dicho cubo; limitar los valores a puntos de intersección de una cuadrícula de una granularidad dada y aproximar la localización de la configuración optima mediante el modelo estadístico de la bondad de ajuste.
+Otra opción sería emplear el llamado \textit{F-Race}~\cite{F-Race}, un tipo de \textit{Racing Algorithm} que parte de un conjunto de instancias de prueba y va descartando, iterativa o factorialmente, la configuración de cada instancia cuando encuentra evidencia estadística de que la configuración es peor que al menos otra candidata~\cite{F-Race-2}. 
+E incluso, podemos incluso plantear el ajuste paramétrico como otro problema de optimización a resolver mediante otra metaheurística.}
 
 Por otro lado, se considera el enfoque de inicialización de parámetros \textit{on-line}, que permite una evolución dinámica, en tiempo de ejecución, de los valores de cada parámetro en función del rendimiento del sistema u otro criterio determinista o estocástico.
 
@@ -596,7 +598,7 @@ La incidencia de este caso es nuevamente un cambio de sectorización, no obstant
 	\label{fig:caso6-fase1}
 \end{figure}
 
-En la \fasedos{} pordemos apreciar ya visualmente que tanto el VNS (\autoref{fig:caso6-fase2-vns}) como el SA \autoref{fig:caso6-fase2-sa} logran resultados similares para los tres primeros objetivos, \ref{O1}, \ref{O2}, \ref{O3}, aunque en el caso del cuarto, podemos observar cómo el SA obtiene una mayor similitud con los estadillos a partir del momento del cambio. Por esta razón, el valor global del fitness en la solución del SA es mejor que en el VNS.
+En la \fasedos{} podemos apreciar visualmente que tanto el VNS (\autoref{fig:caso6-fase2-vns}) como el SA \autoref{fig:caso6-fase2-sa} logran resultados similares para los tres primeros objetivos, \ref{O1}, \ref{O2}, \ref{O3}, aunque en el caso del cuarto, podemos observar cómo el SA obtiene una mayor similitud con los estadillos a partir del momento del cambio. Por esta razón, el valor global del fitness en la solución del SA es mejor que en el VNS.
 
 \begin{figure}[!]
 	\centering
@@ -651,7 +653,7 @@ En media, como recogía la \autoref{table:comparativa-sa-vns-porcentaje}, esa me
 
 \subsubsection{Análisis del Caso 9}
 
-El Caso 9 es equivalente al anterior, el Caso 8, con la diferencia de que ahora sí sucede un alta de otro controlador, C23. La planificación inicial es identica a la del caso anterior, \autoref{fig:caso8-fase0} y la solución inicial (tras la \faseuno{}) es la misma pero añadiendo el alta, como muestra la \autoref{fig:caso9-fase1}.
+El Caso 9 es equivalente al anterior, el Caso 8, con la diferencia de que ahora sí sucede un alta de otro controlador, C23. La planificación inicial es idéntica a la del caso anterior, \autoref{fig:caso8-fase0} y la solución inicial (tras la \faseuno{}) es la misma pero añadiendo el alta, como muestra la \autoref{fig:caso9-fase1}.
 
 \begin{figure}[!]
 	\centering
