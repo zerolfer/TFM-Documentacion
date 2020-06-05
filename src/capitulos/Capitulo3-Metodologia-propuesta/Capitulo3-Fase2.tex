@@ -558,7 +558,7 @@ dos controladores.>>}
     \hfill ---Jónatan Lara Valero~\cite{tesis-jonatan}
 \end{quotation}
 
-A su vez propone otros movimientos como variaciones de este, pero para este TFM únicamente hemos considerado su propuesta del uso de rejillas simple como un tipo de entornos que hemos definido. Este tipo de entornos limitan los intercambios de carga de trabajo permitidos a unas franjas de intervalos concretas. Véase la \autoref{fig:representacion-rejilla} para comprender visualmente cómo se constituye una rejilla a partir de una solución.
+A su vez propone otros movimientos como variaciones de este, pero para este TFM únicamente hemos considerado su propuesta del uso de rejillas simples como un tipo de entornos que hemos definido. Este tipo de entornos limitan los intercambios de carga de trabajo permitidos a unas franjas de intervalos concretas. Véase la \autoref{fig:representacion-rejilla} para comprender visualmente cómo se constituye una rejilla a partir de una solución.
 
 \begin{figure}
     \centering
@@ -566,6 +566,9 @@ A su vez propone otros movimientos como variaciones de este, pero para este TFM 
     \caption[Representación gráfica de una rejilla]{Representación gráfica de una rejilla. Fuente:~\cite{tesis-jonatan}}
     \label{fig:representacion-rejilla}
 \end{figure}
+
+Las rejillas se representan mediante una lista de pares, cada uno con el slot de inicio y final del tramo de la rejilla, obtenidos a partir de cada uno de los turnos y tomados en caso de que se produzca un cambio en alguno de los turnos, ya sea el mismo sector u otro diferente.
+
 
 Si bien no forma parte de este TFM, pues no se trata de trabajo propio, debido a que en el \autoref{capitulo:5} se hacen comparaciones entre las dos metaheurísticas definidas, consideramos importante en esta sección destacar que, los entornos definidos para el sistema \legacy{} fueron actualizados siguiendo la codificación definida (véase la \autoref{sec:3:representacion-soluciones})
 y el SA fue ejecutado empleando todos ellos. El estudio concluyó con que el entorno que mejores resultados ofrecía para el SA es el \textit{mov15}, uno de los propuestos por Lara en~\cite{tesis-jonatan}, de tipo rejilla con la variación de que permite intercambiar más de un intervalo a la vez, entre 1 y 3 siempre y cuando estén consecutivos.
@@ -634,6 +637,8 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
     \algovspace
 \end{algorithm}
 
+\break
+
 \textbf{Restricciones de entorno (y nombre):}
 \begin{enumerate}[align=parleft, labelsep=2cm, itemindent=5em, font=\itshape]
     \item[MovMaxCarga]\mbox{}\\No hay restricciones.
@@ -660,7 +665,7 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 
 \textbf{Objetivo:} Intentar pasar la carga de trabajo de forma controlada para no romper la estructura de la solución.
 
-\textbf{Comportamiento:} El cambio de carga de trabajo se realiza únicamente entre intervalos limitados por las rejillas. La estructura de las rejillas puede cambiar en cada iteración debido a los demás movimientos, por lo que se debe ejecutar la fragmentación del controlador en las rejillas en cada ejecución del movimiento.
+\textbf{Comportamiento:} El cambio de carga de trabajo se realiza únicamente entre intervalos limitados por las rejillas. La estructura de las rejillas puede cambiar en cada iteración debido a los demás movimientos, por lo que se debe ejecutar la fragmentación del turno en las rejillas en cada ejecución del movimiento.
 
 %\textbf{Algoritmo:}
 %\RestyleAlgo{plain}

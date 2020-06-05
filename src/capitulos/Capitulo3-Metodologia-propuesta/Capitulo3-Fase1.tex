@@ -1,7 +1,7 @@
 %! Suppress = LineBreak
 \subsection{Fase 1: Inicialización de Soluciones} \label{sec:3:inicializacion-soluciones}
 
-La fase de inicialización toma como entrada la planificación inicial: aquella planificada para el día que ya \underline{no tiene validez debido a la incidencia}; junto a los datos relativos a la incidencia, que son:
+La fase de inicialización toma como entrada la planificación inicial: aquella planificada para el día, y que ya \underline{no tiene validez debido a la incidencia}; junto a los datos relativos a la incidencia, que son:
 
 \begin{itemize}
 	\item Hora a la que se produce la incidencia.
@@ -138,7 +138,7 @@ El controlador que se da de baja dejará de trabajar ese día. Sin embargo, no p
 
 Si ningún trabajador se reincorpora a su puesto de trabajo, emplearemos un controlador imaginario al que se le asignará toda la carga de trabajo que tenía el controlador de baja a partir del momento de la incidencia.
 
-La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el controlador ``C23'' se ha puesto de baja a las 9:30 (slot 30) y no hay reincorporación (en caso de haberla el controlador ``C0'' tendría su identificador correspondiente). Nótese que se emplean los caracteres de fuera de turno (``000'') en todos los slots a partir de la incidencia en el caso del controlador de baja mientras que para el controlador imaginario (o el reincorporado según se aplique) sucede lo contrario, todos los slots previos a la incidencia tienen el mencionado carácter. 
+La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el controlador ``C23'' se ha puesto de baja a las 9:30 (slot 24) y no hay reincorporación (en caso de haberla el controlador ``C0'' tendría su identificador correspondiente). Nótese que se emplean los caracteres de fuera de turno (``000'') en todos los slots a partir de la incidencia en el caso del controlador de baja mientras que para el controlador imaginario (o el reincorporado según se aplique) sucede lo contrario, todos los slots previos a la incidencia tienen el mencionado carácter. 
 
 \begin{figure}
 	\centering
@@ -148,6 +148,8 @@ La \autoref{fig:3:ejemplo-distribucion-pasos-3-y-4} muestra un ejemplo donde el 
 \end{figure}
 
 Se tratan de slots inalterables en todos los casos, pero a la hora de contabilizarse el trabajo de cada controlador para el cómputo del fitness (véase la \autoref{apartado:adaptacion-fitness}) ---concretamente la función objetivo~\ref{O2}, pues es la que contabiliza las restricciones incumplidas, entre ellas el descanso mínimo (recopiladas en la \autoref{sec:4:RD})~--- no se han de computar como tiempo de descanso para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Requisito \ref{RD:3:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
+
+Es importante destacar también, que todos los controladores imaginarios añadidos durante alguno de los Pasos anteriormente descritos se hará al principio de la planificación para facilitar el proceso de ordenación de los turnos de trabajo por carga necesario para el correcto desempeño de la \fasedos{}, concretamente en cuanto al primer objetivo de la misma, \ref{O1}. Más detalles al respecto en la \autoref{apartado:adaptacion-fitness}
 %
 %
 %
