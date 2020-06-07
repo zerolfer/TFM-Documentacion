@@ -414,7 +414,7 @@ Una vez alcanzado el valor 1 de este primer objetivo, la ordenación deja de ser
 
 La segunda función objetivo~\ref{O2} tratará de minimizar\footnote{En realidad la expresión se transforma en términos de maximización pero la esencia es esa.} el número de restricciones del dominio incumplidas ---definidas en la \autoref{sec:4:RD}---, favoreciendo la factibilidad de la solución alcanzada. Su implementación cuenta el número de restricciones incumplidas (normalizado).
 
-En caso de que el trabajador tenga slots fuera de turno (véase la \autoref{sec:baja-alta-controladores}) éstos serán contabilizados como descansos para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (Restricción \ref{RD:3:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
+En caso de que el trabajador tenga slots fuera de turno (véase la \autoref{sec:baja-alta-controladores}) éstos serán contabilizados como descansos para que en aquellos controladores que llegan como sustitutos en momentos finales de la planificación se tenga en cuenta que no han estado trabajando y el porcentaje de descanso mínimo (restricción \ref{RD:3:porcentaje-min-descanso}) tenga un valor coherente con la realidad.
 
 En nuestra implementación, para ahorrar tiempo de cómputo, el conteo de las restricciones incumplidas se realiza en paralelo, aprovechando la capacidad de computación multihilo del ordenador de trabajo (véase la \autoref{sec:4:mejorando-eficiencia}).
 

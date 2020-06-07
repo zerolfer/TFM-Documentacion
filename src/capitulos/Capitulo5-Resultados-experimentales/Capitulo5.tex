@@ -510,13 +510,13 @@ La sectorización inicial, planificada como se muestra en la \autoref{fig:caso4-
 
 Por ejemplo, el sector ACJ se cierra durante el primer periodo y es sustituido por el afín ACT; en el segundo periodo el sector ACJ vuelve a abrirse y en el último periodo nuevamente se cierra. 
 
-El sector ACQ y ACG se cierran a partir del segundo tramo incluido, ABP a partir del tercero.
+Los sectores ACQ y ACG se cierran a partir del segundo tramo incluido, ABP a partir del tercero.
 
-Como podemos observar en la \autoref{fig:caso4-fase1}, todos los sectores o bien se cierran o bien son sustituidos por otro afín, por lo que no hay necesidad de añadir nuevas filas a la planificación de la solución inicial.
+Como podemos observar en la \autoref{fig:caso4-fase1}, todos los sectores o bien se cierran o bien son sustituidos por otro afín por lo que no hay necesidad de añadir nuevas filas a la planificación de la solución inicial.
 
-Una posible solución final, resultante de la \fasedos{}, es la de la \autoref{fig:caso4-fase2-vns} que, como podemos ver, es de una calidad notable, donde se incumple únicamente la Restricción \ref{RD:3:porcentaje-min-descanso} en 9 ocasiones, con una similitud a los estadillos muy buena, que permite además disminuir el número de controladores necesarios para planificar las nuevas contingencias a partir de la incidencia a dos controladores menos, y a partir del segundo periodo en otros 7. Un total de 9 controladores menos de la solución inicial. Lógicamente estos controladores no son eliminados de la planificación puesto que tienen carga de trabajo antes de la incidencia.
+Una posible solución final, resultante de la \fasedos{}, es la de la \autoref{fig:caso4-fase2-vns} que, como podemos ver, es de una calidad notable, donde se incumple únicamente la restricción \ref{RD:3:porcentaje-min-descanso} en 9 ocasiones, con una similitud a los estadillos muy buena, que permite además disminuir el número de controladores necesarios para planificar las nuevas contingencias a partir de la incidencia a dos controladores menos, y a partir del segundo periodo en otros 7. Un total de 9 controladores menos de la solución inicial. Lógicamente, estos controladores no son eliminados de la planificación puesto que tienen carga de trabajo antes de la incidencia.
 
-En el caso de SA (\autoref{fig:caso4-fase2-sa}), la calidad de la solución es muy similar en cuanto a restricciones incumplidas como a valores de fitness. Sí cabe destacar que el VNS llega a esta solución en mucho menos tiempo que el SA: 5 minutos menos.
+En el caso de SA (\autoref{fig:caso4-fase2-sa}), la calidad de la solución es muy similar en cuanto a restricciones incumplidas como a valores de fitness. Sí cabe destacar que el VNS llega a esta solución en mucho menos tiempo que el SA, este último en 7.5 minutos frente a los 2.8 del VNS.
 
 \begin{figure}[!]
 	\centering
@@ -534,7 +534,7 @@ En el caso de SA (\autoref{fig:caso4-fase2-sa}), la calidad de la solución es m
 
 \subsubsection{Análisis del Caso 5}
 
-La planificación inicial del Caso 5 es la misma que la del caso anterior, cambiando el momento del cambio al slot 30 (véase la \autoref{fig:caso5-fase0}).
+La planificación inicial del Caso 5 es la misma que la del caso anterior, cambiando el momento del incidente al slot 30 (véase la \autoref{fig:caso5-fase0}).
 
 \begin{figure}[!]
 	\centering
@@ -543,7 +543,7 @@ La planificación inicial del Caso 5 es la misma que la del caso anterior, cambi
 	\label{fig:caso5-fase0}
 \end{figure}
 
-La \faseuno{} obtiene como resultado la misma que en el Caso 4, añadiéndole un controlador imaginario para suplir la carencia del controlador que se da de baja a partir de slot 30. Se produce una alta, por lo que se añade también un controlador, pero en este caso no imaginario, puesto que es un recurso que ya se conoce como disponible. La solución inicial es la de la \autoref{fig:caso5-fase1}.
+La \faseuno{} obtiene como resultado la misma que en el Caso 4, añadiéndole un controlador imaginario para suplir la carencia del controlador que se da de baja a partir del slot 30. Se produce una alta, por lo que se añade también un controlador, pero en este caso no imaginario, puesto que es un recurso que ya se conoce como disponible. La solución inicial se muestra en la \autoref{fig:caso5-fase1}.
 
 \begin{figure}[!]
 	\centering
@@ -554,7 +554,7 @@ La \faseuno{} obtiene como resultado la misma que en el Caso 4, añadiéndole un
 
 La idea es que se reorganice toda la planificación a partir del momento de la baja del controlador para poder realizar el trabajo sin el controlador de baja, junto con realizar las adaptaciones a la nueva sectorización de la mejor forma posible.
 
-La \autoref{fig:caso5-fase2-vns} representa un posible resultado alcanzado con nuestro VNS. Como podemos ver, sí es capaz de eliminar el controlador imaginario adicional, a expensas de incumplir la Restricción \ref{R:5:max-trabajo-continuado} en dos ocasiones, algo que no sucede en la solución obtenida con SA de la \autoref{fig:caso5-fase2-sa}. Por ello, el objetivo \ref{O2} es inferior en valor en VNS.
+La \autoref{fig:caso5-fase2-vns} representa un posible resultado alcanzado con nuestro VNS. Como podemos ver, sí es capaz de eliminar el controlador imaginario adicional, a expensas de incumplir la restricción \ref{R:5:max-trabajo-continuado} en dos ocasiones, algo que no sucede en la solución obtenida con SA de la \autoref{fig:caso5-fase2-sa}. Por ello, el objetivo \ref{O2} es inferior en valor en VNS.
 
 Respecto al objetivo \ref{O3}, ambas metaheurísticas obtienen resultados similares, aunque en relación al \ref{O4}, la similitud con las plantillas es significativamente superior la del VNS.
 
@@ -573,9 +573,9 @@ Respecto al objetivo \ref{O3}, ambas metaheurísticas obtienen resultados simila
 \end{figure}
 \subsubsection{Análisis del Caso 6}
 
-Nuevamente la planificación inicial es la misma que la del Caso 4, pero en este caso el momento del cambio es antes, en el slot 32 (véase la \autoref{fig:caso6-fase0}).
+Nuevamente, la planificación inicial es la misma que la del Caso 4, pero en este caso el momento del cambio es antes, en el slot 32 (véase la \autoref{fig:caso6-fase0}).
 
-La incidencia de este caso es nuevamente un cambio de sectorización, no obstante, diferente al del Caso 4. Es la de la \autoref{table:D:caso6-modif}, consta de un desglose más de los sectores así como la apertura de más. Debido a esto último, se ve necesario el uso de una plantilla $3 \times 1$ que introduce 3 controladores imaginarios (véase la \autoref{fig:caso6-fase1})
+La incidencia de este caso es consiste en un cambio de sectorización, no obstante, diferente al del Caso 4, mostrado en la \autoref{table:D:caso6-modif}. Implica la apertura de un mayor número de sectores, por lo que debido a esto, se ve necesario el uso de una plantilla $3 \times 1$ que introduce 3 controladores imaginarios (véase la \autoref{fig:caso6-fase1}).
 
 \begin{figure}[!]
 	\centering
@@ -591,7 +591,7 @@ La incidencia de este caso es nuevamente un cambio de sectorización, no obstant
 	\label{fig:caso6-fase1}
 \end{figure}
 
-En la \fasedos{} podemos apreciar visualmente que tanto el VNS (\autoref{fig:caso6-fase2-vns}) como el SA \autoref{fig:caso6-fase2-sa} logran resultados similares para los tres primeros objetivos, \ref{O1}, \ref{O2}, \ref{O3}, aunque en el caso del cuarto, podemos observar cómo el SA obtiene una mayor similitud con los estadillos a partir del momento del cambio. Por esta razón, el valor global del fitness en la solución del SA es mejor que en el VNS.
+En la \fasedos{} podemos apreciar visualmente que tanto el VNS (\autoref{fig:caso6-fase2-vns}) como el SA (\autoref{fig:caso6-fase2-sa}) logran resultados similares para los tres primeros objetivos, \ref{O1}, \ref{O2}, \ref{O3}, aunque en el caso del cuarto, podemos observar cómo el SA obtiene una mayor similitud con los estadillos a partir del momento del cambio. Por esta razón, el valor global del fitness en la solución del SA es mejor que en el VNS.
 
 \begin{figure}[!]
 	\centering
@@ -625,7 +625,7 @@ El Caso 8 es de los más sencillos, pues únicamente debe gestionar la baja del 
 	\label{fig:caso8-fase1}
 \end{figure}
 
-En cuanto al desempeño de la \fasedos{}, ambas opciones agrupan bastante bien los slots como pretende el \ref{O4}, sin embargo el VNS logra un mejor resultado en dicho objetivo. El primer objetivo \ref{O1} se logra en ambos casos, eliminando el controlador imaginario añadido en la Fase 1. Aunque para el objetivo de las restricciones, \ref{O2}, en esta solución el SA solo incumple la Restricción \ref{RD:12:rotaciones} en 2 ocasiones, mientras que el VNS incumple dos: la Restricción \ref{R:5:max-trabajo-continuado} en tres ocasiones y la \ref{RD:3:porcentaje-min-descanso} en dos.
+En cuanto al desempeño de la \fasedos{}, ambas opciones agrupan bastante bien los slots como pretende el \ref{O4}. Sin embargo, el VNS logra un mejor resultado en dicho objetivo. El primer objetivo \ref{O1} se logra en ambos casos, eliminando el controlador imaginario añadido en la Fase 1. Aunque para el objetivo de las restricciones, \ref{O2}, en esta solución el SA solo incumple la restricción \ref{RD:12:rotaciones} en 2 ocasiones, mientras que el VNS incumple dos: la restricción \ref{R:5:max-trabajo-continuado} en tres ocasiones y la \ref{RD:3:porcentaje-min-descanso} en dos.
 En media, como recogía la \autoref{table:comparativa-sa-vns-porcentaje}, esa mejora de restricciones no es muy significativa.
 
 
@@ -646,7 +646,7 @@ En media, como recogía la \autoref{table:comparativa-sa-vns-porcentaje}, esa me
 
 \subsubsection{Análisis del Caso 9}
 
-El Caso 9 es equivalente al anterior, el Caso 8, con la diferencia de que ahora sí sucede un alta de otro controlador, C23. La planificación inicial es idéntica a la del caso anterior, \autoref{fig:caso8-fase0} y la solución inicial (tras la \faseuno{}) es la misma pero añadiendo el alta, como muestra la \autoref{fig:caso9-fase1}.
+El Caso 9 es equivalente al anterior, el Caso 8, con la diferencia de que ahora sí sucede un alta de otro controlador, C23. La planificación inicial es idéntica a la del caso anterior (\autoref{fig:caso8-fase0}) y la solución inicial (tras la \faseuno{}) es la misma pero añadiendo el alta, como muestra la \autoref{fig:caso9-fase1}.
 
 \begin{figure}[!]
 	\centering
@@ -655,7 +655,7 @@ El Caso 9 es equivalente al anterior, el Caso 8, con la diferencia de que ahora 
 	\label{fig:caso9-fase1}
 \end{figure}
 
-Respecto a la comparación entre metaheurísticas, este es el único caso que el SA (\autoref{fig:caso9-fase2-sa}) realmente logra mejores resultados que el VNS (\autoref{fig:caso9-fase2-vns}) con una diferencia significativa. Ambas metaheurísticas logran alcanza el valor máximo del \ref{O1}, sin embargo es en el \ref{O2}, las restricciones incumplidas, aquel objetivo que el SA obtiene valores mayores (es decir, que incumple menos restricciones).
+Respecto a la comparación entre metaheurísticas, este es el único caso en el que el SA (\autoref{fig:caso9-fase2-sa}) realmente logra mejores resultados que el VNS (\autoref{fig:caso9-fase2-vns}) con una diferencia significativa. Ambas metaheurísticas logran alcanza el valor máximo del \ref{O1}, sin embargo es en el \ref{O2}, las restricciones incumplidas, aquel objetivo que el SA obtiene valores mayores (es decir, que incumple menos restricciones).
 
 \begin{figure}[!]
 	\centering
@@ -675,9 +675,7 @@ En las soluciones concretas mostradas anteriormente, el VNS incumple tres veces 
 
 \subsection{Otros experimentos}
 
-\subsubsection{Comparativa \textit{First Improvement} y \textit{Best Improvement}}
-
-En el \autoref{capitulo:3} describimos las alternativas de metodología y parámetros barajadas en el TFM y por qué fueron elegidas finalmente las empleadas. Una de esas alternativas se trata del comportamiento de la búsqueda local, pudiendo ser \textit{First Improvement} y \textit{Best Improvement}. La segunda, no puede ser aplicada en este problema debido a que no podemos generar todas las posibles soluciones (para quedarnos con la mejor), por lo que se propuso una opción híbrida que precisaba de dos nuevos parámetros al sistema: el número máximo de iteraciones sin mejora para la búsqueda local y el porcentaje mínimo de mejoría para la búsqueda local.
+En el \autoref{capitulo:3} describimos las alternativas de metodología y parámetros barajadas en el TFM y el porqué fueron elegidas finalmente las empleadas. Una de esas alternativas se trata del comportamiento de la búsqueda local, pudiendo ser \textit{First Improvement} y \textit{Best Improvement}. La segunda, no puede ser aplicada en este problema debido a que no podemos generar todas las posibles soluciones (para quedarnos con la mejor), por lo que se propuso una opción híbrida que precisaba de dos nuevos parámetros al sistema: el número máximo de iteraciones sin mejora para la búsqueda local y el porcentaje mínimo de mejoría para la búsqueda local.
 
 Un experimento interesante puede ser una comparativa entre ambos comportamientos, que puede verse la \autoref{fig:5:first-vs-bestiteracioncaso1}, que representa gráficamente el desempeño medio en cada iteración para el Caso 1, que emplea un \textit{VND}, que es únicamente determinista, por lo que tan solo emplea la búsqueda local como medio de búsqueda dentro del entorno. Se ha llamado al comportamiento híbrido como simplemente \textit{Best Improvement} por ser una adaptación de este.
 

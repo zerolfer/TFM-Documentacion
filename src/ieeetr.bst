@@ -770,7 +770,7 @@ FUNCTION {mastersthesis}
   format.authors "author" output.check
   format.title "title" output.check
   blank.sep
-  "Trabajo Fin de Master" format.thesis.type output.nonnull
+  "Trabajo Fin de Máster" format.thesis.type output.nonnull
   school "school" output.check
   address output
   format.date "year" output.check
