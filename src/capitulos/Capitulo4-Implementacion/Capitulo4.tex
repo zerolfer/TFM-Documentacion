@@ -280,7 +280,6 @@ En esta etapa diseñamos, mediante la esquematización, el sistema a implementar
 El sistema se ha diseñado de tal manera que podamos reutilizar la mayor cantidad de código implementado y para ello se ha tomado como fundamento el paradigma Orientado a Objetos (POO) en contraposición con el paradigma procedimental. 
 Además, las limitaciones de implementación de usar el lenguaje de programación Java (véase la \autoref{sec:4:implementacion}) favorecen el uso de este paradigma. 
 Por otro lado, la reutilización de código, la sencillez de los Objetos y la separación de tareas favorece la claridad y facilidad de comprensión del código, algo importante si tenemos en cuenta que el proyecto se encuentra en constante ampliación y evolución y, posiblemente, más de una persona empleará el código en un futuro. 
-% Este salto de línea estropea las figuras de esquema, NO PONER
 
 La selección del paradigma afectará a la forma de diseñar el sistema. El software se diseñó en el lenguaje universal de diseño UML, y debe notarse que los esquemas mostrados en los capítulos anteriores también forman parte del proceso de diseño, pero por claridad en la memoria se han incluido en sus correspondientes secciones.
 
@@ -293,7 +292,6 @@ Se ha dividido el sistema en cuatro módulos:
 \end{itemize}
 
 Los módulos de entrada y salida se han resumido en dos clases que encapsulan toda la lógica de negocio, al igual que el módulo que conforma la \faseuno{}. Sin embargo, para el módulo de búsqueda se ha diseñado un esquema de clases que se recoge a continuación en esta sección. El esquema se ha separado en 3 partes para una mayor claridad, pero se ha incluido de forma completa en el \autoref{Anexo:diagrama-clases}. 
-%En esta sección explicaremos el esquema separándolo en 3 partes para una mayor claridad.
 
 En primer lugar, tenemos la lógica relativa a los VNS propiamente dichos, que serán implementados siguiendo el diseño de la \autoref{fig:4:diseño:vns}.
 
@@ -325,21 +323,21 @@ Por último, los VNS darán uso de las estructuras de entorno mediante los sets,
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=0.9\linewidth]{diagrama-clases-VNS-alt}
-	\caption{Esquema del paquete \textit{vns} (verde)}
+	\caption[Esquema del paquete \textit{vns}]{Esquema del paquete \textit{vns} (verde)}
 	\label{fig:4:diseño:vns}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\linewidth]{diagrama-clases-TipoEntornos}
-	\caption{Esquema del paquete \textit{naturaleza-entornos} (amarillo+naranja)}
+	\caption[Esquema del paquete \textit{naturaleza-entornos}]{Esquema del paquete \textit{naturaleza-entornos} (amarillo+naranja)}
 	\label{fig:4:diseño:tipoEntorno}
 \end{figure}
 
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=1\linewidth]{diagrama-clases-Vecindades}
-	\caption{Esquema del paquete \textit{estructuras-entorno} (cian)}
+	\caption[Esquema del paquete \textit{estructuras-entorno}]{Esquema del paquete \textit{estructuras-entorno} (cian)}
 	\label{fig:4:diseño:entornos}
 \end{figure}
 
@@ -351,6 +349,8 @@ En el esquema de la \autoref{fig:4:diseño:tipoEntorno} pueden verse también la
 %\subsection{Implementación}
 \subsection{Detalles de implementación del sistema}
 \label{sec:4:implementacion}
+
+Todo el código final del sistema descrito y empleado en este TFM se encuentra en el repositorio de GitHub \url{https://github.com/zerolfer/Proyecto-Salomon}.
 
 \subsubsection{Herramientas y tecnologías software utilizadas}
 
@@ -429,7 +429,7 @@ Se realizó un análisis empleando las tecnologías de \textit{Java Mission Cont
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{Method-Profiling-Legacy}
-	\caption{\textit{Method profiling} del sistema \legacy{} obtenido mediante textit{Java Mission Control}}
+	\caption[\textit{Method profiling} del sistema \legacy{}]{\textit{Method profiling} del sistema \legacy{} obtenido mediante \textit{Java Mission Control}}
 	\label{fig:4:method-profiling-legacy}
 \end{figure}
 
@@ -449,7 +449,7 @@ Por último, se ha realizado un análisis de rendimiento comparando la eficienci
 \begin{figure}
 	\centering
 	\includegraphics[width=\linewidth]{Method-Profiling-System}
-	\caption{\textit{Method profiling} del sistema construido para este TFM, obtenido mediante textit{Java Mission Control}}
+	\caption[\textit{Method profiling} del sistema construido para este TFM]{\textit{Method profiling} del sistema construido para este TFM, obtenido mediante \textit{Java Mission Control}}
 	\label{fig:4:method-profiling-system}
 \end{figure}
 
