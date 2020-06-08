@@ -434,7 +434,7 @@ Para gestionar el alta del nuevo controlador C26, se añade al final, y solo se 
 	\label{fig:5:solucion-fase1-caso7}
 \end{figure}
 
-La \fasedos{} toma dicha planificación y la logra reducir a 26 controladores en su solución final, eliminando todos los imaginarios (véase la \autoref{fig:5:solucion-fase2-vns-caso7}). Una diferencia muy grande respecto al SA, que ni siquiera logra reducir un solo controlador (véase la \autoref{fig:5:solucion-fase2-sa-caso7}). Por ello, la diferencia de valor total de la solución es muy grande: el SA obtiene una media de $0.6146$ mientras que el VNS logra la cifra de $0.9335$.
+La \fasedos{} toma dicha planificación y la logra reducir a 26 controladores en su solución final, eliminando todos los imaginarios (véase la \autoref{fig:5:solucion-fase2-vns-caso7}). Una diferencia muy grande respecto al SA, que ni siquiera logra reducir un solo controlador (véase la \autoref{fig:5:solucion-fase2-sa-caso7}). El SA obtiene una media de $0.6146$ mientras que el VNS logra la cifra de $0.9335$.
 
 \begin{figure}
 	\centering
@@ -625,10 +625,6 @@ El Caso 8 es de los más sencillos, pues únicamente debe gestionar la baja del 
 	\label{fig:caso8-fase1}
 \end{figure}
 
-En cuanto al desempeño de la \fasedos{}, ambas opciones agrupan bastante bien los slots como pretende el \ref{O4}. Sin embargo, el VNS logra un mejor resultado en dicho objetivo. El primer objetivo \ref{O1} se logra en ambos casos, eliminando el controlador imaginario añadido en la Fase 1. Aunque para el objetivo de las restricciones, \ref{O2}, en esta solución el SA solo incumple la restricción \ref{RD:12:rotaciones} en 2 ocasiones, mientras que el VNS incumple dos: la restricción \ref{R:5:max-trabajo-continuado} en tres ocasiones y la \ref{RD:3:porcentaje-min-descanso} en dos.
-En media, como recogía la \autoref{table:comparativa-sa-vns-porcentaje}, esa mejora de restricciones no es muy significativa.
-
-
 \begin{figure}[!]
 	\centering
 	\includegraphics[width=\linewidth]{caso8/caso8-fase2-vns}
@@ -643,6 +639,8 @@ En media, como recogía la \autoref{table:comparativa-sa-vns-porcentaje}, esa me
 	\label{fig:caso8-fase2-sa}
 \end{figure}
 
+En cuanto al desempeño de la \fasedos{}, ambas opciones agrupan bastante bien los slots como pretende el \ref{O4}. Sin embargo, el VNS logra un mejor resultado en dicho objetivo. El primer objetivo \ref{O1} se logra en ambos casos, eliminando el controlador imaginario añadido en la Fase 1. Aunque para el objetivo de las restricciones, \ref{O2}, en esta solución el SA solo incumple la restricción \ref{RD:12:rotaciones} en 2 ocasiones, mientras que el VNS incumple dos: la restricción \ref{R:5:max-trabajo-continuado} en tres ocasiones y la \ref{RD:3:porcentaje-min-descanso} en dos.
+En media, como recogía la \autoref{table:comparativa-sa-vns-porcentaje}, esa mejora de restricciones no es muy significativa.
 
 \subsubsection{Análisis del Caso 9}
 
@@ -654,8 +652,6 @@ El Caso 9 es equivalente al anterior, el Caso 8, con la diferencia de que ahora 
 	\caption{Solución inicial (\faseuno{}) para el Caso 9}
 	\label{fig:caso9-fase1}
 \end{figure}
-
-Respecto a la comparación entre metaheurísticas, este es el único caso en el que el SA (\autoref{fig:caso9-fase2-sa}) realmente logra mejores resultados que el VNS (\autoref{fig:caso9-fase2-vns}) con una diferencia significativa. Ambas metaheurísticas logran alcanza el valor máximo del \ref{O1}, sin embargo es en el \ref{O2}, las restricciones incumplidas, aquel objetivo que el SA obtiene valores mayores (es decir, que incumple menos restricciones).
 
 \begin{figure}[!]
 	\centering
@@ -671,19 +667,21 @@ Respecto a la comparación entre metaheurísticas, este es el único caso en el 
 	\label{fig:caso9-fase2-sa}
 \end{figure}
 
+Respecto a la comparación entre metaheurísticas, este es el único caso en el que el SA (\autoref{fig:caso9-fase2-sa}) realmente logra mejores resultados que el VNS (\autoref{fig:caso9-fase2-vns}) con una diferencia significativa. Ambas metaheurísticas logran alcanza el valor máximo del \ref{O1}, sin embargo es en el \ref{O2}, las restricciones incumplidas, aquel objetivo que el SA obtiene valores mayores (es decir, que incumple menos restricciones).
+
 En las soluciones concretas mostradas anteriormente, el VNS incumple tres veces \ref{RD:3:porcentaje-min-descanso}, cuatro \ref{R:5:max-trabajo-continuado} y una \ref{RD:11:tiempo-min-posicion}; mientras que el SA no incumple ni una sola.
 
 \subsection{Otros experimentos}
 
 En el \autoref{capitulo:3} describimos las alternativas de metodología y parámetros barajadas en el TFM y el porqué fueron elegidas finalmente las empleadas. Una de esas alternativas se trata del comportamiento de la búsqueda local, pudiendo ser \textit{First Improvement} y \textit{Best Improvement}. La segunda, no puede ser aplicada en este problema debido a que no podemos generar todas las posibles soluciones (para quedarnos con la mejor), por lo que se propuso una opción híbrida que precisaba de dos nuevos parámetros al sistema: el número máximo de iteraciones sin mejora para la búsqueda local y el porcentaje mínimo de mejoría para la búsqueda local.
 
-Un experimento interesante puede ser una comparativa entre ambos comportamientos, que puede verse la \autoref{fig:5:first-vs-bestiteracioncaso1}, que representa gráficamente el desempeño medio en cada iteración para el Caso 1, que emplea un \textit{VND}, que es únicamente determinista, por lo que tan solo emplea la búsqueda local como medio de búsqueda dentro del entorno. Se ha llamado al comportamiento híbrido como simplemente \textit{Best Improvement} por ser una adaptación de este.
-
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=\linewidth]{First-vs-best_iteracion_Caso1}
 	\caption{Gráfica comparativa del desempeño del sistema para el Caso 1, empleando los dos posibles comportamientos de la búsqueda local.}
 	\label{fig:5:first-vs-bestiteracioncaso1}
 \end{figure}
+
+Un experimento interesante puede ser una comparativa entre ambos comportamientos, que puede verse la \autoref{fig:5:first-vs-bestiteracioncaso1}, que representa gráficamente el desempeño medio en cada iteración para el Caso 1, que emplea un \textit{VND}, que es únicamente determinista, por lo que tan solo emplea la búsqueda local como medio de búsqueda dentro del entorno. Se ha llamado al comportamiento híbrido como simplemente \textit{Best Improvement} por ser una adaptación de este.
 
 Podemos observar cómo el comportamiento propuesto mejora sustancialmente el desempeño final del algoritmo.
