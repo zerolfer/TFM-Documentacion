@@ -279,15 +279,12 @@ Existen más variaciones del algoritmo básico del VNS que no se han contemplado
 
 Recordemos que en secciones anteriores hemos definido la \faseuno{} que nos permite crear una solución inicial sobre la que el VNS pueda trabajar. El esquema planteado para la \fasedos{} se muestra en la \autoref{fig:esquema-fase2}, donde podemos ver cómo se combinan los algoritmos definidos previamente del VNS y el cambio de vecindad, junto a la condición de parada, definida \hyperref[apartado:condiciones-parada]{más adelante en esta sección}. El proceso denominado ``VNS concreto'' se trata del tipo de VNS elegido de entre todos los descritos previamente. Más adelante en el \autoref{capitulo:5} veremos cuál es el más eficiente de todos ellos.
 
-\begin{figure}[htbp]
+\begin{figure}
     \centering
     \includegraphics[width=\linewidth]{Esquema-Fase-2-centrico}
     \caption{Diagrama de flujo del funcionamiento de la Fase 2}
     \label{fig:esquema-fase2}
 \end{figure}
-
-\vspace*{\fill}
-
 %Una vez definida la técnica a utilizar y las posibles variaciones planteadas, debemos instanciar los elementos del algoritmo y definir las heurísticas ---dependientes del problema concreto--- necesarias de la metaheurística.
 
 En las próximas secciones se describe cómo se ha optado por adaptar la metaheurística descrita en la sección anterior al problema descrito en el \autoref{capitulo:2}: cómo se ha implementado la función de evaluación, qué entornos se han definido y bajo qué criterios son ordenados, las técnicas de exploración y explotación utilizadas, las condiciones de parada y la función de distancia para el caso del Skewed VNS.
@@ -463,7 +460,7 @@ con $nSlots$ el número de slots de la instancia concreta del problema.
 
 Cabe destacar que, en caso de alcanzar slots donde no sea posible comparar con posiciones inmediatamente inferior o derecha debido a que se alcance el final de la matriz, entonces ese caso (inferior o derecha) será ignorado.
 
-\NEW{El funcionamiento de este objetivo contradice al \ref{O1} en el sentido de que este precisa de la ordenación de los turnos según la carga de trabajo asignada, mientras que \ref{O4} necesita que los turnos estén en el orden inicial, para poder comparar con la forma de las plantillas, por lo que cuando el \ref{O1} alcance el valor de 1, el orden inicial de los turnos deberá ser restablecido para que el \ref{O4} tenga un positivo sobre la solución.} 
+El funcionamiento de este objetivo contradice al \ref{O1} en el sentido de que este precisa de la ordenación de los turnos según la carga de trabajo asignada, mientras que \ref{O4} necesita que los turnos estén en el orden inicial, para poder comparar con la forma de las plantillas, por lo que cuando el \ref{O1} alcance el valor de 1, el orden inicial de los turnos deberá ser restablecido para que el \ref{O4} tenga un positivo sobre la solución. 
 
 \paragraph{Definición de entornos} \label{paragraph:entornos}
 En secciones previas se ha introducido el concepto de entorno: estructuras algorítmicas de manipulación de una solución que permiten moverse hacia otras cercanas. Por lo tanto, definen el criterio a emplear para moverse entre soluciones.
@@ -547,7 +544,6 @@ Lara en su TFM propone además los movimientos en una o varias rejillas, que tra
 <<Los movimientos \textit{mov3} y \textit{mov6} rompen la estructura vertical de las soluciones
 iniciales salvo que las amplitudes, la longitud de los descansos y la sectorización sean
 compatibles entre sí, caso que no se da en muchas situaciones.
-
 Para solventar este problema definimos el movimiento \textit{mov12}. En este movimiento,
 se crea una rejilla a partir de la solución inicial que limita los intercambios
 que pueden hacerse entre controladores. Una rejilla no será más que una serie de
@@ -637,7 +633,7 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
     \algovspace
 \end{algorithm}
 
-\break
+%\break
 
 \textbf{Restricciones de entorno (y nombre):}
 \begin{enumerate}[align=parleft, labelsep=2cm, itemindent=5em, font=\itshape]
@@ -708,7 +704,7 @@ La idea inicial consiste en emplearlos en el orden descrito, de forma que primer
 \textbf{Restricciones de entorno (y nombre):}
 \begin{enumerate}[align=parleft, labelsep=2cm, itemindent=5em, font=\itshape]
     \item[MovRejilla]\mbox{}\\No hay restricciones.
-
+\vspace*{\fill}
     \item[MovRejilla\_1]\mbox{}\\
     Seleccionamos aleatoriamente uno de los intervalos de las rejillas que cumplan:
     $c_1$ debe tener trabajo en el intervalo elegido. \\
